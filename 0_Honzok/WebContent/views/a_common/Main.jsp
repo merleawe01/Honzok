@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>혼족옵서예vbvbv</title>
+<title>혼족옵서예</title>
 
 <style>
 	header {width: 100%; height: 170px; text-align: center;}
