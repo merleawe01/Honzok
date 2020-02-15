@@ -174,11 +174,35 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm">
+		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm" encType="multipart/form-data">
 			<div id="basic">
 				<div id="mainImg">
-					<img alt="" src="../../images/insertImage.png" width=100% height=100%>
+					<img src="../../images/meal.png" width=100% height=100%>
 				</div>
+				<input type="file" id="addMainImg" name="foodImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this,0)" hidden="">
+				
+				<script>
+					$('#mainImg').click(function(){
+						$('#addMainImg').click();
+						console.log('test');
+					});
+					
+					function LoadImg(value, num){
+						if(value.files && value.files[0]){
+							var reader = new FileReader();
+							
+							reader.onload = function(e){
+								switch(num){
+								case 0: 
+									$("#mainImg > img").attr("src", e.target.result);
+									break;
+								}
+							}
+							
+							reader.readAsDataURL(value.files[0]);
+						}
+					}
+				</script>
 				
 				<div id="nameMain">
 					<span class="bigText">가게이름 </span> <span class="smallText">(필수)</span><br><br>
@@ -261,7 +285,7 @@
 					<span class="middleText">추가 첨부사진</span>
 				</div>
 				<div class="right">
-					<input type="file" multiple accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff">
+					<input type="file" id="addImg" name="foodImg2[]" multiple accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this,1)">
 				</div>
 			</div>
 			
@@ -318,7 +342,7 @@
 			    // 마커 위치를 클릭한 위치로 옮깁니다
 			    marker.setPosition(latlng);
 			    $('#area_x').val(latlng.getLat());
-			    $('#area_y').val(latlng.getLat());
+			    $('#area_y').val(latlng.getLng());
 			    
 			    /* console.log("위도 : " + latlng.getLat());
 			    console.log("경도 : " + latlng.getLng()); */
@@ -327,10 +351,11 @@
 			        if (status === kakao.maps.services.Status.OK) {
 			        	$('#adr').val(result[0].address.address_name);
 			        	var local_name = result[0].address.address_name.substring(0, 2);
-			        	if(local_name == 세종){
+			        	if(local_name == '세종'){
 			        		local_name = '충남';
 			        	}
 			        	$('#local_name').val(local_name);
+			        	console.log(local_name);
 			        }   
 			    });
 			});
