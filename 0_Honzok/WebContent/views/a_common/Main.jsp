@@ -83,7 +83,8 @@
 					<img src="images/travel.PNG" width="25%" height=35% id="travel"/>
 				</a>
 		</div>
-
+		
+		
 	</section>
 
 	<footer>
@@ -93,6 +94,8 @@
 		function goMessage(){
 			window.open("../f_message/messageHome.jsp", "messgaeHome", "width=480, height=600");
 		}	
+		
+		
 	</script>
 	
 </body>
