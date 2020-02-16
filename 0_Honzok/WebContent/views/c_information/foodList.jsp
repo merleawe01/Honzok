@@ -341,6 +341,11 @@
 			<div id="submitCate">적용하기</div>
 		</div>
 		
+		
+		
+		
+		
+		
 		<div id="foodList">
 			<div id="foodImg"><img src="../../images/pork.PNG"></div>
 			<div id="foodMain">

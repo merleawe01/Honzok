@@ -64,11 +64,35 @@ public class InformationDAO {
 			pstmt.setString(1, board.getLocal_name());
 			pstmt.setString(2, board.getAddress());
 			pstmt.setInt(3, board.getStar());
-			pstmt.setString(4, board.getRc_food());
+			String rc_food = (board.getRc_food() == null) ? "" : board.getRc_food();
+			pstmt.setString(4, rc_food);
 			pstmt.setDouble(5, board.getArea_x());
 			pstmt.setDouble(6, board.getArea_y());
 			
 			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int insertCateBoard(Connection conn, FoodBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertCateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			String[] cateArr = board.getCategory().split(", ");
+			for(int i = 0; i < cateArr.length; i++) {
+				pstmt.setString(1, cateArr[i]);
+				result = pstmt.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -134,7 +158,6 @@ public class InformationDAO {
 		return list;
 	}
 
-	
 	
 	
 	

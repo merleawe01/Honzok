@@ -21,9 +21,10 @@ public class FBoardService {
 		
 		int result1 = dao.insertBoard(conn, board);
 		int result2 = dao.insertFBoard(conn, board);
-		int result3 = dao.insertImage(conn, fileList);
+		int result3 = dao.insertCateBoard(conn, board);
+		int result4 = dao.insertImage(conn, fileList);
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);

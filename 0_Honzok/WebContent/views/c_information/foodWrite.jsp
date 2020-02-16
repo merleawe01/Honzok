@@ -20,6 +20,7 @@
 		width: 250px;
 		float: left;
 		border: 1px solid black;
+		cursor: pointer;
 	}
 	#nameMain{
 		display: inline-table;
@@ -117,6 +118,29 @@
 		padding-bottom: 10px;
 		border-bottom: 1px solid gray;
 	}
+	#addImg{
+		display : inline-block;
+		width : 100px;
+		height : 40px;
+		background-color : rgb(224, 224, 224);
+		color : rgb(64, 64, 64);
+		border-radius: 5px;
+		line-height: 40px;
+		font-weight: bold;
+		display: inline-table;
+		cursor: pointer;
+		text-align: center;
+	}
+	#imgList{
+		display : inline-block;
+		width : 100%;
+		padding: 10px;
+	}
+	.deleteImg{
+		color: red;
+		font-weight: bold;
+		cursor: pointer;
+	}
 	#address{
 		width: 100%;
 		height: 300px;
@@ -179,24 +203,19 @@
 				<div id="mainImg">
 					<img src="../../images/meal.png" width=100% height=100%>
 				</div>
-				<input type="file" id="addMainImg" name="foodImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this,0)" hidden="">
+				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this)" hidden="">
 				
 				<script>
 					$('#mainImg').click(function(){
 						$('#addMainImg').click();
-						console.log('test');
 					});
 					
-					function LoadImg(value, num){
+					function LoadImg(value){
 						if(value.files && value.files[0]){
 							var reader = new FileReader();
 							
 							reader.onload = function(e){
-								switch(num){
-								case 0: 
-									$("#mainImg > img").attr("src", e.target.result);
-									break;
-								}
+								$("#mainImg > img").attr("src", e.target.result);
 							}
 							
 							reader.readAsDataURL(value.files[0]);
@@ -280,14 +299,72 @@
 				</div>
 			</div>
 			
-			<div id="plusImg">
+			<div id="plusImg" style="height:auto">
 				<div class="left">
 					<span class="middleText">추가 첨부사진</span>
 				</div>
-				<div class="right">
-					<input type="file" id="addImg" name="foodImg2[]" multiple accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this,1)">
+				<div class="right" style="height:auto">
+					<div id="addImg">이미지 추가</div> &nbsp;&nbsp;* 이미지 추가는 최대 5개 까지만 가능합니다. <br>
+
+					<div id="imgList"></div>
+
+					<input type="file" id="bonusImg1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg1'))" hidden="">
+					<input type="file" id="bonusImg2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg2'))" hidden="">
+					<input type="file" id="bonusImg3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg3'))" hidden="">
+					<input type="file" id="bonusImg4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg4'))" hidden="">
+					<input type="file" id="bonusImg5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg5'))" hidden="">
 				</div>
 			</div>
+			
+			<script>
+				function fullImg(){
+					if($("#bonusImg1")[0].localName == "span" && $("#bonusImg2")[0].localName == "span" && $("#bonusImg3")[0].localName == "span" && $("#bonusImg4")[0].localName == "span" && $("#bonusImg5")[0].localName == "span"){
+						$('#addImg').hide();
+					} else{
+						$('#addImg').show();
+					}
+				}
+				
+				$('#addImg').click(function(){
+					if($('#bonusImg1')[0].value == ""){
+						$('#bonusImg1').click();
+					} else if($('#bonusImg2')[0].value == ""){
+						$('#bonusImg2').click();
+					} else if($('#bonusImg3')[0].value == ""){
+						$('#bonusImg3').click();
+					} else if($('#bonusImg4')[0].value == ""){
+						$('#bonusImg4').click();
+					} else if($('#bonusImg5')[0].value == ""){
+						$('#bonusImg5').click();
+					}
+				});
+				
+				function secondImg(img){
+					var fileValue = img.val().split("\\");
+					var fileName = fileValue[fileValue.length-1]; // 파일명
+					
+					if(fileName == "") {
+						console.log("파일이 없습니다.");
+					} else{
+						$('#imgList').append("<span id=" + img[0].name + ">" + fileName + " <span class='deleteImg'>X</span><br></span>");
+					}
+					fullImg();
+				}
+				
+				$(document).on("click",".deleteImg",function(){
+					var id = this.parentNode.id;
+					this.parentNode.remove();
+					
+					switch(id){
+					case 'bonusImg1' : $("#bonusImg1").val(""); break;
+					case 'bonusImg2' : $("#bonusImg2").val(""); break;
+					case 'bonusImg3' : $("#bonusImg3").val(""); break;
+					case 'bonusImg4' : $("#bonusImg4").val(""); break;
+					case 'bonusImg5' : $("#bonusImg5").val(""); break;
+					}
+					fullImg();
+				});
+			</script>
 			
 			<input type="hidden" id="area_x" name="area_x" value="">
 			<input type="hidden" id="area_y" name="area_y" value="">
@@ -390,7 +467,8 @@
 		<div id="tips">
 			* 이 리뷰는 개인적인 경험을 바탕으로 작성한 이 음식점에 대한 진실된 의견입니다.<br>
 			* 이 시설과 개인적 혹은 업무적으로 관련이 없습니다.<br>
-			* 해당 가게를 사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
+			* 해당 가게를 
+			사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
 		</div>
 		
 		<div id="ok" onclick="insertBoard();">확인</div>
@@ -412,6 +490,8 @@
 				
 				if($('#title').val() == ""){
 					alert("가게이름을 입력해주세요.");
+				} else if($("#addMainImg").val() == "") {
+					alert("가게의 대표이미지를 선택해주세요.");
 				} else if($('#star').val() == "") {
 					alert("음식점에 대한 평가를 해주세요.");
 				} else if($('#cate').val() == "") {
