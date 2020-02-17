@@ -76,8 +76,7 @@ public class FoodInsert extends HttpServlet {
 			String address = multipartRequest.getParameter("address");
 			String local_name = multipartRequest.getParameter("local_name");
 			
-//			String writer = ((Member)request.getSession().getAttribute("loginUser")).getNickName();
-			String writer = "shiningSolo";
+			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 			
 			FoodBoard board = new FoodBoard(title, writer, content, category, local_name, address, star, rc_food, area_x, area_y);
 			
