@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script src="../../js/jquery-3.4.1.min.js"></script>
+<script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a37066af0c038845c5bf58548af2378b&libraries=services"></script>
 
@@ -76,9 +76,7 @@
 	
 	#quicklink {
 		position: fixed;
-		margin: 0 auto;
-   		left: 0;
-	   	right: 1100px;
+		top: 300px;
 	}
 	#quicklink table {
 		display: inline-table;
@@ -86,7 +84,6 @@
 		background-color: rgb(252, 223, 212);
 		border-top: 2px solid gray;
 		border-bottom: 2px solid gray;
-		margin-top: 200px;
 	}
 	.td {
 		border-bottom: 1px solid gray;
@@ -108,15 +105,24 @@
 <body>
 	<header>
 		<div id="mainHeader">
-			<img alt="로고" src="../../images/Logo.png" id="logo">
-			<img alt="메뉴" src="../../images/list.png" id="list">
+			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" id="logo">
+			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
 			
 			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
 			<div id="nickname">
 				닉네임가져올부분
 			</div>
 					
-			<img alt="아이콘" src="../../images/blanket.png" id="icon">
+			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
+			
+			<div id="quicklink">
+				<table>
+					<tr><td class="td">욜로홀로솔로</td></tr>
+					<tr><td class="td">자유게시판</td></tr>
+					<tr><td class="td">물귤교환</td></tr>
+					<tr><td>혼플리마켓</td></tr>
+				</table>
+			</div>
 		</div>
 		
 		<div id="subHeader">
@@ -126,14 +132,7 @@
 		</div>
 	</header>
 	
-	<div id="quicklink">
-		<table>
-			<tr><td class="td">욜로홀로솔로</td></tr>
-			<tr><td class="td">자유게시판</td></tr>
-			<tr><td class="td">물귤교환</td></tr>
-			<tr><td>혼플리마켓</td></tr>
-		</table>
-	</div>
+	
 	
 </body>
 </html>
