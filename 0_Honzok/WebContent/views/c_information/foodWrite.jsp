@@ -203,7 +203,7 @@
 				<div id="mainImg">
 					<img src="../../images/meal.png" width=100% height=100%>
 				</div>
-				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="LoadImg(this)" hidden="">
+				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="LoadImg(this)" hidden="">
 				
 				<script>
 					$('#mainImg').click(function(){
@@ -308,11 +308,11 @@
 
 					<div id="imgList"></div>
 
-					<input type="file" id="bonusImg1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg1'))" hidden="">
-					<input type="file" id="bonusImg2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg2'))" hidden="">
-					<input type="file" id="bonusImg3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg3'))" hidden="">
-					<input type="file" id="bonusImg4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg4'))" hidden="">
-					<input type="file" id="bonusImg5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff" onchange="secondImg($('#bonusImg5'))" hidden="">
+					<input type="file" id="bonusImg1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg1'))" hidden="">
+					<input type="file" id="bonusImg2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg2'))" hidden="">
+					<input type="file" id="bonusImg3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg3'))" hidden="">
+					<input type="file" id="bonusImg4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg4'))" hidden="">
+					<input type="file" id="bonusImg5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg5'))" hidden="">
 				</div>
 			</div>
 			

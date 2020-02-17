@@ -44,10 +44,17 @@ public class FBoardService {
 			ArrayList<FoodBoard> result = dao.listFBoard(conn, area, cateArr[i]);
 			
 			for(FoodBoard fb : result) {
+				boolean check = false;
+				
 				for(FoodBoard fbb : FList) {
-					if(fbb.getNo() != fb.getNo()) {
-						FList.add(fb);
+					if(fbb.getNo() == fb.getNo()) {
+						check = true;
+						break;
 					}
+				}
+				
+				if(check == false) {
+					FList.add(fb);
 				}
 			}
 		}

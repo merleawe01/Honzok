@@ -35,6 +35,12 @@
 </head>
 
 <body>
+	<div class="menu" onclick="goHome();">HOME</div>
+	<script>
+		function goHome(){
+			location.href="<%= request.getContextPath() %>/list.food";
+		}
+	</script>
 	<header>
 		<div id="mainHeader">
 			<button type="button" class="menuBtn" onclick="">

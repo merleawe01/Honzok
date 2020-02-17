@@ -42,7 +42,7 @@ public class FoodList extends HttpServlet {
 		
 		String page = "views/c_information/foodList.jsp";
 		request.setAttribute("area", area);
-		request.setAttribute("cateArr", cateArr);
+		request.setAttribute("category", category);
 		request.setAttribute("list", list);
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
