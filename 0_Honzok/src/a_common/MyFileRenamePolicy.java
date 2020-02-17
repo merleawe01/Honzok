@@ -6,17 +6,17 @@ import java.util.Date;
 
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
-public class MyFileRenamePolicy implements FileRenamePolicy{
-
+public class MyFileRenamePolicy implements FileRenamePolicy {
 	@Override
 	public File rename(File originFile) {
 		long currentTime = System.currentTimeMillis();
-		
+			// 현재시간 millis로 가져옴
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		int ranNum = (int)(Math.random() * 100000);
 		
+		// 확장자명 가져오기
 		String name = originFile.getName();
-		String ext = null;
+		String ext = null;	// 확장자명 받아올 변수
 		int dot = name.lastIndexOf(".");
 		if(dot != -1) {
 			ext = name.substring(dot);
@@ -29,5 +29,4 @@ public class MyFileRenamePolicy implements FileRenamePolicy{
 		
 		return newFile;
 	}
-	
 }

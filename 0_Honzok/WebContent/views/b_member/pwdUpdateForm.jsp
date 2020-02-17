@@ -200,7 +200,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="../common/main.jsp" %>
+	<%@ include file="../a_common/Main.jsp" %>
 	
 	<body>
 

@@ -62,6 +62,15 @@ public class MemberService {
 		return result;
 	}
 
+	public int nickNameCheck(String nickName) {
+		Connection conn = getConnection();
+		int result = new MemberDAO().nickNameCheck(conn, nickName);
+		
+		close(conn);
+		
+		return result;
+	}
+
 	
 }
 
