@@ -88,6 +88,7 @@
 	</section>
 
 	<footer>
+		<div class="menu" onclick="goThumbnail();">마켓</div>
 	</footer>
 	
 	<script>
@@ -95,7 +96,9 @@
 			window.open("../f_message/messageHome.jsp", "messgaeHome", "width=480, height=600");
 		}	
 		
-		
+		function goThumbnail(){
+			location.href="<%= request.getContextPath()%>/list.m";
+		}
 	</script>
 	
 </body>

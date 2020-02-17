@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,14 +23,24 @@
     		background-color: rgba(224, 224, 224, 0.45);font-size: 11pt;}
     	#ok{
 			width : 100px; height : 40px; background-color : rgb(241, 131, 50);
-			color : white; border-radius: 5px; margin: 10px;
+			color : white; border-radius: 5px; margin: 10px; border:0px; cursor:pointer;
 			line-height: 40px; font-weight: bold; display: inline-table; text-align:center;
 		}
 		#cancle{
 			width : 100px; height : 40px; background-color : rgb(224, 224, 224);
-			color : rgb(64, 64, 64); border-radius: 5px; margin: 10px;
+			color : rgb(64, 64, 64); border-radius: 5px; margin: 10px; cursor:pointer;
 			line-height: 40px; font-weight: bold; display: inline-table; text-align:center;
 		}
+		.imageArea div{display:inline-block; vertical:middle; 
+					   margin-left:40px; margin-right:40px; margin-bottom:20px; 
+		}
+		#updateArea{float : right;}
+		#updateBtn{background-color : rgb(241, 131, 50); color:white; border-radius: 5px; border:0px;
+				   
+		}
+		#deleteBtn{background-color : rgb(224, 224, 224);  color:white; border-radius: 5px; border:0px;}
+					   
+		
 		
 </style>
 </head>
@@ -40,7 +53,26 @@
 	<div id="main">
 		<form action="<%= request.getContextPath() %>/insert.m" method="post" encType="multipart/form-data">
 			<div class="form">
-				
+					<div class="imageArea">
+						<div id="titleImgArea">
+								<img id="titleImg" width="300" height="300">
+						</div>
+					
+						<div id="contentImgArea1">
+								<img id="contentImg1" width="300" height="300"> 
+						</div>
+					</div>
+					
+					<!-- 내용입력 칸  -->
+					<textarea class="right" name="incontent"style="width:680px; height:100px;">내용을 입력해주세요.</textarea>
+					<br><br>
+					<div id="updateArea">
+						<input type="button" id="updateBtn"value="수정">
+						<input type="button" id="deleteBtn"value="삭제">
+					</div>
+					<br><br>
+					
+					
 					<div class="input">
 						<div class="left"><b>판매자 정보</b></div>
 					</div>
@@ -49,32 +81,12 @@
 					</div>
 					<div class="input">
 						<div class="left">전화번호 <span class="must">(필수)</span></div>
-						<select class="right" style="height: 30px;">
-	  						<option value="010">010</option>
-	  						<option value="011">011</option>
-	  						<option value="016">016</option>
-	  						<option value="017">017</option>
-	  						<option value="018">018</option>
-	  						<option value="019">019</option>
-						</select> - 
-						<input type="number" class="right" style="width: 80px;"> - 
-						<input type="number" class="right" style="width: 80px;"> 
+						<input type="hidden" value='<%= loginUser.getPhone()  %>' class="right"> <%= loginUser.getPhone()  %>
 						
 					</div>
 					<div class="input">
 						<div class="left">이메일 <span class="must">(필수)</span></div>
-						<input type="text" maxlength="16" placeholder="이메일을 입력해주세요." class="right" style="width: 200px;"> @ 
-						<select class="right" style="height: 30px;">
-	  						<option value="직접입력">직접입력</option>
-	                 		<option value="daum.net">daum.net</option>
-	                 		<option value="empal.com">empal.com</option>
-	                 		<option value="gmail.com">gmail.com</option>
-	                 		<option value="hanmail.net">hanmail.net</option>
-	                 		<option value="msn.com">msn.com</option>
-	                 		<option value="naver.com">naver.com</option>
-	                 		<option value="nate.com">nate.com</option>
-						</select>
-						<input type="text" maxlength="16" class="right" style="width: 150px;">
+						<input type="hidden" value='<%= loginUser.getEmail()  %>' class="right"> <%= loginUser.getEmail()  %>
 					</div>
 					
 					<div class="input">
@@ -97,7 +109,7 @@
 					<!-- 가격 -->
 					<div class="input">
 						<div class="left">가격<span class="must">(필수)</span></div>
-						<input type="text" name="price" placeholder="_______원" class="right" style="width: 100px;">
+						<input type="text" name="price" class="right" style="width: 100px;">원
 					</div>	
 					
 					<!-- 사용기한 -->
@@ -112,25 +124,56 @@
 						<input type="text" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
 					</div>	
 						
-					<!-- 파일첨부, 사진 -->
-						<input type="button" name="file" value="파일첨부"><input type="button" name="image" value="사진">
-					<br>
 					
-					<!-- 내용입력 칸  -->
-					<textarea placeholder="내용을 입력해주세요." class="right" style="width:700px; height:300px;"></textarea>
-				
-					<br><br>
 					
 					<br>
 					
 					<div>
 						<button type="submit" id="ok">확인</button>
-						<div id="cancle" style="cursor:pointer" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
+						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
 					</div>
 					
 			</div>
-		</form>
-	
-	</div>
+			
+			</form>
+		</div>
+			<div id="fileArea">
+				<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
+				<input type="file" id="thumbnailImg2" multiple="multiple" name="thumbnailImg2" onchange="LoadImg(this,2)">
+			</div>
+		<script>
+				$(function(){
+					$("#fileArea").hide();
+					
+					$("#titleImgArea").click(function(){
+						$("#thumbnailImg1").click();
+					});
+					$("#contentImgArea1").click(function(){
+						$("#thumbnailImg2").click();
+					});
+					
+				});		
+					
+				function LoadImg(value, num){
+					if(value.files && value.files[0]){
+						var reader = new FileReader();
+							
+						reader.onload = function(e){								
+							switch(num){
+							case 1: 
+								$("#titleImg").attr("src", e.target.result);
+								break;
+							case 2:
+								$("#contentImg1").attr("src", e.target.result);
+								break;
+							
+							}
+						}
+							
+						reader.readAsDataURL(value.files[0]);
+					}
+				}
+		</script>
+				
 </body>
 </html>

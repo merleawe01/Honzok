@@ -27,7 +27,7 @@ public class MarketService {
 		ArrayList<Market> list = new MarketDAO().selectMList(conn, currentPage);
 		
 		close(conn);
-		
+				
 		return list;
 	}
 

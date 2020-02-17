@@ -34,7 +34,7 @@
 			      margin-left: 650px;
 			      cursor:pointer;}
 		.searchArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
-		#insertBtn{background: orange; border-radius: 15px; color: white; width: 80px; height: 25px;}
+		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
 		footer{margin-bottom : 100px;}
 </style>
 
@@ -57,7 +57,16 @@
 						for(Market m : mList){
 				%>	
 					<tr> 
-						<td rowspan="4" width="300px"></td>
+						<td rowspan="4" width="300px">
+							<% for(int i = 0; i < fList.size(); i++) {
+							Attachment a = fList.get(i);
+							%>
+								<% if(m.getPostNo() == a.getPostNo()){%>
+									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="200px" height="150px">
+								<% } %>				
+							<% } %>
+							
+						</td>
 						<td width="600px">◈<%= m.getPostTitle() %>◈</td>
 							
 					</tr>
@@ -128,6 +137,15 @@
 		
 		</div>
 	</div>
+	
+	<script>
+		$(function(){
+			$('.listArea').click(function(){
+				var bid = $(this).children().children().eq(0).val();
+				location.href="<%= request.getContextPath() %>/detail.m?postno=" + postno;
+			})
+		});
+	</script>
 	
 </body>
 </html>

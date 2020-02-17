@@ -127,6 +127,8 @@ public class MarketDAO {
 			close(stmt);
 		}
 		
+		System.out.println(list);
+		
 		return list;
 	}
 
