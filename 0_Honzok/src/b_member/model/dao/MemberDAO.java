@@ -38,7 +38,7 @@ public Member loginMember(Member member, Connection conn) {
 		Member loginUser = null;
 		
 		String query = prop.getProperty("loginUser");
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
@@ -69,7 +69,6 @@ public Member loginMember(Member member, Connection conn) {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(loginUser);
 		return loginUser;
 		
 		
@@ -194,6 +193,7 @@ public Member selectMember(Connection conn, String loginUserId) {
 	}
 	return member;
 }
+  
 public int updatePwd(Connection conn, HashMap<String, String> map) {
 	PreparedStatement pstmt = null;
 	int result = 0;
@@ -215,4 +215,29 @@ public int updatePwd(Connection conn, HashMap<String, String> map) {
 	
 	return result;
 }
+
+	public int nickNameCheck(Connection conn, String nickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("nickNameCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, nickName);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

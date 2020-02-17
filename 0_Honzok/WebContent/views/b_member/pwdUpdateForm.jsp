@@ -211,6 +211,7 @@
 
 </head>
 <body>
+	<%@ include file="../a_common/Main.jsp" %>
 
 <header>
 <div id="mainHeader"><a href="../../index.jsp">	

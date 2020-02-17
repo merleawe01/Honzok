@@ -114,6 +114,14 @@
 </style>
 <title>Insert title here</title>
 
+</head>
+<body>
+<%@ include file="../a_common/Main.jsp" %>
+<header>
+		<div id="mainHeader">
+			<a href="Main.html"><img alt="로고" src="image/Logo.png" id="logo"></a>
+			<img alt="메뉴"src="image/list.png" id="list">
+
 
 </head>
 <body>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import b_member.model.vo.Member;
+import f_message.model.service.MessageService;
+
 
 /**
  * Servlet implementation class InsertMemberServlet
@@ -30,6 +32,7 @@ public class InsertMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		
 		String userId = request.getParameter("joinUserId");
@@ -47,6 +50,11 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
 		int result = new b_member.model.service.MemberService().insertMember(member);
+    
+    // 회원가입 메세지
+    String nickName = request.getParameter("nickName");
+    new MessageService().welcomeMessage(nickName);
+		
 		
 		String page = "";
 		if(result > 0) {
@@ -59,6 +67,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+
 	}
 
 	/**

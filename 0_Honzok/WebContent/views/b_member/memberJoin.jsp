@@ -205,8 +205,9 @@
 		
 	</style>
 </head>
-<body>
-<body>
+
+<body><%@ include file="../a_common/Main.jsp" %>
+
 	
 	<header>
 	
