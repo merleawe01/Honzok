@@ -26,6 +26,7 @@ public class TradeService {
 		Connection conn = getConnection();
 		
 		ArrayList<Trade> list = new TradeDAO().selectList(conn, currentPage);
+		
 		close(conn);
 		return list;
 	}

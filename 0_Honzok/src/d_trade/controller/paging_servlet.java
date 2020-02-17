@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import d_trade.model.service.TradeService;
+import d_trade.model.vo.PageInfo;
 import d_trade.model.vo.Trade;
-import d_trade.model.vo.pageInfo;
 
 /**
  * Servlet implementation class paging_servlet
@@ -60,17 +60,18 @@ public class paging_servlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		pageInfo pi = new pageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		
 		
 		ArrayList<Trade> list = service.selectList(currentPage);
 		
 		String page = null;
 		if(list != null) {
-			page = "views/board/boardListView.jsp";
+			page = "views/d_trade/gyul_board.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 		} else {
-			page = "views/common/errorPage.jsp";
+			page = "views/a_common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회에 실패하였습니다.");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);

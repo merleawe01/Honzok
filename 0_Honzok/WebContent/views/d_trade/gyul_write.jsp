@@ -125,7 +125,7 @@
 				<div><input type = "text" id = "input_file"></div>
 				
 				<div id = "btn">
-					<input id = "onebu" type="button" value="작성하기"> 
+					<input id = "onebu" type="submit" value="작성하기"> 
 					<input id = "twobu"type="button" value="돌아가기">
 				</div>
 			</form>

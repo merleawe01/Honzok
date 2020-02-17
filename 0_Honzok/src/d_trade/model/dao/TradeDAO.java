@@ -68,7 +68,40 @@ public class TradeDAO {
 		int endRow = startRow + posts -1;
 		
 		String query = prop.getProperty("selectList");
-		return null;
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			list = new ArrayList<Trade>();
+			
+			while(rset.next()) {
+				Trade t = new Trade(rset.getInt("post_no"),
+							 	    rset.getInt("board_no"),
+							   	    rset.getString("post_title"),
+								    rset.getString("content"),
+								    rset.getInt("view_count"),
+								    rset.getString("nickname"),
+								    rset.getInt("point"),
+								    rset.getInt("max_point"),
+								    rset.getDate("dl_time"),
+								    rset.getDate("write_date"),
+								    rset.getDate("modify_date"),
+								    rset.getString("delete_yn").charAt(0));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
 	}
 
 	public ArrayList<Trade> viewTList(Connection conn) {

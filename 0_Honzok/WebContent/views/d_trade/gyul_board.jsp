@@ -1,8 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "java.util.ArrayList, d_trade.model.vo.*" %>
+    pageEncoding="UTF-8" %>
+<%@ page import="java.util.ArrayList, d_trade.model.vo.*" %>
 <%
 	ArrayList<Trade> tList = (ArrayList<Trade>)request.getAttribute("tList");
 	ArrayList<Image> iList = (ArrayList<Image>)request.getAttribute("iList");
+	
+	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -174,8 +185,8 @@
 							<td id="td1"><%= t.getBoardNo() %></td>
 							<td id="td2">사진</td>
 							<td class = "name" id="td3"><%= t.getPostTitle() %></td>
-							<td id="td4"><%= t.getPoint() %> <img alt="귤" src="../../images/orange.png" id="gyul"></td>
-							<td id="td5"><%= t.getMaxPoint() %><img alt="귤" src="../../images/orange.png" id="gyul"></td>
+							<td id="td4"><%= t.getPoint() %> <img alt="귤" src="../images/orange.png" id="gyul"></td>
+							<td id="td5"><%= t.getMaxPoint() %><img alt="귤" src="../images/orange.png" id="gyul"></td>
 							<td id="td6">23:22</td>
 							<td id="td7"><%= t.getWriter() %></td>
 						</tr>
@@ -186,13 +197,16 @@
 				
 				<div id = "write">
 				
-					<button onclick = "location.href = 'gyul_write.jsp'" id = "go_write">글쓰기</button>
+					<button onclick = "location.href = 'views/d_trade/gyul_write.jsp'" id = "go_write">글쓰기</button>
 				
 				</div>
 				
-				<%-- <!-- 페이징 -->
+				<!-- 페이징 -->
 				<div class = 'pagingArea' align='center'>
-                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.pg?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">◀</button>
+					<% if(!list.isEmpty()){ %>
+					<button onclick = "lication.href='<%= request.getContextPath() %>/list.gy?currentPage=1'">◀◀</button>
+				
+                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">◀</button>
                     <script>
                     	if(<%= currentPage %> <= 1){
                     		var before = $('#beforeBtn');
@@ -204,18 +218,22 @@
                     	<% if(p == currentPage){ %>
                     		<button id = "choosen" disabled><%= p %></button>
                     	<% }else{ %>
-                    		<button id = "numBtn" onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage<%= p %>'"><%= p %></button>
+                    		<button id = "numBtn" onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage<%= p %>'"><%= p %></button>
                     	<% } %>	
                     <% } %>
                     
+                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage + 1 %>'"id = "afterBtn">▶</button>
+                    <script>
+                    	if(<%= currentPage %> >= <%= maxPage %>){
+                    		var after = $("#afterBtn");
+                    		after.attr('disabled','true');
+                    	}
+                    </script>
                     
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button>4</button>
-                    <button>5</button>
-                    <button>▶</button>
-				</div> --%>
+                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= maxPage %>'">▶▶</button>
+                     
+                   <% } %>
+				</div>
 				
 				<div id = "search">
                     <select id="searchOption">

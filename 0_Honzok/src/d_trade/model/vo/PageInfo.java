@@ -1,6 +1,6 @@
 package d_trade.model.vo;
 
-public class pageInfo {
+public class PageInfo {
 	
 	private int currentPage;
 	private int listCount;
@@ -9,9 +9,9 @@ public class pageInfo {
 	private int startPage;
 	private int endPage;
 	
-	public pageInfo() {}
+	public PageInfo() {}
 
-	public pageInfo(int currentPage, int listCount, int limit, int maxPage, int startPage, int endPage) {
+	public PageInfo(int currentPage, int listCount, int limit, int maxPage, int startPage, int endPage) {
 		super();
 		this.currentPage = currentPage;
 		this.listCount = listCount;

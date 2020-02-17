@@ -58,7 +58,7 @@
 		<div id="subHeader">
 			<img alt="로고" src="images/Logo.png" id="logo">
 		</div>
-		<div id = "circle3" onclick = "location.href='<%= request.getContextPath() %>/list.gy'">내 정보보기</div>   <!-- 걍 확인할려고 아무거나 쓴거 -->
+		
 		<!-- 메뉴 -->
 		<nav>
 		<table class="menu">
@@ -85,7 +85,7 @@
 					<img src="images/travel.PNG" width="25%" height=35% id="travel"/>
 				</a>
 		</div>
-
+	<div id = "circle3" onclick = "location.href='<%= request.getContextPath() %>/list.gy'">내 정보보기</div>   <!-- 걍 확인할려고 아무거나 쓴거 -->
 	</section>
 
 	<footer>
