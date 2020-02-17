@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
-<%
-	Member loginUser = (Member)session.getAttribute("loginUser");
-	//System.out.println(loginUser);
-	String msg = (String)request.getAttribute("msg"); 
-%>
+    pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,14 +65,11 @@
 				})
 			</script>
 
-			<div id="login">
-				<a href="login.jsp" target="_self">로그인</a>
-			</div>
-			<img alt="아이콘" src="../../images/blanket.png" id="icon">
+			
 
 		</div>
 		<div id="subHeader">
-			<a href="http://localhost:9480/semiPro/"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
+			<a href="../../index.jsp"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
 		</div>
 	</header>
 
@@ -86,29 +79,13 @@
 				
 				<!-- 로그인 박스 -->
 				<div id="login_box" class="center">
-				<% if(loginUser == null ){ %>
-					
-					<form id="login_box" action="<%= request.getContextPath() %>/login.me" onsubmit="return validate();" method="post"> 
+				<form id="login_box" action="<%= request.getContextPath() %>/login.me" onsubmit="return validate();" method="post"> 
 						<input type="text" name="userId" id="userId" placeholder="아이디"><br>
-						<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호"><br><br>
+						<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호"><br><br><br><br>
 							<button onclick="login();" name="loginBtn" id="loginBtn"class="center">로그인</button>
 					</form>
-					
-					<% }else{ %>
-					<div id="userInfo" align="right">
-						<label><%= loginUser.getUserName() %>님의 방문을 환영합니다.</label>
-						<div class="btns">
-							<div id="menuBtn" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"></div>
-							<div id="logoutBtn" onclick="logout();">로그아웃</div>
-						</div>					
-					</div>
-				<% } %>
 				</div>
-				<br clear = "all">
-				
-			
-				
-				<script>
+					<script>
 					function login() {
 						var userId = document.getElementById("userId");
 						var userPwd = document.getElementById("userPwd");
@@ -131,25 +108,24 @@
 						return true;
 					}
 					function logout(){
-						location.href='<%= request.getContextPath() %>/logout.me';
+						location.href='<%=request.getContextPath()%>/logout.me';
 					}
 					function myPage(){
-						location.href="<%= request.getContextPath() %>/views/member/myPage.jsp";
+						location.href="<%=request.getContextPath()%>/views/b_member/myPage.jsp";
 					}
 					
-					var msg = "<%= msg %>";
-					$(function(){
-						if(msg != "null"){
-							alert(msg);
-						}
-					});
+					
+				
 				</script>
 				
+			
+				
+				<br><br><br>
 				<!-- ID/PWD 찾기 + 회원 가입 -->
 				<ul id="link_list" class="center">
-					<li><a href="../member/">아이디 찾기</a></li>
-					<li><a href="../member/pwdUpdateForm.jsp">비밀번호 찾기</a></li>
-					<li><a href="../member/memberJoin.jsp">회원 가입</a></li>
+					<li><a href="../b_member/find_Id.jsp">아이디 찾기</a></li>
+					<li><a href="../b_member/find_Pwd.jsp">비밀번호 찾기</a></li>
+					<li><a href="../b_member/memberJoin.jsp">회원 가입</a></li>
 				</ul>
 				
 				<p class="center">
@@ -157,7 +133,7 @@
 				</p>
 				
 				<button onclick="naver_login();" id="N_loginBtn" class="center">
-					<img src="../../image/naver_icon.png" width="50px" height="50px">
+					<img src="images/naver_icon.png" width="50px" height="50px">
 					<b>네이버 아이디로 로그인/회원가입</b>
 				</button>
 			</div>
