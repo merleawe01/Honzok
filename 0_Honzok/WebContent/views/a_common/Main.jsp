@@ -3,6 +3,7 @@
 <%
 	Message m = new Message();
 	int view = m.getView();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -30,6 +31,7 @@
 	.menu {margin:100px auto;}
 	.circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
 			margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
+	#circle3{width : 300px; height : 200px; background : gray; cursor :pointer; margin-left : 20%;}
 </style>
 
 </head>
@@ -56,7 +58,7 @@
 		<div id="subHeader">
 			<img alt="로고" src="images/Logo.png" id="logo">
 		</div>
-		
+		<div id = "circle3" onclick = "location.href='<%= request.getContextPath() %>/list.gy'">내 정보보기</div>   <!-- 걍 확인할려고 아무거나 쓴거 -->
 		<!-- 메뉴 -->
 		<nav>
 		<table class="menu">
