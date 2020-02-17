@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>혼족옵서예</title>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
 	header {width: 100%; height: 170px; text-align: center;}
 	#mainHeader {width: 1170px; height: 50px; display: inline-block;}

@@ -47,10 +47,11 @@ public class MarketService {
 		
 		MarketDAO dao = new MarketDAO();
 		
-		int result1 = dao.insertMarketBoard(conn, m, writer);
+		int result1 = dao.insertMarketBoard(conn, m);
 		int result2 = dao.insertAttachment(conn, fileList);
+		int result3 = dao.insertCommonBoard(conn, m, writer);
 		
-		if(result1 > 0 && result2 > 0 ) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 ) {
 			commit(conn);
 		} else {
 			rollback(conn);

@@ -159,33 +159,27 @@ public class MarketDAO {
 		return list;
 	}
 
-	public int insertMarketBoard(Connection conn, Market m, String writer) {
-		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
+	public int insertMarketBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
 		int result = 0;
-
-		String query1 = prop.getProperty("insertMarketBoard");
-		String query2 = prop.getProperty("insertMarketWriter");
+		
+		String query = prop.getProperty("insertMarketBoard");
+		
 		
 		try {
-			pstmt1 = conn.prepareStatement(query1);
-			pstmt1.setString(1, m.getItemStatus());
-			pstmt1.setInt(2, m.getItemPrice());
-			pstmt1.setString(3, m.getUseDate());
-			pstmt1.setString(4, m.getEtc());
-			pstmt1.setString(5, m.getSellYn());
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getItemStatus());
+			pstmt.setInt(2, m.getItemPrice());
+			pstmt.setString(3, m.getUseDate());
+			pstmt.setString(4, m.getEtc());
 			
-			pstmt2 = conn.prepareStatement(query2);
-			pstmt2.setString(1, m.getPostTitle());
-			pstmt2.setString(2, writer);
-			
-			result = pstmt1.executeUpdate() * pstmt2.executeUpdate();
+			result = pstmt.executeUpdate(); 
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt1);
-			close(pstmt2);
+			close(pstmt);
+			
 		}
 		
 		return result;
@@ -215,6 +209,39 @@ public class MarketDAO {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int insertCommonBoard(Connection conn, Market m, String writer) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+
+		String query = prop.getProperty("insertMarketWriter");
+		
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPostTitle());
+			pstmt.setString(2, writer);
+			pstmt.setString(3, "하하");
+			
+			
+			
+			
+			
+			
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			
+		}
+		
 		return result;
 	}
 	
