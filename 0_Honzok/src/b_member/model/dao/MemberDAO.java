@@ -36,10 +36,8 @@ public class MemberDAO {
 		Member loginUser = null;
 
 		String query = prop.getProperty("loginUser");
-		System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
-			System.out.println(pstmt);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd());
 
@@ -68,7 +66,6 @@ public class MemberDAO {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(loginUser);
 		return loginUser;
 
 
@@ -154,6 +151,31 @@ public class MemberDAO {
 			close(pstmt);
 		}
 
+		return result;
+	}
+
+	public int nickNameCheck(Connection conn, String nickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("nickNameCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, nickName);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
 		return result;
 	}
 }

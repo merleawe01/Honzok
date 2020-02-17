@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "f_message.model.vo.Message"%>
+    pageEncoding="UTF-8" import = "f_message.model.vo.Message, b_member.model.vo.*"%>
 <%
+	Member loginUser = (Member)session.getAttribute("loginUser");
 	Message m = new Message();
 	int view = m.getView();
 %>
@@ -9,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>혼족옵서예</title>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 	header {width: 100%; height: 170px; text-align: center;}
 	#mainHeader {width: 1170px; height: 50px; display: inline-block;}
@@ -40,6 +41,7 @@
 			<button type="button" class="menuBtn" onclick="">
 				<img alt="메뉴" src="images/list.png" style="width: 30px; heigth: 30px;">
 			</button>
+
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
@@ -49,6 +51,7 @@
 				<% } %>
 				</button>
 			</span>
+
 			<button id = "login" onclick="location.href = 'views/b_member/login.jsp'">로그인</button>
 			<img alt="아이콘" src="images/blanket.png" id="icon">
 
@@ -91,7 +94,11 @@
 	
 	<script>
 		function goMessage(){
-			window.open("../f_message/messageHome.jsp", "messgaeHome", "width=480, height=600");
+			<% if(loginUser != null) {%>
+				window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
+			<% } else {%>
+				alert("로그인 후 이용해주세요.");
+			<% } %>
 		}	
 	</script>
 	
