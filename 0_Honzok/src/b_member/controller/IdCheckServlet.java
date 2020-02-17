@@ -8,22 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import b_member.model.vo.Member;
 import b_member.model.service.MemberService;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class IdCheckServlet
  */
-@WebServlet("/login.me")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/idCheck.me")
+public class IdCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public IdCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +32,15 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		Member member = new Member(userId, userPwd);
+		String userId = request.getParameter("inputId");
 		
-		Member loginUser = new MemberService().loginMember(member);
+		int result = new b_member.model.service.MemberService().idCheck(userId);
 		
-		response.setContentType("text/html; charset=UTF-8");
+		request.setAttribute("result", result);
+		request.setAttribute("checkedId", userId);
 		
-		if(loginUser != null) { 
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(6000); //10분(60 * 10) 기본은 30분 시간 지정 방법 
-			session.setAttribute("loginUser", loginUser);
-			
-			response.sendRedirect("index.jsp");
-		
-		}else { // 로그인 실패 시 
-			request.setAttribute("msg", "로그인 실패");
-			RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
-			view.forward(request, response);
-		}
+		RequestDispatcher view = request.getRequestDispatcher("views/b_member/idCheckForm.jsp");
+		view.forward(request, response);
 	}
 
 	/**

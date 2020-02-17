@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import = "f_message.model.vo.Message, b_member.model.vo.*"%>
+<%@ page import="b_member.model.vo.Member"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	//System.out.println(loginUser);
+	String msg = (String)request.getAttribute("msg"); 
+
 	Message m = new Message();
 	int view = m.getView();
 %>
@@ -20,7 +24,7 @@
 			 background-color: transparent; border: none; cursor: pointer;}
 	#login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
 			font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-	#icon {height: 90%; width: auto; float: right;}
+	#icon {height: 50px%; width: 50px; float: right;}
 	#main {width: 100%;text-align: center;overflow: hidden;height: auto;}
 	#realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
 	#subHeader{width : 1170px; height : 100px;display : inline-block;}
@@ -57,11 +61,25 @@
 				<% } %>
 				</button>
 			</span>
+      
+			</div>
+			<div id="login">
+				<img src="images/blanket.png" id="icon">
+				<% if(loginUser == null){ %>
+				<a href="views/b_member/login.jsp" target="_self">로그인</a>
+				<%}else{ %>
+				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+				<div id="logout">
+				<a href="logout.me">로그아웃</a>
+				<%} %>
+				
+			
+			<!-- <button id = "login" onclick="location.href = 'views/b_member/login.jsp'">로그인</button> -->
 
-			<button id = "login" onclick="location.href = 'views/b_member/login.jsp'">로그인</button>
-			<img alt="아이콘" src="images/blanket.png" id="icon">
 
 		</div>
+		</div>
+		
 		<div id="subHeader">
 			<img alt="로고" src="images/Logo.png" id="logo">
 		</div>
@@ -89,7 +107,7 @@
 
 		<div id="realMain" style="display : inline-block">
 				<a href="#" style="transform:translate(0px, 0px);">
-					<img src="images/travel.PNG" width="25%" height=35% id="travel"/>
+					<img src="../images/travel.PNG" width="25%" height=35% id="travel"/>
 				</a>
 		</div>
 		
