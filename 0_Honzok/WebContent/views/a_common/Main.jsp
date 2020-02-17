@@ -86,10 +86,12 @@
 					<img src="images/travel.PNG" width="25%" height=35% id="travel"/>
 				</a>
 		</div>
-
+		
+		
 	</section>
 
 	<footer>
+		<div class="menu" onclick="goThumbnail();">마켓</div>
 	</footer>
 	
 	<script>
@@ -100,6 +102,10 @@
 				alert("로그인 후 이용해주세요.");
 			<% } %>
 		}	
+		
+		function goThumbnail(){
+			location.href="<%= request.getContextPath()%>/list.m";
+		}
 	</script>
 	
 </body>

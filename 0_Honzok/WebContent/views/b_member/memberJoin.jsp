@@ -206,7 +206,7 @@
 	</style>
 </head>
 <body>
-<body><%@ include file="../common/main.jsp" %>
+<body><%@ include file="../a_common/Main.jsp" %>
 	
 	<header>
 	
