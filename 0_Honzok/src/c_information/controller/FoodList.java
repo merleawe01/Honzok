@@ -1,6 +1,7 @@
-package b_member.controller;
+package c_information.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,22 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import b_member.model.vo.Member;
-import b_member.model.service.MemberService;
+import c_information.model.service.FBoardService;
+import c_information.model.vo.FoodBoard;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class FoodList
  */
-@WebServlet("/login.me")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/list.food")
+public class FoodList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public FoodList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +34,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		Member member = new Member(userId, userPwd);
+		String area = (request.getParameter("area") == null) ? "서울" : request.getParameter("area");
+		String category = (request.getParameter("category") == null) ? "한식, 분식, 일식, 중식, 양식, 야식, 술집, 패스트푸드" : request.getParameter("category");
+		String[] cateArr = category.split(", ");
 		
-		Member loginUser = new MemberService().loginMember(member);
+		ArrayList<FoodBoard> list = new FBoardService().listFBoard(area, cateArr);
 		
-		response.setContentType("text/html; charset=UTF-8");
-		
-		if(loginUser != null) { 
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(6000); //10분(60 * 10) 기본은 30분 시간 지정 방법 
-			session.setAttribute("loginUser", loginUser);
-			
-			response.sendRedirect("index.jsp");
-		
-		}else { // 로그인 실패 시 
-			request.setAttribute("msg", "로그인 실패");
-			RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
-			view.forward(request, response);
-		}
+		String page = "views/c_information/foodList.jsp";
+		request.setAttribute("area", area);
+		request.setAttribute("category", category);
+		request.setAttribute("list", list);
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**

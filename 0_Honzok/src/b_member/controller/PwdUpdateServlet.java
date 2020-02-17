@@ -1,29 +1,28 @@
 package b_member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import b_member.model.vo.Member;
 import b_member.model.service.MemberService;
+import b_member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class PwdUpdateServlet
  */
-@WebServlet("/login.me")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/updatePwd.me")
+public class PwdUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public PwdUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,27 +31,22 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		
-		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
-		Member member = new Member(userId, userPwd);
+		String newPwd = request.getParameter("newPwd");
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		
-		Member loginUser = new MemberService().loginMember(member);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("id", userId);
+		map.put("old", userPwd);
+		map.put("new", newPwd);
 		
-		response.setContentType("text/html; charset=UTF-8");
+		int result = new b_member.model.service.MemberService().updatePwd(map);
 		
-		if(loginUser != null) { 
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(6000); //10분(60 * 10) 기본은 30분 시간 지정 방법 
-			session.setAttribute("loginUser", loginUser);
-			
-			response.sendRedirect("index.jsp");
-		
-		}else { // 로그인 실패 시 
-			request.setAttribute("msg", "로그인 실패");
-			RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
-			view.forward(request, response);
+		if(result > 0) {
+			response.sendRedirect("myPage.me");
+		} else {
+			request.setAttribute("msg", "비밀번호 수정에 실패하였습니다.");
+			request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 		}
 	}
 

@@ -1,9 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	
+	String msg = (String)request.getAttribute("msg"); 
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+  function pwdupdate(){
+	  alert("비밀번호 수정 완료")
+  }
+  
+       			 </script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
 		header {
@@ -178,7 +190,8 @@
 			font-weight: bold;
 			text-align: center;
 		}
-		
+		#cancle{width: 100px; height: 40px; background-color: #5f5f5f; color: white; font-weight: bold; cursor:pointer;
+		margin: 10px; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
 		.comment{
 			margin-left : 20px;
 		}
@@ -196,31 +209,24 @@
 		
 	</style>
 
-<!-- 비밀번호가 같은지 다른지 확인하는 유효성검사도 넣기 -->
-<title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="../common/main.jsp" %>
-	
-	<body>
+	<%@ include file="../a_common/Main.jsp" %>
 
-	<header>
-	
-		<div id="mainHeader">
-			<img alt="로고" src="../image/Logo.png" id="logo">
-			<img alt="메뉴" src="../image/list.png" id="list">
+<header>
+<div id="mainHeader"><a href="../../index.jsp">	
+			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
+			<img alt="메뉴" src="../../images/list.png" id="list">
 			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			<div id="nickname">
-				<a href="login.jsp">로그인</a> 
-			</div>
+			<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+			
 			
 			
 		</div>
 		
 		<div id="subHeader">
 			<div id="boardName">
-				비밀번호 찾기
+				비밀번호 변경
 			</div>
 		</div>
 	
@@ -232,21 +238,30 @@
 			
 			
 			<div id="realMain">
-				
+			
 				<div id = "box"> 
+				<form action="<%= request.getContextPath() %>/updatePwd.me" method="post" id="updatePwdForm" name="updatePwdForm" onsubmit="return send();">
 					<div id = "confirm_comment1">비밀번호 변경</div>
 					
+				
 					<div id =  "input" >
+						<div class = "left">현재 비밀번호</div> 
+						<input type = "password" class = "right" name="userPwd" id="userPwd">
+						
+						<div class = "input">
 						<div class = "left">새비밀번호</div> 
 						
-						<input type = "text" class = "right">
-						 
+						<input type = "password" class = "right" name="newPwd"><label> (영문 대소문자/숫자 조합, 8자~16자)</label>
+						 </div>
 						<div class = "input">
+						
 							<div class = "left">새비밀번호 확인</div>
 							 
-							<input type = "text" class = "right">
+							<input type = "password" class = "right" name="newPwd2">
 								
-							<div><input type = "button" id = "next_bt" value = "확인"></div>
+							<div><input type = "submit" id = "next_bt" value = "확인" onclick="pwdupdate()">
+							<div id="cancle" onclick="location.href='javascript:history.go(-1)'">취소하기</div>
+							</div>
 							
 						
 						</div>
@@ -268,13 +283,12 @@
 				
 			</div>	
 			
-		</div>
+	</div>
 	
 	</section>
 	
 	<footer>
 	
 	</footer>
-
 </body>
 </html>
