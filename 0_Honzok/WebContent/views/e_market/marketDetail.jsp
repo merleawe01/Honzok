@@ -89,7 +89,7 @@
 					</div>
 					
 					<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:680px; height:100px;"><%= m.getContent() %></textarea>
+					<textarea class="right" name="incontent"style="width:680px; height:100px;" readonly><%= m.getContent() %></textarea>
 					<br><br>
 					<div id="updateArea">
 						<% if(loginUser != null && loginUser.getNickName().equals(m.getWriter())){ %>
@@ -160,7 +160,7 @@
 				<br>
 				
 				<div align="center">
-					<% if(loginUser != null && loginUser.getNickName().equals(m.getWriter())){ %>
+					<% if(loginUser != null){ %>
 					<input id = "threebu" type="button" value="구매"> 
 					<input id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'"value="목록으로">
 					<% } %>

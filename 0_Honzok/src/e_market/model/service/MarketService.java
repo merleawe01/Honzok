@@ -79,8 +79,7 @@ public class MarketService {
 			rollback(conn);
 		}
 		
-		close(conn);
-		
+		System.out.println("marketservice : " + result);
 		return m;
 	}
 

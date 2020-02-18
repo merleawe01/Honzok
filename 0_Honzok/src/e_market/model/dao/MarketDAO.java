@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import e_market.model.dao.MarketDAO;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
 
@@ -244,11 +243,15 @@ public class MarketDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, postNo);
 			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
+		System.out.println("marketdao : " + result);
+		System.out.println("pstmt : " + pstmt);
+	
 		
 		return result;
 	}
@@ -284,7 +287,9 @@ public class MarketDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println("marketdao : " + m);
+		System.out.println("pstmt : " + pstmt);
+		System.out.println("Rset : " + rset);
 		return m;
 	}
 
@@ -320,15 +325,7 @@ public class MarketDAO {
 			close(pstmt);
 		}
 		
-		
 		return list;
 	}
-
-	
-	
-	
-	
-	
-	
 	
 }

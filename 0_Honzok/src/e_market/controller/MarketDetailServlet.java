@@ -33,7 +33,7 @@ public class MarketDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postNo = Integer.parseInt(request.getParameter("postno"));
+		int postNo = Integer.parseInt(request.getParameter("postNo"));
 		
 		MarketService service = new MarketService();
 		
