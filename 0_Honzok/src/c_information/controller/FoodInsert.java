@@ -82,14 +82,10 @@ public class FoodInsert extends HttpServlet {
 			
 			ArrayList<Image> fileList = new ArrayList<Image>();
 			
-			for(int i = originFiles.size() -1; i >= 0; i--) {
+			for(int i = 0; i < originFiles.size(); i++) {
 				Image img = new Image(originFiles.get(i), saveFiles.get(i), savePath);
 				
-				if(i == originFiles.size()-1) {
-					img.setFileLevel(0);
-				} else {
-					img.setFileLevel(1);
-				}
+				img.setFileLevel(originFiles.size() - i - 1);
 				
 				fileList.add(img);
 			}

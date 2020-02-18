@@ -20,6 +20,12 @@ public class Image {
 		this.change_name = change_name;
 		this.img_src = img_src;
 	}
+	
+	public Image(String change_name, int fileLevel) {
+		super();
+		this.change_name = change_name;
+		this.fileLevel = fileLevel;
+	}
 
 	public Image(int img_id, int post_no, String origin_name, String change_name, String img_src, Date upload_date,
 			int fileLevel, String status) {

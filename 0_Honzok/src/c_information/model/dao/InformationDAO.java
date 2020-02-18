@@ -158,6 +158,78 @@ public class InformationDAO {
 		return list;
 	}
 
+	public int updateCount(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCount");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public FoodBoard selectBoard(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FoodBoard board = null;
+		
+		String query = prop.getProperty("selectBoard");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				board = new FoodBoard(rs.getInt("POST_NO"), rs.getString("POST_TITLE"), rs.getString("NICKNAME"), rs.getString("CONTENT"), rs.getInt("VIEW_COUNT"), 
+						rs.getInt("RECO_COUNT"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("RC_FOOD"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return board;
+	}
+
+	public ArrayList<Image> selectImage(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Image> imgList = new ArrayList<Image>();
+		
+		String query = prop.getProperty("selectImage");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Image image = new Image(rs.getString("change_name"), rs.getInt("file_level")); 
+
+				imgList.add(image);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return imgList;
+	}
+
 	
 	
 	

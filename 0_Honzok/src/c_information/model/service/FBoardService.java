@@ -1,9 +1,9 @@
 package c_information.model.service;
 
+import static a_common.JDBCTemplate.close;
 import static a_common.JDBCTemplate.commit;
 import static a_common.JDBCTemplate.getConnection;
 import static a_common.JDBCTemplate.rollback;
-import static a_common.JDBCTemplate.close;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -62,6 +62,42 @@ public class FBoardService {
 		close(conn);
 		
 		return FList;
+	}
+
+	public FoodBoard selectBoard(int no) {
+		Connection conn = getConnection();
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.updateCount(conn, no);
+		FoodBoard board = null;
+		if(result > 0) {
+			board = dao.selectBoard(conn, no);
+			if(board != null) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+		} else {
+			rollback(conn);
+		}
+		
+		return board;
+	}
+
+	public ArrayList<Image> selectImage(int no) {
+		Connection conn = getConnection();
+		InformationDAO dao = new InformationDAO();
+		
+		ArrayList<Image> imgList = null;
+		
+		imgList = dao.selectImage(conn, no);
+		if(imgList != null) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return imgList;
 	}
 
 }

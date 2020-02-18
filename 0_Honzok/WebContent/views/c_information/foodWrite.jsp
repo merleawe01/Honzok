@@ -498,6 +498,8 @@
 					alert("가게에 대한 카테고리를 선택해주세요.");
 				} else if($('#reviewContent').val() == "") {
 					alert("가게에 대한 리뷰내용을 작성해주세요.");
+				} else if($('#area_x').val() == ""){
+					alert("가게의 위치를 선택해주세요.");
 				} else if(confirm("글을 작성하시겠습니까?")) {
 					$('#detailForm').submit();
 				}
