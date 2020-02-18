@@ -1,8 +1,8 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="b_member.model.vo.*, java.util.*"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="b_member.model.vo.*, java.util.*, e_market.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
-	Market m = (Market)request.getAttribute("Market");
+	Market m = (Market)request.getAttribute("market");
 	ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
 	Attachment titleImg = fileList.get(0);
 %>      
@@ -51,6 +51,12 @@
 				   width:80px; height:40px; font-size:20px;}
 		#deleteBtn{background-color : rgb(224, 224, 224);  color:white; border-radius: 5px; border:0px; 
 				   width:80px; height:40px; margin-left:10px; font-size:20px;}
+		#threebu{text-align : center; font-size : 15pt; width : 100px; height : 40px;
+			     background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
+			     border: 0; font-weight: bold; line-height: 40px; cursor:pointer;}
+		#fourbu{text-align : center; font-size : 15pt; width : 100px; height : 40px;
+			    background-color : lightgray; color : white;  border-radius: 5px;
+			    border: 0; line-height: 40px; font-weight: bold; cursor:pointer;}				   
 			    
 </style>
 </head>
@@ -63,11 +69,11 @@
 	<div id="main">
 		<form action="<%= request.getContextPath() %>/views/e_market/marketUpdateForm.jsp">
 				<div id="boardTitle">
-						<div id="titleLeft">여기는 제목이 나오는 칸</div>
-						<div id="titleRight">2020.01.25. 23:00</div>
+						<div id="titleLeft"><%= m.getPostTitle() %></div>
+						<div id="titleRight"><%= m.getWriteDate() %></div>
 				</div>
 					
-					<div id="boardWriter">작성자 | 조회 : 10</div>
+					<div id="boardWriter"><%=m.getWriter() %> | 조회 : <%=m.getViewCount() %></div>
 					
 				<div class="form">
 					<div class="imageArea">
@@ -83,11 +89,13 @@
 					</div>
 					
 					<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:680px; height:100px;">내용을 입력해주세요.</textarea>
+					<textarea class="right" name="incontent"style="width:680px; height:100px;"><%= m.getContent() %></textarea>
 					<br><br>
 					<div id="updateArea">
-						<input type="button" id="updateBtn"value="수정">
-						<input type="button" id="deleteBtn"value="삭제">
+						<% if(loginUser != null && loginUser.getNickName().equals(m.getWriter())){ %>
+						<input type="submit" id="updateBtn"value="수정">
+						<input type="button" onclick="deleteMarket();"id="deleteBtn"value="삭제">
+						<% } %>	
 					</div>
 					<br><br>
 					
@@ -115,32 +123,32 @@
 					<!-- 물품명 -->
 					<div class="input">
 						<div class="left">물품명 <span class="must">(필수)</span></div>
-						<input type="text" name="postTitle" maxlength="16" placeholder="제목이 되는 부분입니다." class="right" style="width: 280px;">
+						<input type="hidden" name="postTitle" maxlength="16" value="<%= m.getPostTitle() %>" class="right" style="width: 280px;"><%= m.getPostTitle() %>
 					</div>
 					
 					<!-- 상태 -->
 					<div class="input">
 						<div class="left">상태 <span class="must">(필수)</span></div>
-						<input type="radio" name="status" value="A급">A급 <input type="radio" name="status" value="B급">B급<input type="radio" name="status" value="C급">C급
+						<input type="hidden" name="status" value="<%= m.getItemStatus()%>"><%= m.getItemStatus()%>급
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
 					
 					<!-- 가격 -->
 					<div class="input">
 						<div class="left">가격<span class="must">(필수)</span></div>
-						<input type="text" name="price" class="right" style="width: 100px;">원
+						<input type="hidden" name="price" class="right" style="width: 100px;" value="<%= m.getItemPrice()%>"><%= m.getItemPrice()%>원
 					</div>	
 					
 					<!-- 사용기한 -->
 					<div class="input">
 						<div class="left">사용기한<span class="must">(필수)</span></div>
-						<input type="text" name="useDate" class="right" style="width: 100px;"><span class="must">예) 약 6개월, 약 1년 etc</span>
+						<input type="text" name="useDate" class="right" style="width: 100px;" value="<%= m.getUseDate()%>"><%= m.getUseDate()%><span class="must">예) 약 6개월, 약 1년 etc</span>
 					</div>
 					
 					<!--기타    -->		
 					<div class="input">
 						<div class="left">기타<span class="must">(필수)</span></div>
-						<input type="text" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
+						<input type="hidden" name="etc" class="right" style="width: 350px;" value="<%= m.getEtc()%>">
 					</div>	
 				</div>
 					<br>
@@ -152,12 +160,22 @@
 				<br>
 				
 				<div align="center">
-					<% if(loginUser != null && loginUser.getNickName().equals(b.getbWriter())){ %>
+					<% if(loginUser != null && loginUser.getNickName().equals(m.getWriter())){ %>
 					<input id = "threebu" type="button" value="구매"> 
 					<input id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'"value="목록으로">
 					<% } %>
 				</div>
 		</form>
+		<script>
+				function deleteBoard(){
+					var bool = confirm("정말로 삭제하시겠습니까?");
+					
+					if(bool){
+						location.href='<%= request.getContextPath()%>/delete.m?postno=' + <%= m.getPostNo()%>;
+					}
+				}
+			</script>
+		
 	</div>
 </body>
-</html> --%>
+</html> 

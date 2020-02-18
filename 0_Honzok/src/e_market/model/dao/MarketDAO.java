@@ -127,8 +127,6 @@ public class MarketDAO {
 			close(stmt);
 		}
 		
-		System.out.println(list);
-		
 		return list;
 	}
 
@@ -158,13 +156,38 @@ public class MarketDAO {
 		
 		return list;
 	}
+	
+	public int insertCommonBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
 
+		String query = prop.getProperty("insertCommonBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPostTitle());
+			pstmt.setString(2, m.getWriter());
+			pstmt.setString(3, m.getContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			
+		}
+		
+		
+		
+		return result;
+	}
 	public int insertMarketBoard(Connection conn, Market m) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
 		String query = prop.getProperty("insertMarketBoard");
-		
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -181,7 +204,6 @@ public class MarketDAO {
 			close(pstmt);
 			
 		}
-		
 		return result;
 	}
 
@@ -203,47 +225,106 @@ public class MarketDAO {
 				result += pstmt.executeUpdate();
 				
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 
-	public int insertCommonBoard(Connection conn, Market m, String writer) {
+	public int updateCount(Connection conn, int postNo) {
 		PreparedStatement pstmt = null;
-		
 		int result = 0;
-
-		String query = prop.getProperty("insertMarketWriter");
 		
-		
+		String query = prop.getProperty("updateCount");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, m.getPostTitle());
-			pstmt.setString(2, writer);
-			pstmt.setString(3, "하하");
-			
-			
-			
-			
-			
-			
-			
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, postNo);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
-			
 		}
 		
 		return result;
 	}
+
+	public Market selectBoard(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Market m = null;
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Market(rset.getInt("post_no"),
+							   rset.getString("post_title"),
+							   rset.getDate("write_date"),
+							   rset.getString("writer"),
+							   rset.getInt("view_count"),
+							   rset.getString("content"),
+							   rset.getString("item_status"),
+							   rset.getInt("item_price"),
+							   rset.getString("use_date"),
+							   rset.getString("etc"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+
+	public ArrayList<Attachment> selectImage(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectImage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rset = pstmt.executeQuery(); 
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setImgId(rset.getInt("img_id"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setChangeName(rset.getString("change_name"));
+				at.setImgSrc(rset.getString("img_src"));
+				at.setUploadDate(rset.getDate("upload_date"));
+				
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
+
+	
 	
 	
 	

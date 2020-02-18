@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
 	.input{
 			width : 100%; height : 30px; border-bottom: 2px solid gray; text-align: left;
@@ -62,9 +63,6 @@
 					<textarea class="right" name="incontent"style="width:680px; height:100px;">내용을 입력해주세요.</textarea>
 					<br><br>
 					
-					
-					
-					
 					<div class="input">
 						<div class="left"><b>판매자 정보</b></div>
 					</div>
@@ -94,7 +92,7 @@
 					<!-- 상태 -->
 					<div class="input">
 						<div class="left">상태 <span class="must">(필수)</span></div>
-						<input type="radio" name="status" value="A">A <input type="radio" name="status" value="B급">B급<input type="radio" name="status" value="C급">C급
+						<input type="radio" name="status" value="A">A급 <input type="radio" name="status" value="B">B급<input type="radio" name="status" value="C">C급
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
 					
@@ -115,57 +113,54 @@
 						<div class="left">기타<span class="must">(필수)</span></div>
 						<input type="text" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
 					</div>	
-						
-					
-					
 					<br>
-					
-					<div>
-						<button type="submit" id="ok">확인</button>
-						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
-					</div>
-					
-			</div>
-			
-			</form>
-		</div>
-			<div id="fileArea">
+				<div id="fileArea">
 				<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
 				<input type="file" id="thumbnailImg2" multiple="multiple" name="thumbnailImg2" onchange="LoadImg(this,2)">
 			</div>
-		<script>
-				$(function(){
-					$("#fileArea").hide();
-					
-					$("#titleImgArea").click(function(){
-						$("#thumbnailImg1").click();
-					});
-					$("#contentImgArea1").click(function(){
-						$("#thumbnailImg2").click();
-					});
-					
-				});		
-					
-				function LoadImg(value, num){
-					if(value.files && value.files[0]){
-						var reader = new FileReader();
-							
-						reader.onload = function(e){								
-							switch(num){
-							case 1: 
-								$("#titleImg").attr("src", e.target.result);
-								break;
-							case 2:
-								$("#contentImg1").attr("src", e.target.result);
-								break;
-							
+			<script>
+					$(function(){
+						$("#fileArea").hide();
+						
+						$("#titleImgArea").click(function(){
+							$("#thumbnailImg1").click();
+						});
+						$("#contentImgArea1").click(function(){
+							$("#thumbnailImg2").click();
+						});
+						
+					});		
+						
+					function LoadImg(value, num){
+						if(value.files && value.files[0]){
+							var reader = new FileReader();
+								
+							reader.onload = function(e){								
+								switch(num){
+								case 1: 
+									$("#titleImg").attr("src", e.target.result);
+									break;
+								case 2:
+									$("#contentImg1").attr("src", e.target.result);
+									break;
+								
+								}
 							}
+								
+							reader.readAsDataURL(value.files[0]);
 						}
-							
-						reader.readAsDataURL(value.files[0]);
 					}
-				}
-		</script>
 				
+			</script>
+				<div>
+					<button type="submit" id="ok">확인</button>
+						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
+				</div>
+			</div>
+		</form>	
+	</div>
+		
+			
+	
 </body>
 </html>
