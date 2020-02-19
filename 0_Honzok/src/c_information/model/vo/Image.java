@@ -21,8 +21,10 @@ public class Image {
 		this.img_src = img_src;
 	}
 	
-	public Image(String change_name, int fileLevel) {
+	public Image(int img_id, String origin_name, String change_name, int fileLevel) {
 		super();
+		this.img_id = img_id;
+		this.origin_name = origin_name;
 		this.change_name = change_name;
 		this.fileLevel = fileLevel;
 	}

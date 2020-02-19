@@ -72,16 +72,12 @@
 				<div id="logout">
 				<a href="logout.me">로그아웃</a>
 				<%} %>
-				
-			
-			<!-- <button id = "login" onclick="location.href = 'views/b_member/login.jsp'">로그인</button> -->
-
 
 		</div>
 		</div>
 		
 		<div id="subHeader">
-			<img alt="로고" src="images/Logo.png" id="logo">
+			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
 		</div>
 		
 		<!-- 메뉴 -->

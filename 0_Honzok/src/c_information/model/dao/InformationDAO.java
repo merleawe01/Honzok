@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import c_information.model.vo.FoodBoard;
 import c_information.model.vo.Image;
+import c_information.model.vo.TravelBoard;
 
 public class InformationDAO {
 
@@ -178,12 +179,15 @@ public class InformationDAO {
 		return result;
 	}
 
-	public FoodBoard selectBoard(Connection conn, int no) {
+	public FoodBoard selectFBoard(Connection conn, int no) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		FoodBoard board = null;
 		
-		String query = prop.getProperty("selectBoard");
+		String query = prop.getProperty("selectFBoard");
+		String query2 = prop.getProperty("selectCate");
+		String category = "";
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
@@ -200,6 +204,26 @@ public class InformationDAO {
 			close(rs);
 			close(pstmt);
 		}
+		
+		try {
+			pstmt = conn.prepareStatement(query2);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				category += rs.getString("CNO") + ", ";
+			}
+			category = category.substring(0, category.length()-2);
+			board.setCategory(category);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
 		return board;
 	}
 
@@ -216,7 +240,7 @@ public class InformationDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				Image image = new Image(rs.getString("change_name"), rs.getInt("file_level")); 
+				Image image = new Image(rs.getInt("img_id"), rs.getString("origin_name"), rs.getString("change_name"), rs.getInt("file_level")); 
 
 				imgList.add(image);
 			}
@@ -230,8 +254,109 @@ public class InformationDAO {
 		return imgList;
 	}
 
-	
-	
+	public ArrayList<TravelBoard> listTBoard(Connection conn, String area) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<TravelBoard> list = null;
+		
+		String query = prop.getProperty("listTBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, area);
+			
+			rset = pstmt.executeQuery();
+			list = new ArrayList<TravelBoard>();
+			
+			while(rset.next()) {
+				TravelBoard t = new TravelBoard(rset.getInt("POST_NO"), rset.getString("POST_TITLE"), rset.getString("NICKNAME"), rset.getInt("RECO_COUNT"), rset.getString("ADDRESS"), rset.getInt("STAR"), rset.getDouble("area_x"), rset.getDouble("area_y"), rset.getString("change_name"));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int insertBoard(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, 2);
+			pstmt.setString(2, board.getTitle());
+			pstmt.setString(3, board.getWriter());
+			pstmt.setString(4, board.getContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public int insertTBoard(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertTBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getLocal_name());
+			pstmt.setString(2, board.getAddress());
+			pstmt.setInt(3, board.getStar());
+			String caution = (board.getCaution() == null) ? "" : board.getCaution();
+			pstmt.setString(4, caution);
+			pstmt.setDouble(5, board.getArea_x());
+			pstmt.setDouble(6, board.getArea_y());
+			pstmt.setString(7, board.getBest_time());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public TravelBoard selectTBoard(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		TravelBoard board = null;
+		
+		String query = prop.getProperty("selectTBoard");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				board = new TravelBoard(rs.getInt("POST_NO"), rs.getString("POST_TITLE"), rs.getString("NICKNAME"), rs.getString("CONTENT"), rs.getInt("VIEW_COUNT"), 
+						rs.getInt("RECO_COUNT"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("CAUTION"), rs.getString("BEST_TIME"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return board;
+	}
 	
 	
 	

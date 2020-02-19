@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="c_information.model.vo.*, java.util.ArrayList"%>
 <%
-	FoodBoard board = (FoodBoard)request.getAttribute("board");
+	TravelBoard board = (TravelBoard)request.getAttribute("board");
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	
 	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
@@ -91,7 +91,14 @@
 		padding: 10px;
 		background-color: rgb(224, 224, 224);
 	}
-	#soulFood{
+	#time{
+		width: 100%;
+		min-height: 30px;
+		margin-top: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid gray;
+	}
+	#notice{
 		width: 100%;
 		min-height: 30px;
 		margin-top: 10px;
@@ -168,7 +175,7 @@
 			<script>
 				var photoSrc = new Array();
 				<% for(Image img : imgList){ %>
-					photoSrc.push("<%= request.getContextPath() %>/images/food_board/<%= img.getChange_name() %>");
+					photoSrc.push("<%= request.getContextPath() %>/images/travel_board/<%= img.getChange_name() %>");
 				<% } %>
 				
 				photoSrc = photoSrc.reverse();
@@ -224,12 +231,12 @@
 		</div>
 		
 		<div id="name">
-			<div class="left">가게이름</div>
+			<div class="left">여행지이름</div>
 			<div class="right"><b><%= board.getTitle() %></b></div>
 		</div>
 		
 		<div id="score">
-			<div class="left">음식점에 대한 평가</div>
+			<div class="left">여행지에 대한 평가</div>
 			<div class="right">
 				<% for(int i = 0; i < 5; i++) {
 						if(i > board.getStar()) {%>
@@ -241,15 +248,19 @@
 			</div>
 		</div>
 		
-		
 		<div id="review">
 			<div class="left">리뷰내용</div>
 			<div class="right" id="reviewContent"><%= board.getContent() %></div>
 		</div>
 		
-		<div id="soulFood">
-			<div class="left">추천하는 음식</div>
-			<div class="right"><%= (board.getRc_food() == null) ? "" : board.getRc_food() %></div>
+		<div id="notice">
+			<div class="left">권장 방문시간</div>
+			<div class="right"><%= board.getBest_time() %></div>
+		</div>
+		
+		<div id="time">
+			<div class="left">주의사항</div>
+			<div class="right"><%= board.getCaution() %></div>
 		</div>
 		
 		<div id="address">
@@ -292,39 +303,10 @@
 		<div id="btnList">
 			<div style="background-color: rgb(224, 224, 224);">목록으로</div>
 			<div style="background-color: rgb(224, 224, 224);">삭제</div>
-			
-			<form action="<%= request.getContextPath() %>/views/c_information/foodUpdate.jsp" id="updateForm" method="post">
-				<input type="hidden" name="no" value="<%= board.getNo() %>">
-				<input type="hidden" name="title" value="<%= board.getTitle() %>">
-				<input type="hidden" name="star" value="<%= board.getStar() %>">
-				<input type="hidden" name="category" value="<%= board.getCategory() %>">
-				<input type="hidden" name="content" value="<%= board.getContent() %>">
-				<input type="hidden" name="rc_food" value="<%= (board.getRc_food() == null) ? "" : board.getRc_food() %>">
-				<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
-				<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
-				<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
-				
-				<% for(Image img : imgList){ %>
-					<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
-				<% } %>
-				
-				<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
-			</form>
-			
+			<div style="background-color: rgb(241, 131, 50); color: white;">수정</div>
 			<div style="background-color: rgb(241, 131, 50); color: white;">추천</div>
 			<!-- 접근 유저에 따라 보여지는 버튼 및 이벤트 다르게 구현 -->
 		</div>
-		
-		<script>
-			$('#update').click(function(){
-			 	if(confirm("글을 수정하시겠습니까?")) {
-					$('#updateForm').submit();
-				}
-			})
-		</script>
 		
 		
 		<p style="float: left; color: rgb(51, 51, 51)">댓글 1</p>
@@ -332,7 +314,7 @@
 		<div id = "commentMain">
 			<table style="text-align: left;">
 				<tr>
-					<td rowspan="2"><img alt="댓글" src="<%= request.getContextPath() %>/images/blanket.png" style="width:auto; height: 50px;"></td>
+					<td rowspan="2"><img alt="댓글" src="image/blanket.png" style="width:auto; height: 50px;"></td>
 					<td>
 						<span style="font-weight: bold;">닉네임</span>&nbsp; &nbsp; 
 						<span style="font-weight: bold; color: rgb(190, 190, 190);">2020.01.07 18:28</span>&nbsp; &nbsp; 
@@ -360,10 +342,6 @@
 			<button id="commentRight">등록</button>
 			
 		</div>
-	
 	</div>
-
-
-
 </body>
 </html>

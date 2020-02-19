@@ -58,25 +58,6 @@
 		height: 100%;
 		text-align: left;
 	}
-	#category{
-		width: 100%;
-		height: 100px;
-		margin-top: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid gray;
-	}
-	#category .right{
-		padding: 5px;
-	}
-	#cateTable td{
-		width: 130px;
-		height: 40px;
-	}
-	.foodCate{
-		width: 20px;
-		height: 20px;
-		vertical-align: middle;
-	}
 	.nameCate{
 		display: inline-table;
 		width: 90px;
@@ -99,16 +80,31 @@
 		resize: none;
 		border-radius: 5px;
 	}
-	#plusFood{
+	#time{
 		width: 100%;
 		height: 30px;
 		margin-top: 10px;
 		padding-bottom: 10px;
 		border-bottom: 1px solid gray;
 	}
-	#plusFoodName{
+	input[type=radio] 
+	{
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+		margin: 0;
+	} 
+	#notice{
+		width: 100%;
+		height: 70px;
+		margin-top: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid gray;
+	}
+	#noticeContent{
 		font-size: 13pt;
 		width: 650px;
+		resize: none;
 		border-radius: 5px;
 	}
 	#plusImg{
@@ -190,6 +186,8 @@
 	#menu_wrap .option p {margin:10px 0;}  
 	#menu_wrap .option button {margin-left:5px;}
 </style>
+
+
 </head>
 <body>
 	<%@ include file="../a_common/boardCommon.jsp" %>
@@ -198,10 +196,10 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm" encType="multipart/form-data">
+		<form action="<%= request.getContextPath() %>/insert.travel" method="post" id="detailForm" encType="multipart/form-data">
 			<div id="basic">
 				<div id="mainImg">
-					<img src="../../images/meal.png" width=100% height=100%>
+					<img src="../../images/travel.png" width=100% height=100%>
 				</div>
 				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="LoadImg(this)" hidden="">
 				
@@ -224,9 +222,9 @@
 				</script>
 				
 				<div id="nameMain">
-					<span class="bigText">가게이름 </span> <span class="smallText">(필수)</span><br><br>
-					<input class="middleText" type="text" placeholder=" 방문한 가게의 상호명을 입력해주세요." size="40" id="title" name="title"><br><br>
-					<span class="bigText">음식점에 대한 평가 </span><br><br>
+					<span class="bigText">여행지 </span> <span class="smallText">(필수)</span><br><br>
+					<input class="middleText" type="text" placeholder=" 방문한 여행지를 입력해주세요." size="40" id="title" name="title"><br><br>
+					<span class="bigText">여행지에 대한 평가 </span><br><br>
 					
 					<input type="hidden" id="star" name="star" value="">
 					<img src="../../images/empty_star.png" class="star" id="star1">
@@ -254,47 +252,34 @@
 					</script>
 				</div>
 			</div>
-			
-			<input type="hidden" id="cate" name="category" value="">
-			<div id="category">
-				<div class="left">
-					<span class="middleText">카테고리선택 </span>
-					<span class="smallText">(필수)</span>
-				</div>
-				<div class="right" style="background-color: rgb(224, 224, 224);">
-					<table id="cateTable" style="margin: auto;">
-						<tr>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">한식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">분식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">일식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">중식</div></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">양식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">야식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">술집</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">패스트푸드</div></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			
+							
 			<div id="review">
 				<div class="left">
 					<span class="middleText">리뷰내용 </span>
 					<span class="smallText">(필수)</span><br>
 				</div>
 				<div class="right">
-					<textarea rows="4" id="reviewContent" name="content" placeholder=" 식사, 분위기, 서비스에 대한 경험을 공유하세요."></textarea>
+					<textarea rows="4" id="reviewContent" name="content" placeholder=" 여행지에 대한 경험을 공유하세요."></textarea>
 				</div>
 			</div>
 			
-			<div id="plusFood">
+			<div id="time">
 				<div class="left">
-					<span class="middleText">추천 하는 음식 </span>
+					<span class="middleText">권장 방문시간</span>
 				</div>
 				<div class="right">
-					<input type="text" id="plusFoodName" name="rc_food">
+					<input type="radio" name="best_time" value="1~2시간">&nbsp;&nbsp;<span class="middleText"> 1~2시간</span>&nbsp;&nbsp;
+					<input type="radio" name="best_time" value="2~3시간">&nbsp;&nbsp;<span class="middleText"> 2~3시간</span>&nbsp;&nbsp;
+					<input type="radio" name="best_time" value="3시간 이상">&nbsp;&nbsp;<span class="middleText"> 3시간 이상</span>
+				</div>
+			</div>
+			
+			<div id="notice">
+				<div class="left">
+					<span class="middleText">주의사항 </span>
+				</div>
+				<div class="right">
+					<textarea rows="3" id="noticeContent" placeholder=" 여행지에 대한 주의사항을 입력해주세요." name="caution"></textarea>
 				</div>
 			</div>
 			
@@ -463,10 +448,9 @@
 		</script>
 		
 		<div id="tips">
-			* 이 리뷰는 개인적인 경험을 바탕으로 작성한 이 음식점에 대한 진실된 의견입니다.<br>
-			* 이 시설과 개인적 혹은 업무적으로 관련이 없습니다.<br>
-			* 해당 가게를 
-			사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
+			* 이 리뷰는 개인적인 경험을 바탕으로 작성한 이 여행지에 대한 진실된 의견입니다.<br>
+			* 이 여행지 및 시설은 개인적 혹은 업무적으로 관련이 없습니다.<br>
+			* 해당 여행지 및 시설을 사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
 		</div>
 		
 		<div id="ok" onclick="insertBoard();">확인</div>
@@ -474,26 +458,12 @@
 		
 		<script>
 			function insertBoard(){
-				var cateStr = "";
-				for(var i = 0; i < 8; i++){
-					if($('.foodCate')[i].checked){
-						if(cateStr == ""){
-							cateStr = $('.nameCate')[i].innerText;
-						} else {
-							cateStr = cateStr + ", " + $('.nameCate')[i].innerText;
-						}
-					}
-				}
-				$('#cate').val(cateStr);
-				
 				if($('#title').val() == ""){
-					alert("가게이름을 입력해주세요.");
+					alert("여행지 이름을 입력해주세요.");
 				} else if($("#addMainImg").val() == "") {
-					alert("가게의 대표이미지를 선택해주세요.");
+					alert("여행지의 대표이미지를 선택해주세요.");
 				} else if($('#star').val() == "") {
-					alert("음식점에 대한 평가를 해주세요.");
-				} else if($('#cate').val() == "") {
-					alert("가게에 대한 카테고리를 선택해주세요.");
+					alert("여행지에 대한 평가를 해주세요.");
 				} else if($('#reviewContent').val() == "") {
 					alert("가게에 대한 리뷰내용을 작성해주세요.");
 				} else if($('#area_x').val() == ""){

@@ -1,5 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+    pageEncoding="UTF-8" import="java.util.ArrayList" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	int no = Integer.parseInt(request.getParameter("no"));
+	String title = request.getParameter("title");
+	int star = Integer.parseInt(request.getParameter("star"));
+	String category = request.getParameter("category");
+	String content = request.getParameter("content");
+	String rc_food = request.getParameter("rc_food");
+	Double area_x = Double.parseDouble(request.getParameter("area_x"));
+	Double area_y = Double.parseDouble(request.getParameter("area_y"));
+	int imgSize = Integer.parseInt(request.getParameter("imgSize"));
+	
+	ArrayList<String> imgId = new ArrayList<String>();
+	ArrayList<String> imgOrigin = new ArrayList<String>();
+	ArrayList<String> imgChange = new ArrayList<String>();
+	ArrayList<String> imgLevel = new ArrayList<String>();
+	
+	for(int i = 0; i < imgSize; i++) {
+		imgId.add(request.getParameter("imgId"+i));
+		imgOrigin.add(request.getParameter("imgOrigin"+i));
+		imgChange.add(request.getParameter("imgChange"+i));
+		imgLevel.add(request.getParameter("imgLevel"+i));
+	}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -198,7 +224,7 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm" encType="multipart/form-data">
+		<form action="<%= request.getContextPath() %>/update.food" method="post" id="updateForm" encType="multipart/form-data">
 			<div id="basic">
 				<div id="mainImg">
 					<img src="../../images/meal.png" width=100% height=100%>
@@ -225,16 +251,27 @@
 				
 				<div id="nameMain">
 					<span class="bigText">가게이름 </span> <span class="smallText">(필수)</span><br><br>
-					<input class="middleText" type="text" placeholder=" 방문한 가게의 상호명을 입력해주세요." size="40" id="title" name="title"><br><br>
+					<input class="middleText" type="text" placeholder=" 방문한 가게의 상호명을 입력해주세요." size="40" id="title" name="title" value="<%= title %>"><br><br>
 					<span class="bigText">음식점에 대한 평가 </span><br><br>
 					
-					<input type="hidden" id="star" name="star" value="">
+					<input type="hidden" id="star" name="star" value=<%= star %>>
 					<img src="../../images/empty_star.png" class="star" id="star1">
 					<img src="../../images/empty_star.png" class="star" id="star2">
 					<img src="../../images/empty_star.png" class="star" id="star3">
 					<img src="../../images/empty_star.png" class="star" id="star4">
 					<img src="../../images/empty_star.png" class="star" id="star5">
 					<script>
+						$(function(){
+							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
+							for(var i = 0; i < 5; i++){
+								if(i <= <%= star %>){
+									findStar[i].attr('src','../../images/star.PNG');
+								} else{
+									findStar[i].attr('src','../../images/empty_star.png');
+								}
+							}
+						})
+						
 						$('.star').mouseenter(function(){
 							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
 							for(var i = 0; i < 5; i++){
@@ -255,7 +292,7 @@
 				</div>
 			</div>
 			
-			<input type="hidden" id="cate" name="category" value="">
+			<input type="hidden" id="cate" name="category" value="<%= category %>">
 			<div id="category">
 				<div class="left">
 					<span class="middleText">카테고리선택 </span>
@@ -279,13 +316,32 @@
 				</div>
 			</div>
 			
+			<script>
+				$(function(){
+					var cateArr = "<%= category %>";
+					cateArr = cateArr.split(', ');
+					for(var i in cateArr) {
+						switch(cateArr[i]){
+						case "한식" : $('.foodCate')[0].checked = true; break;
+						case "분식" : $('.foodCate')[1].checked = true; break;
+						case '일식' : $('.foodCate')[2].checked = true; break;
+						case '중식' : $('.foodCate')[3].checked = true; break;
+						case '양식' : $('.foodCate')[4].checked = true; break;
+						case '야식' : $('.foodCate')[5].checked = true; break;
+						case '술집' : $('.foodCate')[6].checked = true; break;
+						case '패스트푸드' : $('.foodCate')[7].checked = true; break;
+						}
+					}
+				})
+			</script>
+			
 			<div id="review">
 				<div class="left">
 					<span class="middleText">리뷰내용 </span>
 					<span class="smallText">(필수)</span><br>
 				</div>
 				<div class="right">
-					<textarea rows="4" id="reviewContent" name="content" placeholder=" 식사, 분위기, 서비스에 대한 경험을 공유하세요."></textarea>
+					<textarea rows="4" id="reviewContent" name="content" placeholder=" 식사, 분위기, 서비스에 대한 경험을 공유하세요."><%= content %></textarea>
 				</div>
 			</div>
 			
@@ -294,7 +350,7 @@
 					<span class="middleText">추천 하는 음식 </span>
 				</div>
 				<div class="right">
-					<input type="text" id="plusFoodName" name="rc_food">
+					<input type="text" id="plusFoodName" name="rc_food" value="<%= rc_food %>">
 				</div>
 			</div>
 			
@@ -396,7 +452,7 @@
 		<script>
 			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(37.4989347355231, 127.032854329609), //지도의 중심좌표.
+				center: new kakao.maps.LatLng(<%= area_x %>, <%= area_y %>), //지도의 중심좌표.
 				level: 3 //지도의 레벨(확대, 축소 정도)
 			};
 
@@ -499,7 +555,7 @@
 				} else if($('#area_x').val() == ""){
 					alert("가게의 위치를 선택해주세요.");
 				} else if(confirm("글을 작성하시겠습니까?")) {
-					$('#detailForm').submit();
+					$('#updateForm').submit();
 				}
 			};
 		</script>
