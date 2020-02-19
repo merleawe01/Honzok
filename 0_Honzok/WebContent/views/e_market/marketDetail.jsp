@@ -5,12 +5,14 @@
 	Market m = (Market)request.getAttribute("market");
 	ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
 	Attachment titleImg = fileList.get(0);
+	Attachment contentImg = fileList.get(1);
 %>      
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
 	#boardTitle {
 			width : 100%; height : 25px; display : inline-block;
@@ -48,9 +50,9 @@
 		}
 		#updateArea{float : right; }
 		#updateBtn{background-color : rgb(241, 131, 50); color:white; border-radius: 5px; border:0px;
-				   width:80px; height:40px; font-size:20px;}
+				   width:80px; height:40px; font-size:20px; cursor:pointer;}
 		#deleteBtn{background-color : rgb(224, 224, 224);  color:white; border-radius: 5px; border:0px; 
-				   width:80px; height:40px; margin-left:10px; font-size:20px;}
+				   width:80px; height:40px; margin-left:10px; font-size:20px; cursor:pointer;}
 		#threebu{text-align : center; font-size : 15pt; width : 100px; height : 40px;
 			     background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
 			     border: 0; font-weight: bold; line-height: 40px; cursor:pointer;}
@@ -73,18 +75,20 @@
 						<div id="titleRight"><%= m.getWriteDate() %></div>
 				</div>
 					
-					<div id="boardWriter"><%=m.getWriter() %> | 조회 : <%=m.getViewCount() %></div>
+					<div id="boardWriter"><%=loginUser.getNickName() %> | 조회 : <%=m.getViewCount() %></div>
 					
 				<div class="form">
 					<div class="imageArea">
 						<div id="titleImgArea">
-							<a href="<%= request.getContextPath()%>/thumbnail_uploadFiles/ <%= titleImg.getChangeName()%>" download="<%=titleImg.getOriginName() %> ">
-								<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/ <%= titleImg.getChangeName() %>"width="300" height="300">
+							<a href="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= titleImg.getChangeName()%>" download="<%=titleImg.getChangeName() %> ">
+								<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= titleImg.getChangeName() %>"width="300" height="300">
 							</a>	
 						</div>
 					
 						<div id="contentImgArea1">
-								<img id="contentImg1" width="300" height="300"> 
+							<a href="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= contentImg.getChangeName()%>" download="<%=contentImg.getOriginName() %> ">
+								<img id="contentImg1"src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= contentImg.getChangeName() %>" width="300" height="300">
+							</a>
 						</div>
 					</div>
 					
@@ -92,7 +96,7 @@
 					<textarea class="right" name="incontent"style="width:680px; height:100px;" readonly><%= m.getContent() %></textarea>
 					<br><br>
 					<div id="updateArea">
-						<% if(loginUser != null && loginUser.getNickName().equals(m.getWriter())){ %>
+						<% if(loginUser != null/*  && loginUser.getNickName().equals(m.getWriter()) */){ %>
 						<input type="submit" id="updateBtn"value="수정">
 						<input type="button" onclick="deleteMarket();"id="deleteBtn"value="삭제">
 						<% } %>	
@@ -130,7 +134,7 @@
 					<div class="input">
 						<div class="left">상태 <span class="must">(필수)</span></div>
 						<input type="hidden" name="status" value="<%= m.getItemStatus()%>"><%= m.getItemStatus()%>급
-						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
+						
 					</div>
 					
 					<!-- 가격 -->
@@ -142,13 +146,13 @@
 					<!-- 사용기한 -->
 					<div class="input">
 						<div class="left">사용기한<span class="must">(필수)</span></div>
-						<input type="text" name="useDate" class="right" style="width: 100px;" value="<%= m.getUseDate()%>"><%= m.getUseDate()%><span class="must">예) 약 6개월, 약 1년 etc</span>
+						<input type="hidden" name="useDate" class="right" style="width: 100px;" value="<%= m.getUseDate()%>"><%= m.getUseDate()%>
 					</div>
 					
 					<!--기타    -->		
 					<div class="input">
 						<div class="left">기타<span class="must">(필수)</span></div>
-						<input type="hidden" name="etc" class="right" style="width: 350px;" value="<%= m.getEtc()%>">
+						<input type="hidden" name="etc" class="right" style="width: 350px;" value="<%= m.getEtc()%>"><%= m.getEtc()%>
 					</div>	
 				</div>
 					<br>
@@ -174,7 +178,7 @@
 						location.href='<%= request.getContextPath()%>/delete.m?postno=' + <%= m.getPostNo()%>;
 					}
 				}
-			</script>
+		</script>
 		
 	</div>
 </body>

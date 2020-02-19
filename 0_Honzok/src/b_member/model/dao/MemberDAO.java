@@ -36,7 +36,6 @@ public class MemberDAO {
 		Member loginUser = null;
 
 		String query = prop.getProperty("loginUser");
-		System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
 			System.out.println(pstmt);
@@ -68,7 +67,7 @@ public class MemberDAO {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(loginUser);
+		
 		return loginUser;
 
 
@@ -94,7 +93,6 @@ public class MemberDAO {
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -148,7 +146,6 @@ public class MemberDAO {
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);

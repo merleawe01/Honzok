@@ -249,8 +249,7 @@ public class MarketDAO {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("marketdao : " + result);
-		System.out.println("pstmt : " + pstmt);
+		
 	
 		
 		return result;
@@ -287,9 +286,7 @@ public class MarketDAO {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println("marketdao : " + m);
-		System.out.println("pstmt : " + pstmt);
-		System.out.println("Rset : " + rset);
+		
 		return m;
 	}
 
@@ -327,5 +324,36 @@ public class MarketDAO {
 		
 		return list;
 	}
+
+	public int updateMarket(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMarket");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getItemStatus());
+			pstmt.setInt(2, m.getItemPrice());
+			pstmt.setString(3, m.getUseDate());
+			pstmt.setString(4, m.getEtc());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateCommonBoard(Connection conn, Market m) {
+		
+		return 0;
+	}
+	
+	
 	
 }

@@ -71,7 +71,21 @@ public class Market {
 		this.modifyDate = modifyDate;
 		this.recoCount = recoCount;
 	}
+	
+	
 
+	public Market(int postNo, String postTitle, String content, String itemStatus, int itemPrice, String useDate, String etc, 
+			String writer) {
+		super();
+		this.postNo = postNo;
+		this.itemStatus = itemStatus;
+		this.itemPrice = itemPrice;
+		this.useDate = useDate;
+		this.etc = etc;
+		this.postTitle = postTitle;
+		this.writer = writer;
+		this.content = content;
+	}
 
 	public Market(String postTitle, String content, String itemStatus, int itemPrice, String useDate, String etc, String writer
 			) {

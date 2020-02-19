@@ -9,6 +9,8 @@ import static a_common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import org.apache.tomcat.jni.File;
+
 import e_market.model.dao.MarketDAO;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
@@ -79,7 +81,7 @@ public class MarketService {
 			rollback(conn);
 		}
 		
-		System.out.println("marketservice : " + result);
+	
 		return m;
 	}
 
@@ -88,6 +90,63 @@ public class MarketService {
 		ArrayList<Attachment> list = new MarketDAO().selectImage(conn, postNo);
 		
 		return list;
+	}
+
+	public int updateThumbnail(Market m) {
+		Connection conn = getConnection();
+		
+		MarketDAO dao = new MarketDAO();
+		
+		int result1 = dao.updateMarket(conn, m); 
+		int result2 = dao.updateCommonBoard(conn, m);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
+	public int updateThumbnail(Market m, ArrayList<Attachment> file) {
+		Connection conn = getConnection();
+		
+		MarketDAO dao = new MarketDAO();
+		
+		int result1 = dao.updateMarket(conn, m);
+		int result2 = 0;
+		if(file.get(0).getImgId() == 0){
+//			result2 = dao.insertNewAttachment(conn, file);
+		} else {
+//			result2 = dao.updateAttachment(conn, file);
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
+	public int updateThumbnail(Market m, ArrayList<Attachment> changeFile, ArrayList<Attachment> newInsertFile) {
+		Connection conn = getConnection();
+		
+		MarketDAO dao = new MarketDAO();
+		
+		int result1 = dao.updateMarket(conn, m);
+//		int result2 = dao.updateImage(conn, changeFile);
+//		int result3 = dao.insertNewImage(conn, newInsertFile);
+//		
+//		if(result1 > 0 && result2 > 0 && result3 > 0) {
+//			commit(conn);
+//		} else {
+//			rollback(conn);
+//		}
+//		
+		return result1;
 	}
 
 
