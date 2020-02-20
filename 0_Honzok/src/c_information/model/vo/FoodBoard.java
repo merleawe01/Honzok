@@ -55,7 +55,7 @@ public class FoodBoard {
 	}
 	
 	// 디테일 뷰에서 사용할 생성자.
-	public FoodBoard(int no, String title, String writer, String content, int view_count, int reco_count,
+	public FoodBoard(int no, String title, String writer, String content, int view_count, int reco_count, String local_name,
 			String address, int star, String rc_food, double area_x, double area_y) {
 		super();
 		this.no = no;
@@ -64,6 +64,7 @@ public class FoodBoard {
 		this.content = content;
 		this.view_count = view_count;
 		this.reco_count = reco_count;
+		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
 		this.rc_food = rc_food;

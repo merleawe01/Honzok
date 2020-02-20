@@ -196,7 +196,7 @@ public class InformationDAO {
 			
 			if(rs.next()) {
 				board = new FoodBoard(rs.getInt("POST_NO"), rs.getString("POST_TITLE"), rs.getString("NICKNAME"), rs.getString("CONTENT"), rs.getInt("VIEW_COUNT"), 
-						rs.getInt("RECO_COUNT"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("RC_FOOD"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
+						rs.getInt("RECO_COUNT"), rs.getString("LOCAL_NAME"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("RC_FOOD"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -447,7 +447,7 @@ public class InformationDAO {
 				pstmt.setString(4, a.getImg_src());
 				
 				for(int j = count - 1; j >= 0; j--) {
-					if(array[j] == "insert" || array[j] == "change") {
+					if(array[j].equals("insert") || array[j].equals("change")) {
 						pstmt.setInt(5, j);
 						count = j;
 						break;
@@ -468,7 +468,7 @@ public class InformationDAO {
 			count = array.length;
 			
 			for(int j = count - 1; j >= 0; j--) {
-				if(array[j] == "delete" || array[j] == "change") {
+				if(array[j].equals("delete") || array[j].equals("change")) {
 					
 					pstmt.setInt(1, no);
 					pstmt.setInt(2, j);
@@ -482,6 +482,30 @@ public class InformationDAO {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int updateCateBoard(Connection conn, FoodBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			String[] cateArr = board.getCategory().split(", ");
+			for(int i = 0; i < cateArr.length; i++) {
+				pstmt.setString(1, cateArr[i]);
+				pstmt.setInt(2, board.getNo());
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
 		return result;
 	}
 	
