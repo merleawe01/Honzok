@@ -5,6 +5,7 @@
 	
 	String titleImg = request.getParameter("titleImage");
 	String contentImg1 = request.getParameter("contentImage1"); 
+	
 	int postNo = Integer.parseInt(request.getParameter("postNo"));
 	String title = request.getParameter("postTitle");
 	String content = request.getParameter("incontent");
@@ -51,7 +52,8 @@
 		.imageArea div{display:inline-block; vertical:middle; 
 					   margin-left:40px; margin-right:40px; margin-bottom:20px; 
 		}
-					   
+		#titleImgArea{cursor : pointer;}
+		#contentImgArea1{cursor : pointer;}			   
 		
 		
 </style>

@@ -106,7 +106,7 @@ public class MarketUpdateServlet extends HttpServlet {
 			ArrayList<Attachment> newInsertFile = new ArrayList<Attachment>();
 			
 			for(int h = 0; h < fileList.size();) {
-				for(int i = 0; i < 4; i++) {
+				for(int i = 0; i < 2; i++) {
 					if(!detailImgId.get(i).equals("") && changeImg.get(i).equals("data")) { // 바꾼 파일
 						fileList.get(h).setImgId(Integer.parseInt(detailImgId.get(i)));
 						changeFile.add(fileList.get(h));

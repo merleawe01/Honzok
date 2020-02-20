@@ -27,7 +27,7 @@
 			   cursor:pointer;}
 		.searchArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
 		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
-		.listArea{opacity:0.8; cursor:pointer;}
+		.listArea{cursor:pointer; border-spacing: 10px;}
 		footer{margin-bottom : 100px;}
 </style>
 
