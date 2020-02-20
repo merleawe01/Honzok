@@ -307,17 +307,17 @@
 
 					<div id="imgList"></div>
 
-					<input type="file" id="bonusImg1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg1'))" hidden="">
-					<input type="file" id="bonusImg2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg2'))" hidden="">
-					<input type="file" id="bonusImg3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg3'))" hidden="">
-					<input type="file" id="bonusImg4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg4'))" hidden="">
-					<input type="file" id="bonusImg5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg5'))" hidden="">
+					<input type="file" id="imgFile1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile1'))" hidden="">
+					<input type="file" id="imgFile2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile2'))" hidden="">
+					<input type="file" id="imgFile3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile3'))" hidden="">
+					<input type="file" id="imgFile4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile4'))" hidden="">
+					<input type="file" id="imgFile5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile5'))" hidden="">
 				</div>
 			</div>
 			
 			<script>
 				function fullImg(){
-					if($("#bonusImg1")[0].localName == "span" && $("#bonusImg2")[0].localName == "span" && $("#bonusImg3")[0].localName == "span" && $("#bonusImg4")[0].localName == "span" && $("#bonusImg5")[0].localName == "span"){
+					if($("#bonusImg1")[0] != undefined && $("#bonusImg2")[0] != undefined && $("#bonusImg3")[0] != undefined && $("#bonusImg4")[0] != undefined && $("#bonusImg5")[0] != undefined){
 						$('#addImg').hide();
 					} else{
 						$('#addImg').show();
@@ -325,16 +325,16 @@
 				}
 				
 				$('#addImg').click(function(){
-					if($('#bonusImg1')[0].value == ""){
-						$('#bonusImg1').click();
-					} else if($('#bonusImg2')[0].value == ""){
-						$('#bonusImg2').click();
-					} else if($('#bonusImg3')[0].value == ""){
-						$('#bonusImg3').click();
-					} else if($('#bonusImg4')[0].value == ""){
-						$('#bonusImg4').click();
-					} else if($('#bonusImg5')[0].value == ""){
-						$('#bonusImg5').click();
+					if($("#bonusImg1")[0] == undefined){
+						$('#imgFile1').click();
+					} else if($("#bonusImg2")[0] == undefined){
+						$('#imgFile2').click();
+					} else if($("#bonusImg3")[0] == undefined){
+						$('#imgFile3').click();
+					} else if($("#bonusImg4")[0] == undefined){
+						$('#imgFile4').click();
+					} else if($("#bonusImg5")[0] == undefined){
+						$('#imgFile5').click();
 					}
 				});
 				
@@ -355,11 +355,11 @@
 					this.parentNode.remove();
 					
 					switch(id){
-					case 'bonusImg1' : $("#bonusImg1").val(""); break;
-					case 'bonusImg2' : $("#bonusImg2").val(""); break;
-					case 'bonusImg3' : $("#bonusImg3").val(""); break;
-					case 'bonusImg4' : $("#bonusImg4").val(""); break;
-					case 'bonusImg5' : $("#bonusImg5").val(""); break;
+					case 'bonusImg1' : $("#imgFile1").val(""); break;
+					case 'bonusImg2' : $("#imgFile2").val(""); break;
+					case 'bonusImg3' : $("#imgFile3").val(""); break;
+					case 'bonusImg4' : $("#imgFile4").val(""); break;
+					case 'bonusImg5' : $("#imgFile5").val(""); break;
 					}
 					fullImg();
 				});

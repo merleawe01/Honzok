@@ -100,4 +100,24 @@ public class FBoardService {
 		return imgList;
 	}
 
+	public int updateFBoard(FoodBoard board, ArrayList<Image> fileList, String imgInfo) {
+		Connection conn = getConnection();
+		
+		InformationDAO dao = new InformationDAO();
+		
+		int result1 = dao.updateBoard(conn, board);
+		int result2 = dao.updateFBoard(conn, board);
+		int result3 = dao.deleteCateBoard(conn, board);
+		int result4 = dao.insertCateBoard(conn, board);
+		int result5 = dao.updateImage(conn, fileList, imgInfo, board.getNo());
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
 }

@@ -11,8 +11,10 @@
 	String rc_food = request.getParameter("rc_food");
 	Double area_x = Double.parseDouble(request.getParameter("area_x"));
 	Double area_y = Double.parseDouble(request.getParameter("area_y"));
-	int imgSize = Integer.parseInt(request.getParameter("imgSize"));
+	String address = request.getParameter("address");
+	String local_name = request.getParameter("local_name");
 	
+	int imgSize = Integer.parseInt(request.getParameter("imgSize"));
 	ArrayList<String> imgId = new ArrayList<String>();
 	ArrayList<String> imgOrigin = new ArrayList<String>();
 	ArrayList<String> imgChange = new ArrayList<String>();
@@ -225,13 +227,15 @@
 	
 	<div id="main">
 		<form action="<%= request.getContextPath() %>/update.food" method="post" id="updateForm" encType="multipart/form-data">
+			<input type="hidden" id="no" name="no" value="<%= no %>">
 			<div id="basic">
 				<div id="mainImg">
-					<img src="../../images/meal.png" width=100% height=100%>
+					<img src="<%= request.getContextPath() %>/images/food_board/<%= imgChange.get(0) %>" width=100% height=100%>
 				</div>
 				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="LoadImg(this)" hidden="">
 				
 				<script>
+				
 					$('#mainImg').click(function(){
 						$('#addMainImg').click();
 					});
@@ -247,6 +251,7 @@
 							reader.readAsDataURL(value.files[0]);
 						}
 					}
+					
 				</script>
 				
 				<div id="nameMain">
@@ -361,19 +366,27 @@
 				<div class="right" style="height:auto">
 					<div id="addImg">이미지 추가</div> &nbsp;&nbsp;* 이미지 추가는 최대 5개 까지만 가능합니다. <br>
 
-					<div id="imgList"></div>
+					<div id="imgList">
+						<% if(imgSize != 1) { %>
+							<% for(int i = 1; i < imgSize; i++) { %>
+								<span id="bonusImg<%= imgLevel.get(i) %>"><%= imgOrigin.get(i) %> <span class='deleteImg'>X</span><br></span>
+							<% } %>
+						<% } %>
+					</div>
 
-					<input type="file" id="bonusImg1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg1'))" hidden="">
-					<input type="file" id="bonusImg2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg2'))" hidden="">
-					<input type="file" id="bonusImg3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg3'))" hidden="">
-					<input type="file" id="bonusImg4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg4'))" hidden="">
-					<input type="file" id="bonusImg5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#bonusImg5'))" hidden="">
+					<input type="file" id="imgFile1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile1'))" hidden="">
+					<input type="file" id="imgFile2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile2'))" hidden="">
+					<input type="file" id="imgFile3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile3'))" hidden="">
+					<input type="file" id="imgFile4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile4'))" hidden="">
+					<input type="file" id="imgFile5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile5'))" hidden="">
+					
+					<input type="hidden" id="imgInfo" name="imgInfo" value="">
 				</div>
 			</div>
 			
 			<script>
 				function fullImg(){
-					if($("#bonusImg1")[0].localName == "span" && $("#bonusImg2")[0].localName == "span" && $("#bonusImg3")[0].localName == "span" && $("#bonusImg4")[0].localName == "span" && $("#bonusImg5")[0].localName == "span"){
+					if($("#bonusImg1")[0] != undefined && $("#bonusImg2")[0] != undefined && $("#bonusImg3")[0] != undefined && $("#bonusImg4")[0] != undefined && $("#bonusImg5")[0] != undefined){
 						$('#addImg').hide();
 					} else{
 						$('#addImg').show();
@@ -381,16 +394,16 @@
 				}
 				
 				$('#addImg').click(function(){
-					if($('#bonusImg1')[0].value == ""){
-						$('#bonusImg1').click();
-					} else if($('#bonusImg2')[0].value == ""){
-						$('#bonusImg2').click();
-					} else if($('#bonusImg3')[0].value == ""){
-						$('#bonusImg3').click();
-					} else if($('#bonusImg4')[0].value == ""){
-						$('#bonusImg4').click();
-					} else if($('#bonusImg5')[0].value == ""){
-						$('#bonusImg5').click();
+					if($("#bonusImg1")[0] == undefined){
+						$('#imgFile1').click();
+					} else if($("#bonusImg2")[0] == undefined){
+						$('#imgFile2').click();
+					} else if($("#bonusImg3")[0] == undefined){
+						$('#imgFile3').click();
+					} else if($("#bonusImg4")[0] == undefined){
+						$('#imgFile4').click();
+					} else if($("#bonusImg5")[0] == undefined){
+						$('#imgFile5').click();
 					}
 				});
 				
@@ -411,20 +424,21 @@
 					this.parentNode.remove();
 					
 					switch(id){
-					case 'bonusImg1' : $("#bonusImg1").val(""); break;
-					case 'bonusImg2' : $("#bonusImg2").val(""); break;
-					case 'bonusImg3' : $("#bonusImg3").val(""); break;
-					case 'bonusImg4' : $("#bonusImg4").val(""); break;
-					case 'bonusImg5' : $("#bonusImg5").val(""); break;
+					case 'bonusImg1' : $("#imgFile1").val(""); break;
+					case 'bonusImg2' : $("#imgFile2").val(""); break;
+					case 'bonusImg3' : $("#imgFile3").val(""); break;
+					case 'bonusImg4' : $("#imgFile4").val(""); break;
+					case 'bonusImg5' : $("#imgFile5").val(""); break;
 					}
 					fullImg();
 				});
+				
 			</script>
 			
-			<input type="hidden" id="area_x" name="area_x" value="">
-			<input type="hidden" id="area_y" name="area_y" value="">
-			<input type="hidden" id="adr" name="address" value="">
-			<input type="hidden" id="local_name" name="local_name" value="">
+			<input type="hidden" id="area_x" name="area_x" value="<%= area_x %>">
+			<input type="hidden" id="area_y" name="area_y" value="<%= area_y %>">
+			<input type="hidden" id="adr" name="address" value="<%= address %>">
+			<input type="hidden" id="local_name" name="local_name" value="<%= local_name %>">
 		</form>
 			
 		<div id="address">
@@ -542,19 +556,76 @@
 				}
 				$('#cate').val(cateStr);
 				
+				// same, change, insert, delete 
+				var imgInfo = "";
+				if($("#addMainImg").val() == "") {
+					imgInfo = "same"
+				} else{
+					imgInfo = "change"
+				}
+				
+				// numInfo 는 가지고있는 이미지 1~5중에
+				var numInfo = new Array;
+				
+				<% if(imgSize != 1) {
+					for(int i = 1; i < imgSize; i++){%>
+						numInfo.push(<%= imgLevel.get(i) %>);
+					<%}
+				}%>
+				
+				for(var i = 1; i <= 5; i++) {
+					var check = false;
+					
+					if(<%= imgSize %> == 1) {
+						// size가 1일 경우 same이랑 insert
+						if($("#imgFile"+i).val() == "") {
+							imgInfo += ", same";
+						} else {
+							imgInfo += ", insert";
+						}
+						
+					} else {
+						// 이건 size가 1이 아닌 경우
+						if($("#imgFile"+i).val() == "") {
+							// same, delete
+							for(var j = 0; j < numInfo.length; j++) {
+								if(numInfo[j] == i && $("#bonusImg"+i)[0] == undefined) {
+									check = true;
+									imgInfo += ", delete";
+									break;
+								}
+							}
+							if(!check){
+								imgInfo += ", same";
+							}
+						} else {
+							// change, insert
+							
+							for(var j = 0; j < numInfo.length; j++) {
+								if(numInfo[j] == i) {
+									check = true;
+									imgInfo += ", change";
+									break;
+								}
+							}
+							if(!check){
+								imgInfo += ", insert";
+							}
+						}
+					}
+				}
+				
+				$('#imgInfo').val(imgInfo);
+				
 				if($('#title').val() == ""){
 					alert("가게이름을 입력해주세요.");
-				} else if($("#addMainImg").val() == "") {
-					alert("가게의 대표이미지를 선택해주세요.");
 				} else if($('#star').val() == "") {
 					alert("음식점에 대한 평가를 해주세요.");
 				} else if($('#cate').val() == "") {
 					alert("가게에 대한 카테고리를 선택해주세요.");
 				} else if($('#reviewContent').val() == "") {
 					alert("가게에 대한 리뷰내용을 작성해주세요.");
-				} else if($('#area_x').val() == ""){
-					alert("가게의 위치를 선택해주세요.");
-				} else if(confirm("글을 작성하시겠습니까?")) {
+				} else if(confirm("글을 수정하시겠습니까?")) {
 					$('#updateForm').submit();
 				}
 			};

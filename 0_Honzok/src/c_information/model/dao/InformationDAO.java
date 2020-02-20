@@ -119,7 +119,7 @@ public class InformationDAO {
 				pstmt.setString(3, a.getImg_src());
 				pstmt.setInt(4, a.getFileLevel());
 				
-				result += pstmt.executeUpdate();
+				result = pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -303,7 +303,6 @@ public class InformationDAO {
 		}
 		
 		return result;
-		
 	}
 
 	public int insertTBoard(Connection conn, TravelBoard board) {
@@ -356,6 +355,134 @@ public class InformationDAO {
 			close(pstmt);
 		}
 		return board;
+	}
+
+	public int updateBoard(Connection conn, FoodBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBoard");
+		//UPDATE B_COMMON SET POST_TITLE = ?, CONTENT = ?, MODIFY_DATE = SYSDATE WHERE POST_NO = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateFBoard(Connection conn, FoodBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateFBoard");
+		//UPDATE EAT SET LOCAL_NAME = ?, ADDRESS = ?, STAR = ?, RC_FOOD = ?, AREA_X = ?, AREA_Y = ? WHERE POST_NO = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getLocal_name());
+			pstmt.setString(2, board.getAddress());
+			pstmt.setInt(3, board.getStar());
+			String rc_food = (board.getRc_food() == null) ? "" : board.getRc_food();
+			pstmt.setString(4, rc_food);
+			pstmt.setDouble(5, board.getArea_x());
+			pstmt.setDouble(6, board.getArea_y());
+			pstmt.setInt(7, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteCateBoard(Connection conn, FoodBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteCateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateImage(Connection conn, ArrayList<Image> fileList, String imgInfo, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String[] array = imgInfo.split(", ");
+		int count = array.length;
+		
+		String query = prop.getProperty("updateInsertImage");
+		String query2 = prop.getProperty("updateDeleteImage"); //UPDATE IMAGE SET STATUS = 'N' WHERE POST_NO = ? AND FILE_LEVEL = ?
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++) {
+				Image a = fileList.get(i);
+
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, no);
+				pstmt.setString(2, a.getOrigin_name());
+				pstmt.setString(3, a.getChange_name());
+				pstmt.setString(4, a.getImg_src());
+				
+				for(int j = count - 1; j >= 0; j--) {
+					if(array[j] == "insert" || array[j] == "change") {
+						pstmt.setInt(5, j);
+						count = j;
+						break;
+					}
+				}
+				
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query2);
+			
+			count = array.length;
+			
+			for(int j = count - 1; j >= 0; j--) {
+				if(array[j] == "delete" || array[j] == "change") {
+					
+					pstmt.setInt(1, no);
+					pstmt.setInt(2, j);
+					
+					result = pstmt.executeUpdate();
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

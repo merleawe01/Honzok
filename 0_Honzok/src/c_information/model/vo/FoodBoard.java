@@ -71,6 +71,22 @@ public class FoodBoard {
 		this.area_y = area_y;
 	}
 
+	// 글 수정에서 사용할 생성자
+	public FoodBoard(int no, String title, String content, String category, String local_name, String address, int star,
+			String rc_food, double area_x, double area_y) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.local_name = local_name;
+		this.address = address;
+		this.star = star;
+		this.rc_food = rc_food;
+		this.area_x = area_x;
+		this.area_y = area_y;
+	}
+
 	public int getNo() {
 		return no;
 	}

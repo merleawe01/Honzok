@@ -255,6 +255,7 @@
 		<div id="address">
 			<div class="left">주소</div>
 			<div class="right">
+				<input type="hidden" name="address" value="<%= board.getAddress() %>">
 				<b><%= board.getAddress() %></b>
 				
 				<div id="map"></div>
