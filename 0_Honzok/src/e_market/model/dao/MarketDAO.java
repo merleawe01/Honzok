@@ -337,6 +337,7 @@ public class MarketDAO {
 			pstmt.setInt(2, m.getItemPrice());
 			pstmt.setString(3, m.getUseDate());
 			pstmt.setString(4, m.getEtc());
+			pstmt.setInt(5, m.getPostNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -350,10 +351,80 @@ public class MarketDAO {
 	}
 
 	public int updateCommonBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		return 0;
+		String query = prop.getProperty("updateCommonBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPostTitle());
+			pstmt.setString(2, m.getContent());
+			pstmt.setInt(3, m.getPostNo());
+			
+			result = pstmt.executeUpdate();
+ 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
-	
-	
+
+	public int updateImage(Connection conn, ArrayList<Attachment> changeFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateImage");
+		
+		try {
+			for(int i = 0; i < changeFile.size(); i++) {
+				Attachment a = changeFile.get(i);
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, a.getOriginName());
+				pstmt.setString(2, a.getChangeName());
+				pstmt.setInt(3, a.getImgId());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertNewImage(Connection conn, ArrayList<Attachment> newInsertFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertNewImage");
+		
+		try {
+			for(int i = 0; i < newInsertFile.size(); i++) {
+				Attachment a = newInsertFile.get(i);
+			
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, a.getPostNo());
+				pstmt.setString(2, a.getOriginName());
+				pstmt.setString(3, a.getChangeName());
+				pstmt.setString(4, a.getImgSrc());
+				pstmt.setInt(5, a.getFileLevel());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }

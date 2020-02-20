@@ -105,7 +105,7 @@ public class MarketService {
 		} else {
 			rollback(conn);
 		}
-		
+	
 		return result1;
 	}
 
@@ -117,9 +117,9 @@ public class MarketService {
 		int result1 = dao.updateMarket(conn, m);
 		int result2 = 0;
 		if(file.get(0).getImgId() == 0){
-//			result2 = dao.insertNewAttachment(conn, file);
+			result2 = dao.insertNewImage(conn, file);
 		} else {
-//			result2 = dao.updateAttachment(conn, file);
+			result2 = dao.updateImage(conn, file);
 		}
 		
 		if(result1 > 0 && result2 > 0) {
@@ -137,15 +137,15 @@ public class MarketService {
 		MarketDAO dao = new MarketDAO();
 		
 		int result1 = dao.updateMarket(conn, m);
-//		int result2 = dao.updateImage(conn, changeFile);
-//		int result3 = dao.insertNewImage(conn, newInsertFile);
-//		
-//		if(result1 > 0 && result2 > 0 && result3 > 0) {
-//			commit(conn);
-//		} else {
-//			rollback(conn);
-//		}
-//		
+		int result2 = dao.updateImage(conn, changeFile);
+		int result3 = dao.insertNewImage(conn, newInsertFile);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+	
 		return result1;
 	}
 

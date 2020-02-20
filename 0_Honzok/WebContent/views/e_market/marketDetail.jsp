@@ -69,7 +69,7 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/views/e_market/marketUpdateForm.jsp">
+		<form action="<%= request.getContextPath() %>/views/e_market/marketUpdate.jsp">
 				<div id="boardTitle">
 						<div id="titleLeft"><%= m.getPostTitle() %></div>
 						<div id="titleRight"><%= m.getWriteDate() %></div>
@@ -80,14 +80,19 @@
 				<div class="form">
 					<div class="imageArea">
 						<div id="titleImgArea">
+							<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
 							<a href="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= titleImg.getChangeName()%>" download="<%=titleImg.getChangeName() %> ">
 								<img id="titleImg" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= titleImg.getChangeName() %>"width="300" height="300">
+								<input type="hidden" value="<%= titleImg.getChangeName() %>" name="titleImage"> 
+								<input type="hidden" value="<%= titleImg.getImgId() %>" name="detailImgId0"> 
 							</a>	
 						</div>
 					
 						<div id="contentImgArea1">
 							<a href="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= contentImg.getChangeName()%>" download="<%=contentImg.getOriginName() %> ">
 								<img id="contentImg1"src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= contentImg.getChangeName() %>" width="300" height="300">
+								<input type="hidden" value="<%= contentImg.getChangeName() %>" name="contentImage1"> 
+								<input type="hidden" value="<%= contentImg.getImgId() %>" name="detailImgId1">
 							</a>
 						</div>
 					</div>
