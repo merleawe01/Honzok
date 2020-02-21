@@ -87,4 +87,22 @@ public class TBoardService {
 		return imgList;
 	}
 
+	public int updateFBoard(TravelBoard board, ArrayList<Image> fileList, String imgInfo) {
+		Connection conn = getConnection();
+		
+		InformationDAO dao = new InformationDAO();
+		
+		int result1 = dao.updateBoard(conn, board);
+		int result2 = dao.updateTBoard(conn, board);
+		int result3 = dao.updateImage(conn, fileList, imgInfo, board.getNo());
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
 }

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import c_information.model.service.FBoardService;
+import c_information.model.service.ReplyService;
 import c_information.model.service.TBoardService;
 import c_information.model.vo.Image;
+import c_information.model.vo.Reply;
 import c_information.model.vo.TravelBoard;
 
 /**
@@ -39,14 +41,14 @@ public class TravelDetail extends HttpServlet {
 		TravelBoard board = new TBoardService().selectBoard(no);
 		ArrayList<Image> imgList = new TBoardService().selectImage(no);
 		
-//		ArrayList<Reply> list = new BoardService().selectReplyList(bId);
+		ArrayList<Reply> replyList = new ReplyService().selectReplyList(no);
 		
 		String page = null;
 		if(board != null) {
 			page = "views/c_information/travelDetail.jsp";
 			request.setAttribute("board", board);
 			request.setAttribute("imgList", imgList);
-//			request.setAttribute("list", list);
+			request.setAttribute("replyList", replyList);
 		} else {
 			page = "views/a_common/errorPage.jsp";
 			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다.");

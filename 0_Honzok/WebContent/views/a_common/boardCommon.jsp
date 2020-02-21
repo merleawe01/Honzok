@@ -37,6 +37,7 @@
 		height : 100%;
 		width : auto;
 		float : left;
+		cursor: pointer;
 	}
 	#list {
 		height : 100%;
@@ -54,6 +55,7 @@
 		color: rgb(241,131,50);
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 12pt;
+		cursor: pointer;
 	}
 	/* #nickname::after{
 		content : "님";
@@ -115,7 +117,7 @@
 <body>
 	<header>
 		<div id="mainHeader">
-			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" id="logo">
+			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
 			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
 			
 			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->

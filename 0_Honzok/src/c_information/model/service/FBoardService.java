@@ -19,6 +19,8 @@ public class FBoardService {
 		
 		InformationDAO dao = new InformationDAO();
 		
+		System.out.println("area : " + board.getLocal_name());
+		
 		int result1 = dao.insertBoard(conn, board);
 		int result2 = dao.insertFBoard(conn, board);
 		int result3 = dao.insertCateBoard(conn, board);

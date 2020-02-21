@@ -54,7 +54,7 @@ public class TravelBoard {
 	}
 	
 	// 디테일 뷰에서 사용할 생성자.
-	public TravelBoard(int no, String title, String writer, String content, int view_count, int reco_count,
+	public TravelBoard(int no, String title, String writer, String content, int view_count, int reco_count, String local_name,
 			String address, int star, String caution, String best_time, double area_x, double area_y) {
 		super();
 		this.no = no;
@@ -63,6 +63,7 @@ public class TravelBoard {
 		this.content = content;
 		this.view_count = view_count;
 		this.reco_count = reco_count;
+		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
 		this.caution = caution;
@@ -71,17 +72,13 @@ public class TravelBoard {
 		this.area_y = area_y;
 	}
 	
-	public TravelBoard(int no, String title, String writer, String content, int view_count, Date write_date,
-			int reco_count, String local_name, String address, int star, String caution, String best_time,
-			double area_x, double area_y, String img_src) {
+	// 글 수정에서 사용할 생성자
+	public TravelBoard(int no, String title, String content, String local_name, String address, int star,
+			String caution, String best_time, double area_x, double area_y) {
 		super();
 		this.no = no;
 		this.title = title;
-		this.writer = writer;
 		this.content = content;
-		this.view_count = view_count;
-		this.write_date = write_date;
-		this.reco_count = reco_count;
 		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
@@ -89,8 +86,8 @@ public class TravelBoard {
 		this.best_time = best_time;
 		this.area_x = area_x;
 		this.area_y = area_y;
-		this.img_src = img_src;
 	}
+
 
 	public int getNo() {
 		return no;

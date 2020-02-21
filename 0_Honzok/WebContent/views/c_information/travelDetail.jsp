@@ -3,6 +3,7 @@
 <%
 	TravelBoard board = (TravelBoard)request.getAttribute("board");
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
+	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
 	
 	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
 %>
@@ -157,6 +158,9 @@
 		background-color: white;
 		display : inline-table;
 	}
+	.replyUpdate{cursor: pointer;}
+	.replyDelete{cursor: pointer;}
+	
 </style>
 
 </head>
@@ -164,6 +168,12 @@
 	<%@ include file="../a_common/boardCommon.jsp" %>
 	<script>
 		$('#boardName').text('욜로홀로솔로');
+		
+		<% if(loginUser == null){
+			loginUser = new Member();
+			loginUser.setNickName("");
+			loginUser.setUserId("");
+		} %>
 	</script>
 	
 	<div id="main">
@@ -174,12 +184,14 @@
 			
 			<script>
 				var photoSrc = new Array();
-				<% for(Image img : imgList){ %>
-					photoSrc.push("<%= request.getContextPath() %>/images/travel_board/<%= img.getChange_name() %>");
-				<% } %>
-				
-				photoSrc = photoSrc.reverse();
-
+				<% for(int i = 0; i <= 5; i++){
+					for(Image img : imgList){ 
+						if(img.getFileLevel() == i) {%>
+						photoSrc.push("<%= request.getContextPath() %>/images/travel_board/<%= img.getChange_name() %>");
+						<% }
+					}
+				} %>
+	
 				var temp = 0;
 				
 				$(function(){
@@ -260,7 +272,7 @@
 		
 		<div id="time">
 			<div class="left">주의사항</div>
-			<div class="right"><%= board.getCaution() %></div>
+			<div class="right"><%= (board.getCaution() == null) ? "" : board.getCaution() %></div>
 		</div>
 		
 		<div id="address">
@@ -303,43 +315,200 @@
 		<div id="btnList">
 			<div style="background-color: rgb(224, 224, 224);">목록으로</div>
 			<div style="background-color: rgb(224, 224, 224);">삭제</div>
-			<div style="background-color: rgb(241, 131, 50); color: white;">수정</div>
+			
+			<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
+				<input type="hidden" name="no" value="<%= board.getNo() %>">
+				<input type="hidden" name="title" value="<%= board.getTitle() %>">
+				<input type="hidden" name="star" value="<%= board.getStar() %>">
+				<input type="hidden" name="content" value="<%= board.getContent() %>">
+				<input type="hidden" name="caution" value="<%= (board.getCaution() == null) ? "" : board.getCaution() %>">
+				<input type="hidden" name="best_time" value="<%= board.getBest_time() %>">
+				<input type="hidden" name="address" value="<%= board.getAddress() %>">
+				<input type="hidden" name="local_name" value="<%= board.getLocal_name() %>">
+				<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
+				<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
+				<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
+				
+				<% for(Image img : imgList){ %>
+					<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
+					<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
+					<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
+					<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
+				<% } %>
+				
+				<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
+			</form>
+			
 			<div style="background-color: rgb(241, 131, 50); color: white;">추천</div>
 			<!-- 접근 유저에 따라 보여지는 버튼 및 이벤트 다르게 구현 -->
 		</div>
 		
+		<script>
+			$('#update').click(function(){
+			 	if(confirm("글을 수정하시겠습니까?")) {
+					$('#updateForm').submit();
+				}
+			})
+		</script>
 		
-		<p style="float: left; color: rgb(51, 51, 51)">댓글 1</p>
+		<p style="float: left; color: rgb(51, 51, 51)">댓글 <span id="replyCount"><%= replyList.size() %></span></p>
 		
 		<div id = "commentMain">
-			<table style="text-align: left;">
-				<tr>
-					<td rowspan="2"><img alt="댓글" src="image/blanket.png" style="width:auto; height: 50px;"></td>
-					<td>
-						<span style="font-weight: bold;">닉네임</span>&nbsp; &nbsp; 
-						<span style="font-weight: bold; color: rgb(190, 190, 190);">2020.01.07 18:28</span>&nbsp; &nbsp; 
-						<span>수정 | 삭제</span>
-					</td>
-				</tr>
-				<tr><td>오 개꿀</td></tr>
-			</table>
-			<br>
-			
-			<table style="text-align: left;">
-				<tr>
-					<td rowspan="2"><img alt="댓글" src="image/blanket.png" style="width:auto; height: 50px;"></td>
-					<td>
-						<span style="font-weight: bold;">닉네임</span>&nbsp; &nbsp; 
-						<span style="font-weight: bold; color: rgb(190, 190, 190);">2020.01.07 18:28</span>&nbsp; &nbsp; 
-						<span>수정 | 삭제</span>
-					</td>
-				</tr>
-				<tr><td>오 개꿀</td></tr>
-			</table>
-			<br>
+			<div id= "replyTable" style="width:auto; height:auto;">
+			<% if(replyList.isEmpty()){ %>
+				<br><span style="margin-right: 200px;">등록된 댓글이 없습니다.</span><br><br><br>
+			<% } else {
+				for(int i = 0; i < replyList.size(); i++) { %>
+				<table style="text-align: left;">
+					<tr>
+						<td rowspan="2"><img alt="댓글" src="<%= request.getContextPath() %>/images/blanket.png" style="width:auto; height: 50px;"></td>
+						<td>
+							<span style="font-weight: bold;"><%= replyList.get(i).getWriter() %></span>&nbsp; &nbsp; 
+							<span style="font-weight: bold; color: rgb(190, 190, 190);"><%= replyList.get(i).getWrite_date() %></span>&nbsp; &nbsp; 
+							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter())) { %>
+								<span><input type="hidden" value='<%= replyList.get(i).getCno() %>'><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span></span>
+							<% } %>
+							
+						</td>
+					</tr>
+					<tr><td><%= replyList.get(i).getContent() %></td></tr>
+				</table>
+				<br>
+			<% 	}
+			}%>
+			</div>
 			
 			<textarea id="commentLeft" rows="4" cols="100"></textarea>
 			<button id="commentRight">등록</button>
+			
+			<script>
+				$('#commentRight').click(function(){
+					if($('#commentLeft').val() == ""){
+						alert('작성된 내용이 없습니다.');
+					} else if('<%= loginUser.getUserId() %>' == "") {
+						alert('로그인한 유저만 댓글을 작성할 수 있습니다.');
+					} else{
+						var writer = '<%= loginUser.getUserId() %>';
+						var bid = <%= board.getNo() %>;
+						var content = $('#commentLeft').val();
+						
+						$.ajax({
+							url: '<%= request.getContextPath() %>/insert.reply',
+							type: 'post',
+							data: {writer: writer, content: content, bid: bid},
+							success: function(data){
+								$replyTable = $('#replyTable');
+								$replyTable.html("");
+								
+								$('#replyCount').text(data.length);
+								
+								for(var key in data){
+									var $table = $('<table>').css('text-align', 'left');
+									
+									var $tr1 = $('<tr>');
+									var $tr2 = $('<tr>');
+									
+									var $td1 = $('<td>').attr('rowspan', 2);
+									var $td2 = $('<td>');
+									var $td3 = $('<td>').text(data[key].content);
+									
+									var $span1 = $('<span>').html(data[key].writer + '&nbsp; &nbsp; ').css('font-weight', 'bold');
+									var $span2 = $('<span>').html(data[key].write_date + '&nbsp; &nbsp; ').css('font-weight', 'bold').css('color', 'rgb(190, 190, 190)');
+									var $span3 = $('<span>').html('<input type="hidden" value=' + data[key].cno + '><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span>');
+									
+									var $img = $('<img>').attr('src', "<%= request.getContextPath() %>/images/blanket.png").css('width', 'auto').css('height', '50px');
+									
+									$td1.append($img);
+									$td2.append($span1);
+									$td2.append($span2);
+									if(data[key].writer == '<%= loginUser.getNickName() %>') {
+										$td2.append($span3);	
+									}
+									
+									$tr1.append($td1);
+									$tr1.append($td2);
+									$tr2.append($td3);
+									$table.append($tr1);
+									$table.append($tr2);
+									
+									$replyTable.append($table);
+									$replyTable.append('<br>');
+								}
+								
+								$('#commentLeft').val('');
+							}
+						});
+					}
+				})
+				
+				$(document).on('click', '.replyDelete', function(){
+					if(confirm('댓글을 삭제하시겠습니까?')) {
+						var bid = <%= board.getNo() %>;
+						var rid = $(this).parent().children().eq(0).val();
+						$.ajax({
+							url: '<%= request.getContextPath() %>/delete.reply',
+							type: 'post',
+							data: {bid: bid, rid: rid},
+							success: function(data){
+								$replyTable = $('#replyTable');
+								$replyTable.html("");
+								
+								$('#replyCount').text(data.length);
+								
+								if(data.length == 0) {
+									var $span = $('<span>').text('등록된 댓글이 없습니다.').css('margin-right', '200px');
+									
+									$replyTable.append('<br>');
+									$replyTable.append($span);
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									
+								} else {
+									for(var key in data){
+										var $table = $('<table>').css('text-align', 'left');
+										
+										var $tr1 = $('<tr>');
+										var $tr2 = $('<tr>');
+										
+										var $td1 = $('<td>').attr('rowspan', 2);
+										var $td2 = $('<td>');
+										var $td3 = $('<td>').text(data[key].content);
+										
+										var $span1 = $('<span>').html(data[key].writer + '&nbsp; &nbsp; ').css('font-weight', 'bold');
+										var $span2 = $('<span>').html(data[key].write_date + '&nbsp; &nbsp; ').css('font-weight', 'bold').css('color', 'rgb(190, 190, 190)');
+										var $span3 = $('<span>').html('<input type="hidden" value=' + data[key].cno + '><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span>');
+										
+										var $img = $('<img>').attr('src', "<%= request.getContextPath() %>/images/blanket.png").css('width', 'auto').css('height', '50px');
+										
+										$td1.append($img);
+										$td2.append($span1);
+										$td2.append($span2);
+										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+											$td2.append($span3);	
+										}
+										
+										$tr1.append($td1);
+										$tr1.append($td2);
+										$tr2.append($td3);
+										$table.append($tr1);
+										$table.append($tr2);
+										
+										$replyTable.append($table);
+										$replyTable.append('<br>');
+									}
+								}
+								
+								$('#commentLeft').val('');
+							}
+						});
+					}
+				})
+				
+				$(document).on('click', '.replyUpdate', function(){
+					console.log($(this).parent().parent().parent().next().children()); // 댓글 보여주는 부분의 td까지 왔음
+				})
+			</script>
 			
 		</div>
 	</div>

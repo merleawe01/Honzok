@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import c_information.model.vo.FoodBoard;
 import c_information.model.vo.Image;
+import c_information.model.vo.Reply;
 import c_information.model.vo.TravelBoard;
 
 public class InformationDAO {
@@ -59,6 +60,7 @@ public class InformationDAO {
 		int result = 0;
 		
 		String query = prop.getProperty("insertFBoard");
+		//INSERT INTO EAT VALUES (SEQ_PNO.CURRVAL, ?, ?, ?, ?, ?, ?)
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -346,7 +348,7 @@ public class InformationDAO {
 			
 			if(rs.next()) {
 				board = new TravelBoard(rs.getInt("POST_NO"), rs.getString("POST_TITLE"), rs.getString("NICKNAME"), rs.getString("CONTENT"), rs.getInt("VIEW_COUNT"), 
-						rs.getInt("RECO_COUNT"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("CAUTION"), rs.getString("BEST_TIME"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
+						rs.getInt("RECO_COUNT"), rs.getString("LOCAL_NAME"), rs.getString("ADDRESS"), rs.getInt("STAR"), rs.getString("CAUTION"), rs.getString("BEST_TIME"), rs.getDouble("AREA_X"), rs.getDouble("AREA_Y"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -433,14 +435,35 @@ public class InformationDAO {
 		String[] array = imgInfo.split(", ");
 		int count = array.length;
 		
-		String query = prop.getProperty("updateInsertImage");
-		String query2 = prop.getProperty("updateDeleteImage"); //UPDATE IMAGE SET STATUS = 'N' WHERE POST_NO = ? AND FILE_LEVEL = ?
+		String query = prop.getProperty("updateDeleteImage"); //UPDATE IMAGE SET STATUS = 'N' WHERE POST_NO = ? AND FILE_LEVEL = ?
+		String query2 = prop.getProperty("updateInsertImage");
 		
 		try {
+			pstmt = conn.prepareStatement(query);
+			
+			for(int j = count - 1; j >= 0; j--) {
+				if(array[j].equals("delete") || array[j].equals("change")) {
+					
+					pstmt.setInt(1, no);
+					pstmt.setInt(2, j);
+					
+					result = pstmt.executeUpdate();
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			count = array.length;
 			for(int i = 0; i < fileList.size(); i++) {
+				
 				Image a = fileList.get(i);
 
-				pstmt = conn.prepareStatement(query);
+				pstmt = conn.prepareStatement(query2);
 				pstmt.setInt(1, no);
 				pstmt.setString(2, a.getOrigin_name());
 				pstmt.setString(3, a.getChange_name());
@@ -462,26 +485,6 @@ public class InformationDAO {
 			close(pstmt);
 		}
 		
-		try {
-			pstmt = conn.prepareStatement(query2);
-			
-			count = array.length;
-			
-			for(int j = count - 1; j >= 0; j--) {
-				if(array[j].equals("delete") || array[j].equals("change")) {
-					
-					pstmt.setInt(1, no);
-					pstmt.setInt(2, j);
-					
-					result = pstmt.executeUpdate();
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
 		return result;
 	}
 
@@ -500,6 +503,126 @@ public class InformationDAO {
 				pstmt.setInt(2, board.getNo());
 				result = pstmt.executeUpdate();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateBoard(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBoard");
+		//UPDATE B_COMMON SET POST_TITLE = ?, CONTENT = ?, MODIFY_DATE = SYSDATE WHERE POST_NO = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateTBoard(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateTBoard");
+		// UPDATE TRIP SET LOCAL_NAME = ?, ADDRESS = ?, STAR = ?, CAUTION = ?, BEST_TIME = ?, AREA_X = ?, AREA_Y = ? WHERE POST_NO = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, board.getLocal_name());
+			pstmt.setString(2, board.getAddress());
+			pstmt.setInt(3, board.getStar());
+			String caution = (board.getCaution() == null) ? "" : board.getCaution();
+			pstmt.setString(4, caution);
+			pstmt.setString(5, board.getBest_time());
+			pstmt.setDouble(6, board.getArea_x());
+			pstmt.setDouble(7, board.getArea_y());
+			pstmt.setInt(8, board.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, r.getPost_no());
+			pstmt.setString(2, r.getWriter());
+			pstmt.setString(3, r.getContent());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int post_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Reply> list = null;
+		
+		String query = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, post_no);
+			
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Reply>();
+			
+			while(rs.next()) {
+				list.add(new Reply(rs.getInt("cno"), rs.getInt("post_no"), rs.getString("nickname"), rs.getString("content"), rs.getDate("write_date"), rs.getString("delete_yn")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int deleteReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, r.getCno());
+			
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
