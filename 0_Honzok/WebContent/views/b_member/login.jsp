@@ -91,7 +91,7 @@
 	            	</div>
 	            	<div id="loginBtnArea">
 	            		<!-- <input type="submit" onclick="login();" name="loginBtn" id="loginBtn"class="center" value="로그인"> -->
-	            		<button type="button" onclick="login();" name="loginBtn" id="loginBtn">로그인</button>
+	            		<button type="submit"  name="loginBtn" id="loginBtn">로그인</button>
 	            	</div>
 	            </form>
 	            </div>
@@ -105,7 +105,7 @@
                   } else if($("#userPwd").val() == "") {
                      alert("비밀번호를 입력해주세요.");
                   } else {
-                     $('#login_box').submit();
+                     $('form').submit();
                   }
                };
             </script>

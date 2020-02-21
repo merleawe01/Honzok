@@ -35,7 +35,7 @@
 	#logo {height: auto; width: auto; float: center;}
 	#travel {position:relative; left:50px; top:100px;}
 	
-	nav {background-color:#fff4c7; visibility: hidden;}
+	nav {background-color:#fff4c7; }
 	.menu {margin:100px auto;}
 	.circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
 			margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
@@ -71,7 +71,7 @@
 				<div id="logout">
 				<a href="logout.me">로그아웃</a>
 				<%} %>
-
+			</div>
 		</div>
 		
 		
@@ -83,16 +83,16 @@
 		<nav>
 		<table class="menu">
 				<tr>
-					<td><div class="circle" id="circle1"></div></td>
+					<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
 					<td></td>
 					<td><div class="circle" id="circle2"></div></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><div class="circle" id="circle1"></div></td>
+					<td><div class="circle" id="circle1" onclick="goGy();">물귤교환</div></td>
 					<td></td>
-					<td><div class="circle" id="circle2" onclick="goThumbnail();">마켓</div></td>
+					<td><div class="circle" id="circle2" onclick="goMarket();">혼플리마켓</div></td>
 				</tr>
 		</table>
 		</nav>
@@ -100,11 +100,7 @@
 
 	<section>
 
-		<div id="realMain" style="display : inline-block">
-				<a href="#" style="transform:translate(0px, 0px);">
-					<img src="../images/travel.PNG" width="25%" height=35% id="travel"/>
-				</a>
-		</div>
+
 		
 		
 	</section>
@@ -122,7 +118,10 @@
 			<% } %>
 		}	
 		
-		function goThumbnail(){
+		function goInfo(){
+			location.href="<%= request.getContextPath()%>/list.food";
+		}
+		function goMarket(){
 			location.href="<%= request.getContextPath()%>/list.m";
 		}
 		

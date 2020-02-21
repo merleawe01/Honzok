@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import a_common.PageInfo;
 import b_member.model.vo.Member;
 import f_message.model.service.MessageService;
 import f_message.model.vo.Message;
-import f_message.model.vo.PageInfo;
 
 /**
  * Servlet implementation class RecieveSerchServlet
