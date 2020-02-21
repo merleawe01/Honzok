@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <title>Insert title here</title>
 <style>
+
    header {width: 100%; height: 170px; text-align: center;}
    #mainHeader {width: 1170px; height: 50px; display: inline-block;}
    .menuBtn {padding:3px; display: inline-table; float: right;
@@ -37,7 +38,8 @@
     #loginBtn {text-align:center; font-weight:bold; font-size:14px; width:100%; height:45px;
              padding: 0 20px; border: none; border-radius: 5px; box-sizing: border-box; margin:20px auto;
              background-color: powderblue; cursor:pointer;}
-    #link_list {left:0px; margin-bottom:20px;}
+
+  #link_list {left:0px; margin-bottom:20px;}
     #link_list li {display:inline-block; list-style: none;}
     #link_list li a {display: block; padding: 0 10px; font-size: 14px; font-weight: 600; color:rgb(118,129,73);}
     #link_list li a:hover {color:rgb(241,131,50);}
@@ -52,46 +54,48 @@
 </head>
 <body>
 <body>
-   <header>
-      <div id="mainHeader">
-         <button type="button" class="menuBtn" onclick="">
-            <img src="../../images/list.png" style="width: 30px; heigth: 30px;">
-         </button>
-      <script>
-            $(function() {
-               $(".menuBtn").click(function() {
-                  $("#accordian ul ul").slideUp();
-                  if (!$(this).next().is(":visible")) {
-                     $(this).next().slideDown();
-                  }
-               })
-            })
-            
-         </script>
 
-      </div>
-      <div id="subHeader">
-         <a href="../../index.jsp"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
-      </div>
-   </header>
+	<header>
+		<div id="mainHeader">
+			<button type="button" class="menuBtn" onclick="">
+				<img src="../../images/list.png" style="width: 30px; heigth: 30px;">
+			</button>
+		<script>
+				$(function() {
+					$(".menuBtn").click(function() {
+						$("#accordian ul ul").slideUp();
+						if (!$(this).next().is(":visible")) {
+							$(this).next().slideDown();
+						}
+					})
+				})
+				
+			</script>
 
-   <section>
-      <div id="main">
-         <div id="realMain">
-            
-            <!-- 로그인 박스 -->
-               <div class="center">
-               <form action="<%= request.getContextPath() %>/login.me" method="post">
-                  <div id="login_box">
-                     <input type="text" name="userId" id="userId" placeholder="아이디"><br>
-                     <input type="password" name="userPwd" id="userPwd" placeholder="비밀번호">
-                  </div>
-                  <div id="loginBtnArea">
-                     <!-- <input type="submit" onclick="login();" name="loginBtn" id="loginBtn"class="center" value="로그인"> -->
-                     <button type="button" onclick="login();" name="loginBtn" id="loginBtn">로그인</button>
-                  </div>
-               </form>
-               </div>
+		</div>
+		<div id="subHeader">
+			<a href="../../index.jsp"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
+		</div>
+	</header>
+
+	<section>
+		<div id="main">
+			<div id="realMain">
+				
+				<!-- 로그인 박스 -->
+	            <div class="center">
+	            <form action="<%= request.getContextPath() %>/login.me" method="post">
+	            	<div id="login_box">
+		            	<input type="text" name="userId" id="userId" placeholder="아이디"><br>
+		            	<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호">
+	            	</div>
+	            	<div id="loginBtnArea">
+	            		<!-- <input type="submit" onclick="login();" name="loginBtn" id="loginBtn"class="center" value="로그인"> -->
+	            		<button type="button" onclick="login();" name="loginBtn" id="loginBtn">로그인</button>
+	            	</div>
+	            </form>
+	            </div>
+
             </div>
             <script>
                function login(){
@@ -106,67 +110,68 @@
                };
             </script>
             
-         <div id="linkArea">
-            <!-- ID/PWD 찾기 + 회원 가입 -->
-            <ul id="link_list" class="center">
-               <li><a href="../b_member/find_Id.jsp">아이디 찾기</a></li>
-               <li><a href="../b_member/find_Pwd1.jsp">비밀번호 찾기</a></li>
-               <li><a href="../b_member/memberJoin.jsp">회원 가입</a></li>
-            </ul>
-         
-         </div>
-         
-         <p class="center">
-            <span id="text">또는</span>
-         </p>
-         
-      
-   </div>   
-            
-            
-            <!-- <button onclick="naver_login();" id="N_loginBtn" class="center">
-               <img src="images/naver_icon.png" width="50px" height="50px">
-               <b>네이버 아이디로 로그인/회원가입</b>
-               <div id="naver_id_login"></div>
-               
-            </button> -->
-         
-         <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-         <button id="N_loginBtn" class="center">
-               <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-         <div id="naver_id_login"></div>
-           <!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<!--          <script type="text/javascript">
-              var naver_id_login = new naver_id_login("PUOQo9pPnn5wJXhNF0v6", "http://localhost:9580/0_Honzok/views.jsp");
-              var state = naver_id_login.getUniqState();
-              naver_id_login.setButton("white", 2,40);
-              naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
-              naver_id_login.setState(state);
-              naver_id_login.setPopup();
-              naver_id_login.init_naver_id_login();
-         </script>
-         
-         <script type="text/javascript">
-               var clientId = "PUOQo9pPnn5wJXhNF0v6";
-               var callbackUrl = "http://localhost:9580/0_Honzok/views.jsp";
-               var naver_id_login = new naver_id_login(clientId, callbackUrl);
-               var state = naver_id_login.getUniqState();
-               naver_id_login.setButton("white", 3, 40);
-               naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
-               naver_id_login.setState(state);
-               naver_id_login.setPopup();
-               naver_id_login.init_naver_id_login();
-         </script> -->
-         
-         </button>
-         
 
-      
-   </section>
+			<div id="linkArea">
+				<!-- ID/PWD 찾기 + 회원 가입 -->
+				<ul id="link_list" class="center">
+					<li><a href="../b_member/find_Id.jsp">아이디 찾기</a></li>
+					<li><a href="../b_member/find_Pwd1.jsp">비밀번호 찾기</a></li>
+					<li><a href="../b_member/memberJoin.jsp">회원 가입</a></li>
+				</ul>
+			
+			</div>
+			
+			<p class="center">
+				<span id="text">또는</span>
+			</p>
+			
+		
+	</div>	
+				
+				
+				<!-- <button onclick="naver_login();" id="N_loginBtn" class="center">
+					<img src="images/naver_icon.png" width="50px" height="50px">
+					<b>네이버 아이디로 로그인/회원가입</b>
+					<div id="naver_id_login"></div>
+					
+				</button> -->
+			
+			<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+			<button id="N_loginBtn" class="center">
+		 		  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+			<div id="naver_id_login"></div>
+			  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+<!-- 			<script type="text/javascript">
+			  	var naver_id_login = new naver_id_login("PUOQo9pPnn5wJXhNF0v6", "http://localhost:9580/0_Honzok/views.jsp");
+			  	var state = naver_id_login.getUniqState();
+			  	naver_id_login.setButton("white", 2,40);
+			  	naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
+			  	naver_id_login.setState(state);
+			  	naver_id_login.setPopup();
+			  	naver_id_login.init_naver_id_login();
+			</script>
+			
+			<script type="text/javascript">
+					var clientId = "PUOQo9pPnn5wJXhNF0v6";
+					var callbackUrl = "http://localhost:9580/0_Honzok/views.jsp";
+					var naver_id_login = new naver_id_login(clientId, callbackUrl);
+					var state = naver_id_login.getUniqState();
+					naver_id_login.setButton("white", 3, 40);
+					naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
+					naver_id_login.setState(state);
+					naver_id_login.setPopup();
+					naver_id_login.init_naver_id_login();
+			</script> -->
+			
+			</button>
+			
 
-   <footer> 
-   
-   </footer>
-   
+		
+	</section>
+
+	<footer> 
+	
+	</footer>
+	
 </body>
 </html>

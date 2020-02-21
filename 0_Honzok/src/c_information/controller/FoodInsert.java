@@ -76,21 +76,16 @@ public class FoodInsert extends HttpServlet {
 			String address = multipartRequest.getParameter("address");
 			String local_name = multipartRequest.getParameter("local_name");
 			
-//			String writer = ((Member)request.getSession().getAttribute("loginUser")).getNickName();
-			String writer = "shiningSolo";
+			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 			
 			FoodBoard board = new FoodBoard(title, writer, content, category, local_name, address, star, rc_food, area_x, area_y);
 			
 			ArrayList<Image> fileList = new ArrayList<Image>();
 			
-			for(int i = originFiles.size() -1; i >= 0; i--) {
+			for(int i = 0; i < originFiles.size(); i++) {
 				Image img = new Image(originFiles.get(i), saveFiles.get(i), savePath);
 				
-				if(i == originFiles.size()-1) {
-					img.setFileLevel(0);
-				} else {
-					img.setFileLevel(1);
-				}
+				img.setFileLevel(originFiles.size() - i - 1);
 				
 				fileList.add(img);
 			}

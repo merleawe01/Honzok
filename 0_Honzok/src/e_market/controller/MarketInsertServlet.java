@@ -44,7 +44,7 @@ public class MarketInsertServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
-			int maxSize = 1024 * 1024 * 10;		// 10Mbyte : 전송파일 용량 제한.(바꿔도됨)
+			int maxSize = 1024 * 1024 * 10;		
 			String root = request.getSession().getServletContext().getRealPath("/");
 			String savePath = root + "thumbnail_uploadFiles/";
 			
@@ -65,20 +65,22 @@ public class MarketInsertServlet extends HttpServlet {
 				}
 			}
 			
-			String postTitle =request.getParameter("postTitle");
-			String content = request.getParameter("incontent");
-			String itemStatus = request.getParameter("status");
-			int itemPrice = Integer.parseInt(request.getParameter("price"));
-			String useDate =request.getParameter("useDate");
-			String etc = request.getParameter("etc");
+			String postTitle =multipartRequest.getParameter("postTitle");
+			String content = multipartRequest.getParameter("incontent");
+			String itemStatus = multipartRequest.getParameter("status");
+			int itemPrice = Integer.parseInt(multipartRequest.getParameter("price"));
+			String useDate =multipartRequest.getParameter("useDate");
+			String etc = multipartRequest.getParameter("etc");
 			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 			
-			Market m = new Market();
-			m.setPostTitle(postTitle);
+			Market m = new Market(postTitle,content, itemStatus, itemPrice,useDate, etc, writer);
+			/*m.setPostTitle(postTitle);
+			m.setContent(content);
 			m.setItemStatus(itemStatus);
 			m.setItemPrice(itemPrice);
 			m.setUseDate(useDate);
 			m.setEtc(etc);
+			m.setWriter(writer);*/
 			
 			
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
@@ -89,7 +91,6 @@ public class MarketInsertServlet extends HttpServlet {
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
 				
-				// 내용이미지인지 대표이미지인지 구분
 				if(i == originFiles.size()-1) {
 					at.setFileLevel(0);
 				} else {
@@ -99,7 +100,7 @@ public class MarketInsertServlet extends HttpServlet {
 				fileList.add(at);
 			}
 			
-			int result = new MarketService().insertMarket(m, fileList, writer);
+			int result = new MarketService().insertMarket(m, fileList);
 			
 			if(result > 0) {
 				response.sendRedirect("list.m");
@@ -110,7 +111,7 @@ public class MarketInsertServlet extends HttpServlet {
 				}
 				
 				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+				request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 			}
 		}
 	}

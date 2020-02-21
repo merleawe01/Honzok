@@ -71,16 +71,12 @@
 				<div id="logout">
 				<a href="logout.me">로그아웃</a>
 				<%} %>
-				
-			
-</div>
-
 
 		</div>
 		
 		
 		<div id="subHeader">
-			<img alt="로고" src="images/Logo.png" id="logo">
+			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
 		</div>
 		
 		<!-- 메뉴 -->
@@ -96,7 +92,7 @@
 					<td></td>
 					<td><div class="circle" id="circle1"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="goThumbnail();">마켓</div></td>
 				</tr>
 		</table>
 		</nav>
@@ -132,5 +128,5 @@
 	</script>
 	
 </body>
-
+  
 </html>

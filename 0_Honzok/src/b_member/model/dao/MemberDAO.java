@@ -257,7 +257,6 @@ public int updatePwd(Connection conn, HashMap<String, String> map) {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, nickName);
-			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt(1);

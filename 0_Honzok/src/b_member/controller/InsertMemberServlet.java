@@ -51,10 +51,9 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
 		int result = new MemberService().insertMember(member);
-    
-    // 회원가입 메세지
-		//String nickName = request.getParameter("nickName");
-		//new MessageService().welcomeMessage(nickName);
+
+	    new MessageService().welcomeMessage(nickName);
+
 		
 		
 		String page = "";
