@@ -12,8 +12,25 @@ public class Message {
 	private Date date;
 	private int view;
 	
+	public Message() {}
 	
-	
+	public Message(String to, String from, String mTitle, String content) {
+		super();
+		this.to = to;
+		this.from = from;
+		this.mTitle = mTitle;
+		this.content = content;
+	}
+
+	public Message(int mNo, String to, String from, String mTitle, String content, Date date, int view) {
+		this.mNo = mNo;
+		this.to = to;
+		this.from = from;
+		this.mTitle = mTitle;
+		this.content = content;
+		this.date = date;
+		this.view = view;
+	}
 	// getter/setter 메소드
 	public int getmNo() {
 		return mNo;
@@ -57,5 +74,13 @@ public class Message {
 	public void setView(int view) {
 		this.view = view;
 	}
+
+	@Override
+	public String toString() {
+		return "Message [mNo=" + mNo + ", to=" + to + ", from=" + from + ", mTitle=" + mTitle + ", content=" + content
+				+ ", date=" + date + ", view=" + view + "]";
+	}
+	
+	
 	
 }

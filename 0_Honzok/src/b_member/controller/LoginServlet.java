@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import b_member.model.service.MemberService;
 import b_member.model.vo.Member;
+import b_member.model.service.MemberService;
 
 /**
  * Servlet implementation class LoginServlet

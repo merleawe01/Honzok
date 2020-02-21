@@ -1,5 +1,213 @@
 package d_trade.model.vo;
 
-public class Trade {
+import java.sql.Date;
 
+public class Trade {
+	
+	private int postNo;
+	private int boardNo;
+	private String postTitle;
+	private String writer;
+	private String content;
+	private int viewCount;
+	private Date writeDate;
+	private Date modifyDate;
+	private int recoCount;
+	private char deleteYN;
+	
+	private Date dlTime;
+	private char dlYN;
+	private int minPoint;
+	private int maxPoint;
+	private int point;
+	private String nickname;
+
+	public Trade() {}
+	
+	
+
+	public Trade(String postTitle, String writer, String content) {
+		super();
+		this.postTitle = postTitle;
+		this.writer = writer;
+		this.content = content;
+	}
+
+
+	public Trade(int minPoint, int maxPoint, int point, String nickname) {
+		super();
+		this.minPoint = minPoint;
+		this.maxPoint = maxPoint;
+		this.point = point;
+		this.nickname = nickname;
+	}
+
+
+
+	public Trade(int postNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
+		super();
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.writer = writer;
+		this.dlTime = dlTime;
+		this.maxPoint = maxPoint;
+		this.point = point;
+	}
+
+
+	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname, int point, int maxPoint, Date dlTime, Date writeDate,
+			Date modifyDate, char deleteYN) {
+		super();
+		this.postNo = postNo;
+		this.boardNo = boardNo;
+		this.postTitle = postTitle;
+		this.content = content;
+		this.viewCount = viewCount;
+		this.writeDate = writeDate;
+		this.modifyDate = modifyDate;
+		this.deleteYN = deleteYN;
+		this.dlTime = dlTime;
+		this.maxPoint = maxPoint;
+		this.point = point;
+		this.nickname = nickname;
+	}
+
+
+
+	public int getPostNo() {
+		return postNo;
+	}
+
+	public void setPostNo(int postNo) {
+		this.postNo = postNo;
+	}
+
+	public int getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
+
+	public String getPostTitle() {
+		return postTitle;
+	}
+
+	public void setPostTitle(String postTitle) {
+		this.postTitle = postTitle;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public Date getWriteDate() {
+		return writeDate;
+	}
+
+	public void setWriteDate(Date writeDate) {
+		this.writeDate = writeDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public int getRecoCount() {
+		return recoCount;
+	}
+
+	public void setRecoCount(int recoCount) {
+		this.recoCount = recoCount;
+	}
+
+	public char getDeleteYN() {
+		return deleteYN;
+	}
+
+	public void setDeleteYN(char deleteYN) {
+		this.deleteYN = deleteYN;
+	}
+
+
+	
+	public Date getDlTime() {
+		return dlTime;
+	}
+
+	public void setDlTime(Date dlTime) {
+		this.dlTime = dlTime;
+	}
+
+	public char getDlYN() {
+		return dlYN;
+	}
+
+	public void setDlYN(char dlYN) {
+		this.dlYN = dlYN;
+	}
+
+	public int getMinPoint() {
+		return minPoint;
+	}
+
+	public void setMinPoint(int minPoint) {
+		this.minPoint = minPoint;
+	}
+
+	public int getMaxPoint() {
+		return maxPoint;
+	}
+
+	public void setMaxPoint(int maxPoint) {
+		this.maxPoint = maxPoint;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

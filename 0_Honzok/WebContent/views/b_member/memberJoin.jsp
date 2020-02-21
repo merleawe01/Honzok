@@ -205,18 +205,19 @@
 		
 	</style>
 </head>
-<body>
+
 <body><%@ include file="../a_common/Main.jsp" %>
+
 	
 	<header>
 	
-		<div id="mainHeader">
-			<img alt="로고" src="../image/Logo.png" id="logo">
-			<img alt="메뉴" src="../image/list.png" id="list">
+		<div id="mainHeader"><a href="index.jsp">	
+			<img alt="로고" src="../../image/Logo.png" id="logo"></a>
+			<img alt="메뉴" src="../../image/list.png" id="list">
 			
 			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
 			<div id="nickname">
-				<a href>로그인</a> 
+				<a href="login.jsp">로그인</a> 
 			</div>
 			
 			
@@ -236,44 +237,60 @@
 			
 			
 			<div id="realMain">
+				<form action="<%= request.getContextPath() %>/insert.me" method="post" id="joinForm" name="joinForm">
 				<div id = "information"><b>기본 정보</b></div>
+				
 				<div class =  "input" >
 					<div class = "left">이름<span class = "must">(필수)</span></div> 
 					
-				<input type = "text" class = "right">
+				<input type = "text" class = "right" name="userName">
 					 
 				</div>
 				
 				<div class = "input">
 					<div class = "left">아이디<span class = "must">(필수)</span></div>
-					<input type = "text" class = "right"> <input type = "button" class = "mini_bt" value = "중복확인">
+					<input type = "text" class = "right" name="joinUserId"> <input type="button" id="idCheck" class="mini_bt" onclick="checkId();" value="중복확인"/>
 				</div>
 				
 				<div class = "input">
 					<div class = "left">비밀번호<span class = "must">(필수)</span></div>
-					 <input type = "password" class = "right">
+					 <input type = "password" class = "right" name="joinUserPwd">
 				</div>
 				
 				<div class = "input">
 					<div class = "left">비밀번호 확인<span class = "must">(필수)</span></div>
-					<input type = "password" class = "right">
+					<input type = "password" class = "right" >
 				</div>
 				
 				<div class = "input">
 					<div class = "left">닉네임<span class = "must">(필수)</span></div>
-					 <input type = "text" class = "right">
+					 <input type = "text" class = "right" name="nickName">
 				</div>
 				
 				<div class ="input">
 					<div class = "left">주소</div>
 						
-						<input type = "text" class = "right address1" style = "width : 120px;"><input type = "button" class = "mini_bt" value = "우편번호"><br>
-						<input type = "text" class = "right address1" style = "width : 400px;"><label class = address2>기본 주소</label> <br>
-						<input type = "text" class = "right" style = "width : 400px;" placeholder = "상세 주소를 입력해주세요."><label class = address2>나머지 주소</label>
+						<input type = "text" class = "right address1" id="postalCode" name="postalCode" style = "width : 120px;"/>
+						<input type="button" onclick="goPopup()" class="mini_bt" style="margin-left:5px;" value="우편번호"/><br>
+							
+						<input type = "text" class = "right address1" id="bAddr" name="bAddr" style = "width : 400px;"><label class = address2>기본 주소</label> <br>
+						<input type = "text" class = "right" id="lAddr" name="lAddr" style = "width : 400px;" placeholder = "상세 주소를 입력해주세요."><label class = address2>나머지 주소</label>
 						
 					
 				</div>
-				
+				<script>
+						function goPopup(){
+							// 주소검색을 수행할 팝업 페이지를 호출합니다.
+							// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+							var pop = window.open("../../popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+						}
+						function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+							// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+							document.getElementById("bAddr").value = roadAddrPart1;
+							document.getElementById("lAddr").value = addrDetail;
+							document.getElementById("postalCode").value = zipNo;
+						}
+				</script>
 				<div class = "input">
 					<div class = "left">핸드폰 번호 </div>
 								<select class = "right" style = "height : 30px; width : 100px;">
@@ -292,7 +309,7 @@
 				<div class = "input"  id = "end_line">
 					<div class = "left">이메일<span class = "must">(필수)</span></div>
 					<div> 
-					<input type = "text" class = "right email" maxlength="16" placeholder="이메일을 입력해주세요."> @ <input type = "text" class = "right email"> 
+					<input type = "text" class = "right email" maxlength="16" placeholder="이메일을 입력해주세요." name="email"> @ <input type = "text" class = "right email"> 
 					<select>
 						<option>직접입력</option>
 						<option>daum.net</option>
@@ -335,8 +352,8 @@
 					
 				</div>
 								
-				<input type = "button" id = "finish_bt" value = "회원가입">
-				
+				<input type = "submit" id = "finish_bt" value = "회원가입">
+				</form>
 			</div>
 			
 			

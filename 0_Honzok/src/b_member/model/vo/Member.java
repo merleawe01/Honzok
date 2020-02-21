@@ -28,12 +28,42 @@ public class Member {
 	
 	
 	
+
 	public Member(String userName, String bAddr, String phone, String email) {
 		super();
 		this.userName = userName;
 		this.bAddr = bAddr;
 		this.phone = phone;
 		this.email = email;
+
+	public Member(String userId, String userName, String nickName, int postalCode, String bAddr, String lAddr,
+			String phone, String email, int point) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.postalCode = postalCode;
+		this.bAddr = bAddr;
+		this.lAddr = lAddr;
+		this.phone = phone;
+		this.email = email;
+		this.point = point;
+	}
+
+	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
+			String lAddr, String phone, String email, int point) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.postalCode = postalCode;
+		this.bAddr = bAddr;
+		this.lAddr = lAddr;
+		this.phone = phone;
+		this.email = email;
+		this.point = point;
+
 	}
 
 	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
@@ -52,6 +82,35 @@ public class Member {
 		this.enrollDate = enrollDate;
 		this.status = status;
 		this.point = point;
+	}
+
+	public Member(String userId, String userName, String nickName, int postalCode, String bAddr, String lAddr,
+			String phone, String email) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.postalCode = postalCode;
+		this.bAddr = bAddr;
+		this.lAddr = lAddr;
+		this.phone = phone;
+		this.email = email;
+	}
+
+	
+
+	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
+			String lAddr, String phone, String email) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.postalCode = postalCode;
+		this.bAddr = bAddr;
+		this.lAddr = lAddr;
+		this.phone = phone;
+		this.email = email;
 	}
 
 	// getter/setter 메소드
