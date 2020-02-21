@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import e_market.model.dao.MarketDAO;
+import b_member.model.vo.Member;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
 
@@ -127,8 +127,6 @@ public class MarketDAO {
 			close(stmt);
 		}
 		
-		System.out.println(list);
-		
 		return list;
 	}
 
@@ -158,36 +156,54 @@ public class MarketDAO {
 		
 		return list;
 	}
-
-	public int insertMarketBoard(Connection conn, Market m, String writer) {
-		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
+	
+	public int insertCommonBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		
 		int result = 0;
 
-		String query1 = prop.getProperty("insertMarketBoard");
-		String query2 = prop.getProperty("insertMarketWriter");
+		String query = prop.getProperty("insertCommonBoard");
 		
 		try {
-			pstmt1 = conn.prepareStatement(query1);
-			pstmt1.setString(1, m.getItemStatus());
-			pstmt1.setInt(2, m.getItemPrice());
-			pstmt1.setString(3, m.getUseDate());
-			pstmt1.setString(4, m.getEtc());
-			pstmt1.setString(5, m.getSellYn());
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPostTitle());
+			pstmt.setString(2, m.getWriter());
+			pstmt.setString(3, m.getContent());
 			
-			pstmt2 = conn.prepareStatement(query2);
-			pstmt2.setString(1, m.getPostTitle());
-			pstmt2.setString(2, writer);
-			
-			result = pstmt1.executeUpdate() * pstmt2.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt1);
-			close(pstmt2);
+			close(pstmt);
+			
 		}
 		
+		
+		
+		return result;
+	}
+	public int insertMarketBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertMarketBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getItemStatus());
+			pstmt.setInt(2, m.getItemPrice());
+			pstmt.setString(3, m.getUseDate());
+			pstmt.setString(4, m.getEtc());
+			
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			
+		}
 		return result;
 	}
 
@@ -209,18 +225,279 @@ public class MarketDAO {
 				result += pstmt.executeUpdate();
 				
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateCount(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCount");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+	
+		
+		return result;
+	}
+
+	public Market selectBoard(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Market m = null;
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Market(rset.getInt("post_no"),
+							   rset.getString("post_title"),
+							   rset.getDate("write_date"),
+							   rset.getString("writer"),
+							   rset.getInt("view_count"),
+							   rset.getString("content"),
+							   rset.getString("item_status"),
+							   rset.getInt("item_price"),
+							   rset.getString("use_date"),
+							   rset.getString("etc"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
+
+	public ArrayList<Attachment> selectImage(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectImage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rset = pstmt.executeQuery(); 
+			list = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setImgId(rset.getInt("img_id"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setChangeName(rset.getString("change_name"));
+				at.setImgSrc(rset.getString("img_src"));
+				at.setUploadDate(rset.getDate("upload_date"));
+				
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int updateMarket(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMarket");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getItemStatus());
+			pstmt.setInt(2, m.getItemPrice());
+			pstmt.setString(3, m.getUseDate());
+			pstmt.setString(4, m.getEtc());
+			pstmt.setInt(5, m.getPostNo());
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
-	
-	
-	
-	
-	
+
+	public int updateCommonBoard(Connection conn, Market m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCommonBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getPostTitle());
+			pstmt.setString(2, m.getContent());
+			pstmt.setInt(3, m.getPostNo());
+			
+			result = pstmt.executeUpdate();
+ 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateImage(Connection conn, ArrayList<Attachment> changeFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateImage");
+		
+		try {
+			for(int i = 0; i < changeFile.size(); i++) {
+				Attachment a = changeFile.get(i);
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, a.getOriginName());
+				pstmt.setString(2, a.getChangeName());
+				pstmt.setInt(3, a.getImgId());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertNewImage(Connection conn, ArrayList<Attachment> newInsertFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertNewImage");
+		
+		try {
+			for(int i = 0; i < newInsertFile.size(); i++) {
+				Attachment a = newInsertFile.get(i);
+			
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, a.getPostNo());
+				pstmt.setString(2, a.getOriginName());
+				pstmt.setString(3, a.getChangeName());
+				pstmt.setString(4, a.getImgSrc());
+				pstmt.setInt(5, a.getFileLevel());
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteMarket(Connection conn, String postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMarket");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public int deleteImage(Connection conn, String postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteImage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member selectInfo(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		
+		String query = prop.getProperty("selectInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				m = new Member(rs.getString("user_name"),
+									rs.getString("b_address"),
+									rs.getString("phone"),
+									rs.getString("email"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return m;
+	}
 	
 }

@@ -97,7 +97,7 @@
 					<td></td>
 					<td><div class="circle" id="circle1"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="goThumbnail();">마켓</div></td>
 				</tr>
 		</table>
 		</nav>
@@ -133,5 +133,5 @@
 	</script>
 	
 </body>
-
+  
 </html>

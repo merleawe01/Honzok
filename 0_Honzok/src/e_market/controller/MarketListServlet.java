@@ -47,7 +47,6 @@ public class MarketListServlet extends HttpServlet {
 		currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			// 페이지 전환 시 전달 받은 페이지로 currentPage 적용
 		}
 		
 		limit = 10;
@@ -66,10 +65,10 @@ public class MarketListServlet extends HttpServlet {
 		
 		String page = null;
 		if(mList != null && fList != null) {
-			page = "views/e_market/marketList.jsp";
 			request.setAttribute("mList", mList);
 			request.setAttribute("fList", fList);
 			request.setAttribute("pi", pi); //페이징에 대한것이고
+			page = "views/e_market/marketList.jsp";
 		} else {
 			page = "views/a_common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회에 실패하였습니다.");

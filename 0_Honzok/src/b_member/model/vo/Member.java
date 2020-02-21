@@ -28,6 +28,14 @@ public class Member {
 	
 	
 	
+
+	public Member(String userName, String bAddr, String phone, String email) {
+		super();
+		this.userName = userName;
+		this.bAddr = bAddr;
+		this.phone = phone;
+		this.email = email;
+
 	public Member(String userId, String userName, String nickName, int postalCode, String bAddr, String lAddr,
 			String phone, String email, int point) {
 		super();
@@ -55,6 +63,7 @@ public class Member {
 		this.phone = phone;
 		this.email = email;
 		this.point = point;
+
 	}
 
 	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
