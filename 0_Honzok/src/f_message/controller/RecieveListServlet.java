@@ -36,10 +36,11 @@ public class RecieveListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		String loginUserNickName = ((Member)session.getAttribute("loginUser")).getNickName();
 		
 		MessageService service = new MessageService();
 		
-		int listCount = service.getListCount();
+		int listCount = service.getRListCount(loginUserNickName);
 		
 		//현재 페이지 표시
 		int currentPage;
@@ -65,9 +66,8 @@ public class RecieveListServlet extends HttpServlet {
 		// vo에 PageInfo class 만들어주기
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		String loginUserNickName = ((Member)session.getAttribute("loginUser")).getNickName();
 		// vo에 Message class 만들어 준 뒤에 service에 selectLsit 메소드 만들어주기
-		ArrayList<Message> mlist = service.selectList(currentPage, loginUserNickName);
+		ArrayList<Message> mlist = service.selectRList(currentPage, loginUserNickName);
 				
 		String page = null;
 		

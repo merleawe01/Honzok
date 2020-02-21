@@ -17,16 +17,16 @@ import f_message.model.vo.Message;
 import f_message.model.vo.PageInfo;
 
 /**
- * Servlet implementation class SendListSerlvet
+ * Servlet implementation class RecieveSerchServlet
  */
-@WebServlet("/list.se")
-public class SendListServlet extends HttpServlet {
+@WebServlet("/search.re")
+public class RecieveSerchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendListServlet() {
+    public RecieveSerchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,23 +37,29 @@ public class SendListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String loginUserNickName = ((Member)session.getAttribute("loginUser")).getNickName();
+
+		
+		String select = request.getParameter("searchSelect");
+		String keyword = request.getParameter("word");
 		
 		MessageService service = new MessageService();
 		
-		int listCount = service.getSendListCount(loginUserNickName);
-
-		//현재 페이지 표시
 		int currentPage;
-		int limit; // 한 페이지에 표시될 페이징 수
-		int maxPage; // 전체 페이지 중 가장 마지막 페이지
-		int startPage; // 페이징 된 페이지 중 시작 페이지
-		int endPage; // 페이징 된 페이지 중 마지막 페이지
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
 		
 		currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		// 요청이 들어오면 currentPage --> 페이지 전환 시 전달 받은 페이지로 currentPage 적용
+		// 요청이 들어오면 currentPage --> 페이지 전환 시 전달 받은 페이지로 currentPage 적용	
+		
+		
+		int listCount = service.searchMsgCount(select, keyword, loginUserNickName);
+		ArrayList<Message> mList =service.searchMsgList(currentPage, select, keyword, loginUserNickName);
+		
 		
 		limit = 5;
 		maxPage = (int)((double)listCount/limit + 0.9);
@@ -64,24 +70,22 @@ public class SendListServlet extends HttpServlet {
 		}
 		
 		// vo에 PageInfo class 만들어주기
-		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);	
 		
-		// vo에 Message class 만들어 준 뒤에 service에 selectLsit 메소드 만들어주기
-		ArrayList<Message> mlist = service.selectSendList(currentPage, loginUserNickName);
-				
 		String page = null;
 		
-		if(mlist != null) {
-			page = "views/f_message/sendMessageView.jsp";
-			request.setAttribute("list", mlist);
+		if(mList != null) {
+			page = "views/f_message/SearchListView.jsp";
+			request.setAttribute("list", mList);
 			request.setAttribute("pi", pi);
 		} else {
 			page = "views/a_common/error.jsp";
-			request.setAttribute("msg", "쪽지 보관함을 볼 수 없습니다.");
+			request.setAttribute("msg", "쪽지함을 볼 수 없습니다.");
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+
 	}
 
 	/**

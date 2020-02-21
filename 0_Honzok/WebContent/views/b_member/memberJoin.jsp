@@ -290,7 +290,7 @@
 							document.getElementById("lAddr").value = addrDetail;
 							document.getElementById("postalCode").value = zipNo;
 						}
-					</script>
+				</script>
 				<div class = "input">
 					<div class = "left">핸드폰 번호 </div>
 								<select class = "right" style = "height : 30px; width : 100px;">

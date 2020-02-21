@@ -1,27 +1,27 @@
 package f_message.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_member.model.service.MemberService;
+import f_message.model.service.MessageService;
 
 /**
- * Servlet implementation class ToCheckServlet
+ * Servlet implementation class StoreMessageServlet
  */
-@WebServlet("/toCheck.me")
-public class ToCheckServlet extends HttpServlet {
+@WebServlet("/store.msg")
+public class StoreMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ToCheckServlet() {
+    public StoreMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +30,23 @@ public class ToCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String nickName = request.getParameter("toMember");
-		int result = new MemberService().nickNameCheck(nickName);
-
-		PrintWriter out = response.getWriter();
 		
-		if(result > 0 ) {
-			out.append("success");
+		String mNo = request.getParameter("mNo");
+		String[] mNoList = mNo.split(",");
+		
+		int result = new MessageService().storeMessage(mNoList);
+		
+		String page = null;
+		if(result > 0) {
+			request.setAttribute("msg", "선택한 쪽지가 성공적으로 보관되었습니다.");
+			page = "list.box";
 		} else {
-			out.append("fail");
+			page = "views/a_common/errorPage.jsp";
+			request.setAttribute("msg", "쪽지 보관에 실패했습니다.");
 		}
 		
-		out.flush();
-		out.close();
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
