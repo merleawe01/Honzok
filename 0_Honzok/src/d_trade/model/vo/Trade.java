@@ -22,9 +22,18 @@ public class Trade {
 	private int point;
 	private String nickname;
 
+	private int rNo;
+	
 	public Trade() {}
 	
 	
+
+	public Trade(String nickname) {
+		super();
+		this.nickname = nickname;
+	}
+
+
 
 	public Trade(String postTitle, String writer, String content) {
 		super();
@@ -44,9 +53,18 @@ public class Trade {
 
 
 
-	public Trade(int postNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
+	/*
+	 * public Trade(int postNo, String postTitle, int point, int maxPoint, Date
+	 * dlTime, String writer) { super(); this.postNo = postNo; this.postTitle =
+	 * postTitle; this.writer = writer; this.dlTime = dlTime; this.maxPoint =
+	 * maxPoint; this.point = point; }
+	 */
+
+	
+	
+	public Trade(int rNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
 		super();
-		this.postNo = postNo;
+		this.rNo = rNo;
 		this.postTitle = postTitle;
 		this.writer = writer;
 		this.dlTime = dlTime;
@@ -54,8 +72,19 @@ public class Trade {
 		this.point = point;
 	}
 
+	public Trade(int postNo, int rNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
+		super();
+		this.postNo = postNo;
+		this.rNo = rNo;
+		this.postTitle = postTitle;
+		this.writer = writer;
+		this.dlTime = dlTime;
+		this.maxPoint = maxPoint;
+		this.point = point;
+	}
+	
 
-	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname, int point, int maxPoint, Date dlTime, Date writeDate,
+	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname,int minPoint, int point, int maxPoint, Date dlTime, Date writeDate,
 			Date modifyDate, char deleteYN) {
 		super();
 		this.postNo = postNo;
@@ -70,6 +99,7 @@ public class Trade {
 		this.maxPoint = maxPoint;
 		this.point = point;
 		this.nickname = nickname;
+		this.minPoint = minPoint;
 	}
 
 
@@ -203,6 +233,22 @@ public class Trade {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+
+
+	public int getrNo() {
+		return rNo;
+	}
+
+
+
+	public void setrNo(int rNo) {
+		this.rNo = rNo;
+	}
+
+
+
+
 	
 	
 	

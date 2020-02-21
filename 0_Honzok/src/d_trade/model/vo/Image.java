@@ -16,10 +16,29 @@ public class Image {
 
 	
 	
+	@Override
+	public String toString() {
+		return "Image [imgId=" + imgId + ", postNo=" + postNo + ", originName=" + originName + ", changeName="
+				+ changeName + ", imgSrc=" + imgSrc + ", uploadDate=" + uploadDate + ", fileLevel=" + fileLevel
+				+ ", status=" + status + "]";
+	}
+
+
+
 	public Image(int postNo, String changeName) {
 		super();
 		this.postNo = postNo;
 		this.changeName = changeName;
+	}
+
+	
+
+	public Image(String originName, String changeName, String imgSrc, int fileLevel) {
+		super();
+		this.originName = originName;
+		this.changeName = changeName;
+		this.imgSrc = imgSrc;
+		this.fileLevel = fileLevel;
 	}
 
 

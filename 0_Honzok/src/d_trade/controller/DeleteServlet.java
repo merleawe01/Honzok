@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import d_trade.model.service.TradeService;
-import d_trade.model.vo.Trade;
 
 /**
- * Servlet implementation class detailview_servlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet("/detail.gy")
-public class detailview_servlet extends HttpServlet {
+@WebServlet("/delete.gy")
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public detailview_servlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,14 +29,15 @@ public class detailview_servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pn = Integer.parseInt(request.getParameter("pn"));
+		int postNo = Integer.parseInt(request.getParameter("pno"));
+		int result = new TradeService().delectTrade(postNo);
 		
-		TradeService service = new TradeService();
-		
-		Trade trade = service.selectTrade(pn);
-		
-		/* 사진쪽 넣어야함 */
-		
+		if(result > 0) {
+			response.sendRedirect("list.gy");
+		} else {
+			request.setAttribute("msg", "게시글 삭제에 실패하였습니다.");
+			request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

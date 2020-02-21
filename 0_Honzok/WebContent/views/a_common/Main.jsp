@@ -110,7 +110,7 @@
 	</section>
 
 	<footer>
-	
+
 	</footer>
 	
 	<script>
@@ -124,6 +124,10 @@
 		
 		function goThumbnail(){
 			location.href="<%= request.getContextPath()%>/list.m";
+		}
+		
+		function goGy(){
+			location.href="<%= request.getContextPath()%>/list.gy";
 		}
 	</script>
 	
