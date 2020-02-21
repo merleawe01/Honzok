@@ -1,27 +1,28 @@
 package f_message.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_member.model.service.MemberService;
+import f_message.model.service.MessageService;
+import f_message.model.vo.Message;
 
 /**
- * Servlet implementation class ToCheckServlet
+ * Servlet implementation class StoreageDetailServlet
  */
-@WebServlet("/toCheck.me")
-public class ToCheckServlet extends HttpServlet {
+@WebServlet("/detail.st")
+public class StoreageDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ToCheckServlet() {
+    public StoreageDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +31,21 @@ public class ToCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String nickName = request.getParameter("toMember");
-		int result = new MemberService().nickNameCheck(nickName);
-
-		PrintWriter out = response.getWriter();
+		int mNo = Integer.parseInt(request.getParameter("mNo"));
 		
-		if(result > 0 ) {
-			out.append("success");
+		Message m = new MessageService().selectMessage(mNo);
+		
+		String page = null;
+		if(m != null) {
+			page = "views/f_message/StoreDetailView.jsp";
+			request.setAttribute("message", m);
 		} else {
-			out.append("fail");
+			page = "views/a_common/errorPage.jsp";
+			request.setAttribute("msg", "쪽지 조회에 실패했습니다.");
 		}
 		
-		out.flush();
-		out.close();
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
