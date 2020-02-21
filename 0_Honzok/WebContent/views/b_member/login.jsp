@@ -13,45 +13,48 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <title>Insert title here</title>
 <style>
-	header {width: 100%; height: 170px; text-align: center;}
-	#mainHeader {width: 1170px; height: 50px; display: inline-block;}
-	.menuBtn {padding:3px; display: inline-table; float: right;
-			 background-color: transparent; border: none; cursor: pointer;}
-	#login {float: right; padding: 10px; color: rgb(241, 131, 50);
-			font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-	
-	#icon {height: 90%; width: auto; float: right;}
-	#subHeader {width : 1170px; height : 100px;display : inline-block;}
-	#logo {height: auto; width: auto; float: center;}
-	
-	#main {width: 100%; text-align: center; height: 1170px;}
-	#realMain {width : 900px; display : inline-table; height: auto;}
 
-	.center {width:400px; margin: 0 auto; position: relative; top:80px; left:25px;}
-	#login_box {display: block; height:200px; background-color: #d3d3d3;} 
-	#login_box input{display: block; width: 300px; height: 45px; line-height: 49px; margin: 0 0 3px;
-     				  padding: 0 20px; border: 1px solid #d8d8d8; border-radius: 5px; box-sizing: border-box;}
+   header {width: 100%; height: 170px; text-align: center;}
+   #mainHeader {width: 1170px; height: 50px; display: inline-block;}
+   .menuBtn {padding:3px; display: inline-table; float: right;
+          background-color: transparent; border: none; cursor: pointer;}
+   #login {float: right; padding: 10px; color: rgb(241, 131, 50);
+         font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
+   
+   #icon {height: 90%; width: auto; float: right;}
+   #subHeader {width : 1170px; height : 100px;display : inline-block;}
+   #logo {height: auto; width: auto; float: center;}
+   
+   #main {width: 100%; text-align: center; height: 1170px;}
+   #realMain {width : 900px; display : inline-table; height: auto;}
+
+   .center {width:400px; margin: 0 auto; position: relative; top:80px; left:25px;}
+   #login_box {display: block; height:200px; background-color: #d3d3d3;} 
+   #login_box input{display: block; width: 300px; height: 45px; line-height: 49px; margin: 0 0 3px;
+                   padding: 0 20px; border: 1px solid #d8d8d8; border-radius: 5px; box-sizing: border-box;}
     #userId {position:absolute; left:50px; top:50px}
     #userPwd {position:absolute; left:50px; top:105px;}
     #loginBtnArea{width:400px; height:80px;}
     #loginBtn {text-align:center; font-weight:bold; font-size:14px; width:100%; height:45px;
-    		   padding: 0 20px; border: none; border-radius: 5px; box-sizing: border-box; margin:20px auto;
-    		   background-color: powderblue; cursor:pointer;}
-    #link_list {left:0px; margin-bottom:20px;}
+             padding: 0 20px; border: none; border-radius: 5px; box-sizing: border-box; margin:20px auto;
+             background-color: powderblue; cursor:pointer;}
+
+  #link_list {left:0px; margin-bottom:20px;}
     #link_list li {display:inline-block; list-style: none;}
     #link_list li a {display: block; padding: 0 10px; font-size: 14px; font-weight: 600; color:rgb(118,129,73);}
     #link_list li a:hover {color:rgb(241,131,50);}
     a {text-decoration: none; cursor:pointer;}
     p {display: block; margin: 0 0 20px; font-size: 14px; text-align: center;
-    	background: url("image/line.png") repeat-x center;}
+       background: url("image/line.png") repeat-x center;}
     #N_loginBtn {width:300px; hegith:150px; margin-top:10px;
-    			cursor:pointer; background-color:white; border:2px solid #d3d3d3; border-radius: 5px;}
+             cursor:pointer; background-color:white; border:2px solid #d3d3d3; border-radius: 5px;}
     #N_loginBtn img {vertical-align: middle; border-right:2px solid #d3d3d3;}
     #N_loginBtn b {font-size:14px;}
 </style>
 </head>
 <body>
 <body>
+
 	<header>
 		<div id="mainHeader">
 			<button type="button" class="menuBtn" onclick="">
@@ -92,6 +95,7 @@
 	            	</div>
 	            </form>
 	            </div>
+
             </div>
             <script>
                function login(){
@@ -106,6 +110,7 @@
                };
             </script>
             
+
 			<div id="linkArea">
 				<!-- ID/PWD 찾기 + 회원 가입 -->
 				<ul id="link_list" class="center">

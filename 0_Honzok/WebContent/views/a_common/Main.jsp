@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "f_message.model.vo.Message, b_member.model.vo.*"%>
+    pageEncoding="UTF-8" import = "f_message.model.vo.Message"%>
 <%@ page import="b_member.model.vo.Member"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
@@ -9,12 +9,14 @@
 	Message m = new Message();
 	int view = m.getView();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>혼족옵서예</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <style>
 	header {width: 100%; height: 170px; text-align: center;}
 	#mainHeader {width: 1170px; height: 50px; display: inline-block;}
@@ -24,6 +26,8 @@
 			 background-color: transparent; border: none; cursor: pointer;}
 	#login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
 			font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
+	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
+	
 	#icon {height: 50px%; width: 50px; float: right;}
 	#main {width: 100%;text-align: center;overflow: hidden;height: auto;}
 	#realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
@@ -40,12 +44,7 @@
 </head>
 
 <body>
-	<div class="menu" onclick="goHome();">HOME</div>
-	<script>
-		function goHome(){
-			location.href="<%= request.getContextPath() %>/list.food";
-		}
-	</script>
+	 
 	<header>
 		<div id="mainHeader">
 			<button type="button" class="menuBtn" onclick="">
@@ -61,8 +60,8 @@
 				<% } %>
 				</button>
 			</span>
-      
-			</div>
+      </div>
+			
 			<div id="login">
 				<img src="images/blanket.png" id="icon">
 				<% if(loginUser == null){ %>
@@ -74,7 +73,7 @@
 				<%} %>
 
 		</div>
-		</div>
+		
 		
 		<div id="subHeader">
 			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
@@ -111,7 +110,7 @@
 	</section>
 
 	<footer>
-		<div class="menu" onclick="goThumbnail();">마켓</div>
+	
 	</footer>
 	
 	<script>

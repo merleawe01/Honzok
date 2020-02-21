@@ -47,7 +47,16 @@ public class MemberService {
 		
 		return result;
 	}
-
+	
+	public int nickCheck(String userNick) {
+		Connection conn = getConnection();
+		
+		MemberDAO mDAO = new MemberDAO();
+		int result = mDAO.nickCheck(conn, userNick);
+		close(conn);
+		
+		return result;
+	}
 
 	public int updateMember(Member member) {
 		Connection conn = getConnection();

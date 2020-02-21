@@ -14,14 +14,14 @@ import b_member.model.service.MemberService;
 /**
  * Servlet implementation class IdCheckServlet
  */
-@WebServlet("/idCheck.me")
-public class IdCheckServlet extends HttpServlet {
+@WebServlet("/nickCheck.me")
+public class NickNameCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdCheckServlet() {
+    public NickNameCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +31,15 @@ public class IdCheckServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		String userNick = request.getParameter("inputNick");
 		
-		String userId = request.getParameter("inputId");
+		int result = new MemberService().nickCheck(userNick);
 		
-		int result = new MemberService().idCheck(userId);
 		
 		request.setAttribute("result", result);
-		request.setAttribute("checkedId", userId);
+		request.setAttribute("checkedNick", userNick);
 		
-		RequestDispatcher view = request.getRequestDispatcher("views/b_member/idCheckForm.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("views/b_member/nickNameCheckForm.jsp");
 		view.forward(request, response);
 	}
 
