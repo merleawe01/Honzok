@@ -16,23 +16,21 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 
 import a_common.MyFileRenamePolicy;
-import b_member.model.vo.Member;
-import c_information.model.service.FBoardService;
-import c_information.model.vo.FoodBoard;
+import c_information.model.service.TBoardService;
 import c_information.model.vo.Image;
-
+import c_information.model.vo.TravelBoard;
 
 /**
- * Servlet implementation class FoodInsert
+ * Servlet implementation class TravelUpdate
  */
-@WebServlet("/insert.food")
-public class FoodInsert extends HttpServlet {
+@WebServlet("/update.travel")
+public class TravelUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FoodInsert() {
+    public TravelUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +44,7 @@ public class FoodInsert extends HttpServlet {
 		if(ServletFileUpload.isMultipartContent(request)) { // enctype이 multipart/form-data로 전송되었는지 확인
 			int maxSize = 1024 * 1024 * 10; // 10Mbyte : 전송파일 용량 제한
 			String root = request.getSession().getServletContext().getRealPath("/"); // 웹 서버 컨테이너 경로 추출
-			String savePath = root + "images/food_board/";
+			String savePath = root + "images/travel_board/";
 			
 			MultipartRequest multipartRequest 
 				= new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
@@ -66,19 +64,19 @@ public class FoodInsert extends HttpServlet {
 				}
 			}
 			
+			int no = Integer.parseInt(multipartRequest.getParameter("no"));
 			String title = multipartRequest.getParameter("title");
 			int star = Integer.parseInt(multipartRequest.getParameter("star"));
 			String category = multipartRequest.getParameter("category");
 			String content = multipartRequest.getParameter("content");
-			String rc_food = multipartRequest.getParameter("rc_food");
+			String caution = multipartRequest.getParameter("caution");
+			String best_time = multipartRequest.getParameter("best_time");
 			double area_x = Double.parseDouble(multipartRequest.getParameter("area_x"));
 			double area_y = Double.parseDouble(multipartRequest.getParameter("area_y"));
 			String address = multipartRequest.getParameter("address");
 			String local_name = multipartRequest.getParameter("local_name");
 			
-			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
-			
-			FoodBoard board = new FoodBoard(title, writer, content, category, local_name, address, star, rc_food, area_x, area_y);
+			TravelBoard board = new TravelBoard(no, title, content, local_name, address, star, caution, best_time, area_x, area_y);
 			
 			ArrayList<Image> fileList = new ArrayList<Image>();
 			
@@ -90,16 +88,18 @@ public class FoodInsert extends HttpServlet {
 				fileList.add(img);
 			}
 			
-			int result = new FBoardService().insertFBoard(board, fileList);
+			String imgInfo = multipartRequest.getParameter("imgInfo");
+			
+			int result = new TBoardService().updateFBoard(board, fileList, imgInfo);
 			
 			if(result > 0) {
-				response.sendRedirect("list.food");
+				response.sendRedirect("detail.travel?no=" + no);
 			} else {
 				for(int i = 0; i < saveFiles.size(); i++) {
 					File failedFile = new File(savePath + saveFiles.get(i));
 					failedFile.delete();
 				}
-				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
+				request.setAttribute("msg", "여행 게시판 수정에 실패하였습니다.");
 				request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 			}
 		}

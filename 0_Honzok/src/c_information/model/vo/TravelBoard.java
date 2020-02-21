@@ -1,8 +1,9 @@
+
 package c_information.model.vo;
 
 import java.sql.Date;
 
-public class FoodBoard {
+public class TravelBoard {
 	private int no;
 	private String title;
 	private String writer;
@@ -10,37 +11,35 @@ public class FoodBoard {
 	private int view_count;
 	private Date write_date;
 	private int reco_count;
-	private String category;
 	private String local_name;
 	private String address;
 	private int star;
-	private String rc_food;
+	private String caution;
+	private String best_time;
 	private double area_x;
 	private double area_y;
 	private String img_src;
-	// 댓글도 어떻게 할지
 	
-	
-	public FoodBoard() {}
+	public TravelBoard() {}
 	
 	// 글 작성에서 사용할 생성자
-	public FoodBoard(String title, String writer, String content, String category, String local_name, String address, int star,
-			String rc_food, double area_x, double area_y) {
+	public TravelBoard(String title, String writer, String content, String best_time, String caution, String local_name, String address, int star,
+			double area_x, double area_y) {
 		super();
 		this.title = title;
-		this.writer = writer;
+		this.writer = writer; 
 		this.content = content;
-		this.category = category;
+		this.best_time = best_time;
+		this.caution = caution;
 		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
-		this.rc_food = rc_food;
 		this.area_x = area_x;
 		this.area_y = area_y;
 	}
 	
 	// 리스트 뷰에서 사용할 생성자.
-	public FoodBoard(int no, String title, String writer, int reco_count, String address, int star,
+	public TravelBoard(int no, String title, String writer, int reco_count, String address, int star,
 			double area_x, double area_y, String img_src) {
 		super();
 		this.no = no;
@@ -55,8 +54,8 @@ public class FoodBoard {
 	}
 	
 	// 디테일 뷰에서 사용할 생성자.
-	public FoodBoard(int no, String title, String writer, String content, int view_count, int reco_count, String local_name,
-			String address, int star, String rc_food, double area_x, double area_y) {
+	public TravelBoard(int no, String title, String writer, String content, int view_count, int reco_count, String local_name,
+			String address, int star, String caution, String best_time, double area_x, double area_y) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -67,26 +66,28 @@ public class FoodBoard {
 		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
-		this.rc_food = rc_food;
+		this.caution = caution;
+		this.best_time = best_time;
 		this.area_x = area_x;
 		this.area_y = area_y;
 	}
-
+	
 	// 글 수정에서 사용할 생성자
-	public FoodBoard(int no, String title, String content, String category, String local_name, String address, int star,
-			String rc_food, double area_x, double area_y) {
+	public TravelBoard(int no, String title, String content, String local_name, String address, int star,
+			String caution, String best_time, double area_x, double area_y) {
 		super();
 		this.no = no;
 		this.title = title;
 		this.content = content;
-		this.category = category;
 		this.local_name = local_name;
 		this.address = address;
 		this.star = star;
-		this.rc_food = rc_food;
+		this.caution = caution;
+		this.best_time = best_time;
 		this.area_x = area_x;
 		this.area_y = area_y;
 	}
+
 
 	public int getNo() {
 		return no;
@@ -144,14 +145,6 @@ public class FoodBoard {
 		this.reco_count = reco_count;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public String getLocal_name() {
 		return local_name;
 	}
@@ -176,12 +169,20 @@ public class FoodBoard {
 		this.star = star;
 	}
 
-	public String getRc_food() {
-		return rc_food;
+	public String getCaution() {
+		return caution;
 	}
 
-	public void setRc_food(String rc_food) {
-		this.rc_food = rc_food;
+	public void setCaution(String caution) {
+		this.caution = caution;
+	}
+
+	public String getBest_time() {
+		return best_time;
+	}
+
+	public void setBest_time(String best_time) {
+		this.best_time = best_time;
 	}
 
 	public double getArea_x() {

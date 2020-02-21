@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, c_information.model.vo.*" %>
 <% 
-	ArrayList<FoodBoard> list = (ArrayList<FoodBoard>)request.getAttribute("list");
+	ArrayList<TravelBoard> list = (ArrayList<TravelBoard>)request.getAttribute("list");
 	String area = (String)request.getAttribute("area");
-	String category = (String)request.getAttribute("category");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,8 +16,8 @@
 		font-size: 15pt;
 		padding-bottom: 10px;
 	}
-	#selectField > span:first-child{color: rgb(230, 126, 34); cursor: pointer;}
-	#selectField > span:last-child{color: rgb(118, 129, 73); cursor: pointer;}
+	#selectField > span:last-child{color: rgb(230, 126, 34); cursor: pointer;}
+	#selectField > span:first-child{color: rgb(118, 129, 73); cursor: pointer;}
 	#selectArea{
 		width: 100%;
 		height: 50px;
@@ -88,50 +87,8 @@
 		font-size: 20pt;
 		cursor: pointer;
 	}
-	#selectCategory{
-		width: 100%;
-		height: 140px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-		background-color: rgb(224, 224, 224);
-		padding-top: 5px;
-	}
-	#selectCategory td{
-		width: 180px;
-		height: 40px;
-	}
-	.foodCate{
-		width: 20px;
-		height: 20px;
-		vertical-align: middle;
-		display: inline-table;
-		cursor: pointer;
-	}
-	.nameCate{
-		display: inline-table;
-		width: 90px;
-		height: 20px;
-		border-radius: 5px;
-		background-color: white;
-		vertical-align: middle;
-		text-align: center;
-		cursor: pointer;
-	}
-	#submitCate{
-		display: inline-table;
-		width: 90px;
-		height: 20px;
-		border-radius: 5px;
-		background-color: rgb(94, 94, 94);
-		color: white;
-		vertical-align: middle;
-		text-align: center;
-		padding: 2px;
-		margin-top: 10px;
-		cursor: pointer;
-	}
 	
-	.foodList{
+	.travelList{
 		width: 100%;
 		height: 250px;
 		padding: 10px;
@@ -139,17 +96,17 @@
 		border-bottom: 1px solid gray;
 		cursor: pointer;
 	}
-	#foodImg{
+	#travelImg{
 		width: 250px;
 		height: 250px;
 		display: inline-table;
 		float: left;
 	}
-	#foodImg img{
+	#travelImg img{
 		width: 100%;
 		height: 100%;
 	}
-	#foodMain{
+	#travelMain{
 		width: 550px;
 		height: 250px;
 		display: inline-table;
@@ -284,22 +241,22 @@
 		    		<span class="close">&times;</span>
 		    		<img src="<%= request.getContextPath() %>/images/map.png" usemap="#usemap">
 		    		<map name="usemap">
-		    			<area shape="poly" coords="182,149,204,132,233,151,234,161,202,168,186,161,184,154" onClick="location.href='<%= request.getContextPath() %>/list.food?area=서울'">
-		    			<area shape="poly" coords="179,140,182,148,204,133,233,149,234,160,203,170,185,163,169,174,158,202,157,217,185,241,248,240,301,204,306,150,278,141,277,104,237,69,228,47,190,65,190,76,169,89,177,106,155,116,148,128,155,148" onClick="location.href='<%= request.getContextPath() %>/list.food?area=경기'">
+		    			<area shape="poly" coords="182,149,204,132,233,151,234,161,202,168,186,161,184,154" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=서울'">
+		    			<area shape="poly" coords="179,140,182,148,204,133,233,149,234,160,203,170,185,163,169,174,158,202,157,217,185,241,248,240,301,204,306,150,278,141,277,104,237,69,228,47,190,65,190,76,169,89,177,106,155,116,148,128,155,148" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=경기'">
 		    			<area shape="poly" coords="179,141,184,164,168,174,160,190,138,186,112,141,111,126,131,104,153,113,146,127,154,148" onClick="changeArea('인천', 37.45611340275262, 126.70558540958115)">
-		    			<area shape="poly" coords="230,48,285,53,335,44,344,29,369,27,375,13,386,20,494,190,478,215,407,220,355,195,313,207,301,201,309,151,280,138,277,103,237,66" onClick="location.href='<%= request.getContextPath() %>/list.food?area=강원'">
-		    			<area shape="poly" coords="249,241,305,207,313,210,355,198,393,216,383,256,356,250,317,284,311,327,327,343,314,375,284,378,285,365,274,317,255,301,246,273,260,261" onClick="location.href='<%= request.getContextPath() %>/list.food?area=충북'">
-		    			<area shape="poly" coords="247,241,258,262,244,272,253,303,236,328,259,347,277,343,283,378,263,378,250,358,235,357,218,371,195,367,173,377,144,365,145,344,121,333,116,301,105,299,98,255,140,218,166,227,184,243" onClick="location.href='<%= request.getContextPath() %>/list.food?area=충남'">
-		    			<area shape="poly" coords="255,304,239,328,258,347,275,342,272,319" onClick="location.href='<%= request.getContextPath() %>/list.food?area=대전'">
-		    			<area shape="poly" coords="376,429,381,409,375,394,407,373,425,395,397,432,432,436,476,416,516,424,527,390,523,359,507,366,515,258,502,239,494,194,480,217,407,223,397,217,385,257,355,252,317,284,320,291,312,327,329,342,315,375,319,393,339,398,361,427" onClick="location.href='<%= request.getContextPath() %>/list.food?area=경북'">
-		    			<area shape="poly" coords="376,395,383,411,375,430,395,432,423,396,406,375" onClick="location.href='<%= request.getContextPath() %>/list.food?area=대구'">
-		    			<area shape="poly" coords="459,425,457,436,480,454,483,464,493,482,506,465,516,425,476,416" onClick="location.href='<%= request.getContextPath() %>/list.food?area=울산'">
-		    			<area shape="poly" coords="481,466,438,487,435,501,393,512,407,523,428,515,432,525,487,494,493,483,492,481" onClick="location.href='<%= request.getContextPath() %>/list.food?area=부산'">
-		    			<area shape="poly" coords="317,394,337,401,361,429,433,437,458,425,456,437,479,455,479,464,438,486,434,499,392,512,407,525,428,518,430,526,410,565,386,560,373,545,346,548,340,568,317,561,311,530,290,499,280,472,296,456,284,434,312,395" onClick="location.href='<%= request.getContextPath() %>/list.food?area=경남'">
-		    			<area shape="poly" coords="145,369,174,381,197,370,219,373,237,361,249,361,262,381,313,376,317,391,310,394,281,432,291,456,277,470,233,474,186,451,156,468,137,444,141,421,161,394" onClick="location.href='<%= request.getContextPath() %>/list.food?area=전북'">
-		    			<area shape="poly" coords="162,484,158,496,179,515,208,498,196,484" onClick="location.href='<%= request.getContextPath() %>/list.food?area=광주'">
-		    			<area shape="poly" coords="72,644,103,630,103,618,130,609,227,626,231,611,255,600,266,606,276,600,275,577,314,561,307,531,287,501,277,473,232,477,187,455,157,473,162,481,196,481,213,497,182,518,153,499,161,481,137,450,119,480,121,493,92,498,92,519,80,530,70,579,90,583,60,625" onClick="location.href='<%= request.getContextPath() %>/list.food?area=전남'">
-		    			<area shape="poly" coords="160,655,92,692,118,724,198,703,210,671" onClick="location.href='<%= request.getContextPath() %>/list.food?area=제주'">
+		    			<area shape="poly" coords="230,48,285,53,335,44,344,29,369,27,375,13,386,20,494,190,478,215,407,220,355,195,313,207,301,201,309,151,280,138,277,103,237,66" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=강원'">
+		    			<area shape="poly" coords="249,241,305,207,313,210,355,198,393,216,383,256,356,250,317,284,311,327,327,343,314,375,284,378,285,365,274,317,255,301,246,273,260,261" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=충북'">
+		    			<area shape="poly" coords="247,241,258,262,244,272,253,303,236,328,259,347,277,343,283,378,263,378,250,358,235,357,218,371,195,367,173,377,144,365,145,344,121,333,116,301,105,299,98,255,140,218,166,227,184,243" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=충남'">
+		    			<area shape="poly" coords="255,304,239,328,258,347,275,342,272,319" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=대전'">
+		    			<area shape="poly" coords="376,429,381,409,375,394,407,373,425,395,397,432,432,436,476,416,516,424,527,390,523,359,507,366,515,258,502,239,494,194,480,217,407,223,397,217,385,257,355,252,317,284,320,291,312,327,329,342,315,375,319,393,339,398,361,427" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=경북'">
+		    			<area shape="poly" coords="376,395,383,411,375,430,395,432,423,396,406,375" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=대구'">
+		    			<area shape="poly" coords="459,425,457,436,480,454,483,464,493,482,506,465,516,425,476,416" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=울산'">
+		    			<area shape="poly" coords="481,466,438,487,435,501,393,512,407,523,428,515,432,525,487,494,493,483,492,481" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=부산'">
+		    			<area shape="poly" coords="317,394,337,401,361,429,433,437,458,425,456,437,479,455,479,464,438,486,434,499,392,512,407,525,428,518,430,526,410,565,386,560,373,545,346,548,340,568,317,561,311,530,290,499,280,472,296,456,284,434,312,395" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=경남'">
+		    			<area shape="poly" coords="145,369,174,381,197,370,219,373,237,361,249,361,262,381,313,376,317,391,310,394,281,432,291,456,277,470,233,474,186,451,156,468,137,444,141,421,161,394" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=전북'">
+		    			<area shape="poly" coords="162,484,158,496,179,515,208,498,196,484" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=광주'">
+		    			<area shape="poly" coords="72,644,103,630,103,618,130,609,227,626,231,611,255,600,266,606,276,600,275,577,314,561,307,531,287,501,277,473,232,477,187,455,157,473,162,481,196,481,213,497,182,518,153,499,161,481,137,450,119,480,121,493,92,498,92,519,80,530,70,579,90,583,60,625" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=전남'">
+		    			<area shape="poly" coords="160,655,92,692,118,724,198,703,210,671" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=제주'">
 		    		</map>
 		    	</div>
 		    </div>
@@ -339,11 +296,11 @@
 			
 			var positions = [
 				<% if(!(list.isEmpty())) {%>
-					<% for(FoodBoard b : list) { %>
+					<% for(TravelBoard t : list) { %>
 					{
-				        content: '<div style="width:150px; text-align: center; padding:5px;"><%= b.getTitle() %></div>', 
-				        latlng: new kakao.maps.LatLng(<%= b.getArea_x() %>, <%= b.getArea_y() %>),
-				        id: <%= b.getNo() %>,
+				        content: '<div style="width:150px; text-align: center; padding:5px;"><%= t.getTitle() %></div>', 
+				        latlng: new kakao.maps.LatLng(<%= t.getArea_x() %>, <%= t.getArea_y() %>),
+				        id: <%= t.getNo() %>,
 				    },
 					<% 	} %>
 				<% } %>
@@ -387,7 +344,7 @@
 			
 			function makeClick(m) {
 				return function() {
-					location.href='<%= request.getContextPath() %>/detail.food?no=' + m.id;
+					location.href='<%= request.getContextPath() %>/detail.travel?no=' + m.id;
 				};
 			}
 
@@ -409,88 +366,17 @@
 			});
 		</script>
 		
-		<div id="selectCategory">
-			<table id="cateTable" style="margin: auto;">
-				<tr>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">전체 선택</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">한식</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">분식</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">일식</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">중식</div></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">양식</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">야식</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">술집</div></td>
-					<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">패스트푸드</div></td>
-				</tr>
-			</table>
-			<div id="submitCate">적용하기</div>
-		</div>
-		
-		<script>
-			var cateArr = $('#cateTable input');
-			
-			$('.nameCate').click(function(){
-				$(this).prev().click()
-			});
-			
-			$('.foodCate').click(function(){
-				if($(this).next()[0].innerText == '전체 선택'){
-					if(cateArr[0].checked){
-						for(var i = 1; i < 9; i++) {
-							cateArr[i].checked = true;
-						}
-					} else{
-						for(var i = 1; i < 9; i++) {
-							cateArr[i].checked = false;
-						}
-					}
-				} else {
-					var check = true;
-					for(var i = 1; i < 9; i++) {
-						if(!cateArr[i].checked){
-							check = false;
-							break;
-						}
-					}
-					if(check){
-						cateArr[0].checked = true;
-					} else{
-						cateArr[0].checked = false;
-					}
-				}
-			})
-			
-			$('#submitCate').click(function(){
-				var check = false;
-				var category = "";
-				for(var i = 1; i < 9; i++){
-					if(cateArr[i].checked) {
-						check = true;
-						category += cateArr[i].nextSibling.nextSibling.innerText + ", "
-					}
-				}
-				if(check) {
-					category = category.substr(0, category.length-2);
-					location.href='<%= request.getContextPath() %>/list.food?area=<%= area %>&category=' + category;
-				} else {
-					alert('카테고리를 선택해주세요.');
-				}
-			})
-		</script>
 		
 		<% if(list.isEmpty()) {%>
 			해당하는 데이터가 존재하지 않습니다.
 		
 		<% } else { %>
-		<% for(FoodBoard b : list) { %>
+		<% for(TravelBoard b : list) { %>
 		
-		<div class="foodList">
+		<div class="travelList">
 			<input type="hidden" value='<%= b.getNo() %>'>
-			<div id="foodImg"><img src="<%= request.getContextPath() %>/images/food_board/<%= b.getImg_src() %>"></div>
-			<div id="foodMain">
+			<div id="travelImg"><img src="<%= request.getContextPath() %>/images/travel_board/<%= b.getImg_src() %>"></div>
+			<div id="travelMain">
 				<div id="top"><%= b.getTitle() %></div>
 				<div id="middle">
 					<% for(int i = 0; i < 5; i++) {
@@ -516,13 +402,13 @@
 		<% 	} %>
 		<% } %>
 		
-		<div id="write" onclick='location.href="views/c_information/foodWrite.jsp"'>글쓰기</div>
+		<div id="write" onclick='location.href="views/c_information/travelWrite.jsp"'>글쓰기</div>
 		
 		<script>
 			$(function(){
-				$('.foodList').click(function(){
+				$('.travelList').click(function(){
 					var no = $(this).children('input').val();
-					location.href='<%= request.getContextPath() %>/detail.food?no=' + no;
+					location.href='<%= request.getContextPath() %>/detail.travel?no=' + no;
 				});
 			});
 		</script>

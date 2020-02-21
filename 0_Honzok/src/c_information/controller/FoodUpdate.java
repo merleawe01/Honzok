@@ -21,18 +21,17 @@ import c_information.model.service.FBoardService;
 import c_information.model.vo.FoodBoard;
 import c_information.model.vo.Image;
 
-
 /**
- * Servlet implementation class FoodInsert
+ * Servlet implementation class FoodUpdate
  */
-@WebServlet("/insert.food")
-public class FoodInsert extends HttpServlet {
+@WebServlet("/update.food")
+public class FoodUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FoodInsert() {
+    public FoodUpdate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -66,6 +65,7 @@ public class FoodInsert extends HttpServlet {
 				}
 			}
 			
+			int no = Integer.parseInt(multipartRequest.getParameter("no"));
 			String title = multipartRequest.getParameter("title");
 			int star = Integer.parseInt(multipartRequest.getParameter("star"));
 			String category = multipartRequest.getParameter("category");
@@ -76,9 +76,7 @@ public class FoodInsert extends HttpServlet {
 			String address = multipartRequest.getParameter("address");
 			String local_name = multipartRequest.getParameter("local_name");
 			
-			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
-			
-			FoodBoard board = new FoodBoard(title, writer, content, category, local_name, address, star, rc_food, area_x, area_y);
+			FoodBoard board = new FoodBoard(no, title, content, category, local_name, address, star, rc_food, area_x, area_y);
 			
 			ArrayList<Image> fileList = new ArrayList<Image>();
 			
@@ -90,16 +88,18 @@ public class FoodInsert extends HttpServlet {
 				fileList.add(img);
 			}
 			
-			int result = new FBoardService().insertFBoard(board, fileList);
+			String imgInfo = multipartRequest.getParameter("imgInfo");
+			
+			int result = new FBoardService().updateFBoard(board, fileList, imgInfo);
 			
 			if(result > 0) {
-				response.sendRedirect("list.food");
+				response.sendRedirect("detail.food?no=" + no);
 			} else {
 				for(int i = 0; i < saveFiles.size(); i++) {
 					File failedFile = new File(savePath + saveFiles.get(i));
 					failedFile.delete();
 				}
-				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
+				request.setAttribute("msg", "음식 게시판 수정에 실패하였습니다.");
 				request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 			}
 		}

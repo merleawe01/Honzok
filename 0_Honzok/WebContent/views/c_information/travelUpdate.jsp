@@ -1,5 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	int no = Integer.parseInt(request.getParameter("no"));
+	String title = request.getParameter("title");
+	int star = Integer.parseInt(request.getParameter("star"));
+	String category = request.getParameter("category");
+	String content = request.getParameter("content");
+	String caution = request.getParameter("caution");
+	String best_time = request.getParameter("best_time");
+	Double area_x = Double.parseDouble(request.getParameter("area_x"));
+	Double area_y = Double.parseDouble(request.getParameter("area_y"));
+	String address = request.getParameter("address");
+	String local_name = request.getParameter("local_name");
+	
+	int imgSize = Integer.parseInt(request.getParameter("imgSize"));
+	ArrayList<String> imgId = new ArrayList<String>();
+	ArrayList<String> imgOrigin = new ArrayList<String>();
+	ArrayList<String> imgChange = new ArrayList<String>();
+	ArrayList<String> imgLevel = new ArrayList<String>();
+	
+	for(int i = 0; i < imgSize; i++) {
+		imgId.add(request.getParameter("imgId"+i));
+		imgOrigin.add(request.getParameter("imgOrigin"+i));
+		imgChange.add(request.getParameter("imgChange"+i));
+		imgLevel.add(request.getParameter("imgLevel"+i));
+	}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,25 +87,6 @@
 		height: 100%;
 		text-align: left;
 	}
-	#category{
-		width: 100%;
-		height: 100px;
-		margin-top: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid gray;
-	}
-	#category .right{
-		padding: 5px;
-	}
-	#cateTable td{
-		width: 130px;
-		height: 40px;
-	}
-	.foodCate{
-		width: 20px;
-		height: 20px;
-		vertical-align: middle;
-	}
 	.nameCate{
 		display: inline-table;
 		width: 90px;
@@ -99,16 +109,31 @@
 		resize: none;
 		border-radius: 5px;
 	}
-	#plusFood{
+	#time{
 		width: 100%;
 		height: 30px;
 		margin-top: 10px;
 		padding-bottom: 10px;
 		border-bottom: 1px solid gray;
 	}
-	#plusFoodName{
+	input[type=radio] 
+	{
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
+		margin: 0;
+	} 
+	#notice{
+		width: 100%;
+		height: 70px;
+		margin-top: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid gray;
+	}
+	#noticeContent{
 		font-size: 13pt;
 		width: 650px;
+		resize: none;
 		border-radius: 5px;
 	}
 	#plusImg{
@@ -190,6 +215,8 @@
 	#menu_wrap .option p {margin:10px 0;}  
 	#menu_wrap .option button {margin-left:5px;}
 </style>
+
+
 </head>
 <body>
 	<%@ include file="../a_common/boardCommon.jsp" %>
@@ -198,10 +225,11 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm" encType="multipart/form-data">
+		<form action="<%= request.getContextPath() %>/update.travel" method="post" id="updateForm" encType="multipart/form-data">
+			<input type="hidden" id="no" name="no" value="<%= no %>">
 			<div id="basic">
 				<div id="mainImg">
-					<img src="../../images/meal.png" width=100% height=100%>
+					<img src="<%= request.getContextPath() %>/images/travel_board/<%= imgChange.get(0) %>" width=100% height=100%>
 				</div>
 				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="LoadImg(this)" hidden="">
 				
@@ -224,17 +252,28 @@
 				</script>
 				
 				<div id="nameMain">
-					<span class="bigText">가게이름 </span> <span class="smallText">(필수)</span><br><br>
-					<input class="middleText" type="text" placeholder=" 방문한 가게의 상호명을 입력해주세요." size="40" id="title" name="title"><br><br>
-					<span class="bigText">음식점에 대한 평가 </span><br><br>
+					<span class="bigText">여행지 </span> <span class="smallText">(필수)</span><br><br>
+					<input class="middleText" type="text" placeholder=" 방문한 여행지를 입력해주세요." size="40" id="title" name="title" value="<%= title %>"><br><br>
+					<span class="bigText">여행지에 대한 평가 </span><br><br>
 					
-					<input type="hidden" id="star" name="star" value="">
+					<input type="hidden" id="star" name="star" value=<%= star %>>
 					<img src="../../images/empty_star.png" class="star" id="star1">
 					<img src="../../images/empty_star.png" class="star" id="star2">
 					<img src="../../images/empty_star.png" class="star" id="star3">
 					<img src="../../images/empty_star.png" class="star" id="star4">
 					<img src="../../images/empty_star.png" class="star" id="star5">
 					<script>
+						$(function(){
+							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
+							for(var i = 0; i < 5; i++){
+								if(i <= <%= star %>){
+									findStar[i].attr('src','../../images/star.PNG');
+								} else{
+									findStar[i].attr('src','../../images/empty_star.png');
+								}
+							}
+						})	
+					
 						$('.star').mouseenter(function(){
 							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
 							for(var i = 0; i < 5; i++){
@@ -254,47 +293,44 @@
 					</script>
 				</div>
 			</div>
-			
-			<input type="hidden" id="cate" name="category" value="">
-			<div id="category">
-				<div class="left">
-					<span class="middleText">카테고리선택 </span>
-					<span class="smallText">(필수)</span>
-				</div>
-				<div class="right" style="background-color: rgb(224, 224, 224);">
-					<table id="cateTable" style="margin: auto;">
-						<tr>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">한식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">분식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">일식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">중식</div></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">양식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">야식</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">술집</div></td>
-							<td><input type="checkbox" class="foodCate">&nbsp;&nbsp;<div class="nameCate">패스트푸드</div></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			
+							
 			<div id="review">
 				<div class="left">
 					<span class="middleText">리뷰내용 </span>
 					<span class="smallText">(필수)</span><br>
 				</div>
 				<div class="right">
-					<textarea rows="4" id="reviewContent" name="content" placeholder=" 식사, 분위기, 서비스에 대한 경험을 공유하세요."></textarea>
+					<textarea rows="4" id="reviewContent" name="content" placeholder=" 여행지에 대한 경험을 공유하세요."><%= content %></textarea>
 				</div>
 			</div>
 			
-			<div id="plusFood">
+			<div id="time">
 				<div class="left">
-					<span class="middleText">추천 하는 음식 </span>
+					<span class="middleText">권장 방문시간</span>
 				</div>
 				<div class="right">
-					<input type="text" id="plusFoodName" name="rc_food">
+					<input class="best_time" type="radio" name="best_time" value="1~2시간">&nbsp;&nbsp;<span class="middleText"> 1~2시간</span>&nbsp;&nbsp;
+					<input class="best_time" type="radio" name="best_time" value="2~3시간">&nbsp;&nbsp;<span class="middleText"> 2~3시간</span>&nbsp;&nbsp;
+					<input class="best_time" type="radio" name="best_time" value="3시간 이상">&nbsp;&nbsp;<span class="middleText"> 3시간 이상</span>
+				</div>
+			</div>
+			
+			<script>
+				$(function(){
+					switch('<%= best_time %>'){
+					case '1~2시간' : $('.best_time')[0].checked = true; break;
+					case '2~3시간' : $('.best_time')[1].checked = true; break;
+					case '3시간 이상' : $('.best_time')[2].checked = true; break;
+					}
+				})
+			</script>
+			
+			<div id="notice">
+				<div class="left">
+					<span class="middleText">주의사항 </span>
+				</div>
+				<div class="right">
+					<textarea rows="3" id="noticeContent" placeholder=" 여행지에 대한 주의사항을 입력해주세요." name="caution"><%= caution %></textarea>
 				</div>
 			</div>
 			
@@ -305,13 +341,21 @@
 				<div class="right" style="height:auto">
 					<div id="addImg">이미지 추가</div> &nbsp;&nbsp;* 이미지 추가는 최대 5개 까지만 가능합니다. <br>
 
-					<div id="imgList"></div>
+					<div id="imgList">
+						<% if(imgSize != 1) { %>
+							<% for(int i = 1; i < imgSize; i++) { %>
+								<span id="bonusImg<%= imgLevel.get(i) %>"><%= imgOrigin.get(i) %> <span class='deleteImg'>X</span><br></span>
+							<% } %>
+						<% } %>
+					</div>
 
 					<input type="file" id="imgFile1" name="bonusImg1" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile1'))" hidden="">
 					<input type="file" id="imgFile2" name="bonusImg2" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile2'))" hidden="">
 					<input type="file" id="imgFile3" name="bonusImg3" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile3'))" hidden="">
 					<input type="file" id="imgFile4" name="bonusImg4" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile4'))" hidden="">
 					<input type="file" id="imgFile5" name="bonusImg5" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="secondImg($('#imgFile5'))" hidden="">
+					
+					<input type="hidden" id="imgInfo" name="imgInfo" value="">
 				</div>
 			</div>
 			
@@ -365,10 +409,10 @@
 				});
 			</script>
 			
-			<input type="hidden" id="area_x" name="area_x" value="">
-			<input type="hidden" id="area_y" name="area_y" value="">
-			<input type="hidden" id="adr" name="address" value="">
-			<input type="hidden" id="local_name" name="local_name" value="">
+			<input type="hidden" id="area_x" name="area_x" value="<%= area_x %>">
+			<input type="hidden" id="area_y" name="area_y" value="<%= area_y %>">
+			<input type="hidden" id="adr" name="address" value="<%= address %>">
+			<input type="hidden" id="local_name" name="local_name" value="<%= local_name %>">
 		</form>
 			
 		<div id="address">
@@ -396,7 +440,7 @@
 		<script>
 			var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(37.4989347355231, 127.032854329609), //지도의 중심좌표.
+				center: new kakao.maps.LatLng(<%= area_x %>, <%= area_y %>), //지도의 중심좌표.
 				level: 3 //지도의 레벨(확대, 축소 정도)
 			};
 
@@ -463,10 +507,9 @@
 		</script>
 		
 		<div id="tips">
-			* 이 리뷰는 개인적인 경험을 바탕으로 작성한 이 음식점에 대한 진실된 의견입니다.<br>
-			* 이 시설과 개인적 혹은 업무적으로 관련이 없습니다.<br>
-			* 해당 가게를 
-			사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
+			* 이 리뷰는 개인적인 경험을 바탕으로 작성한 이 여행지에 대한 진실된 의견입니다.<br>
+			* 이 여행지 및 시설은 개인적 혹은 업무적으로 관련이 없습니다.<br>
+			* 해당 여행지 및 시설을 사실과 무관하게 비하하거나 이미지를 실추하는 발언은 삼가해주시기 바랍니다.
 		</div>
 		
 		<div id="ok" onclick="insertBoard();">확인</div>
@@ -474,32 +517,77 @@
 		
 		<script>
 			function insertBoard(){
-				var cateStr = "";
-				for(var i = 0; i < 8; i++){
-					if($('.foodCate')[i].checked){
-						if(cateStr == ""){
-							cateStr = $('.nameCate')[i].innerText;
+				// same, change, insert, delete 
+				var imgInfo = "";
+				if($("#addMainImg").val() == "") {
+					imgInfo = "same"
+				} else{
+					imgInfo = "change"
+				}
+				
+				// numInfo 는 가지고있는 이미지 1~5중에
+				var numInfo = new Array;
+				
+				<% if(imgSize != 1) {
+					for(int i = 1; i < imgSize; i++){%>
+						numInfo.push(<%= imgLevel.get(i) %>);
+					<%}
+				}%>
+				
+				for(var i = 1; i <= 5; i++) {
+					var check = false;
+					
+					if(<%= imgSize %> == 1) {
+						// size가 1일 경우 same이랑 insert
+						if($("#imgFile"+i).val() == "") {
+							imgInfo += ", same";
 						} else {
-							cateStr = cateStr + ", " + $('.nameCate')[i].innerText;
+							imgInfo += ", insert";
+						}
+						
+					} else {
+						// 이건 size가 1이 아닌 경우
+						if($("#imgFile"+i).val() == "") {
+							// same, delete
+							for(var j = 0; j < numInfo.length; j++) {
+								if(numInfo[j] == i && $("#bonusImg"+i)[0] == undefined) {
+									check = true;
+									imgInfo += ", delete";
+									break;
+								}
+							}
+							if(!check){
+								imgInfo += ", same";
+							}
+						} else {
+							// change, insert
+							
+							for(var j = 0; j < numInfo.length; j++) {
+								if(numInfo[j] == i) {
+									check = true;
+									imgInfo += ", change";
+									break;
+								}
+							}
+							if(!check){
+								imgInfo += ", insert";
+							}
 						}
 					}
 				}
-				$('#cate').val(cateStr);
+				
+				$('#imgInfo').val(imgInfo);
 				
 				if($('#title').val() == ""){
-					alert("가게이름을 입력해주세요.");
+					alert("여행지 이름을 입력해주세요.");
 				} else if($("#addMainImg").val() == "") {
-					alert("가게의 대표이미지를 선택해주세요.");
+					alert("여행지의 대표이미지를 선택해주세요.");
 				} else if($('#star').val() == "") {
-					alert("음식점에 대한 평가를 해주세요.");
-				} else if($('#cate').val() == "") {
-					alert("가게에 대한 카테고리를 선택해주세요.");
+					alert("여행지에 대한 평가를 해주세요.");
 				} else if($('#reviewContent').val() == "") {
 					alert("가게에 대한 리뷰내용을 작성해주세요.");
-				} else if($('#area_x').val() == ""){
-					alert("가게의 위치를 선택해주세요.");
-				} else if(confirm("글을 작성하시겠습니까?")) {
-					$('#detailForm').submit();
+				} else if(confirm("글을 수정하시겠습니까?")) {
+					$('#updateForm').submit();
 				}
 			};
 		</script>
