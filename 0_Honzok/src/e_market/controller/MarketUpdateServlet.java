@@ -15,24 +15,23 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 
-
+import a_common.MyFileRenamePolicy;
+import b_member.model.vo.Member;
+import e_market.model.service.MarketService;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
-import a_common.MyFileRenamePolicy;
-import e_market.model.service.MarketService;
-import b_member.model.vo.Member;
 
 /**
- * Servlet implementation class MarketInsertServlet
+ * Servlet implementation class MarketUpdateServlet
  */
-@WebServlet("/insert.m")
-public class MarketInsertServlet extends HttpServlet {
+@WebServlet("/update.m")
+public class MarketUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MarketInsertServlet() {
+    public MarketUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,8 +40,6 @@ public class MarketInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024 * 1024 * 10;		
 			String root = request.getSession().getServletContext().getRealPath("/");
@@ -65,6 +62,7 @@ public class MarketInsertServlet extends HttpServlet {
 				}
 			}
 			
+			int postNo = Integer.parseInt(multipartRequest.getParameter("postNo"));
 			String postTitle =multipartRequest.getParameter("postTitle");
 			String content = multipartRequest.getParameter("incontent");
 			String itemStatus = multipartRequest.getParameter("status");
@@ -73,20 +71,13 @@ public class MarketInsertServlet extends HttpServlet {
 			String etc = multipartRequest.getParameter("etc");
 			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 			
-			Market m = new Market(postTitle,content, itemStatus, itemPrice,useDate, etc, writer);
-			/*m.setPostTitle(postTitle);
-			m.setContent(content);
-			m.setItemStatus(itemStatus);
-			m.setItemPrice(itemPrice);
-			m.setUseDate(useDate);
-			m.setEtc(etc);
-			m.setWriter(writer);*/
-			
+			Market m = new Market(postNo, postTitle, content, itemStatus, itemPrice, useDate, etc, writer);
 			
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
 			
 			for(int i = originFiles.size() -1; i >= 0; i--) {
 				Attachment at = new Attachment();
+				at.setPostNo(postNo);
 				at.setImgSrc(savePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
@@ -100,19 +91,61 @@ public class MarketInsertServlet extends HttpServlet {
 				fileList.add(at);
 			}
 			
-			int result = new MarketService().insertMarket(m, fileList);
+			ArrayList<String> detailImgId = new ArrayList<String>();
+			for(int i = 0; i < 2; i++) {
+				detailImgId.add(multipartRequest.getParameter("detailImgId" + i));
+			}
 			
+			ArrayList<String> changeImg = new ArrayList<String>();
+			changeImg.add(multipartRequest.getParameter("cTitle"));
+			changeImg.add(multipartRequest.getParameter("cContent1" ));
+			
+
+			
+			ArrayList<Attachment> changeFile = new ArrayList<Attachment>();
+			ArrayList<Attachment> newInsertFile = new ArrayList<Attachment>();
+			
+			for(int h = 0; h < fileList.size();) {
+				for(int i = 0; i < 2; i++) {
+					if(!detailImgId.get(i).equals("") && changeImg.get(i).equals("data")) { // 바꾼 파일
+						fileList.get(h).setImgId(Integer.parseInt(detailImgId.get(i)));
+						changeFile.add(fileList.get(h));
+						h++;
+					} else if(detailImgId.get(i).equals("") && changeImg.get(i).equals("data")) { // 새로 넣은 파일
+						newInsertFile.add(fileList.get(h));
+						h++;
+					}
+				}
+			}
+			
+			
+			
+			int result = 0;
+			
+			if(changeFile.isEmpty() && newInsertFile.isEmpty()) {
+				result = new MarketService().updateThumbnail(m);
+			} else if(!changeFile.isEmpty() && newInsertFile.isEmpty()) {
+				result = new MarketService().updateThumbnail(m, changeFile);
+			} else if(changeFile.isEmpty() && !newInsertFile.isEmpty()) {
+				result = new MarketService().updateThumbnail(m, newInsertFile);
+			} else {
+				result = new MarketService().updateThumbnail(m, changeFile, newInsertFile);
+			}
+			
+			String page = "";
 			if(result > 0) {
-				response.sendRedirect("list.m");
+				page = "detail.m?postNo=" + m.getPostNo();
 			} else {
 				for(int i = 0; i < saveFiles.size(); i++) {
 					File failedFile = new File(savePath + saveFiles.get(i));
 					failedFile.delete();
 				}
 				
+				page = "views/a_common/errorPage.jsp";
 				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
-				request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 			}
+			request.getRequestDispatcher(page).forward(request, response);
+			
 		}
 	}
 

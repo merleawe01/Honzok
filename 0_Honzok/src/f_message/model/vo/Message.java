@@ -14,6 +14,14 @@ public class Message {
 	
 	public Message() {}
 	
+	public Message(String to, String from, String mTitle, String content) {
+		super();
+		this.to = to;
+		this.from = from;
+		this.mTitle = mTitle;
+		this.content = content;
+	}
+
 	public Message(int mNo, String to, String from, String mTitle, String content, Date date, int view) {
 		this.mNo = mNo;
 		this.to = to;

@@ -17,16 +17,16 @@ import f_message.model.vo.Message;
 import f_message.model.vo.PageInfo;
 
 /**
- * Servlet implementation class SendListSerlvet
+ * Servlet implementation class StorageListServlet
  */
-@WebServlet("/list.se")
-public class SendListServlet extends HttpServlet {
+@WebServlet("/list.box")
+public class StorageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendListServlet() {
+    public StorageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,11 +37,10 @@ public class SendListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String loginUserNickName = ((Member)session.getAttribute("loginUser")).getNickName();
-		
 		MessageService service = new MessageService();
 		
-		int listCount = service.getSendListCount(loginUserNickName);
-
+		int listCount = service.getStoreListCount(loginUserNickName);
+		
 		//현재 페이지 표시
 		int currentPage;
 		int limit; // 한 페이지에 표시될 페이징 수
@@ -67,12 +66,12 @@ public class SendListServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
 		// vo에 Message class 만들어 준 뒤에 service에 selectLsit 메소드 만들어주기
-		ArrayList<Message> mlist = service.selectSendList(currentPage, loginUserNickName);
+		ArrayList<Message> mlist = service.selectStoreList(currentPage, loginUserNickName);
 				
 		String page = null;
 		
 		if(mlist != null) {
-			page = "views/f_message/sendMessageView.jsp";
+			page = "views/f_message/storeMessageView.jsp";
 			request.setAttribute("list", mlist);
 			request.setAttribute("pi", pi);
 		} else {
