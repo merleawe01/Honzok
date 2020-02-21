@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Insert title here</title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
 		header {
@@ -85,14 +86,6 @@
 			background : rgb(242, 242, 242);
 		}
 		
-		#box2{
-			margin-top : 2%;
-			width : 100%;
-			text-align : left;
-			padding : 20px 0px 20px 0px; 
-			background : rgb(242, 242, 242);
-		}
-		
 		#confirm_comment1{
 			padding-left :30px; 
 			font-weight : bold;
@@ -107,19 +100,12 @@
 			margin-bottom : 20px;
 		}
 		
-		.left{
-			font-size : 17px;
-			width : 150px;
-			display : inline-table;
-			margin-left : 7%;
-			font-weight : bold;
-		}
-		
-		.right{
+		#input_id{
 			border-radius : 5px;
 			width : 200px;
 			height: 30px;
-			margin-left : 5%;
+			margin-left : 20%;
+			margin-bottom : 20px;
 			margin-top : 3%;
 		}
 		
@@ -128,66 +114,19 @@
 			margin-left : 25%;
 		}
 		
-		#code{	
-			margin-left : 155px;
-			margin-bottom : 3px;
-		}
-		
-		#code_get{
-			border-radius : 5px;
-			background : lightgray;
-			height : 25px;
-			font-weight: bold;
-			
-		}
-		
-		#help{
-			margin-left : 155px;
-			font-size : 13px;
-			
-		}
-		
-		#hover_bt{
-			border : 1px solid black;
-			position : relative;
-			background : gray;
-			width : 20px;
-			height: 20px;
-			display : inline-block;
-			font-weight : bold;
-			margin-left : 5px;
-			display : block;
-			
-		}
-		
-		#hover_content{
-			width : 300px;
-			height : 30px;
-		}
-		
 		#next_bt{
 			width : 100px;
 			height : 40px;
-			background-color : rgb(241, 131, 50);
+			background-color : RGB(84, 84, 84); 
 			color : white;
 			border-radius: 5px;
-			margin-left : 25%;
-			margin-top : 30px;
+			margin-left : 26%; 
 			margin-bottom : 10px;
 			line-height: 40px;
 			font-weight: bold;
 			text-align: center;
 		}
 		
-		
-		.comment{
-			margin-left : 20px;
-		}
-		
-		#comment1{
-			font-weight : bold;
-			margin-bottom : 20px;
-		}
 		
 		@media only screen and (max-width: 1200px) {
 			.sidebar {
@@ -197,12 +136,9 @@
 		
 	</style>
 
-<!-- 비밀번호가 같은지 다른지 확인하는 유효성검사도 넣기 -->
-<title>Insert title here</title>
 </head>
 <body>
-
-	<header>
+<header>
 	
 		<div id="mainHeader"><a href="../../index.jsp">	
 			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
@@ -232,54 +168,31 @@
 			<div id="realMain">
 				
 				<div id = "box"> 
-				
-					<div id = "confirm_comment1"> 비밀번호 변경</div>
-				
+					<div id = "confirm_comment1">아이디 확인 </div>
 					
-				
+					<div id = "confirm_comment2">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</div>
+					
 					<div id =  "input" >
-						<div class = "left">새비밀번호</div> 
-						
-						<input type = "password" class = "right" name="userPwd" >
-						 
-						<div class = "input">
-							<div class = "left">새비밀번호 확인</div>
-							 
-							<input type = "password" class = "right" name="userPwd2">
-								
-							<div>
-							<input type="submit" id="next_bt" value="확인"
-								onclick="pwdupdate()">
-							
-							</div>
-							
-						
-						</div>
-				
-					</div>
-				
-				</div>
-								
-				<div id = "box2">
-					<div class = "comment" id = "comment1">※ 사용 불가한 비밀번호</div>
-
-					<div class = "comment" id = "comment2">
-					1. 빈칸 / 공백<br>
-					2. 숫자만으로 이루어진 경우<br>
-					3. 동일한 문자를 많이 포함한 경우
-					</div>
 					
-				</div>
+						<input type = "text" id = "input_id" placeholder = "아이디를 입력해주세요.">
+					 		
+						<div><a href="find_Pwd2.jsp"><input type = "button" id = "next_bt" value = "다음"></a></div>
 				
-			</div>	
+					</div>
+				
+				</div>
+								
+				
+				
+			</div>
+			
 			
 		</div>
 	
 	</section>
-	</body>
+	
 	<footer>
 	
 	</footer>
-
 </body>
 </html>

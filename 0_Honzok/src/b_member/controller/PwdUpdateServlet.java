@@ -40,9 +40,10 @@ public class PwdUpdateServlet extends HttpServlet {
 		map.put("old", userPwd);
 		map.put("new", newPwd);
 		
-		int result = new b_member.model.service.MemberService().updatePwd(map);
+		int result = new MemberService().updatePwd(map);
 		
 		if(result > 0) {
+			request.setAttribute("msg", "회원수정에 성공");
 			response.sendRedirect("myPage.me");
 		} else {
 			request.setAttribute("msg", "비밀번호 수정에 실패하였습니다.");

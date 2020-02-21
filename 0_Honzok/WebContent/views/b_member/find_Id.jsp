@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
 		header {
@@ -85,14 +87,6 @@
 			background : rgb(242, 242, 242);
 		}
 		
-		#box2{
-			margin-top : 2%;
-			width : 100%;
-			text-align : left;
-			padding : 20px 0px 20px 0px; 
-			background : rgb(242, 242, 242);
-		}
-		
 		#confirm_comment1{
 			padding-left :30px; 
 			font-weight : bold;
@@ -108,19 +102,17 @@
 		}
 		
 		.left{
-			font-size : 17px;
+			font-size : 20px;
 			width : 150px;
 			display : inline-table;
-			margin-left : 7%;
-			font-weight : bold;
 		}
 		
 		.right{
+			text-align : left;
 			border-radius : 5px;
-			width : 200px;
-			height: 30px;
-			margin-left : 5%;
-			margin-top : 3%;
+			width : 150px;
+			height: 20px;
+			margin-bottom : 20px;
 		}
 		
 		#input{
@@ -138,37 +130,39 @@
 			background : lightgray;
 			height : 25px;
 			font-weight: bold;
-			
 		}
 		
 		#help{
 			margin-left : 155px;
 			font-size : 13px;
-			
+			display : inline-bolck;
 		}
-		
+
 		#hover_bt{
 			border : 1px solid black;
-			position : relative;
 			background : gray;
 			width : 20px;
 			height: 20px;
-			display : inline-block;
 			font-weight : bold;
 			margin-left : 5px;
-			display : block;
+			z-index : 1;
 			
 		}
 		
 		#hover_content{
-			width : 300px;
-			height : 30px;
+			border : 1px solid black;
+			width : 250px;
+			height : 50px;
+			background-color : white;
+			font-size : 10px;
+			margin-left : 10%;
+			z-index : 2;
 		}
 		
 		#next_bt{
 			width : 100px;
 			height : 40px;
-			background-color : rgb(241, 131, 50);
+			background-color : RGB(84, 84, 84); 
 			color : white;
 			border-radius: 5px;
 			margin-left : 25%;
@@ -180,15 +174,6 @@
 		}
 		
 		
-		.comment{
-			margin-left : 20px;
-		}
-		
-		#comment1{
-			font-weight : bold;
-			margin-bottom : 20px;
-		}
-		
 		@media only screen and (max-width: 1200px) {
 			.sidebar {
 				display:none;
@@ -197,12 +182,10 @@
 		
 	</style>
 
-<!-- 비밀번호가 같은지 다른지 확인하는 유효성검사도 넣기 -->
-<title>Insert title here</title>
+
 </head>
 <body>
-
-	<header>
+<header>
 	
 		<div id="mainHeader"><a href="../../index.jsp">	
 			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
@@ -218,7 +201,7 @@
 		
 		<div id="subHeader">
 			<div id="boardName">
-				비밀번호 찾기
+				아이디 찾기
 			</div>
 		</div>
 	
@@ -232,54 +215,67 @@
 			<div id="realMain">
 				
 				<div id = "box"> 
-				
-					<div id = "confirm_comment1"> 비밀번호 변경</div>
-				
+					<div id = "confirm_comment1">본인확인 이메일로 인증 </div>
 					
-				
+					<div id = "confirm_comment2">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</div>
+					
 					<div id =  "input" >
-						<div class = "left">새비밀번호</div> 
+					<div class = "left">이름</div> 
+					
+					<input type = "text" class = "right" name="name" id="name" required autofocus>
+					 
+					 <div class = "input">
+					<div class = "left">이메일 주소</div>
+					 
+					<input type = "text" class = "right email" id="email" maxlength="16" placeholder="이메일을 입력해주세요." name="email" required>
+					 @ <input type = "text" id="email02" class = "right email"> 
+					<select name="selectEmail" id="selectEmail">
+					   	  <option value="1">직접입력</option>
+		                  <option value="daum.net">daum.net</option>
+		                  <option value="empal.com" >empal.com</option>
+		                  <option  value="gmail.com" >gmail.com</option>
+		                  <option  value="hanmail.com">hanmail.net</option>
+		                  <option  value="msn.com">msn.com</option>
+		                  <option  value="naver.com">naver.com</option>
+		                  <option  value="nate.com">nate.com</option>
+					</select>
+					
+					<script>
+			           $('#selectEmail').change(function(){
+			        	   $("#selectEmail option:selected").each(function () {
+			        		   if($(this).val()== '1'){ //직접입력일 경우
+			        			   $("#email02").val(''); //값 초기화 
+			        			   $("#email02").attr("disabled",false); //활성화
+			        			   }else{ //직접입력이 아닐경우 
+			        				   $("#email02").val($(this).text()); //선택값 입력
+			        				   $("#email02").attr("disabled",true); //비활성화 
+			        				   } 
+			        		   }); 
+			        	   });
+			
+			           </script>
+			            
 						
-						<input type = "password" class = "right" name="userPwd" >
-						 
-						<div class = "input">
-							<div class = "left">새비밀번호 확인</div>
-							 
-							<input type = "password" class = "right" name="userPwd2">
-								
-							<div>
-							<input type="submit" id="next_bt" value="확인"
-								onclick="pwdupdate()">
-							
-							</div>
-							
 						
-						</div>
-				
-					</div>
-				
-				</div>
-								
-				<div id = "box2">
-					<div class = "comment" id = "comment1">※ 사용 불가한 비밀번호</div>
-
-					<div class = "comment" id = "comment2">
-					1. 빈칸 / 공백<br>
-					2. 숫자만으로 이루어진 경우<br>
-					3. 동일한 문자를 많이 포함한 경우
-					</div>
+						<a href="find_Id2.jsp"><input type = "button" id = "next_bt" value = "다음"></a>
+						
 					
 				</div>
+				</div>
 				
-			</div>	
+				</div>
+								
+				
+				
+			</div>
+			
 			
 		</div>
 	
 	</section>
-	</body>
+	
 	<footer>
 	
 	</footer>
-
 </body>
 </html>
