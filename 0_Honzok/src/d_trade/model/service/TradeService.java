@@ -8,7 +8,10 @@ import static a_common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import org.apache.tomcat.jni.File;
+
 import d_trade.model.dao.TradeDAO;
+import d_trade.model.vo.Image;
 import d_trade.model.vo.Trade;
 
 public class TradeService {
@@ -22,40 +25,44 @@ public class TradeService {
 		return result;
 	}
 
-	public ArrayList<Trade> selectList(int currentPage) {
+	public ArrayList<Trade> viewList1(int currentPage) {
 		Connection conn = getConnection();
 		
-		ArrayList<Trade> list = new TradeDAO().selectList(conn, currentPage);
-		
-		close(conn);
-		return list;
-	}
-
-	public ArrayList viewList(int i) {
-		Connection conn = getConnection();
-		
-		ArrayList list = null;
+		ArrayList<Trade> list = null;
 		
 		TradeDAO tDAO = new TradeDAO();
 		
-		if(i == 1) {
-			list = tDAO.viewTList(conn);
-		}else {
-			list = tDAO.viewIList(conn);
-		}
+	
+		list = tDAO.viewTList1(conn, currentPage);
+
+		
+		return list;
+	}
+	
+	public ArrayList<Image> viewList2() {
+		Connection conn = getConnection();
+		
+		ArrayList<Image> list = null;
+		
+		TradeDAO tDAO = new TradeDAO();
+		
+		list = tDAO.viewIList2(conn);
+		
 		
 		return list;
 	}
 
-	public int insertTrade(Trade g, Trade t) {
+	public int insertTrade(Trade g, Trade t, ArrayList<Image> fileList) {
 		Connection conn = getConnection();
 		
 		TradeDAO dao = new TradeDAO();
 		
+		
 		int result1 = dao.insertTrade1(conn, g);
 		int result2 = dao.insertTrade2(conn, t);
+		int result3 = dao.insertImage(conn, fileList);
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -82,8 +89,98 @@ public class TradeService {
 		} else {
 			rollback(conn);
 		}
-		
 		return trade;
 	}
+
+	public ArrayList<Image> selectImage(int pn) {
+		Connection conn =getConnection();
+		ArrayList<Image> list = new TradeDAO().selectImage(conn, pn);
+		
+		return list;
+	}
+
+	public Trade selectNick(int pn) {
+		Connection conn = getConnection();
+		TradeDAO dao = new TradeDAO();
+		
+		Trade trade = dao.selectNick(conn, pn);
+		return trade;
+	}
+
+	public int updateThumbnail(Trade g, Trade t) {
+		Connection conn = getConnection();
+		
+		TradeDAO dao = new TradeDAO();
+		
+		int result1 = dao.updateGBoard1(conn, g);
+		int result2 = dao.updateGBoard2(conn, t);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
+	public int updateThumbnail(Trade g, Trade t, ArrayList<Image> file) {
+		Connection conn = getConnection();
+		
+		TradeDAO dao = new TradeDAO();
+		
+		int result1 = dao.updateGBoard1(conn, g);
+		int result2 = dao.updateGBoard2(conn, t);
+		int result3 = 0;
+		
+		if(file.get(0).getImgId() == 0) {
+			result3 = dao.insertNewImage(conn, file);
+		} else {
+			result3 = dao.updateImage(conn, file);
+		}
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
+	public int updateThumbnail(Trade g, Trade t, ArrayList<Image> changeFile, ArrayList<Image> newInsertFile) {
+		Connection conn = getConnection();
+		
+		TradeDAO dao = new TradeDAO();
+		
+		int result1 = dao.updateGBoard1(conn, g);
+		int result2 = dao.updateGBoard2(conn, t);
+		int result3 = dao.updateImage(conn, changeFile);
+		int result4 = dao.insertNewImage(conn, newInsertFile);
+		
+		if(result1 > 0 && result2 >0 && result3>0 && result4>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result1;
+	}
+
+	public int delectTrade(int postNo) {
+		Connection conn = getConnection();
+		TradeDAO dao = new TradeDAO();
+		
+		int result = dao.deleteTrade(conn, postNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		return result;
+	}
+
+	
 
 }

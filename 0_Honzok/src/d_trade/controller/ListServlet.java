@@ -3,7 +3,6 @@ package d_trade.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import d_trade.model.service.TradeService;
+import d_trade.model.vo.Image;
 import d_trade.model.vo.PageInfo;
 import d_trade.model.vo.Trade;
 
 /**
- * Servlet implementation class paging_servlet
+ * Servlet implementation class list_servlet
  */
-@WebServlet("/list.pg")
-public class paging_servlet extends HttpServlet {
+@WebServlet("/list.gy")
+public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public paging_servlet() {
+    public ListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +36,7 @@ public class paging_servlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		TradeService service = new TradeService();
+		
 		
 		int listCount = service.getListCount();
 		
@@ -51,7 +52,7 @@ public class paging_servlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		limit = 5;
+		limit = 10;
 		
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit + 0.9)) - 1) * limit + 1;
@@ -63,19 +64,22 @@ public class paging_servlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
 		
-		ArrayList<Trade> list = service.selectList(currentPage);
+		ArrayList<Trade> tList = service.viewList1(currentPage);
+		ArrayList<Image> iList = service.viewList2();
 		
 		String page = null;
-		if(list != null) {
-			page = "views/d_trade/gyul_board.jsp";
-			request.setAttribute("list", list);
+		if(tList != null && iList !=null) {
+			request.setAttribute("tList", tList);
+			request.setAttribute("iList", iList);
 			request.setAttribute("pi", pi);
-		} else {
+			page = "views/d_trade/gyulBoard.jsp";
+		}else {
+			request.setAttribute("msg", "조회에 실패하였습니다.");
 			page = "views/a_common/errorPage.jsp";
-			request.setAttribute("msg", "게시판 조회에 실패하였습니다.");
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request,response);
+		
+		request.getRequestDispatcher(page).forward(request, response);
+		
 	}
 
 	/**

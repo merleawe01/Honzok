@@ -116,6 +116,7 @@
 
 	<footer>
 		<div class="menu" onclick="goThumbnail();">마켓</div>
+		<div class="menu" onclick="goGy();">물귤</div>
 	</footer>
 	
 	<script>
@@ -129,6 +130,10 @@
 		
 		function goThumbnail(){
 			location.href="<%= request.getContextPath()%>/list.m";
+		}
+		
+		function goGy(){
+			location.href="<%= request.getContextPath()%>/list.gy";
 		}
 	</script>
 	

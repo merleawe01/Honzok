@@ -4,8 +4,6 @@
 <%
 	ArrayList<Trade> tList = (ArrayList<Trade>)request.getAttribute("tList");
 	ArrayList<Image> iList = (ArrayList<Image>)request.getAttribute("iList");
-	
-	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
@@ -109,6 +107,7 @@
 		
 		.list_line{
 			height:70px;
+			cursor : pointer;
 		}
 		
 		#sell{
@@ -117,7 +116,7 @@
 		}
 		
 		#td1{ width:40px; }
-		#td2{ width:50px; }
+		#td2{ width:50px; height : 50px; }
 		#td3{ width:250px; }
 		#td4{ width:130px; }
 		#td5{ width:130px; }
@@ -178,17 +177,26 @@
 					<td colspan="7">존재하는 공지사항이 없습니다.</td>
 				</tr>
 				<% } else{ 
-						 for(int i = 0; i < tList.size(); i++){ 
-						 Trade t = tList.get(i);
+						 for(Trade t : tList){ 
 						 %>
 						<tr class = "list_line">
-							<td id="td1"><%= t.getBoardNo() %></td>
-							<td id="td2">사진</td>
-							<td class = "name" id="td3"><%= t.getPostTitle() %></td>
-							<td id="td4"><%= t.getPoint() %> <img alt="귤" src="../images/orange.png" id="gyul"></td>
-							<td id="td5"><%= t.getMaxPoint() %><img alt="귤" src="../images/orange.png" id="gyul"></td>
-							<td id="td6">23:22</td>
-							<td id="td7"><%= t.getWriter() %></td>
+							<td class="list_line2" id="td1"><input type = "hidden" value = "<%= t.getPostNo() %>"><%= t.getrNo() %></td>
+							<td class="list_line2" id="td2">
+								<% for(int j = 0; j < iList.size(); j++){
+									Image m = iList.get(j);
+									
+								%>
+									<% if(t.getPostNo() == m.getPostNo()){ %>
+										<img width="100%" height="100%" src = "<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= m.getChangeName() %>">
+									<% } %>
+								<% } %>
+							
+							</td>
+							<td class = "name list_line2" id="td3"><%= t.getPostTitle() %></td>
+							<td class="list_line2" id="td4"><%= t.getPoint() %> <img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
+							<td class="list_line2" id="td5"><%= t.getMaxPoint() %><img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
+							<td class="list_line2" id="td6"><%= t.getDlTime() %></td>
+							<td class="list_line2" id="td7"><%= t.getWriter() %></td>
 						</tr>
 						<% }
 							}%>
@@ -197,14 +205,14 @@
 				
 				<div id = "write">
 				
-					<button onclick = "location.href = 'views/d_trade/gyul_write.jsp'" id = "go_write">글쓰기</button>
+					<button onclick = "location.href = 'views/d_trade/gyulWrite.jsp'" id = "go_write">글쓰기</button>
 				
 				</div>
 				
 				<!-- 페이징 -->
 				<div class = 'pagingArea' align='center'>
-					<% if(!list.isEmpty()){ %>
-					<button onclick = "lication.href='<%= request.getContextPath() %>/list.gy?currentPage=1'">◀◀</button>
+					<% if(!tList.isEmpty()){ %>
+					<button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=1'">◀◀</button>
 				
                     <button onclick = "location.href ='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">◀</button>
                     <script>
@@ -218,7 +226,7 @@
                     	<% if(p == currentPage){ %>
                     		<button id = "choosen" disabled><%= p %></button>
                     	<% }else{ %>
-                    		<button id = "numBtn" onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage<%= p %>'"><%= p %></button>
+                    		<button id = "numBtn" onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= p %>'"><%= p %></button>
                     	<% } %>	
                     <% } %>
                     
@@ -247,12 +255,11 @@
                 </div>
 	
 	</div>
-	
 	<script>
 		$(function(){
-			$('.list_line').click(function(){
-				var pn = $(this).children().eq(0).val();
-				location.href="<%= request.getContextPath()%>/detail.gy?post_no="+pn;
+			$('.list_line2').click(function(){
+				var pn = $(this).parent().children().eq(0).children().val();
+				location.href="<%= request.getContextPath()%>/detail.gy?postNo="+pn;
 			});
 		});
 	</script>

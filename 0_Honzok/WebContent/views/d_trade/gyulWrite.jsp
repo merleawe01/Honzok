@@ -6,6 +6,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+		#insert { 
+			width : 1170px;
+		}
+
+		#contentImgArea2{
+			margin-left : 100px;
+		}
+		
+		
+		#contentImgArea1:hover, #contentImgArea2:hover{cursor:pointer;}
+		
 		#content_table{
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -25,7 +36,7 @@
 		#time{ height : 60px; }
 		#content{ height : 400px; }
 		
-		#input_contents{ width : 1020px;}
+		#input_contents{ width : 750px;}
 		
 		.content_title{
 			font-weight : bold;
@@ -41,21 +52,9 @@
 		#input_start{ width:200px; height:30px; border-radius : 5px; border : 1px gray solid; }
 		#input_buy{ width:200px; height:30px; border-radius : 5px; border : 1px gray solid; }
 		#input_time{ font-weight : bold; font-size : 25px; }
-		#input_content{ width:1020px; height:350px; border-radius : 5px; border : 1px gray solid; }
-		
-		#file{ 
-			text-align : left;
-			margin-top : 20px;
-			margin-left : 10px;
-		}
-		
-		#input_file{
-			width : 1170px;
-			height : 200px;
-			border-radius : 5px;
-			border : 1px solid gray;
-		}
-		
+		#input_content{ width:750px; height:350px; border-radius : 5px; border : 1px gray solid; }
+
+				
 		#btn{ margin-top : 50px;}
 		
 		#onebu{text-align : center;
@@ -95,8 +94,25 @@
 		
 		<div>
 			<form action="<%= request.getContextPath() %>/insert.gy" method="post" encType="multipart/form-data">
+			
 				<div id = "insert">
-					<table id = "content_table" >
+				
+					<table style="margin-left: auto; margin-right: auto;">
+						<tr>
+							<td>
+							<div id="contentImgArea1">
+								<img id="titleImg" width="300" height="300" > 
+							</div>
+						</td>
+						<td>
+							<div id="contentImgArea2">
+								<img id="contentImg1" width="300" height="300"> 
+							</div>
+						</td>
+						</tr>
+					</table>
+	
+					<table id = "content_table" style="margin-left: auto; margin-right: auto;">
 						<tr>
 							<td class = "content_title" id = "title">제목<label class = "must">(필수)</label></td>
 							<td id = "input_contents"><input type = "text" id = "input_title" placeholder = "상품명을 입력해주세요." name = "gtitle"></td>
@@ -120,14 +136,47 @@
 					</table>
 				</div>
 				
-				<div id = "file"><input type = "button" value = "파일첨부" background = "gray"></div>
-				
-				<div><input type = "text" id = "input_file"></div>
-				
 				<div id = "btn">
 					<input id = "onebu" type="submit" value="작성하기"> 
-					<input id = "twobu"type="button" value="돌아가기">
+					<input type="button" id="twobu" value="목록으로" onclick="location.href='<%= request.getContextPath() %>/list.gy'">
 				</div>
+				
+				
+				<div id="fileArea">
+					<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
+					<input type="file" id="thumbnailImg2" multiple="multiple" name="thumbnailImg2" onchange="LoadImg(this,2)">
+				</div>
+				<script>
+					$(function(){
+						$("#fileArea").hide();
+						
+						$("#contentImgArea1").click(function(){
+							$("#thumbnailImg1").click();
+						});
+						$("#contentImgArea2").click(function(){
+							$("#thumbnailImg2").click();
+						});
+					});
+					
+					function LoadImg(value, num){
+						if(value.files && value.files[0]){
+							var reader = new FileReader();
+							
+							reader.onload = function(e){								
+								switch(num){
+								case 1: 
+									$("#titleImg").attr("src", e.target.result);
+									break;
+								case 2:
+									$("#contentImg1").attr("src", e.target.result);
+									break;
+								}
+							}
+							
+							reader.readAsDataURL(value.files[0]);
+						}
+					}
+				</script>
 			</form>
 		</div>
 	

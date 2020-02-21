@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,8 +58,8 @@ public class TradeDAO {
 		return result;
 	}
 
-	public ArrayList<Trade> selectList(Connection conn, int currentPage) {
-		
+
+	public ArrayList<Trade> viewTList1(Connection conn, int currentPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Trade> list = null;
@@ -67,7 +68,7 @@ public class TradeDAO {
 		int startRow = (currentPage - 1) * posts + 1;
 		int endRow = startRow + posts -1;
 		
-		String query = prop.getProperty("selectList");
+		String query = prop.getProperty("viewTList");
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -79,19 +80,15 @@ public class TradeDAO {
 			
 			while(rset.next()) {
 				Trade t = new Trade(rset.getInt("post_no"),
-							 	    rset.getInt("board_no"),
-							   	    rset.getString("post_title"),
-								    rset.getString("content"),
-								    rset.getInt("view_count"),
-								    rset.getString("nickname"),
-								    rset.getInt("point"),
-								    rset.getInt("max_point"),
-								    rset.getDate("dl_time"),
-								    rset.getDate("write_date"),
-								    rset.getDate("modify_date"),
-								    rset.getString("delete_yn").charAt(0));
+								   rset.getInt("rnum"),
+								   rset.getString("post_title"),
+								   rset.getInt("max_point"),
+								   rset.getInt("point"),
+								   rset.getDate("dl_time"),
+								   rset.getString("NICKNAME"));
 				
 				list.add(t);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,42 +97,11 @@ public class TradeDAO {
 			close(pstmt);
 		}
 		
-		
+
 		return list;
 	}
 
-	public ArrayList<Trade> viewTList(Connection conn) {
-		Statement stmt = null;
-		ResultSet rset = null;
-		ArrayList<Trade> list = null;
-		
-		String query = prop.getProperty("viewTList");
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			list = new ArrayList<Trade>();
-			
-			while(rset.next()) {
-				list.add(new Trade(rset.getInt("rnum"),
-								   rset.getString("post_title"),
-								   rset.getInt("point"),
-								   rset.getInt("max_point"),
-								   rset.getDate("dl_time"),
-								   rset.getString("writer")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(stmt);
-		}
-		
-		return list;
-	}
-
-	public ArrayList viewIList(Connection conn) {
+	public ArrayList<Image> viewIList2(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		
@@ -161,6 +127,7 @@ public class TradeDAO {
 			close(rset);
 			close(stmt);
 		}
+		
 		
 		
 		
@@ -196,8 +163,10 @@ public class TradeDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, t.getMinPoint());
 			pstmt.setInt(2, t.getMaxPoint());
-			pstmt.setInt(3, t.getPoint());
-			pstmt.setString(4, t.getNickname());
+//			pstmt.setInt(3, t.getPoint());
+			pstmt.setString(3, t.getNickname());
+			
+
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -246,6 +215,7 @@ public class TradeDAO {
 								  rs.getString("content"),
 								  rs.getInt("view_count"),
 								  rs.getString("nickname"),
+								  rs.getInt("min_point"),
 								  rs.getInt("point"),
 								  rs.getInt("max_point"),
 								  rs.getDate("dl_time"),
@@ -259,7 +229,217 @@ public class TradeDAO {
 			close(rs);
 			close(pstmt);
 		}
+
+		
 		return trade;
+	}
+
+	public int insertImage(Connection conn, ArrayList<Image> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertImage");
+		
+			
+			try {
+				for(int i = 0; i < fileList.size(); i++) {
+					Image a = fileList.get(i);
+					
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, a.getOriginName());
+					pstmt.setString(2, a.getChangeName());
+					pstmt.setString(3, a.getImgSrc());
+					pstmt.setInt(4, a.getFileLevel());
+					
+					result += pstmt.executeUpdate();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		
+		return result;
+	}
+
+	public ArrayList<Image> selectImage(Connection conn, int pn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Image> list = null;
+		
+		String query = prop.getProperty("selectImage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, pn);
+			
+			rs = pstmt.executeQuery();
+			list = new ArrayList<Image>();
+			
+			while(rs.next()) {
+				Image ig = new Image();
+				ig.setImgId(rs.getInt("img_id"));
+				ig.setOriginName(rs.getString("origin_name"));
+				ig.setChangeName(rs.getString("change_name"));
+				ig.setImgSrc(rs.getString("img_src"));
+				ig.setUploadDate(rs.getDate("upload_date"));
+				
+				list.add(ig);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public Trade selectNick(Connection conn, int pn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Trade trade = null;
+		String query = prop.getProperty("selectNick");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, pn);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				trade = new Trade(rs.getString("nickname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return trade;
+	}
+
+	public int updateGBoard1(Connection conn, Trade g) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateGBoard1");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, g.getPostTitle());
+			pstmt.setString(2, g.getContent());
+			pstmt.setInt(3, g.getPostNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int updateGBoard2(Connection conn, Trade t) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateGBoard2");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, t.getMinPoint());
+			pstmt.setInt(2, t.getMaxPoint());
+			pstmt.setInt(3, t.getPostNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertNewImage(Connection conn, ArrayList<Image> newInsertFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertNewImage");
+		
+			
+		try {
+			for(int i = 0; i < newInsertFile.size(); i++) {
+				Image a = newInsertFile.get(i);
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, a.getPostNo());
+				pstmt.setString(2, a.getOriginName());
+				pstmt.setString(3, a.getChangeName());
+				pstmt.setString(4, a.getImgSrc());
+			//	pstmt.setInt(5, a.getFileLevel());
+				
+				result += pstmt.executeUpdate();
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateImage(Connection conn, ArrayList<Image> changeFile) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateImage");
+		
+		try {
+			for(int i = 0; i < changeFile.size(); i++) {
+				Image a = changeFile.get(i);
+				
+				pstmt=conn.prepareStatement(query);
+				pstmt.setString(1, a.getOriginName());
+				pstmt.setString(2, a.getChangeName());
+				pstmt.setInt(3, a.getImgId());
+				
+				result += pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteTrade(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteTrade");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		
+		return result;
 	}
 
 }
