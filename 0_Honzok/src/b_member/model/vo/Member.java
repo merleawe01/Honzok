@@ -35,7 +35,7 @@ public class Member {
 		this.bAddr = bAddr;
 		this.phone = phone;
 		this.email = email;
-
+	}
 	public Member(String userId, String userName, String nickName, int postalCode, String bAddr, String lAddr,
 			String phone, String email, int point) {
 		super();

@@ -5,7 +5,6 @@
 	ArrayList<Image> fileList = (ArrayList<Image>)request.getAttribute("fileList");
 	Image titleImg = fileList.get(0);
 	
-	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>

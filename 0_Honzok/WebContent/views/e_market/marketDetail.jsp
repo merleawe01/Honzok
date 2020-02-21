@@ -1,7 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="b_member.model.vo.*, java.util.*, e_market.model.vo.*"%>
 <%
-	Member loginUser = (Member)session.getAttribute("loginUser");
+	
 	Market m = (Market)request.getAttribute("market");
 	ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
 	Attachment titleImg = fileList.get(0);

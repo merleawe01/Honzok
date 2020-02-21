@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, e_market.model.vo.*" %> 
+<%@ page import="java.util.ArrayList, e_market.model.vo.*, a_common.*" %> 
 <%
 	ArrayList<Market> mList = (ArrayList<Market>)request.getAttribute("mList");
 	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
@@ -29,6 +29,7 @@
 		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
 		.listArea{cursor:pointer; border-spacing: 10px;}
 		footer{margin-bottom : 100px;}
+		#borderTr td{border-bottom : 1px solid black;}
 </style>
 
 </head>
@@ -40,7 +41,7 @@
 	
 	<div id="main">
 		<div class="tableArea">
-				<table class="listArea" border="1">
+				<table class="listArea" >
 				
 				<% if(mList.isEmpty()){ %>
 				
@@ -50,7 +51,7 @@
 						for(int i = 0; i < mList.size(); i++){
 							Market m = mList.get(i);
 				%>	
-					<tr> 
+					<tr id="borderTr"> 
 						<td rowspan="4" width="300px">
 						<input type="hidden" value ="<%= m.getPostNo() %>">
 							<% for(int j = 0; j < fList.size(); j++) {

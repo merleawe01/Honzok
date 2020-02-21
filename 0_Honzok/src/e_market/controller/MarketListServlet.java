@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import a_common.PageInfo;
 import e_market.model.service.MarketService;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
-import e_market.model.vo.PageInfo;
 
 /**
  * Servlet implementation class MarketListServlet

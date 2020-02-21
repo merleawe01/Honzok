@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="java.util.ArrayList, d_trade.model.vo.*" %>
+<%@ page import="java.util.ArrayList, d_trade.model.vo.*, a_common.*" %>
 <%
 	ArrayList<Trade> tList = (ArrayList<Trade>)request.getAttribute("tList");
 	ArrayList<Image> iList = (ArrayList<Image>)request.getAttribute("iList");
