@@ -34,7 +34,7 @@ public class IdCheckServlet extends HttpServlet {
 		
 		String userId = request.getParameter("inputId");
 		
-		int result = new b_member.model.service.MemberService().idCheck(userId);
+		int result = new MemberService().idCheck(userId);
 		
 		request.setAttribute("result", result);
 		request.setAttribute("checkedId", userId);

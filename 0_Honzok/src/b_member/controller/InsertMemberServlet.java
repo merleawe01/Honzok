@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import b_member.model.service.MemberService;
 import b_member.model.vo.Member;
 import f_message.model.service.MessageService;
 
@@ -49,11 +50,10 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
-		int result = new b_member.model.service.MemberService().insertMember(member);
-    
-    // 회원가입 메세지
-    String nickName = request.getParameter("nickName");
-    new MessageService().welcomeMessage(nickName);
+		int result = new MemberService().insertMember(member);
+
+	    new MessageService().welcomeMessage(nickName);
+
 		
 		
 		String page = "";

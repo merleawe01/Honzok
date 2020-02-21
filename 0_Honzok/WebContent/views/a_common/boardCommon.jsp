@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import = "f_message.model.vo.*, b_member.model.vo.*"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	/* String msg = (String)request.getAttribute("msg"); 
+
+	Message m = new Message();
+	int view = m.getView(); */
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +37,7 @@
 		height : 100%;
 		width : auto;
 		float : left;
+		cursor: pointer;
 	}
 	#list {
 		height : 100%;
@@ -47,11 +55,12 @@
 		color: rgb(241,131,50);
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 12pt;
+		cursor: pointer;
 	}
-	#nickname::after{
+	/* #nickname::after{
 		content : "님";
 		color : black;
-	}
+	} */
 	#boardName{
 		margin : 20px;
 		width : 100%;
@@ -85,6 +94,9 @@
 		border-top: 2px solid gray;
 		border-bottom: 2px solid gray;
 	}
+	#quicklink td {
+		cursor: pointer;
+	}
 	.td {
 		border-bottom: 1px solid gray;
 	}
@@ -105,23 +117,33 @@
 <body>
 	<header>
 		<div id="mainHeader">
-			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" id="logo">
+			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
 			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
 			
 			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			<div id="nickname">
-				닉네임가져올부분
-			</div>
+			
+			<% if(loginUser == null){ %>
+				<div id="nickname" onclick="location.href='views/b_member/login.jsp'">로그인</div>
+			<%}else{ %>
+				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+			<%} %>
 					
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
 			
 			<div id="quicklink">
 				<table>
-					<tr><td class="td">욜로홀로솔로</td></tr>
-					<tr><td class="td">자유게시판</td></tr>
-					<tr><td class="td">물귤교환</td></tr>
-					<tr><td>혼플리마켓</td></tr>
+					<tr><td class="td" onclick="moveLink('list.food');">욜로홀로솔로</td></tr>
+					<tr><td class="td" onclick="moveLink('');">자유게시판</td></tr>
+					<tr><td class="td" onclick="moveLink('list.gy');">물귤교환</td></tr>
+					<tr><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
 				</table>
+				
+				<script>
+					function moveLink(link){
+						location.href="<%= request.getContextPath() %>/" + link;
+					}
+				</script>
+				
 			</div>
 		</div>
 		
@@ -135,4 +157,5 @@
 	
 	
 </body>
+
 </html>

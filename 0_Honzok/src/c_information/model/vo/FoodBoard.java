@@ -53,6 +53,40 @@ public class FoodBoard {
 		this.area_y = area_y;
 		this.img_src = img_src;
 	}
+	
+	// 디테일 뷰에서 사용할 생성자.
+	public FoodBoard(int no, String title, String writer, String content, int view_count, int reco_count, String local_name,
+			String address, int star, String rc_food, double area_x, double area_y) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.writer = writer;
+		this.content = content;
+		this.view_count = view_count;
+		this.reco_count = reco_count;
+		this.local_name = local_name;
+		this.address = address;
+		this.star = star;
+		this.rc_food = rc_food;
+		this.area_x = area_x;
+		this.area_y = area_y;
+	}
+
+	// 글 수정에서 사용할 생성자
+	public FoodBoard(int no, String title, String content, String category, String local_name, String address, int star,
+			String rc_food, double area_x, double area_y) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.local_name = local_name;
+		this.address = address;
+		this.star = star;
+		this.rc_food = rc_food;
+		this.area_x = area_x;
+		this.area_y = area_y;
+	}
 
 	public int getNo() {
 		return no;

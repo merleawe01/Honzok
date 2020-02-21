@@ -126,6 +126,37 @@ public int idCheck(Connection conn, String userId) {
 	}
 	return result;
 }
+
+public int nickCheck(Connection conn, String userNick) {
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int result = 0;
+	
+	String query = prop.getProperty("nickCheck");
+	
+	try {
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, userNick);
+		
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rs);
+		close(pstmt);
+	}
+	
+	return result;
+}
+
+	
+
+
 public int updateMember(Connection conn, Member member) {
 	PreparedStatement pstmt = null;
 	int result = 0;
@@ -226,7 +257,6 @@ public int updatePwd(Connection conn, HashMap<String, String> map) {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, nickName);
-			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt(1);

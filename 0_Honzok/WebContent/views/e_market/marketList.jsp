@@ -17,24 +17,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
 	.tableArea{width:800px; height:auto; margin-left:auto; margin-right:auto;}
-		#listArea{text-align:center; height:250px;}
-		#write{  text-align:center;
-				 font-size : 15pt;
-				  width : 100px;
-				  height : 40px;
-			      background-color : rgb(241, 131, 50);
-			      color : white;
-			      border-radius: 5px;
-			      border: 0;
-			      font-weight: bold;
-			      line-height: 40px;
-			      margin-left: 650px;
-			      cursor:pointer;}
+		.listArea{text-align:center; height:250px;}
+		#write{text-align:center; font-size : 15pt; width : 100px; height : 40px;
+			   background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
+			   border: 0; font-weight: bold; line-height: 40px; margin-left: 650px;
+			   cursor:pointer;}
 		.searchArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
 		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
+		.listArea{cursor:pointer; border-spacing: 10px;}
 		footer{margin-bottom : 100px;}
 </style>
 
@@ -47,22 +40,24 @@
 	
 	<div id="main">
 		<div class="tableArea">
-				<table id="listArea" border="1">
+				<table class="listArea" border="1">
 				
 				<% if(mList.isEmpty()){ %>
 				
 					<div>조회된 리스트가 없습니다.</div>
 				
 				<% } else{ 
-						for(Market m : mList){
+						for(int i = 0; i < mList.size(); i++){
+							Market m = mList.get(i);
 				%>	
 					<tr> 
 						<td rowspan="4" width="300px">
-							<% for(int i = 0; i < fList.size(); i++) {
-							Attachment a = fList.get(i);
+						<input type="hidden" value ="<%= m.getPostNo() %>">
+							<% for(int j = 0; j < fList.size(); j++) {
+								Attachment a = fList.get(j);
 							%>
 								<% if(m.getPostNo() == a.getPostNo()){%>
-									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="200px" height="150px">
+									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
 								<% } %>				
 							<% } %>
 							
@@ -140,11 +135,12 @@
 	
 	<script>
 		$(function(){
-			$('.listArea').click(function(){
-				var bid = $(this).children().children().eq(0).val();
-				location.href="<%= request.getContextPath() %>/detail.m?postno=" + postno;
+			$('.listArea img').click(function(){
+				var postno = $(this).prev().val();
+				location.href="<%= request.getContextPath() %>/detail.m?postNo=" + postno;
 			})
 		});
+		
 	</script>
 	
 </body>

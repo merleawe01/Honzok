@@ -179,6 +179,7 @@
 			text-align: center;
 		}
 		
+		
 		.comment{
 			margin-left : 20px;
 		}
@@ -200,15 +201,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="../common/main.jsp" %>
-	
-	<body>
 
 	<header>
 	
-		<div id="mainHeader">
-			<img alt="로고" src="../image/Logo.png" id="logo">
-			<img alt="메뉴" src="../image/list.png" id="list">
+		<div id="mainHeader"><a href="../../index.jsp">	
+			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
+			<img alt="메뉴" src="../../images/list.png" id="list">
 			
 			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
 			<div id="nickname">
@@ -249,7 +247,11 @@
 							 
 							<input type = "password" class = "right" name="userPwd2">
 								
-							<div><input type = "button" id = "next_bt" value = "확인"></div>
+							<div>
+							<input type="submit" id="next_bt" value="확인"
+								onclick="pwdupdate()">
+							
+							</div>
 							
 						
 						</div>
@@ -274,7 +276,7 @@
 		</div>
 	
 	</section>
-	
+	</body>
 	<footer>
 	
 	</footer>

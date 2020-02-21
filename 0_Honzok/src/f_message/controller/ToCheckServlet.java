@@ -32,15 +32,14 @@ public class ToCheckServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String nickName = request.getParameter("toMember");
-		
 		int result = new MemberService().nickNameCheck(nickName);
-		
+
 		PrintWriter out = response.getWriter();
 		
 		if(result > 0 ) {
-			out.append("fail");
-		} else {
 			out.append("success");
+		} else {
+			out.append("fail");
 		}
 		
 		out.flush();
