@@ -76,9 +76,7 @@
 	
 	#quicklink {
 		position: fixed;
-		margin: 0 auto;
-   		left: 0;
-	   	right: 1100px;
+		top: 300px;
 	}
 	#quicklink table {
 		display: inline-table;
@@ -117,6 +115,16 @@
 			</div>
 					
 			<img alt="아이콘" src="../../images/blanket.png" id="icon">
+			
+			<div id="quicklink">
+				<table>
+					<tr><td class="td">욜로홀로솔로</td></tr>
+					<tr><td class="td">자유게시판</td></tr>
+					<tr><td class="td">물귤교환</td></tr>
+					<tr><td>혼플리마켓</td></tr>
+				</table>
+			</div>
+			
 		</div>
 		
 		<div id="subHeader">
@@ -126,14 +134,7 @@
 		</div>
 	</header>
 	
-	<div id="quicklink">
-		<table>
-			<tr><td class="td">욜로홀로솔로</td></tr>
-			<tr><td class="td">자유게시판</td></tr>
-			<tr><td class="td">물귤교환</td></tr>
-			<tr><td>혼플리마켓</td></tr>
-		</table>
-	</div>
+	
 	
 </body>
 </html>

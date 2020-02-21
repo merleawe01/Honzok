@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.apache.tomcat.jni.File;
 
+import b_member.model.vo.Member;
 import e_market.model.dao.MarketDAO;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
@@ -106,6 +107,9 @@ public class MarketService {
 			rollback(conn);
 		}
 	
+		System.out.println("result1 : " + result1);
+		System.out.println("result2 : " + result2);
+		
 		return result1;
 	}
 
@@ -128,6 +132,9 @@ public class MarketService {
 			rollback(conn);
 		}
 		
+		System.out.println("result1 : " + result1);
+		System.out.println("result2 : " + result2);
+		
 		return result1;
 	}
 
@@ -146,7 +153,40 @@ public class MarketService {
 			rollback(conn);
 		}
 	
+		System.out.println("result1 : " + result1);
+		System.out.println("result2 : " + result2);
+		System.out.println("result3 : " + result3);
+		
 		return result1;
+	}
+
+	public int deleteMarket(String postNo) {
+		Connection conn = getConnection();
+		MarketDAO dao = new MarketDAO();
+		
+		int result1 = dao.deleteMarket(conn, postNo);
+		int result2 = dao.deleteImage(conn, postNo);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result1;
+	}
+
+	public Member selectInfo(int postNo) {
+		Connection conn = getConnection();
+		MarketDAO dao = new MarketDAO();
+		
+		Member m = new MarketDAO().selectInfo(conn, postNo);
+		
+		System.out.println("m : " + m);
+		
+		return m;
 	}
 
 

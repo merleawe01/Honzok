@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import b_member.model.vo.Member;
 import e_market.model.vo.Attachment;
 import e_market.model.vo.Market;
 
@@ -425,6 +426,78 @@ public class MarketDAO {
 		}
 		
 		return result;
+	}
+
+	public int deleteMarket(Connection conn, String postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMarket");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public int deleteImage(Connection conn, String postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteImage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, postNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member selectInfo(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		
+		String query = prop.getProperty("selectInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				m = new Member(rs.getString("user_name"),
+									rs.getString("b_address"),
+									rs.getString("phone"),
+									rs.getString("email"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return m;
 	}
 	
 }

@@ -14,11 +14,15 @@
 	String useDate = request.getParameter("useDate");
 	String etc = request.getParameter("etc");
 	
-	/* ArrayList<String> images = new ArrayList<String>();
-	images.add(request.getParameter("detailImg1") == null ? "" : "src=" + request.getContextPath() + "/thumbnail_uploadFiles/" + request.getParameter("detailImg1"));
+	 ArrayList<String> images = new ArrayList<String>();
+	 for(int i = 1; i < 2; i++){
+			images.add(request.getParameter("detailImg" + i) == null ? "" : "src=" + request.getContextPath() + "/thumbnail_uploadFiles/" + request.getParameter("detailImg" + i));
+		}
 	
 	ArrayList<String> imgIds = new ArrayList<String>();
-	imgIds.add(request.getParameter("detailImgId1") == null ? "" : request.getParameter("detailImgId1")); */
+	for(int i = 0; i < 2; i++){
+		imgIds.add(request.getParameter("detailImgId" + i) == null ? "" : request.getParameter("detailImgId" + i));
+	}
 %>        
 <!DOCTYPE html>
 <html>
@@ -71,13 +75,13 @@
 					<div class="imageArea">
 						<div id="titleImgArea">
 								<img id="titleImg" width="300" height="300" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= titleImg %>">
-								<input type="hidden" id="detailImgId0" name="detailImgId0" value="<%= titleImg  %>"> 
+								<input type="hidden" id="detailImgId0" name="detailImgId0" value="<%= imgIds.get(0)  %>"> 
 								<input type="hidden" id="cTitle" name="cTitle">
 						</div>
 					
 						<div id="contentImgArea1">
 								<img id="contentImg1" width="300" height="300" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= contentImg1 %>"> 
-								<input type="hidden" id="detailImgId1" name="detailImgId1" value="<%= contentImg1 %>"> 
+								<input type="hidden" id="detailImgId1" name="detailImgId1" value="<%= imgIds.get(1) %>"> 
 								<input type="hidden" id="cContent1" name="cContent1">
 						</div>
 					</div>
@@ -178,7 +182,6 @@
 							reader.readAsDataURL(value.files[0]);
 						}
 					}
-				
 				</script>
 					<div>
 						<button type="submit" id="upBtn">수정완료</button>

@@ -57,7 +57,7 @@
 								Attachment a = fList.get(j);
 							%>
 								<% if(m.getPostNo() == a.getPostNo()){%>
-									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="200px" height="150px">
+									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
 								<% } %>				
 							<% } %>
 							

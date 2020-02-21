@@ -35,7 +35,8 @@
 		.imageArea div{display:inline-block; vertical:middle; 
 					   margin-left:40px; margin-right:40px; margin-bottom:20px; 
 		}
-					   
+		#titleImgArea{cursor : pointer;}
+		#contentImgArea1{cursor : pointer;			   
 		
 		
 </style>

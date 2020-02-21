@@ -77,6 +77,7 @@ public class MarketUpdateServlet extends HttpServlet {
 			
 			for(int i = originFiles.size() -1; i >= 0; i--) {
 				Attachment at = new Attachment();
+				at.setPostNo(postNo);
 				at.setImgSrc(savePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
@@ -91,15 +92,14 @@ public class MarketUpdateServlet extends HttpServlet {
 			}
 			
 			ArrayList<String> detailImgId = new ArrayList<String>();
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 2; i++) {
 				detailImgId.add(multipartRequest.getParameter("detailImgId" + i));
 			}
 			
 			ArrayList<String> changeImg = new ArrayList<String>();
 			changeImg.add(multipartRequest.getParameter("cTitle"));
-			for(int i = 0; i < 3; i++) {
-				changeImg.add(multipartRequest.getParameter("cContent" + (i+1)));
-			}
+			changeImg.add(multipartRequest.getParameter("cContent1" ));
+			
 
 			
 			ArrayList<Attachment> changeFile = new ArrayList<Attachment>();
@@ -117,6 +117,8 @@ public class MarketUpdateServlet extends HttpServlet {
 					}
 				}
 			}
+			
+			
 			
 			int result = 0;
 			

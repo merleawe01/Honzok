@@ -13,6 +13,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 	#boardTitle {
 			width : 100%; height : 25px; display : inline-block;
@@ -104,6 +106,7 @@
 						<% if(loginUser != null/*  && loginUser.getNickName().equals(m.getWriter()) */){ %>
 						<input type="submit" id="updateBtn"value="수정">
 						<input type="button" onclick="deleteMarket();"id="deleteBtn"value="삭제">
+						
 						<% } %>	
 					</div>
 					<br><br>
@@ -170,17 +173,26 @@
 				
 				<div align="center">
 					<% if(loginUser != null){ %>
-					<input id = "threebu" type="button" value="구매"> 
-					<input id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'"value="목록으로">
+					<input id = "threebu" type="button" onclick="location.href='views/e_market/marketBuy.jsp'"value="구매"> 
+					<input id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">
 					<% } %>
 				</div>
 		</form>
 		<script>
-				function deleteBoard(){
+				function deleteMarket(){
 					var bool = confirm("정말로 삭제하시겠습니까?");
 					
 					if(bool){
-						location.href='<%= request.getContextPath()%>/delete.m?postno=' + <%= m.getPostNo()%>;
+						location.href='<%= request.getContextPath()%>/delete.m?postNo=' + <%= m.getPostNo()%>;
+					}
+				}
+				
+				function buyMarket(){
+					var buy = confirm("정말로 구매하시겠습니까?");
+					
+					if(buy){
+						/* location.href='views/e_market/marketBuy.jsp' */
+						location.href='<%= request.getContextPath()%>/buy.m'
 					}
 				}
 		</script>
