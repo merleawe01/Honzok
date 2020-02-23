@@ -4,6 +4,7 @@
 	TravelBoard board = (TravelBoard)request.getAttribute("board");
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
+	String recCheck = (String)request.getAttribute("recCheck");
 	
 	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
 %>
@@ -119,13 +120,13 @@
 		margin-top: 10px;
 		padding-bottom: 10px;
 	}
-	#btnList{
+	.btnList{
 		width: 100%;
 		height: 50px;
 		margin-top: 10px;
 		padding-bottom: 10px;
 	}
-	#btnList div{
+	.btnList div{
 		width : 100px;
 		height : 40px;
 		border-radius: 5px;
@@ -135,6 +136,12 @@
 		display: inline-table;
 		float: right;
 		cursor: pointer;
+	}
+	#thumbsImg{
+		width: 40px;
+		height: 40px;
+		vertical-align: middle;
+		margin-right: 10px;
 	}
 	#commentMain{
 		width : 100%;
@@ -312,42 +319,62 @@
 			</div>
 		</div>
 		
-		<div id="btnList">
-			<div style="background-color: rgb(224, 224, 224);">목록으로</div>
-			<div style="background-color: rgb(224, 224, 224);">삭제</div>
-			
-			<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
-				<input type="hidden" name="no" value="<%= board.getNo() %>">
-				<input type="hidden" name="title" value="<%= board.getTitle() %>">
-				<input type="hidden" name="star" value="<%= board.getStar() %>">
-				<input type="hidden" name="content" value="<%= board.getContent() %>">
-				<input type="hidden" name="caution" value="<%= (board.getCaution() == null) ? "" : board.getCaution() %>">
-				<input type="hidden" name="best_time" value="<%= board.getBest_time() %>">
-				<input type="hidden" name="address" value="<%= board.getAddress() %>">
-				<input type="hidden" name="local_name" value="<%= board.getLocal_name() %>">
-				<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
-				<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
-				<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
+		<div class="btnList">
+			<% if(loginUser.getNickName().equals(board.getWriter())) { %>
+				<div id="delete" style="background-color: rgb(224, 224, 224);">삭제</div>
 				
-				<% for(Image img : imgList){ %>
-					<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
-				<% } %>
-				
-				<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
-			</form>
-			
-			<div style="background-color: rgb(241, 131, 50); color: white;">추천</div>
-			<!-- 접근 유저에 따라 보여지는 버튼 및 이벤트 다르게 구현 -->
+				<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
+					<input type="hidden" name="no" value="<%= board.getNo() %>">
+					<input type="hidden" name="title" value="<%= board.getTitle() %>">
+					<input type="hidden" name="star" value="<%= board.getStar() %>">
+					<input type="hidden" name="content" value="<%= board.getContent() %>">
+					<input type="hidden" name="caution" value="<%= (board.getCaution() == null) ? "" : board.getCaution() %>">
+					<input type="hidden" name="best_time" value="<%= board.getBest_time() %>">
+					<input type="hidden" name="address" value="<%= board.getAddress() %>">
+					<input type="hidden" name="local_name" value="<%= board.getLocal_name() %>">
+					<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
+					<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
+					<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
+					
+					<% for(Image img : imgList){ %>
+						<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
+					<% } %>
+					
+					<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
+				</form>
+			<% } else { %>
+				<div style="background-color: rgb(241, 131, 50); color: white;">추천</div>
+				<div>
+					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsup.png"> 
+					<%= board.getReco_count() %>
+				</div>
+			<% } %>
 		</div>
 		
 		<script>
+			$('#delete').click(function(){
+			 	if(confirm("글을 삭제하시겠습니까?")) {
+			 		location.href='<%= request.getContextPath() %>/delete.travel?no=<%= board.getNo() %>'
+				}
+			})
+			
 			$('#update').click(function(){
 			 	if(confirm("글을 수정하시겠습니까?")) {
 					$('#updateForm').submit();
 				}
+			})
+			
+			$(function(){
+				<% if(recCheck.equals("Y")) {%>
+					$('#recommend').css('background-color', 'rgb(241, 131, 50)');
+					$('#recommend').css('color', 'white');
+				<% } else { %>
+					$('#recommend').css('background-color', 'rgb(224, 224, 224)');
+					$('#recommend').css('color', 'black');
+				<% }%>
 			})
 		</script>
 		
@@ -509,8 +536,12 @@
 					console.log($(this).parent().parent().parent().next().children()); // 댓글 보여주는 부분의 td까지 왔음
 				})
 			</script>
-			
 		</div>
+		
+		<div class="btnList">
+			<div style="background-color: rgb(224, 224, 224);" onclick="history.go(-1);">목록으로</div>
+		</div>
+		
 	</div>
 </body>
 </html>

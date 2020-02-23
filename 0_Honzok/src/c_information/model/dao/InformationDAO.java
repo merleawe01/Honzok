@@ -631,6 +631,62 @@ public class InformationDAO {
 		
 		return result;
 	}
+
+	public int deleteBoard(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public String checkRec(Connection conn, int no, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String result = "N";
+		
+		String query = prop.getProperty("checkRec");
+		
+		System.out.println("no : " + no);
+		System.out.println("userId : " + userId);
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			pstmt.setString(2, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			System.out.println("rs : " + rs);
+			
+			if(rs.next()) {
+				result = rs.getString("RECO_YN");
+				System.out.println("result : " + result);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+				
+		return result;
+	}
+	
+	
 	
 	
 	

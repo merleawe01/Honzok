@@ -14,6 +14,7 @@
 
 <style>
 	#selectField{
+		font-weight: bold;
 		font-size: 15pt;
 		padding-bottom: 10px;
 	}
