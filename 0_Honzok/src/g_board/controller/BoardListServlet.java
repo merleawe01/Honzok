@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import g_board.model.service.BoardService;
 import g_board.model.vo.Board;
-import g_board.model.vo.PageInfo;
+import a_common.PageInfo;
 
 /**
  * Servlet implementation class BoardListServlet

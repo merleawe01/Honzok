@@ -35,15 +35,15 @@ public class MarketBuyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
 		
+		
 		MarketService service = new MarketService();
 		
 		Market market = service.selectBoard(postNo);
-		Member m = service.selectInfo(postNo);
+		
 		
 		String page = null;
-		if(market != null && m != null) {
+		if(market != null) {
 			request.setAttribute("market", market);
-			request.setAttribute("m", m);
 			page = "views/e_market/marketBuy.jsp";
 		} else {
 			request.setAttribute("msg", "실패하였습니다.");
@@ -51,9 +51,6 @@ public class MarketBuyServlet extends HttpServlet {
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);
-		
-		System.out.println("market : " + market);
-		System.out.println("m : " + m);
 	}
 
 	/**

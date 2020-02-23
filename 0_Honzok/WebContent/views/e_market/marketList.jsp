@@ -21,15 +21,18 @@
 <style>
 	.tableArea{width:800px; height:auto; margin-left:auto; margin-right:auto;}
 		.listArea{text-align:center; height:250px;}
-		#write{text-align:center; font-size : 15pt; width : 100px; height : 40px;
+		#write{text-align:center; font-size : 17pt; width : 100px; height : 40px;
 			   background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
 			   border: 0; font-weight: bold; line-height: 40px; margin-left: 650px;
 			   cursor:pointer;}
 		.searchArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
-		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
+		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 5px; border:0px; font-size:17px;
+					color: white; width: 100px; height: 40px; cursor: pointer; font-weight: bold; }
 		.listArea{cursor:pointer; border-spacing: 10px;}
-		footer{margin-bottom : 100px;}
-		#borderTr td{border-bottom : 1px solid black;}
+		
+		#border td{border-bottom : 1px solid black;}
+		.pagingArea{display:block;}
+	.pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
 </style>
 
 </head>
@@ -63,20 +66,20 @@
 							<% } %>
 							
 						</td>
-						<td width="600px">◈<%= m.getPostTitle() %>◈</td>
+						<td width="600px" style="border-top: 1px solid black">◈<%= m.getPostTitle() %>◈</td>
 							
 					</tr>
 						
 					<tr>
-						<td>상태:<%= m.getItemStatus() %></td>
+						<td >상태 : <%= m.getItemStatus() %>급</td>
 					</tr>
 						
 					<tr>
-						<td>가격:<%= m.getItemPrice() %></td>
+						<td >가격 : <%= m.getItemPrice() %>원</td>
 					</tr>
 						
 					<tr>
-						<td>기타:<%= m.getEtc() %></td>
+						<td style="border-bottom: 1px solid black">기타 : <%= m.getEtc() %></td>
 					</tr>
 					<% 		}
 					}
@@ -91,7 +94,7 @@
 					<%-- <% } %> --%>
 				</div>	
 			</div>
-			<br><br>
+			<br><br><br>
 				
 		<div class='pagingArea' align='center'>
 			<% if(!mList.isEmpty()){ %>

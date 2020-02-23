@@ -17,7 +17,7 @@ public class Market {
 	private Date writeDate;
 	private Date modifyDate;
 	private int recoCount;
-	
+
 	public Market() {}
 	
 	public Market(int postNo, String postTitle, int boardNo, String writer, String content, int viewCount,

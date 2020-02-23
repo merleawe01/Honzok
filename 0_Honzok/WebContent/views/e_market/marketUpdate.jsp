@@ -14,7 +14,17 @@
 	String useDate = request.getParameter("useDate");
 	String etc = request.getParameter("etc");
 	
-	 ArrayList<String> images = new ArrayList<String>();
+	String check1 ="";
+	String check2 ="";
+	String check3 ="";
+
+	switch(status){
+	case "A": check1 = "checked"; break;
+	case "B": check2 = "checked"; break;
+	case "C": check3 = "checked"; break; 
+	}
+	
+	ArrayList<String> images = new ArrayList<String>();
 	 for(int i = 1; i < 2; i++){
 			images.add(request.getParameter("detailImg" + i) == null ? "" : "src=" + request.getContextPath() + "/thumbnail_uploadFiles/" + request.getParameter("detailImg" + i));
 		}
@@ -58,7 +68,7 @@
 		}
 		#titleImgArea{cursor : pointer;}
 		#contentImgArea1{cursor : pointer;}			   
-		
+		#size{font-size:15px; color : gray;}
 		
 </style>
 </head>
@@ -78,79 +88,84 @@
 								<input type="hidden" id="detailImgId0" name="detailImgId0" value="<%= imgIds.get(0)  %>"> 
 								<input type="hidden" id="cTitle" name="cTitle">
 						</div>
-					
+			
 						<div id="contentImgArea1">
 								<img id="contentImg1" width="300" height="300" src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= contentImg1 %>"> 
 								<input type="hidden" id="detailImgId1" name="detailImgId1" value="<%= imgIds.get(1) %>"> 
 								<input type="hidden" id="cContent1" name="cContent1">
 						</div>
 					</div>
-					
-					<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:680px; height:100px;"><%= content %></textarea>
+					<div id="size">※사진은 300x300크기만 입력해주세요.※</div>
 					<br><br>
 					
 					<div class="input">
-						<div class="left"><b>판매자 정보</b></div>
+						<div class="left" style="font-size:25px;"><b>판매자 정보</b></div>
 					</div>
 					<div class="input">
-						<div class="left">거래방법 <span class="must">(필수)</span></div>안전거래
+						<div class="left"><b>거래방법</b><span class="must">(필수)</span></div>안전거래
 					</div>
 					<div class="input">
-						<div class="left">전화번호 <span class="must">(필수)</span></div>
+						<div class="left"><b>전화번호</b> <span class="must">(필수)</span></div>
 						<input type="hidden" value='<%= loginUser.getPhone()  %>' class="right"> <%= loginUser.getPhone()  %>
 						
 					</div>
 					<div class="input">
-						<div class="left">이메일 <span class="must">(필수)</span></div>
+						<div class="left"><b>이메일</b> <span class="must">(필수)</span></div>
 						<input type="hidden" value='<%= loginUser.getEmail()  %>' class="right"> <%= loginUser.getEmail()  %>
 					</div>
+					<br><br>
 					
 					<div class="input">
-						<div class="left"><b>게시글 작성</b></div>
+						<div class="left" style="font-size:25px;"><b>게시글 작성</b></div>
 					</div>
 					
 					<!-- 물품명 -->
 					<div class="input">
-						<div class="left">물품명 <span class="must">(필수)</span></div>
+						<div class="left"><b>물품명</b> <span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
 						<input type="text" name="postTitle" maxlength="16" class="right" style="width: 280px;" value="<%= title %>">
 					</div>
 					
 					<!-- 상태 -->
 					<div class="input">
-						<div class="left">상태 <span class="must">(필수)</span></div>
+						<div class="left"><b>상태</b> <span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
-						<input type="radio" name="status" value="A">A급 <input type="radio" name="status" value="B">B급<input type="radio" name="status" value="C">C급
+						<input type="radio" id="status" name="status" value="A" <%= check1 %>>A급
+						<input type="radio" id="status" name="status" value="B" <%= check2 %>>B급
+						<input type="radio" id="status" name="status" value="C" <%= check3 %>>C급
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
 					
 					<!-- 가격 -->
 					<div class="input">
-						<div class="left">가격<span class="must">(필수)</span></div>
+						<div class="left"><b>가격</b><span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
 						<input type="text" name="price" class="right" style="width: 100px;" value="<%= price %>">원
 					</div>	
 					
 					<!-- 사용기한 -->
 					<div class="input">
-						<div class="left">사용기한<span class="must">(필수)</span></div>
+						<div class="left"><b>사용기한</b><span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
 						<input type="text" name="useDate" class="right" style="width: 100px;" value="<%= useDate %>"><span class="must">예) 약 6개월, 약 1년 etc</span>
 					</div>
 					
 					<!--기타    -->		
 					<div class="input">
-						<div class="left">기타<span class="must">(필수)</span></div>
+						<div class="left"><b>기타</b><span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
 						<input type="text" name="etc" class="right" style="width: 350px;" value="<%= etc %>">
 					</div>	
+					<br>
+					<!-- 내용입력 칸  -->
+					<textarea class="right" name="incontent"style="width:900px; height:200px; resize: none;" ><%= content %></textarea>
 					<br>
 				<div id="fileArea">
 				<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
 				<input type="file" id="thumbnailImg2" multiple="multiple" name="thumbnailImg2" onchange="LoadImg(this,2)">
 				</div>
 				<script>
+				
 					$(function(){
 						$("#fileArea").hide();
 						
