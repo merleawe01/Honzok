@@ -94,7 +94,7 @@
 		        var msg = '<%= loginUser.getUserName() %> 님 \n';
 		        msg += '결제 금액 ' + rsp.paid_amount + '원이 결제 되었습니다.';
 		    } else {
-		        var msg = '결제에 실패하였습니다.';
+		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
 		    location.href="<%= request.getContextPath()%>/list.m";

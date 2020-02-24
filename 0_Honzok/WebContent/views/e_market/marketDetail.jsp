@@ -76,7 +76,7 @@
 						<div id="titleRight"><%= m.getWriteDate() %></div>
 				</div>
 					
-					<div id="boardWriter"><%=loginUser.getNickName() %> | 조회 : <%=m.getViewCount() %></div>
+					<div id="boardWriter"><%=m.getNickname() %> | 조회 : <%=m.getViewCount() %></div>
 					
 				<div class="form">
 					<div class="imageArea">
@@ -117,12 +117,12 @@
 					</div>
 					<div class="input">
 						<div class="left"><b>전화번호</b> <span class="must">(필수)</span></div>
-						<input type="hidden" class="right">  <%= loginUser.getPhone()  %> 
+						<input type="hidden" class="right" name="phone" value="<%= m.getPhone()%>" >  <%= m.getPhone()%> 
 						
 					</div>
 					<div class="input">
 						<div class="left"><b>이메일</b> <span class="must">(필수)</span></div>
-						<input type="hidden" value='<%= loginUser.getEmail()  %>' class="right"> <%= loginUser.getEmail() %>
+						<input type="hidden" name= "email" value='<%= m.getEmail()  %>' class="right"> <%= m.getEmail() %>
 					</div>
 					<br><br>
 					<div class="input">

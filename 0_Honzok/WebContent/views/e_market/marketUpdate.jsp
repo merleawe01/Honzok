@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="b_member.model.vo.Member, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="b_member.model.vo.Member, java.util.ArrayList, e_market.model.vo.*"%>
 <%
-	
+	String phone = request.getParameter("phone");
+	String email = request.getParameter("email");
 	
 	String titleImg = request.getParameter("titleImage");
 	String contentImg1 = request.getParameter("contentImage1"); 
@@ -18,10 +19,12 @@
 	String check2 ="";
 	String check3 ="";
 
-	switch(status){
-	case "A": check1 = "checked"; break;
-	case "B": check2 = "checked"; break;
-	case "C": check3 = "checked"; break; 
+	if(status.equals("A")){
+		check1 = "checked";
+	} else if(status.equals("B")){
+		check2 = "checked";
+	} else if(status.equals("C")){
+		check3 = "checked";
 	}
 	
 	ArrayList<String> images = new ArrayList<String>();
@@ -106,12 +109,12 @@
 					</div>
 					<div class="input">
 						<div class="left"><b>전화번호</b> <span class="must">(필수)</span></div>
-						<input type="hidden" value='<%= loginUser.getPhone()  %>' class="right"> <%= loginUser.getPhone()  %>
+						<input type="hidden" value='<%= phone%>' class="right"> <%= phone  %>
 						
 					</div>
 					<div class="input">
 						<div class="left"><b>이메일</b> <span class="must">(필수)</span></div>
-						<input type="hidden" value='<%= loginUser.getEmail()  %>' class="right"> <%= loginUser.getEmail()  %>
+						<input type="hidden" value='<%= email %>' class="right"> <%= email %>
 					</div>
 					<br><br>
 					
@@ -130,11 +133,13 @@
 					<div class="input">
 						<div class="left"><b>상태</b> <span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
-						<input type="radio" id="status" name="status" value="A" <%= check1 %>>A급
-						<input type="radio" id="status" name="status" value="B" <%= check2 %>>B급
-						<input type="radio" id="status" name="status" value="C" <%= check3 %>>C급
+						<input type="checkbox"  id="status" name="status" value="A" <%= check1 %>>A급
+						<input type="checkbox"  id="status" name="status" value="B" <%= check2 %>>B급
+						<input type="checkbox"  id="status" name="status" value="C" <%= check3 %>>C급
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
+					
+					
 					
 					<!-- 가격 -->
 					<div class="input">
@@ -221,6 +226,8 @@
 			
 			$('.form').parent().submit();
 		});
+		
+		
 	</script>
 </body>
 </html>

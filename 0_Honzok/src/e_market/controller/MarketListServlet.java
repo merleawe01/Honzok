@@ -49,7 +49,7 @@ public class MarketListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		limit = 10;
+		limit = 5;
 		
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit + 0.9)) - 1) * limit + 1;

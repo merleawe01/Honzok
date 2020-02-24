@@ -32,7 +32,12 @@
 		
 		#border td{border-bottom : 1px solid black;}
 		.pagingArea{display:block;}
-	.pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
+	    .pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
+	    #numBtn{background:none; margin:3px; padding:10px auto;}
+  		#choosen{background:#f18332; border-radius:50px; color:white;}
+ 
+	}
+	    
 </style>
 
 </head>
@@ -96,13 +101,14 @@
 			</div>
 			<br><br><br>
 				
-		<div class='pagingArea' align='center'>
+		<div class="pagingArea" align="center">
 			<% if(!mList.isEmpty()){ %>
 			<!-- 맨 처음으로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
 			
 			<!-- 이전 페이지로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn">&lt;</button>
+			<button type="button" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn" class="pagingBtn">&lt;</button>
+			
 			<script>
 				if(<%= currentPage%> <= 1){
 					var before = $('#beforeBtn');
@@ -113,14 +119,14 @@
 			<!-- 10개의 페이지 목록 -->
 			<% for(int p = startPage; p <= endPage; p++){ %>
 				<% if(p == currentPage){ %>
-					<button id="choosen" disabled><%= p %></button>
+					<button  type="button" id="choosen" disabled><%= p %></button>
 				<% } else {%>
-				<button id="numBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= p %>'"><%= p %></button>
+				<button  type="button" id="numBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= p %>'"><%= p %></button>
 				<% } %>
 			<% } %>
 			
 			<!-- 다음페이지로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage + 1%>'" id="afterBtn">&gt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage + 1%>'" id="afterBtn">&gt;</button>
 			<script>
 				if(<%= currentPage%> >= <%= maxPage%>){
 					var after = $("#afterBtn");
@@ -129,7 +135,7 @@
 			</script>
 			
 			<!-- 맨 끝으로 -->
-			<button onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
 			
 			<% } %>
 			
@@ -138,6 +144,12 @@
 	</div>
 	
 	<script>
+    $('.pagingBtn').mouseenter(function(){
+        $(this).css('background','#FFD393');
+     }).mouseout(function(){
+        $(this).css('background','none');
+     });
+	
 		$(function(){
 			$('.listArea img').click(function(){
 				var postno = $(this).prev().val();

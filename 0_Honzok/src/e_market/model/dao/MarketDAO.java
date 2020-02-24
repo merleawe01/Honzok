@@ -60,7 +60,7 @@ public class MarketDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Market> list = null;
-		int posts = 10; // 한 페이지에 보여질 게시글 개수
+		int posts = 5; // 한 페이지에 보여질 게시글 개수
 		
 		int startRow = (currentPage - 1) * posts + 1;
 		int endRow = startRow + posts -1;
@@ -272,14 +272,17 @@ public class MarketDAO {
 			if(rset.next()) {
 				m = new Market(rset.getInt("post_no"),
 							   rset.getString("post_title"),
-							   rset.getDate("write_date"),
-							   rset.getString("writer"),
-							   rset.getInt("view_count"),
 							   rset.getString("content"),
 							   rset.getString("item_status"),
 							   rset.getInt("item_price"),
 							   rset.getString("use_date"),
-							   rset.getString("etc"));
+							   rset.getString("etc"),
+							   rset.getDate("write_date"),
+							   rset.getInt("view_count"),
+							   rset.getString("nickname"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getString("writer"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
