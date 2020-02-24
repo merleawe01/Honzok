@@ -23,4 +23,44 @@ public class RecommendService {
 		return result;
 	}
 
+	public int cancleRec(int bid, String writer) {
+		Connection conn = getConnection();
+		
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.cancleRec(conn, bid, writer);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		int recNum = dao.recNum(conn, bid);
+		
+		close(conn);
+		
+		return recNum;
+	}
+
+	public int okRec(int bid, String writer) {
+		Connection conn = getConnection();
+		
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.okRec(conn, bid, writer);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		int recNum = dao.recNum(conn, bid);
+		
+		close(conn);
+		
+		return recNum;
+	}
+
 }

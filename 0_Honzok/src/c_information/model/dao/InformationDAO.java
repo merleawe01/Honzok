@@ -659,10 +659,6 @@ public class InformationDAO {
 		
 		String query = prop.getProperty("checkRec");
 		
-		System.out.println("no : " + no);
-		System.out.println("userId : " + userId);
-		
-		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
@@ -670,16 +666,106 @@ public class InformationDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			System.out.println("rs : " + rs);
-			
 			if(rs.next()) {
 				result = rs.getString("RECO_YN");
-				System.out.println("result : " + result);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int cancleRec(Connection conn, int bid, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("minusRec");
+		String query2 = prop.getProperty("deleteRec");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query2);
+			pstmt.setInt(1, bid);
+			pstmt.setString(2, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int recNum(Connection conn, int bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("recNum");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt("reco_count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int okRec(Connection conn, int bid, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("plusRec");
+		String query2 = prop.getProperty("okRec");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query2);
+			pstmt.setInt(1, bid);
+			pstmt.setString(2, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			close(pstmt);
 		}
 				

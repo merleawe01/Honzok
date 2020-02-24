@@ -5,8 +5,6 @@
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
 	String recCheck = (String)request.getAttribute("recCheck");
-	
-	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
 %>
 <!DOCTYPE html>
 <html>
@@ -237,7 +235,7 @@
 					setTimeout(function() {
 						$('#leftPhoto').css('line-height', $('#mainPhoto').height()+'px');
 						$('#rightPhoto').css('line-height', $('#mainPhoto').height()+'px');
-					}, 10);
+					}, 50);
 				}
 			</script>
 		</div>
@@ -338,7 +336,7 @@
 				<div id= "recommend" style="background-color: rgb(241, 131, 50); color: white;">추천</div>
 				<div>
 					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsup.png"> 
-					<%= board.getReco_count() %>
+					<span id = recNum><%= board.getReco_count() %></span>
 				</div>
 			<% } %>
 		</div>
@@ -364,6 +362,34 @@
 					$('#recommend').css('background-color', 'rgb(224, 224, 224)');
 					$('#recommend').css('color', 'black');
 				<% }%>
+			})
+			
+			var recCheck = '<%= recCheck %>';
+			
+			$('#recommend').click(function(){
+				if('<%= loginUser.getUserId() %>' == "") {
+					alert('로그인한 유저만 추천을 할 수 있습니다.');
+				} else {
+					var writer = '<%= loginUser.getUserId() %>';
+					var bid = <%= board.getNo() %>;
+					$.ajax({
+						url: '<%= request.getContextPath() %>/check.recommend',
+						type: 'post',
+						data: {recCheck: recCheck, writer: writer, bid: bid},
+						success: function(data){
+							if(data[0] == "Y") {
+								$('#recommend').css('background-color', 'rgb(241, 131, 50)');
+								$('#recommend').css('color', 'white');
+								recCheck="Y";
+							} else {
+								$('#recommend').css('background-color', 'rgb(224, 224, 224)');
+								$('#recommend').css('color', 'black');
+								recCheck="N";
+							}
+							$('#recNum').text(data[1]);
+						}
+					});
+				}
 			})
 		</script>
 		
