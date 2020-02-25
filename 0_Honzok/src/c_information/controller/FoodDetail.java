@@ -51,8 +51,6 @@ public class FoodDetail extends HttpServlet {
 		ArrayList<Reply> replyList = new ReplyService().selectReplyList(no);
 		String recCheck = new RecommendService().checkRec(no, userId);
 		
-		System.out.println(recCheck);
-		
 		String page = null;
 		if(board != null) {
 			page = "views/c_information/foodDetail.jsp";
