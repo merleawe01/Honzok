@@ -19,16 +19,17 @@
 
 <style>
 	header {width: 100%; height: 170px; text-align: center;}
-	#mainHeader {width: 1170px; height: 50px; display: inline-block;}
+	#mainHeader {width: 1170px; height: 50px; display: inline-block; float:right;}
 	.menuBtn {padding:3px; display: inline-table; float: right;
 			 background-color: transparent; border: none; cursor: pointer;}
 	.messageBtn {padding:3px; display: inline-table; float: right;
 			 background-color: transparent; border: none; cursor: pointer;}
-	#login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
-			font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
+	#login {float: right; padding: 10px; font-family: 'Nanum Gothic', sans-serif; font-size: 13pt;}
+	#loginText, #nickname{color: rgb(241, 131, 50); font-weight:bold;}
+	#loginText:hover{cursor:pointer;}
 	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
 	
-	#icon {height: 50px%; width: 50px; float: right;}
+	#icon {height: 45px; width: 45px; float: right; vertical-align:center;}
 	#main {width: 100%;text-align: center;overflow: hidden;height: auto;}
 	#realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
 	#subHeader{width : 1170px; height : 100px;display : inline-block;}
@@ -60,19 +61,17 @@
 				<% } %>
 				</button>
 			</span>
-      </div>
-			
 			<div id="login">
+					<% if(loginUser == null){ %>
+						<span id="loginText" onclick="goLogin();">로그인</span>
+					<%}else{ %>
+						<span id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %></span>님
+						<a href="logout.me">로그아웃</a>
+					<%} %>
 				<img src="images/blanket.png" id="icon">
-				<% if(loginUser == null){ %>
-				<a href="views/b_member/login.jsp" target="_self">로그인</a>
-				<%}else{ %>
-				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
-				<div id="logout">
-				<a href="logout.me">로그아웃</a>
-				<%} %>
 			</div>
-		</div>
+     	</div>
+			
 		
 		
 		<div id="subHeader">
@@ -127,6 +126,10 @@
 		
 		function goGy(){
 			location.href="<%= request.getContextPath()%>/list.gy";
+		}
+		
+		function goLogin(){
+			location.href="views/b_member/login.jsp"
 		}
 	</script>
 	

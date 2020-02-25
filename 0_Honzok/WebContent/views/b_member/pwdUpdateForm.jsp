@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
-
-String msg = (String)request.getAttribute("msg");
+	String msg = (String)request.getAttribute("msg");
 %>
 
 <!DOCTYPE html>
@@ -277,7 +276,7 @@ header {
 							<div class="left">새비밀번호 확인</div>
 
 							<input type="password" class="right" id="pwd2" name="newPwd2">
-							 <label id="pwd3Result"></label>
+							<label id="pwd3Result"></label>
 						</div>
 			
 			<script>
@@ -347,7 +346,9 @@ header {
 			<div class="comment" id="comment1">※ 사용 불가한 비밀번호</div>
 
 			<div class="comment" id="comment2">
-				1. 빈칸 / 공백<br> 2. 숫자만으로 이루어진 경우<br> 3. 동일한 문자를 많이 포함한 경우
+				1. 빈칸 / 공백이 포함된 경우 <br>
+				2. 숫자만으로 이루어진 경우 <br>
+				3. 첫 글자가 영어로 시작하지 않는 경우
 			</div>
 
 		</div>

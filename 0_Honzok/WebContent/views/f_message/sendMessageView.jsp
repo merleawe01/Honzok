@@ -28,6 +28,7 @@
 	button:hover{cursor: pointer;}
 	.messageBtn{background: #AEBF2A; color:white; float:right; display:inline-block;
 			 padding:5px; margin:5px;}
+	.buttonArea {display:block; height:30px;}
 	.pagingArea {margin-top:10px;}
 	.pagingArea button{background:none; border-radius:50px; color:#805959; margin:3px; padding:10px auto;}
 	#numBtn{background:none; margin:3px; padding:10px auto;}
@@ -79,17 +80,18 @@
 				} 
 			%>	
 		</table>
-	</form>
-	</div>
-		
-	<div class="pagingArea" align="center">
+		<div class="buttonArea">
+			<button type="button" class="messageBtn" id="writeBtn"
+					onclick="location.href='views/f_message/sendMessageForm.jsp'">쪽지보내기</button>
+		</div>		
+		<div class="pagingArea" align="center">
 		<% if(!list.isEmpty()) { %>
 		<!-- 맨 처음으로 -->
-		<button class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=1'">&lt;&lt;</button>
+		<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=1'">&lt;&lt;</button>
 		<!-- 버튼을 클릭하면 Servlet으로 넘어가서 currentPage가 1로 바뀐다. -->
 			
 		<!-- 이전 페이지로 -->
-		<button onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= currentPage - 1%>'"
+		<button type="button" onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= currentPage - 1%>'"
 				id="beforeBtn" class="pagingBtn">pre</button>
 		
 		<script>
@@ -102,14 +104,14 @@
 		<!-- 5개의 페이지 목록 -->
 		<% for(int p = startPage; p <= endPage; p++){ %>
 			<% if(p == currentPage){ %> <!-- 현재 페이지랑 똑같다면  -->
-				<button id="choosen" disabled><%= p %></button>
+				<button type="button" id="choosen" disabled><%= p %></button>
 			<% } else { %>
-				<button id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= p %>'"><%= p %></button>
+				<button type="button" id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= p %>'"><%= p %></button>
 			<% } %> 
 		<% } %>
 		
 		<!-- 다음 페이지로  -->
-		<button class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.se?currentPage=<%= currentPage + 1 %>'" id="afterBtn">next</button>
+		<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.se?currentPage=<%= currentPage + 1 %>'" id="afterBtn">next</button>
 		<script>
 			if(<%= currentPage%> >= <%=maxPage%>){
 				var after = $("#afterBtn");
@@ -118,16 +120,14 @@
 		</script>
 			
 		<!-- 맨 끝으로 -->
-		<button class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+		<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.se?currentPage=<%= maxPage %>'">&gt;&gt;</button>
 			
 		<% } %>
 		
 	</div>
-	<br>
-
-	<button class="messageBtn" id="writeBtn"
-			onclick="location.href='views/f_message/sendMessageForm.jsp'">쪽지보내기</button>
-			
+	</form>
+	</div>
+		
 	<script>
 		$(function(){
 			$('.detail').mouseenter(function(){

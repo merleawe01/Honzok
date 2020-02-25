@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
 	String msg = (String)request.getAttribute("msg");
-	Member m = (Member)request.getAttribute("m");
+	Member member = (Member)request.getAttribute("member");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,30 +16,39 @@
 		#mainHeader {width: 1170px; height: 50px; display: inline-block;}
 		#subHeader {width: 1170px; height: 100px; display: inline-block;}
 		#logo {height: 100%; width: auto; float:left;}
-		#list, #icon {height: 100%; width: auto; float: right;}
+		#list {height: 100%; width: auto; float: right;}
+		#icon {height: 45px; width: 45px; float: right; vertical-align:center;}
 		#nickname {float: right; padding: 10px; color: rgb(241,131,50);
 					font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
 		#nickname::after {color : black;}
-		#boardName{margin : 20px;width : 100%;height : 70px; display : inline-table; border-bottom: 2pt solid gray;
+		#boardName{margin : 20px;width : 100%; height : 70px; display : inline-table; border-bottom: 2pt solid gray;
 					font-family: 'Nanum Gothic', sans-serif;font-size: 30pt;font-weight: bold;} 
 		
 		#main{width : 100%; text-align: center; height : 1170px;}
 		#realMain {display: inline-table; width: 1170px; display: inline-table; height: 1100px; margin-left: 40px;}
 		
-		#box{margin-top: 2%; border: solid 2px gray; width: 100%; 
+		#box{margin-top: 2%; border: solid 2px gray; width: 100%; text-align: left;
 			padding: 20px 0px 20px 0px; background: rgb(242, 242, 242);}
-		#text{text-align:left;}
 		#confirm_comment1{padding-left: 30px; font-weight: bold; font-size: 20px; margin-bottom: 5px;}
 		#confirm_comment2{font-size : 15px;color : gray;padding-left : 30px;margin-bottom : 20px;}
 		
-		.left{font-size: 20px; font-bold:600; width : 150px; display: inline-table;}
-		.right{text-align: left; border-radius: 5px; width: 300px; height: 30px; margin-bottom: 20px;
-				heigth:10px; border:1px solid gray;}
-		input{padding:5px;}
-		#input{text-align: left; margin-left: 25%; border:0px; padding-left:10px;}
+		.left{font-size : 20px; font-bold:600; width : 150px; display : inline-table;}
+		.right{text-align: left; border-radius: 5px; width: 300px; height: 35px; margin-bottom: 20px;
+				heigth:10px; border:1px solid gray; padding:5px;}
 		#center{text-align:center;}
-		#getNumBtn{height:40px; background-color:#f18332; color:white; margin-left: 25%;
+		#nextBtn{width:100px; height:40px; background-color:RGB(84,84,84); color:white;
 				border-radius:5px; font-weight:bold; font-size:15px; border:0px; margin-top:5px;}
+		#next_bt{width : 100px; height : 40px; background-color : RGB(84, 84, 84); 
+			color : white;
+			border-radius: 5px;
+			margin-left : 25%;
+			margin-top : 15px;
+			margin-bottom : 10px;
+			line-height: 40px;
+			font-weight: bold;
+			font-size:15px;
+			border:0px;
+		}
 		
 		@media only screen and (max-width: 1200px) {
 			.sidebar {display:none;}
@@ -63,24 +72,19 @@
 			<div id="realMain">
 
 			<div id="box">
-				<div id="text">
-					<div id="confirm_comment1">본인확인 이메일로 인증</div>
-					<div id="confirm_comment2">본인확인 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.</div>
-					<br>
-				</div>
+				<div id="confirm_comment1">본인확인 이메일로 인증</div>
+				<div id="confirm_comment2">본인확인 이메일 주소와 입력한 이메일 주소가 같아야,
+						인증번호를 받을 수 있습니다.</div>
+				<br>
 					
-				<form id="findPwdForm" method="post">
-					<div id="input">
-						<div class="left">이름</div>
-						<input type="text" class="right" name="name" id="name" placeholder="이름을 입력해주세요." required autofocus><br>
-						<div class="left">이메일 주소</div>
-	
-						<input type="email" class="right" id="email" placeholder="이메일을 입력해주세요." 
-								name="email" required><br>
-						<div class="center">
-							<button type="submit" name="getNumBtn" id="getNumBtn" onclick="getNum();">인증번호 받기</button><br>
-						</div>
+				<form id="inputKeyCodeForm" method="post">
+					<div id="center">
+						<input type="text" class="right" name="keyCode" id="keyCode" placeholder="인증번호 8자리 문자 입력" ><br>
+						<button type="submit" id="nextBtn">확인</button>
 					</div>
+					<input type="hidden" name="name" id="name" value="<%= member.getUserName() %>">
+					<input type="hidden" name="email" id="email" value="<%= member.getEmail() %>">
+					<input type="hidden" name="id" id="id" value="<%= member.getUserId() %>">
 				</form>
 			</div>
 
@@ -96,24 +100,14 @@
 			if(msg != "null") 
 				alert(msg);
 		});
-
-		$('#getNumBtn').click(function(){
-			$('#findPwdForm').attr('action','<%=request.getContextPath() %>/find.pwd');
-	        $('#findPwdForm').submit();
+		
+		$('#nextBtn').click(function(){
+			console.log($('#email').val());
+			console.log($('#name').val());
+			$('#inputKeyCodeForm').attr('action','<%=request.getContextPath() %>/input.kc2');
+	        $('#inputKeyCodeForm').submit();
 		});
-		
-<%-- 		$('#getNumBtn').click(function(){
-			$.ajax({
-				url : "<%=request.getContextPath()%>/find.pwd",
-				data : {name:$('#name').val(), email:$('#email').val()},
-				success : function(data){
-					
-					$('#name').val('<%= data.name %>');
-					
-				}
-			})
-		}); --%>
-		
+
 	</script>
 			            
 </body>

@@ -1,169 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="b_member.model.vo.*"%>
+<%
+	String msg = (String)request.getAttribute("msg");
+	Member member = (Member)request.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
-		header {
-			width : 100%;
-			height : 170px;
-			text-align: center;
-		}
-		#mainHeader{
-			width : 1170px;
-			height : 50px;
-			display : inline-block;
-		}
-		#subHeader{
-			width : 1170px;
-			height : 100px;
-			display : inline-block;
-		}
-		#logo {
-			height : 100%;
-			width : auto;
-			float : left;
-		}
-		#list {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#icon {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#nickname {
-			float : right;
-			padding : 10px;
-			color: rgb(241,131,50);
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 12pt;
-		}
-		#nickname::after{
-			
-			color : black;
-		}
-		#boardName{
-			margin : 20px;
-			width : 100%;
-			height : 70px;
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 30pt;
-			font-weight: bold;
-			display : inline-table;
-			border-bottom: 2pt solid gray;
-		} 
 
-		#main{
-			width : 100%;
-			text-align: center;
-			height : 1170px;
-			
-		}
-		
-		#realMain {
-			display : inline-table;
-			
-			width : 1170px;
-			display : inline-table;
-			height : 1100px;
+		#main{ width : 100%; text-align: center; height : 1170px;}
+		#realMain {display : inline-table; width : 1170px; display : inline-table; height : 1100px;
 			/* 현재 임시값 입력해놓음 */
 			margin-left : 40px; 
 		}
-		
 
-		#box{
-			margin-top : 2%;
-			border : solid 2px gray;
-			width : 100%;
-			text-align : left;
-			padding : 20px 0px 20px 0px; 
-			background : rgb(242, 242, 242);
-		}
-		
 		#box2{
 			margin-top : 2%;
-			width : 100%;
+			width : 1170px;
 			text-align : left;
 			padding : 20px 0px 20px 0px; 
 			background : rgb(242, 242, 242);
 		}
 		
-		#confirm_comment1{
-			padding-left :30px; 
-			font-weight : bold;
-			font-size : 20px; 
-			margin-bottom : 5px;
-		}
+		#box{margin-top: 2%; border: solid 2px gray; width : 1170px; 
+			padding: 20px 0px 20px 0px; background: rgb(242, 242, 242);}
+		#text{text-align:left;}
+		#confirm_comment1{text-align:left;padding-left: 30px; font-weight: bold; font-size: 20px; margin-bottom: 5px;}
+		#confirm_comment2{font-size : 15px;color : gray;padding-left : 30px;margin-bottom : 20px;}
 		
-		#confirm_comment2{
-			font-size : 15px;
-			color : gray;
-			padding-left : 30px;
-			margin-bottom : 20px;
-		}
+		.left{font-size: 20px; font-bold:600; width : 150px; display: inline-table;}
+		.right{text-align: left; border-radius: 5px; width: 300px; height: 30px; margin-bottom: 20px;
+				heigth:10px; border:1px solid gray;}
 		
-		.left{
-			font-size : 17px;
-			width : 150px;
-			display : inline-table;
-			margin-left : 7%;
-			font-weight : bold;
-		}
-		
-		.right{
-			border-radius : 5px;
-			width : 200px;
-			height: 30px;
-			margin-left : 5%;
-			margin-top : 3%;
-		}
-		
-		#input{
-			text-align : left;
-			margin-left : 25%;
-		}
-		
-		#code{	
-			margin-left : 155px;
-			margin-bottom : 3px;
-		}
-		
-		#code_get{
-			border-radius : 5px;
-			background : lightgray;
-			height : 25px;
-			font-weight: bold;
-			
-		}
-		
-		#help{
-			margin-left : 155px;
-			font-size : 13px;
-			
-		}
-		
-		#hover_bt{
-			border : 1px solid black;
-			position : relative;
-			background : gray;
-			width : 20px;
-			height: 20px;
-			display : inline-block;
-			font-weight : bold;
-			margin-left : 5px;
-			display : block;
-			
-		}
-		
-		#hover_content{
-			width : 300px;
-			height : 30px;
-		}
+		#input{text-align: left; margin-left: 25%; border:0px; padding-left:10px;}
+		input{padding:5px;}
 		
 		#next_bt{
 			width : 100px;
@@ -172,11 +46,11 @@
 			color : white;
 			border-radius: 5px;
 			margin-left : 25%;
-			margin-top : 30px;
 			margin-bottom : 10px;
 			line-height: 40px;
 			font-weight: bold;
 			text-align: center;
+			border:0px;
 		}
 		
 		
@@ -201,72 +75,47 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<header>
-	
-		<div id="mainHeader"><a href="../../index.jsp">	
-			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
-			<img alt="메뉴" src="../../images/list.png" id="list">
-			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			<div id="nickname">
-				<a href="login.jsp">로그인</a> 
-			</div>
-			
-			
-		</div>
-		
-		<div id="subHeader">
-			<div id="boardName">
-				비밀번호 찾기
-			</div>
-		</div>
-	
+		<%@ include file="../a_common/boardCommon.jsp" %>
+		<script>
+			$('#boardName').text('비밀번호 찾기');
+			$('#quicklink').css('display','none');
+		</script>
 	</header>
 	
 	<section>
 		
 		<div id = "main">
-			
-			
 			<div id="realMain">
 				
 				<div id = "box"> 
+					<div id = "confirm_comment1"> 비밀번호 변경</div><br>
 				
-					<div id = "confirm_comment1"> 비밀번호 변경</div>
-				
-					
-				
-					<div id =  "input" >
-						<div class = "left">새비밀번호</div> 
-						
-						<input type = "password" class = "right" name="userPwd" >
-						 
-						<div class = "input">
+					<form action="<%= request.getContextPath() %>/updatePwd.new" id="pwdUpdateForm" method="post" onsubmit="send();">
+						<div id = "input" >
+							<input type="hidden" name="id" value="<%= member.getUserId() %>">
+							<div class = "left">새비밀번호</div> 
+								<input type="password" class = "right" name="pwd1" id="pwd1" required>
+								<label id="pwdResult"></label>
+							<div class = "input">
 							<div class = "left">새비밀번호 확인</div>
-							 
-							<input type = "password" class = "right" name="userPwd2">
-								
-							<div>
-							<input type="submit" id="next_bt" value="확인"
-								onclick="pwdupdate()">
+								<input type = "password" class = "right" name="pwd2" id="pwd2" required>
+								<label id="pwdResult2"></label><br>
+							<button type="submit" id="next_bt" onclick="pwdUpdate()">확인</button>
 							
 							</div>
-							
-						
+					
 						</div>
-				
-					</div>
+					</form>
 				
 				</div>
 								
 				<div id = "box2">
 					<div class = "comment" id = "comment1">※ 사용 불가한 비밀번호</div>
-
-					<div class = "comment" id = "comment2">
-					1. 빈칸 / 공백<br>
-					2. 숫자만으로 이루어진 경우<br>
-					3. 동일한 문자를 많이 포함한 경우
+					<div class="comment" id="comment2">
+						1. 빈칸 / 공백이 포함된 경우 <br>
+						2. 숫자만으로 이루어진 경우 <br>
+						3. 첫 글자가 영어로 시작하지 않는 경우
 					</div>
 					
 				</div>
@@ -277,9 +126,48 @@
 	
 	</section>
 	</body>
-	<footer>
+
+	<script>
 	
-	</footer>
+	$('#pwd1').blur(function(){
+		var str = $(this).val();
+	    var regExp1 = /^[a-z]/gi;
+	    var regExp2 = /[^a-z][^0-9]/gi; 
+	    var regExp3 = /[0-9]/gi;
+	    
+	if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 16){
+	      $('#pwdResult').text("정상입력");
+	      $('#pwdResult').css('color', '#768149');
+	      $(this).parent().css('background', '');
+	      $(this).css('background', '');
+	   } else {
+		   $('#pwdResult').text("영어와 숫자를 혼합하여 8~16자로 만들어주세요");
+		   $('#pwdResult').css('color', '#f18332');
+	      $(this).focus();
+	   }
+	});
+	
+		var newPwd = $("input[name='pwd1']");
+		var newPwd2 = $("input[name='pwd2']");
+	$('#pwd2').keyup(function(){
+		
+		if(newPwd.val().trim() != newPwd2.val().trim()){
+			$('#pwdResult2').text("비밀번호가 일치하지 않습니다.");
+			$('#pwdResult2').css('color', '#f18332');
+			return false;
+		} else{
+			$('#pwdResult2').text("비밀번호가 일치합니다.");
+			$('#pwdResult2').css('color', '#768149');
+			
+			return true;
+		}
+	});
+	
+	$('#next_bt').click(function(){
+			$('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');
+	        $('#pwdUpdateForm').submit();
+	});
+	</script>
 
 </body>
 </html>
