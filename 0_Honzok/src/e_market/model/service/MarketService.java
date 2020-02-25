@@ -177,5 +177,22 @@ public class MarketService {
 		return m;
 	}
 
+	public int updateSellBoard(int postNo, String sellYN) {
+		Connection conn = getConnection();
+		
+		MarketDAO dao = new MarketDAO();
+		
+		int result = dao.updateSellBoard(conn, sellYN); 
+		
+		if(result > 0 ) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+		
+	}
+
 
 }

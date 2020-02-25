@@ -133,12 +133,23 @@
 					<div class="input">
 						<div class="left"><b>상태</b> <span class="must">(필수)</span></div>
 						<input type="hidden" name="postNo" value="<%= request.getParameter("postNo") %>">
-						<input type="checkbox"  id="status" name="status" value="A" <%= check1 %>>A급
-						<input type="checkbox"  id="status" name="status" value="B" <%= check2 %>>B급
-						<input type="checkbox"  id="status" name="status" value="C" <%= check3 %>>C급
+						<input type="checkbox"  id="status" name="status" class="sta" value="A" <%= check1 %>>A급 &nbsp;
+						<input type="checkbox"  id="status" name="status" class="sta" value="B" <%= check2 %>>B급 &nbsp;
+						<input type="checkbox"  id="status" name="status" class="sta" value="C" <%= check3 %>>C급 &nbsp;
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
-					
+					<script>
+					$(function(){
+			               var sta = "<%= status %>";
+			               for(var i in sta) {
+			                  switch(sta[i]){
+			                  case "A" : $('.sta')[0].checked = true; break;
+			                  case "B" : $('.sta')[1].checked = true; break;
+			                  case "C" : $('.sta')[2].checked = true; break;
+			                  }
+			               }
+			            })
+					</script>
 					
 					
 					<!-- 가격 -->

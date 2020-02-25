@@ -502,5 +502,22 @@ public class MarketDAO {
 		
 		return m;
 	}
+
+	public int updateSellBoard(Connection conn, String sellYN) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateSellBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
 	
 }

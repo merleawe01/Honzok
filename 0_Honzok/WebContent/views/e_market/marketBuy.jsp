@@ -14,6 +14,9 @@
 </head>
 <body>
 <%@ include file="../a_common/boardCommon.jsp" %>
+	<input type="hidden" name="sellYN" id="sellYN">
+	<input type="hidden" name="postNo" id="postNo" value="<%= m.getPostNo()%>">
+
 	<%-- 	var IMP = window.IMP; // 생략가능
 		IMP.init('imp05073510'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		
@@ -74,6 +77,7 @@
 		location.href="<%= request.getContextPath()%>/list.m";
 		alert(msg);
 		}); --%>
+		var sell = null;
 		var IMP = window.IMP; // 생략가능
 		IMP.init('imp05073510'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		
@@ -93,11 +97,18 @@
 		    if ( rsp.success ) {
 		        var msg = '<%= loginUser.getUserName() %> 님 \n';
 		        msg += '결제 금액 ' + rsp.paid_amount + '원이 결제 되었습니다.';
+		        sell = 'Y';
+		        $('#sellYN').val(sell);
 		    } else {
 		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : ' + rsp.error_msg;
+		        sell = 'N';
+		        $('#sellYN').val(sell);
 		    }
-		    location.href="<%= request.getContextPath()%>/list.m";
+		    
+		    console.log($('#sellYN').val());
+		    console.log($('#postNo').val());
+		    location.href="<%= request.getContextPath()%>/buy2.m";
 		    alert(msg);
 		});
 	</script>	

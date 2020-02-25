@@ -93,9 +93,9 @@
 					<!-- 상태 -->
 					<div class="input">
 						<div class="left"><b>상태</b> <span class="must">(필수)</span></div>
-						<input type="checkbox" name="status" value="A">A급 
-						<input type="checkbox" name="status" value="B">B급
-						<input type="checkbox" name="status" value="C">C급
+						<input type="checkbox" name="status" value="A">A급 &nbsp;
+						<input type="checkbox" name="status" value="B">B급&nbsp;
+						<input type="checkbox" name="status" value="C">C급&nbsp;
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
 					
