@@ -93,7 +93,7 @@
 	<div id = "main">
 		
 		<div>
-			<form action="<%= request.getContextPath() %>/insert.gy" method="post" encType="multipart/form-data">
+			<form action="<%= request.getContextPath() %>/insert.gy" method="post" encType="multipart/form-data" id = "insertInform">
 			
 				<div id = "insert">
 				
@@ -115,15 +115,15 @@
 					<table id = "content_table" style="margin-left: auto; margin-right: auto;">
 						<tr>
 							<td class = "content_title" id = "title">제목<label class = "must">(필수)</label></td>
-							<td id = "input_contents"><input type = "text" id = "input_title" placeholder = "상품명을 입력해주세요." name = "gtitle"></td>
+							<td id = "input_contents"><input type = "text" id = "input_title" placeholder = "상품명을 입력해주세요." name = "gtitle" required></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "start">시작귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_start" name = "gstart"><label><b> 귤</b></label></td>
+							<td><input type = "number" id = "input_start" name = "gstart" required><label><b> 귤</b></label></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "buy">즉시구매귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_buy" name = "gbuy"><label><b> 귤</b></label></td>
+							<td><input type = "number" id = "input_buy" name = "gbuy" required><label><b> 귤</b></label></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "time">남은시간</td>
@@ -131,7 +131,7 @@
 						</tr>
 						<tr>
 							<td class = "content_title" id = "content">내용<label class = "must">(필수)</label></td>
-							<td><textarea  id = "input_content" placeholder = "내용을 입력해주세요." name = "gcontent"></textarea></td>
+							<td><textarea  id = "input_content" placeholder = "내용을 입력해주세요." name = "gcontent" required></textarea></td>
 						</tr>
 					</table>
 				</div>
@@ -179,7 +179,23 @@
 				</script>
 			</form>
 		</div>
-	
+		<script>
+			$(function(){
+				$('#onebu').click(function(){
+					if($('#input_start').val() > 0 && $('#input_buy').val() > 0){
+						var result = confirm("시작 귤과 즉시구매 귤은 등록 이후 수정하실 수 없습니다.\n게시글을 등록 하시겠습니까?");
+						if(result){
+							$('insertInform').submit();
+						}else{
+							return false;
+						}
+					}else{
+						alert("시작귤 과 즉시구입귤의 값은 0 이상이어야 합니다.");
+						return false;
+					}
+				})
+			})
+		</script>
 	</div>
 </body>
 </html>

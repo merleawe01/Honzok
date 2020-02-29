@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ page import="java.util.ArrayList, d_trade.model.vo.*, a_common.*" %>
+<%@ page import="java.util.ArrayList, d_trade.model.vo.*, a_common.*, java.util.Calendar, java.text.SimpleDateFormat" %>
 <%
 	ArrayList<Trade> tList = (ArrayList<Trade>)request.getAttribute("tList");
 	ArrayList<Image> iList = (ArrayList<Image>)request.getAttribute("iList");
@@ -12,6 +12,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	
+	SimpleDateFormat format = new SimpleDateFormat ("yyyyMMddHHmmss");
+	Calendar time = Calendar.getInstance();
+	String timeNow = format.format(time.getTime());
 %>
 <!DOCTYPE html>
 <html>
@@ -75,7 +78,7 @@
 		#title_table {
 			border-collapse: collapse;
 			border-spacing: 0;
-			margin-left : 90px;
+			
 		}
 		
 		#gyul{
@@ -88,7 +91,8 @@
 			color : white;
 		}
 		
-		#th1{ width:250px; height:50px; border-radius : 10px 0px 0px 10px; }
+		#th0{ width:90px; height:50px; border-radius : 10px 0px 0px 10px; text-align : left; padding-left : 10px;}
+		#th1{ width:250px; }
 		#th2{ width:130px; }
 		#th3{ width:130px; }
 		#th4{ width:150px; }
@@ -147,6 +151,13 @@
 		#search{
 			margin-top : 20px;
 		}
+		
+		#no_exist{
+			width:900px;
+			height:300px;
+		}
+		
+		
 </style>
 </head>
 <body>
@@ -160,6 +171,7 @@
 	<div id = "tablearea1">
 					<table id = "title_table">
 						<tr>
+							<th class="list_title" id="th0">번호</th>
 							<th class="list_title" id="th1">상품명</th>
 							<th class="list_title" id="th2">현재입찰귤</th>
 							<th class="list_title" id="th3">즉시구입귤</th>
@@ -174,11 +186,93 @@
 						<!-- 게시글 불러오는곳 -->
 						<% if(tList.isEmpty()){ %>
 				<tr>
-					<td colspan="7">존재하는 공지사항이 없습니다.</td>
+					<td id = "no_exist">존재하는 게시글이 없습니다.</td>
 				</tr>
 				<% } else{ 
 						 for(Trade t : tList){ 
+							 
+							 Double timer = Double.parseDouble(t.getDlTime()) - Double.parseDouble(timeNow);
+		                      
+		                      String timeCheck = "";
+		                      
+		                      int hour = 0;
+		                      int min = 0;
+		                      int sec = 0;
+		                      
+		                      if(timer < 0) {
+		                         timeCheck = "마감";
+		                      } else {
+		                        int sec1 = Integer.parseInt(t.getDlTime().substring(8, 10)) * 3600
+		                              + Integer.parseInt(t.getDlTime().substring(10, 12)) * 60
+		                              + Integer.parseInt(t.getDlTime().substring(12, 14));
+		                        int sec2 = Integer.parseInt(timeNow.substring(8, 10)) * 3600
+		                              + Integer.parseInt(timeNow.substring(10, 12)) * 60
+		                              + Integer.parseInt(timeNow.substring(12, 14));
+		                        
+		                        int timeAll = sec1 - sec2;
+		                        if(timeAll <= 0) {
+		                           timeAll = timeAll + 84600;
+		                        }
+		                        hour = timeAll / 3600;
+		                        min = (timeAll - hour * 3600) / 60;
+		                        sec = timeAll - hour * 3600 - min * 60;
+
+		                        
+		                        timeCheck = hour+":"+min+":"+sec;
+		                      }
 						 %>
+						 
+						 <script> // 카운트해주는 스크립트
+                           // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
+                           // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
+                           var hours<%= t.getrNo() %> = <%if(hour<10){%>
+                                       "0<%= hour %>"
+                                       <%}else{%>
+                                       "<%= hour %>"
+                                       <%}%>;
+                          
+                           
+                           var minutes<%= t.getrNo() %> = <%if(min<10){%>
+                                     "0<%= min %>"
+                                     <%}else{%>
+                                     "<%= min %>"
+                                     <%}%>;
+                           
+                           var seconds<%= t.getrNo() %> = <%if(sec<10){%>
+                                     "0<%= sec %>"
+                                     <%}else{%>
+                                     "<%= sec %>"
+                                      <%}%>;
+                           
+                           $(function(){
+                              var timer = setInterval(function() {
+                                 seconds<%= t.getrNo() %>--;
+                                 if(seconds<%= t.getrNo() %> == -1){
+                                    seconds<%= t.getrNo() %> = 59;
+                                    minutes<%= t.getrNo() %>--;
+                                    if(minutes<%= t.getrNo() %> < 10){
+                                       minutes<%= t.getrNo() %> = "0" + minutes<%= t.getrNo() %>;
+                                    }
+                                 }
+                                 if(minutes<%= t.getrNo() %> == -1){
+                                    minutes<%= t.getrNo() %> = 59;
+                                    hours<%= t.getrNo() %>--;
+                                    if(hours<%= t.getrNo() %> < 10){
+                                       hours<%= t.getrNo() %> = "0" + hours<%= t.getrNo() %>;
+                                    }
+                                 }
+                                 if(seconds<%= t.getrNo() %> < 10){
+                                    seconds<%= t.getrNo() %> = "0" + seconds<%= t.getrNo() %>;
+                                 }
+                                 if(hours<%= t.getrNo() %> == 0 && minutes<%= t.getrNo() %> == 0 && seconds<%= t.getrNo() %> == 0){
+                                    $("#td6<%= t.getrNo() %>").html("마감"); 
+                                    clearInterval(timer);
+                                 }
+                                 $("#td6<%= t.getrNo() %>").html(hours<%= t.getrNo() %> + ":" + minutes<%= t.getrNo() %> + ":" + seconds<%= t.getrNo() %>);
+                              }, 1000);
+                           });
+                        </script>
+						 
 						<tr class = "list_line">
 							<td class="list_line2" id="td1"><input type = "hidden" value = "<%= t.getPostNo() %>"><%= t.getrNo() %></td>
 							<td class="list_line2" id="td2">
@@ -195,7 +289,7 @@
 							<td class = "name list_line2" id="td3"><%= t.getPostTitle() %></td>
 							<td class="list_line2" id="td4"><%= t.getPoint() %> <img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
 							<td class="list_line2" id="td5"><%= t.getMaxPoint() %><img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
-							<td class="list_line2" id="td6"><%= t.getDlTime() %></td>
+							 <td class="list_line2" id="td6<%= t.getrNo() %>"><%= timeCheck %></td>
 							<td class="list_line2" id="td7"><%= t.getWriter() %></td>
 						</tr>
 						<% }
@@ -243,16 +337,7 @@
                    <% } %>
 				</div>
 				
-				<div id = "search">
-                    <select id="searchOption">
-                        <option value='title'>제목</option>
-                        <option value='content'>내용</option>
-                        <option value='title_content'>제목+내용</option>
-                        <option value='nickname'>닉네임</option>
-                    </select>
-                    <input id="keyWord">
-                    <input type='button' value='검색'>
-                </div>
+				
 	
 	</div>
 	<script>

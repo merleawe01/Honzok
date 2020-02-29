@@ -7,6 +7,7 @@ public class Trade {
 	private int postNo;
 	private int boardNo;
 	private String postTitle;
+	private String userId;
 	private String writer;
 	private String content;
 	private int viewCount;
@@ -15,7 +16,7 @@ public class Trade {
 	private int recoCount;
 	private char deleteYN;
 	
-	private Date dlTime;
+	private String dlTime;
 	private char dlYN;
 	private int minPoint;
 	private int maxPoint;
@@ -42,6 +43,16 @@ public class Trade {
 		this.content = content;
 	}
 
+	
+
+	public Trade(String userId, int point, String nickname) {
+		super();
+		this.userId = userId;
+		this.point = point;
+		this.nickname = nickname;
+	}
+
+
 
 	public Trade(int minPoint, int maxPoint, int point, String nickname) {
 		super();
@@ -62,7 +73,7 @@ public class Trade {
 
 	
 	
-	public Trade(int rNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
+	public Trade(int rNo, String postTitle, int maxPoint, int point, String dlTime, String writer) {
 		super();
 		this.rNo = rNo;
 		this.postTitle = postTitle;
@@ -72,7 +83,7 @@ public class Trade {
 		this.point = point;
 	}
 
-	public Trade(int postNo, int rNo, String postTitle, int maxPoint, int point, Date dlTime, String writer) {
+	public Trade(int postNo, int rNo, String postTitle, int maxPoint, int point, String dlTime, String writer) {
 		super();
 		this.postNo = postNo;
 		this.rNo = rNo;
@@ -84,7 +95,26 @@ public class Trade {
 	}
 	
 
-	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname,int minPoint, int point, int maxPoint, Date dlTime, Date writeDate,
+	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname,int minPoint, int point, int maxPoint, String dlTime,char dlYN, Date writeDate,
+			Date modifyDate, char deleteYN) {
+		super();
+		this.postNo = postNo;
+		this.boardNo = boardNo;
+		this.postTitle = postTitle;
+		this.content = content;
+		this.viewCount = viewCount;
+		this.writeDate = writeDate;
+		this.modifyDate = modifyDate;
+		this.deleteYN = deleteYN;
+		this.dlTime = dlTime;
+		this.maxPoint = maxPoint;
+		this.point = point;
+		this.nickname = nickname;
+		this.minPoint = minPoint;
+		this.dlYN = dlYN;
+	}
+	
+	public Trade(int postNo, int boardNo, String postTitle, String content, int viewCount, String nickname,int minPoint, int point, int maxPoint, String dlTime, Date writeDate,
 			Date modifyDate, char deleteYN) {
 		super();
 		this.postNo = postNo;
@@ -101,7 +131,6 @@ public class Trade {
 		this.nickname = nickname;
 		this.minPoint = minPoint;
 	}
-
 
 
 	public int getPostNo() {
@@ -186,11 +215,11 @@ public class Trade {
 
 
 	
-	public Date getDlTime() {
+	public String getDlTime() {
 		return dlTime;
 	}
 
-	public void setDlTime(Date dlTime) {
+	public void setDlTime(String dlTime) {
 		this.dlTime = dlTime;
 	}
 
@@ -244,6 +273,18 @@ public class Trade {
 
 	public void setrNo(int rNo) {
 		this.rNo = rNo;
+	}
+
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 

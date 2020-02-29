@@ -1,7 +1,6 @@
 package d_trade.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import b_member.model.vo.Member;
 import d_trade.model.service.TradeService;
-import d_trade.model.vo.Image;
 import d_trade.model.vo.Trade;
 
 /**
- * Servlet implementation class detailview_servlet
+ * Servlet implementation class UpdatePointServlet
  */
-@WebServlet("/detail.gy")
-public class DetailviewServlet extends HttpServlet {
+@WebServlet("/update.point")
+public class UpdatePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailviewServlet() {
+    public UpdatePointServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +31,26 @@ public class DetailviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pn = Integer.parseInt(request.getParameter("postNo"));
+		int postNo = Integer.parseInt(request.getParameter("pno"));
+		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+		int maxPoint = Integer.parseInt(request.getParameter("point"));
+		int point = ((Member)request.getSession().getAttribute("loginUser")).getPoint();
 		
-		TradeService service = new TradeService();
+		Trade td = new Trade();
+		td.setPostNo(postNo);
+		td.setUserId(userId);
+		td.setMaxPoint(maxPoint);
+		td.setPoint(point);
 		
-		Trade trade = service.selectTrade(pn);
-		ArrayList<Image> fileList = service.selectImage(pn);
+		
+		
+		int result = new TradeService().udatePoint(td);
 		
 		String page =null;
-		if(trade != null && fileList != null) {
-			request.setAttribute("trade", trade);
-			request.setAttribute("fileList", fileList);
-			page = "views/d_trade/gyulDetailview.jsp?postNo="+pn;
+		if(result>0) {
+			page = "detail.gy?postNo="+td.getPostNo();
 		}else {
-			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다."	);
+			request.setAttribute("msg", "포인트결제에 실패하였습니다."	);
 			page = "views/a_common/errorPage.jsp";
 		}
 		request.getRequestDispatcher(page).forward(request, response);

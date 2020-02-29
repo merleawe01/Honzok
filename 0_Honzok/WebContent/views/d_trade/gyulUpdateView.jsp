@@ -137,17 +137,17 @@
 						<tr>
 							<td class = "content_title" id = "title">제목<label class = "must">(필수)</label></td>
 							<td id = "input_contents">
-							<input type = "text"  id="input_title" name="title" value="<%= title %>">
+							<input type = "text"  id="input_title" name="title" value="<%= title %>" required>
 							<input type="hidden" name="post_no" value="<%= request.getParameter("pno") %>">
 							</td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "start">시작귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_start" name = "gstart" value="<%= min %>"><label><b> 귤</b></label></td>
+							<td><input type = "number" id = "input_start" name = "gstart" value="<%= min %>" readonly><label><b> 귤</b></label></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "buy">즉시구매귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_buy" name = "gbuy" value="<%= max %>"><label><b> 귤</b></label></td>
+							<td><input type = "number" id = "input_buy" name = "gbuy" value="<%= max %>" readonly><label><b> 귤</b></label></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "time">남은시간</td>
@@ -155,7 +155,7 @@
 						</tr>
 						<tr>
 							<td class = "content_title" id = "content">내용<label class = "must">(필수)</label></td>
-							<td><textarea  id = "input_content"  name = "gcontent" ><%= request.getParameter("content") %></textarea></td>
+							<td><textarea  id = "input_content"  name = "gcontent" required><%= request.getParameter("content") %></textarea></td>
 						</tr>
 					</table>
 				</div>

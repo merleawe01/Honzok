@@ -1,7 +1,6 @@
 package d_trade.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,20 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import d_trade.model.service.TradeService;
-import d_trade.model.vo.Image;
-import d_trade.model.vo.Trade;
 
 /**
- * Servlet implementation class detailview_servlet
+ * Servlet implementation class AuctionUpdatePointServlet
  */
-@WebServlet("/detail.gy")
-public class DetailviewServlet extends HttpServlet {
+@WebServlet("/ac.point")
+public class AuctionUpdatePointServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailviewServlet() {
+    public AuctionUpdatePointServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +29,22 @@ public class DetailviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pn = Integer.parseInt(request.getParameter("postNo"));
+		int postNo = Integer.parseInt(request.getParameter("postNo"));
+		int bPoint = Integer.parseInt(request.getParameter("point"));
+		
 		
 		TradeService service = new TradeService();
+		int result = service.selectWinner(postNo,bPoint);
 		
-		Trade trade = service.selectTrade(pn);
-		ArrayList<Image> fileList = service.selectImage(pn);
 		
-		String page =null;
-		if(trade != null && fileList != null) {
-			request.setAttribute("trade", trade);
-			request.setAttribute("fileList", fileList);
-			page = "views/d_trade/gyulDetailview.jsp?postNo="+pn;
+		
+		
+		String page = "";
+		
+		if(result>0) {
+			page = "detail.gy?postNo="+postNo;
 		}else {
-			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다."	);
+			request.setAttribute("msg", "입찰과정에 오류가 발생하였습니다."	);
 			page = "views/a_common/errorPage.jsp";
 		}
 		request.getRequestDispatcher(page).forward(request, response);

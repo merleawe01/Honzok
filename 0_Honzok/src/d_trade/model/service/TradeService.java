@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.apache.tomcat.jni.File;
 
 import d_trade.model.dao.TradeDAO;
+import d_trade.model.vo.Bid;
 import d_trade.model.vo.Image;
 import d_trade.model.vo.Trade;
 
@@ -179,6 +180,72 @@ public class TradeService {
 			rollback(conn);
 		}
 		return result;
+	}
+
+	public int insertBid(Bid b) {
+		Connection conn = getConnection();
+		TradeDAO dao = new TradeDAO();
+		
+		int result1 = dao.insertBid(conn, b);
+		int result2 = 0;
+		
+		if(result1 > 0) {
+			result2 = dao.updateBid(conn, b);
+			if(result2 > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}else {
+			rollback(conn);
+		}
+		return result2;
+	}
+
+	public int udatePoint(Trade td) {
+		Connection conn = getConnection();
+		TradeDAO dao = new TradeDAO();
+		
+		int result1 = dao.updatePoint(conn, td);
+		int result2 = dao.updatedlYn(conn, td);
+		
+		if(result1>0) {
+			if(result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}else {
+			rollback(conn);
+		}
+		return result2;
+	}
+
+	public int selectWinner(int postNo, int bPoint) {
+		Connection conn = getConnection();
+		TradeDAO dao = new TradeDAO();
+		
+		Trade sw = dao.selectWinner(conn, postNo);
+		int result1 = 0;
+		int result2 = 0;
+		
+		
+		if(sw != null) {
+			result1 = dao.updatePointWinner(conn, sw, bPoint);
+			if(result1>0) {
+				result2 = dao.updateBidYN(conn,postNo);
+				if(result2 > 0) {
+					commit(conn);
+				}else {
+					rollback(conn);
+				}
+			} else {
+				rollback(conn);
+			}
+		}else {
+			rollback(conn);
+		}
+		return result2;
 	}
 
 	
