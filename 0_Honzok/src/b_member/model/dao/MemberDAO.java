@@ -16,236 +16,236 @@ import b_member.model.vo.Member;
 
 
 public class MemberDAO {
-private Properties prop = new Properties();
-	
-	public MemberDAO() {
-		String fileName = MemberDAO.class.getResource("/sql/b_member/member-query.properties").getPath();
-		try {
-			prop.load(new FileReader(fileName));
-		} catch (FileNotFoundException e) {
+	private Properties prop = new Properties();
+		
+		public MemberDAO() {
+			String fileName = MemberDAO.class.getResource("/sql/b_member/member-query.properties").getPath();
+			try {
+				prop.load(new FileReader(fileName));
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			} catch (IOException e) {
 			
-			e.printStackTrace();
-		} catch (IOException e) {
-		
-			e.printStackTrace();
+				e.printStackTrace();
+			}
 		}
-	}
+		
+	public Member loginMember(Member member, Connection conn) {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Member loginUser = null;
+			
+			String query = prop.getProperty("loginUser");
 	
-public Member loginMember(Member member, Connection conn) {
-		
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, member.getUserId());
+				pstmt.setString(2, member.getUserPwd());
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					loginUser = new Member( rset.getString("USER_ID"),
+											rset.getString("USER_PWD"),
+										    rset.getString("USER_NAME"),
+										    rset.getString("NICKNAME"),
+										    rset.getInt("POSTAL_CODE"),
+										    rset.getString("B_ADDRESS"),
+										    rset.getString("L_ADDRESS"),
+										    rset.getString("PHONE"),
+										    rset.getString("EMAIL"),
+										    rset.getString("NAVER_YN"),
+										    rset.getDate("ENROLL_DATE"),
+											rset.getString("STATUS"),
+											rset.getInt("POINT"));
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			return loginUser;
+			
+			
+			
+		}
+	public int insertMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Member loginUser = null;
+		int result = 0;
 		
-		String query = prop.getProperty("loginUser");
-
+		String query = prop.getProperty("insertMember");
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getUserId());
 			pstmt.setString(2, member.getUserPwd());
+			pstmt.setString(3, member.getUserName());
+			pstmt.setString(4, member.getNickName());
+			pstmt.setInt(5, member.getPostalCode());
+			pstmt.setString(6, member.getbAddr());
+			pstmt.setString(7, member.getlAddr());
+			pstmt.setString(8, member.getPhone());
+			pstmt.setString(9, member.getEmail());
 			
-			rset = pstmt.executeQuery();
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public int idCheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
 			
-			if(rset.next()) {
-				loginUser = new Member( rset.getString("USER_ID"),
-										rset.getString("USER_PWD"),
-									    rset.getString("USER_NAME"),
-									    rset.getString("NICKNAME"),
-									    rset.getInt("POSTAL_CODE"),
-									    rset.getString("B_ADDRESS"),
-									    rset.getString("L_ADDRESS"),
-									    rset.getString("PHONE"),
-									    rset.getString("EMAIL"),
-									    rset.getString("NAVER_YN"),
-									    rset.getDate("ENROLL_DATE"),
-										rset.getString("STATUS"),
-										rset.getInt("POINT"));
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int nickCheck(Connection conn, String userNick) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("nickCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userNick);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
 			}
 			
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-		}finally {
-			close(rset);
+		} finally {
+			close(rs);
 			close(pstmt);
 		}
-		return loginUser;
 		
-		
-		
-	}
-public int insertMember(Connection conn, Member member) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-	
-	String query = prop.getProperty("insertMember");
-	
-	try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, member.getUserId());
-		pstmt.setString(2, member.getUserPwd());
-		pstmt.setString(3, member.getUserName());
-		pstmt.setString(4, member.getNickName());
-		pstmt.setInt(5, member.getPostalCode());
-		pstmt.setString(6, member.getbAddr());
-		pstmt.setString(7, member.getlAddr());
-		pstmt.setString(8, member.getPhone());
-		pstmt.setString(9, member.getEmail());
-		
-		result = pstmt.executeUpdate();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}finally {
-		close(pstmt);
+		return result;
 	}
 	
-	return result;
-}
-public int idCheck(Connection conn, String userId) {
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	int result = 0;
-	
-	String query = prop.getProperty("idCheck");
-	
-	try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userId);
 		
-		rs = pstmt.executeQuery();
-		
-		if(rs.next()) {
-			result = rs.getInt(1);
-		}
-	}catch (SQLException e) {
-		e.printStackTrace();
-	}finally {
-		close(rs);
-		close(pstmt);
-	}
-	return result;
-}
-
-public int nickCheck(Connection conn, String userNick) {
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	int result = 0;
 	
-	String query = prop.getProperty("nickCheck");
 	
-	try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, userNick);
+	public int updateMember(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		rs = pstmt.executeQuery();
+		String query = prop.getProperty("updateMember");		
 		
-		if(rs.next()) {
-			result = rs.getInt(1);
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, member.getUserName());
+			pstmt.setString(2, member.getNickName());
+			pstmt.setInt(3, member.getPostalCode());
+			pstmt.setString(4, member.getbAddr());
+			pstmt.setString(5, member.getlAddr());
+			pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getEmail());
+			pstmt.setInt(8, member.getPoint());
+			pstmt.setString(9, member.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	} finally {
-		close(rs);
-		close(pstmt);
+		return result;
 	}
 	
-	return result;
-}
-
-	
-
-
-public int updateMember(Connection conn, Member member) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-	
-	String query = prop.getProperty("updateMember");		
-	
-	try {
-		pstmt = conn.prepareStatement(query);
+	public Member selectMember(Connection conn, String loginUserId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member member = null;
 		
-		pstmt.setString(1, member.getUserName());
-		pstmt.setString(2, member.getNickName());
-		pstmt.setInt(3, member.getPostalCode());
-		pstmt.setString(4, member.getbAddr());
-		pstmt.setString(5, member.getlAddr());
-		pstmt.setString(6, member.getPhone());
-		pstmt.setString(7, member.getEmail());
-		pstmt.setInt(8, member.getPoint());
-		pstmt.setString(9, member.getUserId());
-		
-		result = pstmt.executeUpdate();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}finally {
-		close(pstmt);
-	}
-	
-	return result;
-}
-
-public Member selectMember(Connection conn, String loginUserId) {
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	Member member = null;
-	
-	String query = prop.getProperty("selectMember");
-	try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, loginUserId);
-		
-		rs = pstmt.executeQuery();
-		
-		if(rs.next()) {
-			member = new Member(rs.getString("user_id"),
-					rs.getString("user_pwd"),
-					rs.getString("user_Name"),
-					rs.getString("nickName"),
-					rs.getInt("postal_Code"),
-					rs.getString("b_Address"),
-					rs.getString("l_Address"),
-					rs.getString("phone"),
-					rs.getString("email"),
-					rs.getString("naver_Yn"),
-					rs.getDate("enroll_Date"),
-					rs.getString("status"),
-					rs.getInt("point"));
-					
+		String query = prop.getProperty("selectMember");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, loginUserId);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new Member(rs.getString("user_id"),
+						rs.getString("user_pwd"),
+						rs.getString("user_Name"),
+						rs.getString("nickName"),
+						rs.getInt("postal_Code"),
+						rs.getString("b_Address"),
+						rs.getString("l_Address"),
+						rs.getString("phone"),
+						rs.getString("email"),
+						rs.getString("naver_Yn"),
+						rs.getDate("enroll_Date"),
+						rs.getString("status"),
+						rs.getInt("point"));
+						
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
 		}
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}finally {
-		close(rs);
-		close(pstmt);
+		return member;
 	}
-	return member;
-}
-  
-public int updatePwd(Connection conn, HashMap<String, String> map) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-	
-	String query = prop.getProperty("updatePwd");
-	
-	try {
-		pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, map.get("new"));
-		pstmt.setString(2, map.get("id"));
-		pstmt.setString(3, map.get("old"));
+	  
+	public int updatePwd(Connection conn, HashMap<String, String> map) {
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		result = pstmt.executeUpdate();
-	} catch (SQLException e) {
-		e.printStackTrace();
-	} finally {
-		close(pstmt);
+		String query = prop.getProperty("updatePwd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, map.get("new"));
+			pstmt.setString(2, map.get("id"));
+			pstmt.setString(3, map.get("old"));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
-	
-	return result;
-}
 
 	public int nickNameCheck(Connection conn, String nickName) {
 		PreparedStatement pstmt = null;
@@ -265,6 +265,103 @@ public int updatePwd(Connection conn, HashMap<String, String> map) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Member getMember(Connection conn, String userName, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member member = null;
+		
+		String query = prop.getProperty("getMember");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, email);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				member = new Member(rs.getString("user_id"),
+									rs.getString("user_pwd"),
+									rs.getString("user_Name"),
+									rs.getString("nickName"),
+									rs.getString("email"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return member;
+	}
+
+	public int UpdateKeyCode(Connection conn, String userName, String email, String keyCode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateKeyCode");		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, keyCode);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, email);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int confirmKeyCode(Connection conn, String userName, String email, String keyCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String query = prop.getProperty("confirmKeyCode");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, email);
+			pstmt.setString(3, keyCode);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updatePwdNew(Connection conn, HashMap<String, String> map) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePwdNew");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, map.get("new"));
+			pstmt.setString(2, map.get("id"));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			close(pstmt);
 		}
 		

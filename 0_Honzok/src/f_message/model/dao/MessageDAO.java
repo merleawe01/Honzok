@@ -42,7 +42,6 @@ public class MessageDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, loginUserNickName);
 			rs = pstmt.executeQuery();
-			System.out.println();
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
@@ -217,7 +216,7 @@ public class MessageDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, loginUserNickName);
-			rs = pstmt.executeQuery(query);
+			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				result = rs.getInt(1);
@@ -302,7 +301,7 @@ public class MessageDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, loginUserNickName);
-			rs = pstmt.executeQuery(query);
+			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				result = rs.getInt(1);
@@ -368,7 +367,6 @@ public class MessageDAO {
 				pstmt.setInt(1, Integer.parseInt(mNoList[i]));
 				
 				result += pstmt.executeUpdate();
-				System.out.println(mNoList[i]);
 			}
 			
 		} catch (SQLException e) {
@@ -376,7 +374,6 @@ public class MessageDAO {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("DAO : " + result);
 		return result;
 	}
 
@@ -386,12 +383,11 @@ public class MessageDAO {
 		int result = 0;
 		String query = null;
 		
-		System.out.println(select);
 		if(select.equals("from")) {
 			query = prop.getProperty("fromMsgCount");
 		} else if(select.equals("content")){
 			query = prop.getProperty("contentMsgCount");
-		} else {
+		} else if(select.equals("title")){
 			query = prop.getProperty("titleMsgCount");
 		}
 		
@@ -433,11 +429,13 @@ public class MessageDAO {
 		} else {
 			query = prop.getProperty("titleMsgList");
 		}
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, "%" + keyword + "%");
-			pstmt.setString(2, loginUserNickName);
+			pstmt.setString(1, loginUserNickName);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			rs = pstmt.executeQuery();
 			
 			list = new ArrayList<Message>();
