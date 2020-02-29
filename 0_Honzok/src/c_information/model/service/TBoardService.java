@@ -105,4 +105,19 @@ public class TBoardService {
 		return result1;
 	}
 
+	public int deleteTBoard(int no) {
+		Connection conn = getConnection();
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.deleteBoard(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
 }

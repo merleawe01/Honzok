@@ -14,6 +14,7 @@
 
 <style>
 	#selectField{
+		font-weight: bold;
 		font-size: 15pt;
 		padding-bottom: 10px;
 	}
@@ -22,8 +23,7 @@
 	#selectArea{
 		width: 100%;
 		height: 50px;
-		margin-top: 10px;
-		padding-bottom: 10px;
+		padding-bottom: 20px;
 		text-align: center;
 	}
 	#area{
@@ -242,6 +242,89 @@
 	
 	<div id="main">
 		<div id="selectField"><span onClick="location.href='<%= request.getContextPath() %>/list.food'">혼밥 + 혼술</span> | <span onclick="location.href='<%= request.getContextPath() %>/list.travel'">혼행</span></div>
+		
+		<div id="map"></div>
+		<div id="mapchange">▼</div>
+		<script>
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = { 
+			        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			        level: 2 // 지도의 확대 레벨
+			    };
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+			
+			var positions = [
+				<% if(!(list.isEmpty())) {%>
+					<% for(FoodBoard b : list) { %>
+					{
+				        content: '<div style="width:150px; text-align: center; padding:5px;"><%= b.getTitle() %></div>', 
+				        latlng: new kakao.maps.LatLng(<%= b.getArea_x() %>, <%= b.getArea_y() %>),
+				        id: <%= b.getNo() %>,
+				    },
+					<% 	} %>
+				<% } %>
+			];
+
+			for (var i = 0; i < positions.length; i ++) {
+			    // 마커를 생성합니다
+			    var marker = new kakao.maps.Marker({
+			        map: map, // 마커를 표시할 지도
+			        position: positions[i].latlng // 마커의 위치
+			    });
+
+			    // 마커에 표시할 인포윈도우를 생성합니다 
+			    var infowindow = new kakao.maps.InfoWindow({
+			        content: positions[i].content, // 인포윈도우에 표시할 내용
+			    });
+			    
+			    var str = positions[i];
+
+			    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+			    kakao.maps.event.addListener(marker, 'click', makeClick(positions[i]));
+			    
+			}
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+			function makeOverListener(map, marker, infowindow) {
+			    return function() {
+			        infowindow.open(map, marker);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+			    return function() {
+			        infowindow.close();
+			    };
+			}
+			
+			function makeClick(m) {
+				return function() {
+					location.href='<%= request.getContextPath() %>/detail.food?no=' + m.id;
+				};
+			}
+
+			var isSmall = true;
+			$('#mapchange').click(function(){
+				if(isSmall){
+					var mapContainer = document.getElementById('map');
+				    mapContainer.style.height = '400px'; 
+				    map.relayout();
+				    $('#mapchange').text('▲');
+				    isSmall = false;
+				} else{
+					var mapContainer = document.getElementById('map');
+				    mapContainer.style.height = '50px';
+				    map.relayout();
+				    $('#mapchange').text('▼');
+				    isSmall = true;
+				}
+			});
+		</script>
+		
 		<div id="selectArea">
 			현재 선택된 지역은
 			<span id="area"><%= area %></span>
@@ -327,88 +410,6 @@
 		}
 		</script>
 		
-		<div id="map"></div>
-		<div id="mapchange">▼</div>
-		<script>
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			    mapOption = { 
-			        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			        level: 2 // 지도의 확대 레벨
-			    };
-			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-			
-			var positions = [
-				<% if(!(list.isEmpty())) {%>
-					<% for(FoodBoard b : list) { %>
-					{
-				        content: '<div style="width:150px; text-align: center; padding:5px;"><%= b.getTitle() %></div>', 
-				        latlng: new kakao.maps.LatLng(<%= b.getArea_x() %>, <%= b.getArea_y() %>),
-				        id: <%= b.getNo() %>,
-				    },
-					<% 	} %>
-				<% } %>
-			];
-
-			for (var i = 0; i < positions.length; i ++) {
-			    // 마커를 생성합니다
-			    var marker = new kakao.maps.Marker({
-			        map: map, // 마커를 표시할 지도
-			        position: positions[i].latlng // 마커의 위치
-			    });
-
-			    // 마커에 표시할 인포윈도우를 생성합니다 
-			    var infowindow = new kakao.maps.InfoWindow({
-			        content: positions[i].content, // 인포윈도우에 표시할 내용
-			    });
-			    
-			    var str = positions[i];
-
-			    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-			    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-			    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-			    kakao.maps.event.addListener(marker, 'click', makeClick(positions[i]));
-			    
-			}
-			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-			function makeOverListener(map, marker, infowindow) {
-			    return function() {
-			        infowindow.open(map, marker);
-			    };
-			}
-
-			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-			function makeOutListener(infowindow) {
-			    return function() {
-			        infowindow.close();
-			    };
-			}
-			
-			function makeClick(m) {
-				return function() {
-					location.href='<%= request.getContextPath() %>/detail.food?no=' + m.id;
-				};
-			}
-
-			var isSmall = true;
-			$('#mapchange').click(function(){
-				if(isSmall){
-					var mapContainer = document.getElementById('map');
-				    mapContainer.style.height = '400px'; 
-				    map.relayout();
-				    $('#mapchange').text('▲');
-				    isSmall = false;
-				} else{
-					var mapContainer = document.getElementById('map');
-				    mapContainer.style.height = '50px';
-				    map.relayout();
-				    $('#mapchange').text('▼');
-				    isSmall = true;
-				}
-			});
-		</script>
-		
 		<div id="selectCategory">
 			<table id="cateTable" style="margin: auto;">
 				<tr>
@@ -485,16 +486,16 @@
 			해당하는 데이터가 존재하지 않습니다.
 		
 		<% } else { %>
-		<% for(FoodBoard b : list) { %>
+		<% for(int i = 0; i < list.size(); i++) { %>
 		
-		<div class="foodList">
-			<input type="hidden" value='<%= b.getNo() %>'>
-			<div id="foodImg"><img src="<%= request.getContextPath() %>/images/food_board/<%= b.getImg_src() %>"></div>
+		<div class="foodList" id="num<%=i%>">
+			<input type="hidden" value='<%= list.get(i).getNo() %>'>
+			<div id="foodImg"><img src="<%= request.getContextPath() %>/images/food_board/<%= list.get(i).getImg_src() %>"></div>
 			<div id="foodMain">
-				<div id="top"><%= b.getTitle() %></div>
+				<div id="top"><%= list.get(i).getTitle() %></div>
 				<div id="middle">
-					<% for(int i = 0; i < 5; i++) {
-						if(i > b.getStar()) {%>
+					<% for(int j = 0; j < 5; j++) {
+						if(j > list.get(i).getStar()) {%>
 						<img src="<%= request.getContextPath() %>/images/empty_star.png" class="star">
 						<% } else { %>
 						<img src="<%= request.getContextPath() %>/images/star.PNG" class="star">
@@ -504,11 +505,10 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsup.png"> 
-					<%= b.getReco_count() %>
+					<%= list.get(i).getReco_count() %>
 				</div>
 				<div id="bottom">
-					<b><%= b.getAddress() %></b>
-					<!-- <span>조회 103 | 20.01.16</span> -->
+					<b><%= list.get(i).getAddress() %></b>
 				</div>
 			</div>
 		</div>
@@ -516,13 +516,43 @@
 		<% 	} %>
 		<% } %>
 		
-		<div id="write" onclick='location.href="views/c_information/foodWrite.jsp"'>글쓰기</div>
+		<div id="write">글쓰기</div>
 		
 		<script>
+			var viewNum = 5;
+			
+			$(function(){
+				<% if(list.size() > 5) { %>
+					<% for(int i = 5; i < list.size(); i++) {%>
+						$('#num<%= i %>').hide();
+					<% } %>
+				<% } %>
+			});
+			
+			$(window).scroll(function(){
+			    var scrolltop = $(window).scrollTop(); 
+			    if( scrolltop == $(document).height() - $(window).height() ){
+			        if(<%= list.size() %> > viewNum) {
+			        	for(var i = viewNum; i < viewNum + 5; i++) {
+			        		$('#num'+i).show();
+			        	}
+			        	viewNum += 5;
+			        }
+			    }
+			});
+		
 			$(function(){
 				$('.foodList').click(function(){
 					var no = $(this).children('input').val();
 					location.href='<%= request.getContextPath() %>/detail.food?no=' + no;
+				});
+				
+				$('#write').click(function(){
+					<% if(loginUser == null) { %>
+						alert('로그인한 유저만 글을 작성할 수 있습니다.');
+					<% } else { %>
+					location.href="views/c_information/foodWrite.jsp";
+					<% } %>
 				});
 			});
 		</script>

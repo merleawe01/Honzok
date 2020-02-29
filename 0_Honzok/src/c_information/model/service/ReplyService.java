@@ -50,5 +50,21 @@ public class ReplyService {
 		}
 		return list;
 	}
+
+	public ArrayList<Reply> updateReply(Reply r) {
+		Connection conn = getConnection();
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.updateReply(conn, r);
+		
+		ArrayList<Reply> list = null;
+		if(result > 0) {
+			commit(conn);
+			list = dao.selectReplyList(conn, r.getPost_no());
+		} else {
+			rollback(conn);
+		}
+		return list;
+	}
 	
 }
