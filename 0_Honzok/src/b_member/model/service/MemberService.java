@@ -28,6 +28,8 @@ public class MemberService {
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.insertMember(conn, member);
 		
+		System.out.println("result : " + result);
+		
 		if(result > 0) {
 			commit(conn);
 		}else {

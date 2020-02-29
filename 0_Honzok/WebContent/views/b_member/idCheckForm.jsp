@@ -9,7 +9,7 @@
 	function idValue(){
 		
 		if('<%= request.getAttribute("checkedId") %>' == "null"){
-			document.getElementById('inputId').value = opener.document.join.joinUserId.value;	
+			document.getElementById('inputId').value = opener.document.joinForm.joinUserId.value;	
 		} else {
 			document.getElementById('inputId').value = '<%= (String)request.getAttribute("checkedId") %>';
 		}

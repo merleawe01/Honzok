@@ -267,8 +267,8 @@ header {
 						<div id="input">
 							<div class="left">새비밀번호</div>
 
-							<input type="password" class="right" id="pwd1" name="newPwd"> <label id="pwd2Result"></label><label>
-								(영어로 시작하며 영어와 숫자, 8~16자)</label>
+							<input type="password" class="right" id="pwd1" name="newPwd"> <label id="pwd2Result"></label>
+								<span id="spanteg1">(영어로 시작하며 영어와 숫자, 8~16자)</span>
 						</div>
 
 
@@ -295,6 +295,7 @@ header {
 			            $('#pwd2Result').css('color', 'green');
 			            $(this).parent().css('background', '');
 			            $(this).css('background', '');
+			        	$("#spanteg1").attr("hidden", true);
 			         } else {
 			            $('#pwd2Result').text("알맞은 비밀번호를 입력하세요");
 			            $('#pwd2Result').css('color', 'red');
@@ -307,14 +308,18 @@ header {
 							$('#pwd2').focusout(function() {
 								var pwd1 = $("#pwd1").val();
 								var pwd2 = $("#pwd2").val();
+								
 								if (pwd1 != "" || pwd2 != "") {
 									if (pwd1 == pwd2) {
 										$("#alert-success")
 												.css('display',
 														'inline-block');
+										 
 										$("#alert-danger").css(
 												'display',
 												'none');
+									
+										
 									} else {
 										alert("비밀번호가 일치하지 않습니다. 비밀번호를 재확인해주세요.");
 										$("#alert-success")
@@ -324,6 +329,14 @@ header {
 												'display',
 												'inline-block');
 									}
+								}
+							});
+							
+							
+							var msg = "<%= msg %>";
+							$(function(){
+								if(msg != "null"){
+									alert(msg);
 								}
 							});
 						</script>
@@ -358,13 +371,6 @@ header {
 
 	<footer> </footer>
 	
-	<script>
-	 var msg = "<%= msg %>";
-     
-     $(function(){
-        if(msg != "null") 
-           alert(msg);
-     });
-	</script>
+	
 </body>
 </html>

@@ -194,6 +194,7 @@
          height : 40px;
          background-color : rgb(241, 131, 50); 
          color : white;
+          border: 0;
          border-radius: 5px;
          margin: 20px;
          line-height: 40px;
@@ -252,7 +253,7 @@
                
             <input type = "text" class = "right" name="userName" id="userName"  required>
                   <label id="nameResult"></label>
-                  <span>이름은 한글로 된 2글자 이상으로 입력하셔야합니다.</span>
+                  <span id="spanteg">이름은 한글로 된 2글자 이상으로 입력하셔야합니다.</span>
             </div>
             
             
@@ -260,21 +261,21 @@
                <div class = "left">아이디<span class = "must">(필수)</span></div>
                <input type = "text" class = "right" name="joinUserId" id="joinUserId"  required> <input type="button" id="idCheck" class="mini_bt" onclick="checkId();" value="중복확인"/>
                   <label id="idResult"></label>
-                  <span>영어로 시작하며 영어와 숫자가 섞인 8~12자</span>
+                  <span id="spanteg1" >영어로 시작하며 영어와 숫자가 섞인 8~12자</span>
             </div>
                      
             <div class = "input">
                <div class = "left">비밀번호<span class = "must">(필수)</span></div>
                 <input type = "password" class = "right" name="joinUserPwd" id="joinUserPwd"  required>
                   <label id="pwd1Result"></label>
-                  <span>영어로 시작하며 영어와 숫자,  8~16자</span>
+                  <span id="spanteg2" >영어로 시작하며 영어와 숫자,  8~16자</span>
             </div>
             
             <div class = "input">
                <div class = "left">비밀번호 확인<span class = "must">(필수)</span></div>
                <input type = "password" class = "right" name="joinUserPwd" id="joinUserPwd2"  required>
                   <label id="pwd2Result"></label>
-                  <span>비밀번호와 일치하게 써주세요.</span>
+                  <span id="spanteg3">비밀번호와 일치하게 써주세요.</span>
             </div>
             
             
@@ -397,6 +398,21 @@
                    평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는 천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의
                    대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는
                     천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길</textarea>
+                </div>    
+         <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
+            	   이용약관에 동의하시겠습니까? <input type="checkbox"  class="access_terms3" >동의함
+               </div>
+               
+                   <div class = "access_terms3" style = "margin : 10px 30px 10px 0px;">
+                    <textarea  id = "terms_content" >이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므
+                  로 그들은 길지 아니한 목숨을 사는가 싶이 살았으 그들의 그림자는 천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고
+                   평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는 천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의
+                   대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는
+                    천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므
+                  로 그들은 길지 아니한 목숨을 사는가 싶이 살았으 그들의 그림자는 천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고
+                   평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는 천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길이상 곧 만천하의
+                   대중을 품에 안고 그들에게 밝은 길을 찾아 주며 그들을 행복스럽고 평화스러운 곳으로 인도하겠다는 커다란 이상을 품었기 때문이다 그러므로 그들은 길지 아니한 목숨을 사는가 싶이 살았으  그들의 그림자는
+                    천고에 사라지지 이상 곧 만천하의 대중을 품에 안고 그들에게 밝은 길</textarea>
                </div>
                <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
                이용약관에 동의하시겠습니까? <input type="checkbox"  class="access_terms3" >동의함
@@ -429,9 +445,50 @@
                           }
                       });
                   });
+                  $(".access_terms3").click(function(){
+                      if($("input[name='access_terms3']:checked").length == 3){
+                          $("#checkall").prop("checked",true);
+                      }else{
+                          $("#checkall").prop("checked",false);
+                      }
+
+                  });
+         
+                 
                   </script>
             
          <script>
+         function checkId(){
+             window.open("idCheckForm.jsp", "checkForm", "width=500, height=300");
+             
+             
+          }
+         $('#joinUserId').focus(function(){
+             $(this).parent().css('background', 'beige');
+          });
+          $('#joinUserId').blur(function(){
+             var str = $(this).val();
+             var regExp1 = /^[a-z]/gi; 
+             var regExp2 = /[^a-z][^0-9]/gi; 
+             var regExp3 = /[0-9]/gi; 
+             
+             if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 12){
+                $('#idResult').text("정상입력");
+                $('#idResult').css('color', 'green');
+                $(this).parent().css('background', '');
+                $(this).css('background', '');
+                $("#spanteg1").attr("hidden", true);
+             } else {
+                $('#idResult').text("알맞은 아이디를 입력하세요");
+                $('#idResult').css('color', 'red');
+              
+                $(this).focus();
+             }
+          });
+        
+    		
+         
+         
       $('#userName').focus(function(){
          $(this).parent().css('background', 'beige');
       });
@@ -444,6 +501,7 @@
             $('#nameResult').css('color', 'green');
             $(this).parent().css('background', '');
             $(this).css('background', '');
+            $("#spanteg").attr("hidden", true);
          } else {
             $('#nameResult').text("알맞은 이름을 입력하세요");
             $('#nameResult').css('color', 'red');
@@ -451,27 +509,6 @@
             $(this).focus();
          }
       });
-      $('#joinUserId').focus(function(){
-          $(this).parent().css('background', 'beige');
-       });
-       $('#joinUserId').blur(function(){
-          var str = $(this).val();
-          var regExp1 = /^[a-z]/gi; 
-          var regExp2 = /[^a-z][^0-9]/gi; 
-          var regExp3 = /[0-9]/gi; 
-          
-          if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 12){
-             $('#idResult').text("정상입력");
-             $('#idResult').css('color', 'green');
-             $(this).parent().css('background', '');
-             $(this).css('background', '');
-          } else {
-             $('#idResult').text("알맞은 아이디를 입력하세요");
-             $('#idResult').css('color', 'red');
-           
-             $(this).focus();
-          }
-       });
      
       
       $('#joinUserPwd').focus(function(){
@@ -488,6 +525,7 @@
             $('#pwd1Result').css('color', 'green');
             $(this).parent().css('background', '');
             $(this).css('background', '');
+            $("#spanteg2").attr("hidden", true);
          } else {
             $('#pwd1Result').text("알맞은 비밀번호를 입력하세요");
             $('#pwd1Result').css('color', 'red');
@@ -505,6 +543,7 @@
          } else if($('#joinUserPwd').val() == $('#joinUserPwd2').val()){
             $('#pwd2Result').text("비밀번호 일치");
             $('#pwd2Result').css('color', 'green');
+            $("#spanteg3").attr("hidden", true);
          } else{
             $('#pwd2Result').text("비밀번호 불일치");
             $('#pwd2Result').css('color', 'red');
@@ -527,11 +566,7 @@
    
    </section>
    <script>
-      function checkId(){
-         window.open("idCheckForm.jsp", "checkForm", "width=500, height=300");
-         
-         
-      }
+    
       function checkNickName(){
          window.open("nickNameCheckForm.jsp", "checkNickForm", "width=500, height=300");
       }

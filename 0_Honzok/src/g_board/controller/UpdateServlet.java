@@ -1,7 +1,6 @@
-package b_member.controller;
+package g_board.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,50 +9,59 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_member.model.service.MemberService;
-import b_member.model.vo.Member;
+import g_board.model.service.BoardService;
+import g_board.model.vo.Board;
 
 /**
- * Servlet implementation class PwdUpdateServlet
+ * Servlet implementation class UpdateServlet
  */
-@WebServlet("/updatePwd.me")
-public class PwdUpdateServlet extends HttpServlet {
+@WebServlet("/update.bo")
+public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PwdUpdateServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UpdateServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userPwd = request.getParameter("userPwd");
-		String newPwd = request.getParameter("newPwd");
-		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+		request.setCharacterEncoding("UTF-8");
+
+
+		int postNo = Integer.parseInt(request.getParameter("postNo"));
+
+		String postTitle = request.getParameter("post_Title");
+		String content = request.getParameter("content");	
+		String writeDate = request.getParameter("writeDate");
 		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("id", userId);
-		map.put("old", userPwd);
-		map.put("new", newPwd);
 		
-		int result = new MemberService().updatePwd(map);
-		
+
+		Board b = new Board();
+		b.setPostNo(postNo);
+		b.setPostTitle(postTitle);
+		b.setWriteDate(writeDate);
+		b.setContent(content);
+
+		int result = new BoardService().updateBoard(b);
+
 		String page = null;
 		if(result > 0) {
-			page="/myPage.me";
-			request.setAttribute("msg", "비밀번호 수정에 성공하였습니다");
-		}else {
+			page = "/detail.bo?postNo=" + postNo;
+		} else {
 			page = "views/a_common/errorPage.jsp";
-			request.setAttribute("msg", "비밀번호 수정에 실패하였습니다");
+			request.setAttribute("msg", "업데이트에 실패하였습니다.");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

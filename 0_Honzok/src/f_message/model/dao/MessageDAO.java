@@ -101,7 +101,6 @@ public class MessageDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setString(1, nickName);
 			pstmt.setString(2, "운영자");
 			pstmt.setString(3, "가입하신걸 환영합니다!");
