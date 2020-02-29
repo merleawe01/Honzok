@@ -1,7 +1,7 @@
-package b_member.controller;
+package g_board.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_member.model.service.MemberService;
-import b_member.model.vo.Member;
+import g_board.model.vo.Reply;
+import g_board.model.service.BoardService;
+import g_board.model.vo.Board;
 
 /**
- * Servlet implementation class PwdUpdateServlet
+ * Servlet implementation class detailview_servlet
  */
-@WebServlet("/updatePwd.me")
-public class PwdUpdateServlet extends HttpServlet {
+@WebServlet("/detail.bo")
+public class DetailviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PwdUpdateServlet() {
+    public DetailviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +33,19 @@ public class PwdUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userPwd = request.getParameter("userPwd");
-		String newPwd = request.getParameter("newPwd");
-		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+	int postNo = Integer.parseInt(request.getParameter("postNo"));
 		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("id", userId);
-		map.put("old", userPwd);
-		map.put("new", newPwd);
+		Board board = new BoardService().selectBoard(postNo);
+		ArrayList<Reply> replyList = new BoardService().selectReplyList(postNo);
 		
-		int result = new MemberService().updatePwd(map);
-		
-		String page = null;
-		if(result > 0) {
-			page="/myPage.me";
-			request.setAttribute("msg", "비밀번호 수정에 성공하였습니다");
+		String page =null;
+		if(board != null ) {
+			request.setAttribute("board", board);
+			request.setAttribute("replyList", replyList);
+			page = "views/g_board/boardDetailview.jsp";
 		}else {
+			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다."	);
 			page = "views/a_common/errorPage.jsp";
-			request.setAttribute("msg", "비밀번호 수정에 실패하였습니다");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

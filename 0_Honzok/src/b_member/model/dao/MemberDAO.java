@@ -175,6 +175,7 @@ public int updateMember(Connection conn, Member member) {
 		pstmt.setString(7, member.getEmail());
 		pstmt.setInt(8, member.getPoint());
 		pstmt.setString(9, member.getUserId());
+		pstmt.setString(10, member.getUserPwd());
 		
 		result = pstmt.executeUpdate();
 	} catch (SQLException e) {

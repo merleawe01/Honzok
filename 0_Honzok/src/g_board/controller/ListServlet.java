@@ -3,28 +3,27 @@ package g_board.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import a_common.PageInfo;
 import g_board.model.service.BoardService;
 import g_board.model.vo.Board;
-import g_board.model.vo.PageInfo;
 
 /**
- * Servlet implementation class BoardListServlet
+ * Servlet implementation class list_servlet
  */
 @WebServlet("/list.bo")
-public class BoardListServlet extends HttpServlet {
+public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardListServlet() {
+    public ListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,20 +32,23 @@ public class BoardListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardService service = new BoardService(); // 두 개의 서비스를 호출할 것이기 때문에 참조변수로 생성
+		request.setCharacterEncoding("UTF-8");
 		
-		int listCount = service.getListCount(); // 게시판 리스트 개수
+		BoardService service = new BoardService();
 		
-		int currentPage;	// 현재 페이지 표시
-		int limit;			// 한 페이지에 표시될 페이징 수
-		int maxPage;		// 전체 페이지 중 가장 마지막 페이지
-		int startPage;		// 페이징 된 페이지 중 시작 페이지
-		int endPage;		// 페이징 된 페이지 중 마지막 페이지
+		int listCount =0;
+		if(service.getListCount() > 0) { listCount = service.getListCount();}
+		
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
 		
 		currentPage = 1;
+		
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			// 페이지 전환 시 전달 받은 페이지로 currentPage 적용
 		}
 		
 		limit = 10;
@@ -60,19 +62,21 @@ public class BoardListServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<Board> list = service.selectList(currentPage);
+		
+		ArrayList<Board> List = service.viewList(currentPage);
 		
 		String page = null;
-		if(list != null) {
-			page = "views/board/boardListView.jsp";
-			request.setAttribute("list", list);
+		if(List != null ) {
+			request.setAttribute("List", List);
 			request.setAttribute("pi", pi);
-		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "게시판 조회에 실패하였습니다.");
+			page = "views/g_board/boardListView.jsp";
+		}else {
+			request.setAttribute("msg", "조회에 실패하였습니다.");
+			page = "views/a_common/errorPage.jsp";
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		
+		request.getRequestDispatcher(page).forward(request, response);
+		
 	}
 
 	/**
@@ -82,33 +86,5 @@ public class BoardListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

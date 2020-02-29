@@ -85,7 +85,7 @@
 				<tr>
 					<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="gobo();">자유게시판</div></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -118,8 +118,17 @@
 			<% } %>
 		}	
 		
+		var msg = "<%= msg %>";
+		$(function(){
+			if(msg != "null"){
+				alert(msg);
+			}
+		});
 		function goInfo(){
 			location.href="<%= request.getContextPath()%>/list.food";
+		}
+		function gobo(){
+			location.href="<%= request.getContextPath()%>/list.bo";
 		}
 		function goMarket(){
 			location.href="<%= request.getContextPath()%>/list.m";

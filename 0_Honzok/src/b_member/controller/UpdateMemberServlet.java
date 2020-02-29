@@ -1,7 +1,6 @@
 package b_member.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,6 +34,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String userId = request.getParameter("joinUserId");
+		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		String nickName = request.getParameter("nickName");
 		int postalCode = Integer.parseInt(request.getParameter("postalCode"));
@@ -46,16 +46,16 @@ public class UpdateMemberServlet extends HttpServlet {
 		
 		
 		
-		Member member = new Member(userId,null, userName, nickName, postalCode, bAddr, lAddr, phone, email, point);
+		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email, point);
 		int result = new MemberService().updateMember(member);
 		
 		String page = null;
 		if(result >0) {
 			page="/myPage.me";
-			request.setAttribute("msg", "회원수정에 성공");
+			request.setAttribute("msg", "회원수정에 성공하였습니다");
 		}else {
 			page = "views/a_common/errorPage.jsp";
-			request.setAttribute("msg", "회원수정에 실패");
+			request.setAttribute("msg", "회원수정에 실패하였습니다");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
