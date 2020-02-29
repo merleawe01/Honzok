@@ -32,29 +32,24 @@ public class NewPwdUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String newPwd = request.getParameter("pwd1").trim();
+		String userPwd = request.getParameter("userPwd");
+		String newPwd = request.getParameter("newPwd");
 		String userId = request.getParameter("id");
-		
-		System.out.println(userId);
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("id", userId);
+		map.put("old", userPwd);
 		map.put("new", newPwd);
 		
-		int result = new MemberService().updatePwdNew(map);
+		int result = new MemberService().updatePwd(map);
 		
-		String page = null;
 		if(result > 0) {
-			page = "views/b_member/login.jsp";
-			request.setAttribute("msg", "비밀번호를 변경하였습니다.");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-        	view.forward(request, response);
+			request.setAttribute("msg", "비밀번호를 변경했습니다.");
+			response.sendRedirect("views/b_member/login.jsp");
 		} else {
 			request.setAttribute("msg", "비밀번호 수정에 실패하였습니다.");
 			request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 		}
-		
-		
 	}
 
 	/**

@@ -42,7 +42,6 @@ public class MessageDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, loginUserNickName);
 			rs = pstmt.executeQuery();
-			System.out.println();
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
@@ -368,7 +367,6 @@ public class MessageDAO {
 				pstmt.setInt(1, Integer.parseInt(mNoList[i]));
 				
 				result += pstmt.executeUpdate();
-				System.out.println(mNoList[i]);
 			}
 			
 		} catch (SQLException e) {
@@ -376,7 +374,6 @@ public class MessageDAO {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("DAO : " + result);
 		return result;
 	}
 
@@ -386,7 +383,6 @@ public class MessageDAO {
 		int result = 0;
 		String query = null;
 		
-		System.out.println(select);
 		if(select.equals("from")) {
 			query = prop.getProperty("fromMsgCount");
 		} else if(select.equals("content")){

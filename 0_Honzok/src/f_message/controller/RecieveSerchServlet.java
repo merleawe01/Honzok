@@ -76,6 +76,9 @@ public class RecieveSerchServlet extends HttpServlet {
 			page = "views/f_message/SearchListView.jsp";
 			request.setAttribute("list", mList);
 			request.setAttribute("pi", pi);
+			request.setAttribute("loginUser", loginUserNickName);
+			request.setAttribute("select", select);
+			request.setAttribute("keyword", keyword);
 		} else {
 			page = "views/a_common/error.jsp";
 			request.setAttribute("msg", "쪽지함을 볼 수 없습니다.");

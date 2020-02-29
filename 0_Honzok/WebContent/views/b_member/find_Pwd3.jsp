@@ -38,7 +38,7 @@
 		
 		#input{text-align: left; margin-left: 25%; border:0px; padding-left:10px;}
 		input{padding:5px;}
-		
+		.class{text-align:center;}
 		#next_bt{
 			width : 100px;
 			height : 40px;
@@ -94,14 +94,17 @@
 					<form action="<%= request.getContextPath() %>/updatePwd.new" id="pwdUpdateForm" method="post" onsubmit="send();">
 						<div id = "input" >
 							<input type="hidden" name="id" value="<%= member.getUserId() %>">
+							<input type="hidden" name="userPwd" value="<%= member.getUserId() %>">
 							<div class = "left">새비밀번호</div> 
-								<input type="password" class = "right" name="pwd1" id="pwd1" required>
+								<input type="password" class = "right" name="newPwd" id="pwd1" required>
 								<label id="pwdResult"></label>
 							<div class = "input">
 							<div class = "left">새비밀번호 확인</div>
-								<input type = "password" class = "right" name="pwd2" id="pwd2" required>
+								<input type = "password" class = "right" name="newPwd2" id="pwd2" required>
 								<label id="pwdResult2"></label><br>
-							<button type="submit" id="next_bt" onclick="pwdUpdate()">확인</button>
+							<div class="center">
+								<button type="submit" id="next_bt" onclick="pwdUpdate()">확인</button>
+							</div>
 							
 							</div>
 					
@@ -129,6 +132,9 @@
 
 	<script>
 	
+	var isUsable = false;
+	var pwdCheck = false;
+	
 	$('#pwd1').blur(function(){
 		var str = $(this).val();
 	    var regExp1 = /^[a-z]/gi;
@@ -140,28 +146,39 @@
 	      $('#pwdResult').css('color', '#768149');
 	      $(this).parent().css('background', '');
 	      $(this).css('background', '');
+	      isUsable = true;
 	   } else {
 		   $('#pwdResult').text("영어와 숫자를 혼합하여 8~16자로 만들어주세요");
 		   $('#pwdResult').css('color', '#f18332');
+		   
 	      $(this).focus();
 	   }
 	});
 	
-		var newPwd = $("input[name='pwd1']");
-		var newPwd2 = $("input[name='pwd2']");
-	$('#pwd2').keyup(function(){
+		var newPwd = $("input[name='userPwd']");
+		var newPwd2 = $("input[name='userPwd2']");
+		
+	$('#pwd2').on('change paste keyup',function(){
 		
 		if(newPwd.val().trim() != newPwd2.val().trim()){
 			$('#pwdResult2').text("비밀번호가 일치하지 않습니다.");
 			$('#pwdResult2').css('color', '#f18332');
-			return false;
+		 	pwdCheck = false;
 		} else{
 			$('#pwdResult2').text("비밀번호가 일치합니다.");
 			$('#pwdResult2').css('color', '#768149');
-			
-			return true;
+			pwdCheck = true;
 		}
 	});
+	
+	function validate(){
+		if(isUsable && isIdChecked){
+			return true;
+		} else{
+			alert('아이디 중복확인을 해주세요');
+			return false;
+		}
+	}
 	
 	$('#next_bt').click(function(){
 			$('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');

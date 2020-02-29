@@ -27,7 +27,7 @@
 		#main{width : 100%; text-align: center; height : 1170px;}
 		#realMain {display: inline-table; width: 1170px; display: inline-table; height: 1100px; margin-left: 40px;}
 		
-		#box{margin-top: 2%; border: solid 2px gray; width: 100%; text-align: left;
+		#box{margin-top: 2%; border: solid 2px gray; width: 1170px; text-align: left;
 			padding: 20px 0px 20px 0px; background: rgb(242, 242, 242);}
 		#confirm_comment1{padding-left: 30px; font-weight: bold; font-size: 20px; margin-bottom: 5px;}
 		#confirm_comment2{font-size : 15px;color : gray;padding-left : 30px;margin-bottom : 20px;}
@@ -35,7 +35,12 @@
 		.left{font-size : 20px; font-bold:600; width : 150px; display : inline-table;}
 		.right{text-align: left; border-radius: 5px; width: 300px; height: 35px; margin-bottom: 20px;
 				heigth:10px; border:1px solid gray; padding:5px;}
-		#center{text-align:center;}
+		.center{text-align:center; margin:auto;}
+		tr {width:350px;}
+		#td1 {width:300px;}
+		#td2 {width:50px;}
+		#keyCode{margin-bottom:3%; display:inline-block;}
+		#countDown{margin-left:5px; display:inline-block;}
 		#nextBtn{width:100px; height:40px; background-color:RGB(84,84,84); color:white;
 				border-radius:5px; font-weight:bold; font-size:15px; border:0px; margin-top:5px;}
 		#next_bt{width : 100px; height : 40px; background-color : RGB(84, 84, 84); 
@@ -78,10 +83,15 @@
 				<br>
 					
 				<form id="inputKeyCodeForm" method="post">
-					<div id="center">
-						<input type="text" class="right" name="keyCode" id="keyCode" placeholder="인증번호 8자리 문자 입력" ><br>
-						<button type="submit" id="nextBtn">확인</button>
-					</div>
+				
+					<table class="center">
+						<tr>
+							<td id="td1"><input type="text" class="right" name="keyCode" id="keyCode" placeholder="인증번호 8자리 문자 입력"></td>
+							<td id="td2"><div id="countDown" style="display:inline-block"></div></td>
+						</tr>
+					</table>
+					<button type="submit" class="center" style="display:block" id="nextBtn">확인</button>
+						
 					<input type="hidden" name="name" id="name" value="<%= member.getUserName() %>">
 					<input type="hidden" name="email" id="email" value="<%= member.getEmail() %>">
 					<input type="hidden" name="id" id="id" value="<%= member.getUserId() %>">

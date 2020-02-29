@@ -151,21 +151,23 @@
 			<% } %>
 			
 		</div>
-		<div class="searchArea">
-			<div class="selectArea">
-				<select name="searchSelect" id="searchSelect">
-					<option value="from" selected>보낸 사람</option>
-					<option value="title">제목</option>
-					<option value="content">내용</option>
-				</select> 
-				<!-- <input type="hidden" name="searchSelect" id="searchSelect"> -->
-			</div>
-			<div class="wordArea">
-				<input type="text" placeholder="검색어 입력" name="word" id="word">
-				<button type="button" id="searchBtn" onclick="searchMessage();">검색</button>
-			</div>
-		</div>
 	</form>
+		<form id="searchForm" action="<%= request.getContextPath() %>/search.re" method="get">
+			<div class="searchArea">
+					<div class="selectArea">
+						<select name="searchSelect" id="searchSelect">
+							<option value="from" selected>보낸 사람</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<!-- <input type="hidden" name="searchSelect" id="searchSelect"> -->
+					</div>
+					<div class="wordArea">
+						<input type="text" placeholder="검색어 입력" name="word" id="word">
+						<button type="button" id="searchBtn" onclick="searchMessage();">검색</button>
+					</div>
+				</div>
+		</form>
 	</div>
 	
 	<script>
@@ -249,13 +251,13 @@
 		
 		function searchMessage(){
 			var isSearchChecked = false;
-			var search = $("#search");
+			var search = $("#searchSelect");
 			var searchWord = $('#word');
 			
 			$('#word').change(function(){
-				if(searchWord.val().trim().length()< 1){
+				if($('#word').val().trim().length()< 1){
 					alert('검색어를 입력해주세요.');
-					searchWord.focus();
+					$('#word').focus();
 					isSearchChecked = false;
 				} else{
 					isSearchChecked = true;
@@ -271,8 +273,8 @@
 			}
 			
 			// console.log($('#searchSelect').val());
-			$('#RListForm').attr('action', '<%= request.getContextPath()%>/search.re');
-			$('#RListForm').submit();
+			$('#searchForm').attr('action', '<%= request.getContextPath()%>/search.re');
+			$('#searchForm').submit();
 		}
 
 	</script>

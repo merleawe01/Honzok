@@ -10,6 +10,9 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	String select = (String)request.getAttribute("select");
+	String keyword = (String)request.getAttribute("keyword");
 %>
 <!DOCTYPE html>
 <html>
@@ -113,11 +116,11 @@
 		<div class="pagingArea" align="center">
 			<% if(!list.isEmpty()) { %>
 			<!-- 맨 처음으로 -->
-			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=1'">&lt;&lt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=1&searchSelect=<%= select %>&word=<%= keyword %>'">&lt;&lt;</button>
 			<!-- 버튼을 클릭하면 Servlet으로 넘어가서 currentPage가 1로 바뀐다. -->
 				
 			<!-- 이전 페이지로 -->
-			<button type="button" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= currentPage - 1%>'"
+			<button type="button" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= currentPage - 1%>&searchSelect=<%= select %>&word=<%= keyword %>'"
 					id="beforeBtn" class="pagingBtn">pre</button>
 			
 			<script>
@@ -132,12 +135,12 @@
 				<% if(p == currentPage){ %> <!-- 현재 페이지랑 똑같다면  -->
 					<button type="button" id="choosen" disabled><%= p %></button>
 				<% } else { %>
-					<button type="button" id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= p %>'"><%= p %></button>
+					<button type="button" id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= p %>&searchSelect=<%= select %>&word=<%= keyword %>'"><%= p %></button>
 				<% } %> 
 			<% } %>
 			
 			<!-- 다음 페이지로  -->
-			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/search.re?currentPage=<%= currentPage + 1 %>'" id="afterBtn">next</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/search.re?currentPage=<%= currentPage + 1 %>&searchSelect=<%= select %>&word=<%= keyword %>'" id="afterBtn">next</button>
 			<script>
 				if(<%= currentPage %> >= <%= maxPage %>){
 					var after = $("#afterBtn");
@@ -146,7 +149,7 @@
 			</script>
 				
 			<!-- 맨 끝으로 -->
-			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= maxPage %>&searchSelect=<%= select %>&word=<%= keyword %>'">&gt;&gt;</button>
 				
 			<% } %>
 			
