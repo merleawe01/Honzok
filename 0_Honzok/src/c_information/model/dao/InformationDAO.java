@@ -131,24 +131,30 @@ public class InformationDAO {
 		return result;
 	}
 
-	public ArrayList<FoodBoard> listFBoard(Connection conn, String area, String category) {
+	public ArrayList<FoodBoard> listFBoard(Connection conn, String area, String[] cateArr) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<FoodBoard> list = null;
 		
 		String query = prop.getProperty("listFBoard");
 		
+		for(int i = 1; i < cateArr.length; i++) {
+			query += " OR CNO = ?";
+		}
+		query += ") ORDER BY RECO_COUNT DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, area);
-			pstmt.setString(2, category);
+			for(int i = 0; i < cateArr.length; i++) {
+				pstmt.setString(i + 2, cateArr[i]);
+			}
 			
 			rset = pstmt.executeQuery();
 			list = new ArrayList<FoodBoard>();
 			
 			while(rset.next()) {
-				FoodBoard b = new FoodBoard(rset.getInt("POST_NO"), rset.getString("POST_TITLE"), rset.getString("NICKNAME"), rset.getInt("RECO_COUNT"), rset.getString("ADDRESS"), rset.getInt("STAR"), rset.getDouble("area_x"), rset.getDouble("area_y"), rset.getString("change_name"));
+				FoodBoard b = new FoodBoard(rset.getInt("POST_NO"), rset.getString("POST_TITLE"), rset.getInt("RECO_COUNT"), rset.getString("ADDRESS"), rset.getInt("STAR"), rset.getDouble("AREA_X"), rset.getDouble("AREA_Y"), rset.getString("change_name"));
 				
 				list.add(b);
 			}

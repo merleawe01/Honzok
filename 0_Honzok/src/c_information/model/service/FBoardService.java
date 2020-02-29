@@ -38,30 +38,13 @@ public class FBoardService {
 		
 		InformationDAO dao = new InformationDAO();
 		
-		ArrayList<FoodBoard> FList = new ArrayList<FoodBoard>();
+		ArrayList<FoodBoard> result = null;
 		
-		for(int i = 0; i < cateArr.length; i++) {
-			ArrayList<FoodBoard> result = dao.listFBoard(conn, area, cateArr[i]);
-			
-			for(FoodBoard fb : result) {
-				boolean check = false;
-				
-				for(FoodBoard fbb : FList) {
-					if(fbb.getNo() == fb.getNo()) {
-						check = true;
-						break;
-					}
-				}
-				
-				if(check == false) {
-					FList.add(fb);
-				}
-			}
-		}
+		result = dao.listFBoard(conn, area, cateArr);
 		
 		close(conn);
 		
-		return FList;
+		return result;
 	}
 
 	public FoodBoard selectBoard(int no) {
