@@ -35,7 +35,7 @@
 	    .pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
 	    #numBtn{background:none; margin:3px; padding:10px auto;}
   		#choosen{background:#f18332; border-radius:50px; color:white;}
- 
+ 		#sold{left:0px; width:300px;bottom:82px;font-size:2.5em;font-weight:bold;position:absolute;color:white; background:orangered;}
 	}
 	    
 </style>
@@ -66,7 +66,16 @@
 								Attachment a = fList.get(j);
 							%>
 								<% if(m.getPostNo() == a.getPostNo()){%>
-									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
+									<% if(m.getSellYn().equals("Y")) {%>
+										<div style="position: relative;">
+											<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px" style="opacity:0.3;">
+											<div  id="sold">
+												SOLD &nbsp;&nbsp;OUT	
+											</div>
+										</div>
+									<% }  else {%>	
+										<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
+									<% } %>
 								<% } %>				
 							<% } %>
 							
@@ -101,12 +110,12 @@
 			</div>
 			<br><br><br>
 				
-		<div class="pagingArea" align="center">
+		
 			<% if(!mList.isEmpty()){ %>
-			<!-- 맨 처음으로 -->
+		<div class="pagingArea" align="center">	
 			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
 			
-			<!-- 이전 페이지로 -->
+			
 			<button type="button" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn" class="pagingBtn">&lt;</button>
 			
 			<script>
@@ -116,7 +125,7 @@
 				}
 			</script>
 			
-			<!-- 10개의 페이지 목록 -->
+			
 			<% for(int p = startPage; p <= endPage; p++){ %>
 				<% if(p == currentPage){ %>
 					<button  type="button" id="choosen" disabled><%= p %></button>
@@ -125,7 +134,7 @@
 				<% } %>
 			<% } %>
 			
-			<!-- 다음페이지로 -->
+			
 			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage + 1%>'" id="afterBtn">&gt;</button>
 			<script>
 				if(<%= currentPage%> >= <%= maxPage%>){
@@ -134,13 +143,13 @@
 				}
 			</script>
 			
-			<!-- 맨 끝으로 -->
-			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
 			
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+		</div>	
 			<% } %>
 			
 		
-		</div>
+		
 	</div>
 	
 	<script>

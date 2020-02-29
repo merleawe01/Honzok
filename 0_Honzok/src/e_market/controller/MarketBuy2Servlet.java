@@ -29,7 +29,6 @@ public class MarketBuy2Servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postNo = Integer.parseInt(request.getParameter("postNo").trim());
-		System.out.println(postNo);
 		
 		String sellYN = request.getParameter("sellYN");
 		
@@ -40,7 +39,7 @@ public class MarketBuy2Servlet extends HttpServlet {
 		String page = null;
 		if(result > 0) {
 			request.setAttribute("sellYN", result);
-			page = "views/e_market/marketList.jsp";
+			page = "list.m";
 		} else {
 			request.setAttribute("msg", "실패하였습니다.");
 			page = "views/a_common/errorPage.jsp";

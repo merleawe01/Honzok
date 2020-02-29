@@ -70,7 +70,7 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/views/e_market/marketUpdate.jsp">
+		<form action="<%= request.getContextPath() %>/views/e_market/marketUpdate.jsp" id="marketDetailForm">
 				<div id="boardTitle">
 						<div id="titleLeft"><%= m.getPostTitle() %></div>
 						<div id="titleRight"><%= m.getWriteDate() %></div>
@@ -177,8 +177,9 @@
 				
 				<div align="center">
 					<% if(loginUser != null){ %>
-					<input id = "threebu" type="button" onclick="buyMarket()" value="구매"> 
-					<input id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">
+					<button id = "threebu" type="button" onclick="buyMarket()" value="구매">구매</button>
+					
+					<button id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">목록으로</button>
 					<% } %>
 				</div>
 		</form>
@@ -191,14 +192,18 @@
 					}
 				}
 				
-				function buyMarket(){
+				 function buyMarket(){
 					var buy = confirm("정말로 구매하시겠습니까?");
 					
 					if(buy){
 						/* location.href='views/e_market/marketBuy.jsp' */
 						location.href='<%= request.getContextPath()%>/buy.m?postNo=' + <%= m.getPostNo()%>;
+				
 					}
-				}
+				} 
+				
+				 
+		          
 		</script>
 		
 	</div>

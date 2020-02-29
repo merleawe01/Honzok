@@ -46,7 +46,7 @@ public class MarketBuyServlet extends HttpServlet {
 			request.setAttribute("market", market);
 			page = "views/e_market/marketBuy.jsp";
 		} else {
-			request.setAttribute("msg", "실패하였습니다.");
+			request.setAttribute("msg", "결제 실패하였습니다.");
 			page = "views/a_common/errorPage.jsp";
 		}
 		

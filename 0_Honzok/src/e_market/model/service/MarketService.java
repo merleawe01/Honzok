@@ -182,7 +182,7 @@ public class MarketService {
 		
 		MarketDAO dao = new MarketDAO();
 		
-		int result = dao.updateSellBoard(conn, sellYN); 
+		int result = dao.updateSellBoard(conn, postNo, sellYN); 
 		
 		if(result > 0 ) {
 			commit(conn);

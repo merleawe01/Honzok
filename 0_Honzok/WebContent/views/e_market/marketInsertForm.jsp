@@ -51,12 +51,13 @@
 		<form action="<%= request.getContextPath() %>/insert.m" method="post" encType="multipart/form-data">
 			<div class="form">
 					<div class="imageArea">
-						<div id="titleImgArea">
+						<div id="titleImgArea" class="titleImgArea">
 								<img id="titleImg" width="300" height="300">
 						</div>
 					
-						<div id="contentImgArea1">
+						<div id="contentImgArea1" class="contentImgArea1">
 								<img id="contentImg1" width="300" height="300"> 
+								
 						</div>
 					</div>
 					
@@ -87,34 +88,34 @@
 					<!-- 물품명 -->
 					<div class="input">
 						<div class="left"><b>물품명</b> <span class="must">(필수)</span></div>
-						<input type="text" name="postTitle" maxlength="16" placeholder="제목이 되는 부분입니다." class="right" style="width: 280px;">
+						<input type="text" id="product" name="postTitle" maxlength="16" placeholder="제목이 되는 부분입니다." class="right" style="width: 280px;">
 					</div>
 					
 					<!-- 상태 -->
 					<div class="input">
 						<div class="left"><b>상태</b> <span class="must">(필수)</span></div>
-						<input type="checkbox" name="status" value="A">A급 &nbsp;
-						<input type="checkbox" name="status" value="B">B급&nbsp;
-						<input type="checkbox" name="status" value="C">C급&nbsp;
+						<input type="checkbox" name="status" class="status" value="A">A급 &nbsp;
+						<input type="checkbox" name="status" class="status" value="B">B급&nbsp;
+						<input type="checkbox" name="status" class="status" value="C">C급&nbsp;
 						<span class="must">ex) A급 : 5% B급 : 10% C급 : 15%의 손상정도</span>
 					</div>
 					
 					<!-- 가격 -->
 					<div class="input">
 						<div class="left"><b>가격</b><span class="must">(필수)</span></div>
-						<input type="text" name="price" class="right" style="width: 100px;">원
+						<input type="text" id="price" name="price" class="right" style="width: 100px;">원
 					</div>	
 					
 					<!-- 사용기한 -->
 					<div class="input">
 						<div class="left"><b>사용기한</b><span class="must">(필수)</span></div>
-						<input type="text" name="useDate" class="right" style="width: 100px;"><span class="must">예) 약 6개월, 약 1년 etc</span>
+						<input type="text" id="useDate" name="useDate" class="right" style="width: 100px;"><span class="must">예) 약 6개월, 약 1년 etc</span>
 					</div>
 					
 					<!--기타    -->		
 					<div class="input">
 						<div class="left"><b>기타</b><span class="must">(필수)</span></div>
-						<input type="text" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
+						<input type="text" id="etc" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
 					</div>
 					<br><br>
 					<!-- 내용입력 칸  -->
@@ -159,9 +160,19 @@
 				
 			</script>
 				<div>
-					<button type="submit" id="ok">확인</button>
+					<div id="ok" onclick="insertBoard();">확인</div> 
 						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
 				</div>
+				<script>
+					/* $('#ok').click(function(){
+						if($('#fileArea thumbnailImg1').val() == "" || $('#fileArea thumbnailImg1').val() == ""){
+								event.preventDefault();
+								alert("사진을 다 채워주세요.");
+							};
+						}); */
+					
+			
+				</script>
 			</div>
 		</form>	
 	</div>

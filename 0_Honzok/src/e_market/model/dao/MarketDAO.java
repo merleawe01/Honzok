@@ -96,16 +96,24 @@ public class MarketDAO {
 	}
 
 	public ArrayList<Market> selectMList(Connection conn, int currentPage) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Market> list = null;
+		
+		int posts = 5; // 한 페이지에 보여질 게시글 개수
+		
+		int startRow = (currentPage - 1) * posts + 1;
+		int endRow = startRow + posts -1;
+		
 		
 		String query = prop.getProperty("selectMList");
 		
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
+			rs = pstmt.executeQuery();
 			list = new ArrayList<Market>();
 			
 			while(rs.next()) {
@@ -124,7 +132,7 @@ public class MarketDAO {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return list;
@@ -503,7 +511,7 @@ public class MarketDAO {
 		return m;
 	}
 
-	public int updateSellBoard(Connection conn, String sellYN) {
+	public int updateSellBoard(Connection conn,  int postNo, String sellYN) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -511,13 +519,18 @@ public class MarketDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			
+	         pstmt.setInt(1, postNo);
+	         
+	         result = pstmt.executeUpdate();
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
 		
-		return 0;
+		return result;
 	}
 	
 }
