@@ -71,6 +71,9 @@ public class MarketInsertServlet extends HttpServlet {
 			int itemPrice = Integer.parseInt(multipartRequest.getParameter("price"));
 			String useDate =multipartRequest.getParameter("useDate");
 			String etc = multipartRequest.getParameter("etc");
+			/*String nickname=  multipartRequest.getParameter("etc");
+			String phone =  multipartRequest.getParameter("phone");
+			String email =  multipartRequest.getParameter("email");*/
 			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 			
 			Market m = new Market(postTitle,content, itemStatus, itemPrice,useDate, etc, writer);

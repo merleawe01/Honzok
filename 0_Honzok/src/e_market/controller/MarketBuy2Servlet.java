@@ -1,30 +1,25 @@
 package e_market.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import b_member.model.vo.Member;
 import e_market.model.service.MarketService;
-import e_market.model.vo.Attachment;
-import e_market.model.vo.Market;
 
 /**
- * Servlet implementation class MarketBuyServlet
+ * Servlet implementation class MarketBuy2Servlet
  */
-@WebServlet("/buy.m")
-public class MarketBuyServlet extends HttpServlet {
+@WebServlet("/buy2.m")
+public class MarketBuy2Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MarketBuyServlet() {
+    public MarketBuy2Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +28,25 @@ public class MarketBuyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postNo = Integer.parseInt(request.getParameter("postNo"));
+		int postNo = Integer.parseInt(request.getParameter("postNo").trim());
 		
+		String sellYN = request.getParameter("sellYN");
 		
 		MarketService service = new MarketService();
 		
-		Market market = service.selectBoard(postNo);
-		
+		int result = service.updateSellBoard(postNo, sellYN);
 		
 		String page = null;
-		if(market != null ) {
-			request.setAttribute("market", market);
-			page = "views/e_market/marketBuy.jsp";
+		if(result > 0) {
+			request.setAttribute("sellYN", result);
+			page = "list.m";
 		} else {
-			request.setAttribute("msg", "결제 실패하였습니다.");
+			request.setAttribute("msg", "실패하였습니다.");
 			page = "views/a_common/errorPage.jsp";
 		}
 		
 		request.getRequestDispatcher(page).forward(request, response);
+		
 	}
 
 	/**

@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import b_member.model.vo.Member;
 import f_message.model.service.MessageService;
 import f_message.model.vo.Message;
-import f_message.model.vo.PageInfo;
+import a_common.PageInfo;
 
 /**
  * Servlet implementation class DeleteMessageServlet

@@ -106,9 +106,6 @@ public class MarketService {
 		} else {
 			rollback(conn);
 		}
-	
-		System.out.println("result1 : " + result1);
-		System.out.println("result2 : " + result2);
 		
 		return result1;
 	}
@@ -132,9 +129,6 @@ public class MarketService {
 			rollback(conn);
 		}
 		
-		System.out.println("result1 : " + result1);
-		System.out.println("result2 : " + result2);
-		
 		return result1;
 	}
 
@@ -153,10 +147,6 @@ public class MarketService {
 			rollback(conn);
 		}
 	
-		System.out.println("result1 : " + result1);
-		System.out.println("result2 : " + result2);
-		System.out.println("result3 : " + result3);
-		
 		return result1;
 	}
 
@@ -184,9 +174,24 @@ public class MarketService {
 		
 		Member m = new MarketDAO().selectInfo(conn, postNo);
 		
-		System.out.println("m : " + m);
-		
 		return m;
+	}
+
+	public int updateSellBoard(int postNo, String sellYN) {
+		Connection conn = getConnection();
+		
+		MarketDAO dao = new MarketDAO();
+		
+		int result = dao.updateSellBoard(conn, postNo, sellYN); 
+		
+		if(result > 0 ) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+		
 	}
 
 

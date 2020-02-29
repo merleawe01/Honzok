@@ -18,6 +18,52 @@ public class Market {
 	private Date modifyDate;
 	private int recoCount;
 	
+	private String nickname;
+	private String phone;
+	private String email;
+
+	public Market(int postNo, String postTitle, String content, String itemStatus, int itemPrice, String useDate, String etc,
+			Date writeDate, int viewCount, String nickname, String phone, String email, String writer) {
+		super();
+		this.postNo = postNo;
+		this.itemStatus = itemStatus;
+		this.itemPrice = itemPrice;
+		this.useDate = useDate;
+		this.etc = etc;
+		this.postTitle = postTitle;
+		this.writer = writer;
+		this.content = content;
+		this.nickname = nickname;
+		this.phone = phone;
+		this.email = email;
+		this.writeDate = writeDate;
+		this.viewCount = viewCount;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Market() {}
 	
 	public Market(int postNo, String postTitle, int boardNo, String writer, String content, int viewCount,

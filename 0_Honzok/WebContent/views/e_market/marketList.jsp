@@ -21,15 +21,23 @@
 <style>
 	.tableArea{width:800px; height:auto; margin-left:auto; margin-right:auto;}
 		.listArea{text-align:center; height:250px;}
-		#write{text-align:center; font-size : 15pt; width : 100px; height : 40px;
+		#write{text-align:center; font-size : 17pt; width : 100px; height : 40px;
 			   background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
 			   border: 0; font-weight: bold; line-height: 40px; margin-left: 650px;
 			   cursor:pointer;}
 		.searchArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
-		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 15px; border:0px; color: white; width: 80px; height: 25px; cursor: pointer;}
+		#insertBtn{background-color : rgb(241, 131, 50); border-radius: 5px; border:0px; font-size:17px;
+					color: white; width: 100px; height: 40px; cursor: pointer; font-weight: bold; }
 		.listArea{cursor:pointer; border-spacing: 10px;}
-		footer{margin-bottom : 100px;}
-		#borderTr td{border-bottom : 1px solid black;}
+		
+		#border td{border-bottom : 1px solid black;}
+		.pagingArea{display:block;}
+	    .pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
+	    #numBtn{background:none; margin:3px; padding:10px auto;}
+  		#choosen{background:#f18332; border-radius:50px; color:white;}
+ 		#sold{left:0px; width:300px;bottom:82px;font-size:2.5em;font-weight:bold;position:absolute;color:white; background:orangered;}
+	}
+	    
 </style>
 
 </head>
@@ -58,25 +66,34 @@
 								Attachment a = fList.get(j);
 							%>
 								<% if(m.getPostNo() == a.getPostNo()){%>
-									<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
+									<% if(m.getSellYn().equals("Y")) {%>
+										<div style="position: relative;">
+											<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px" style="opacity:0.3;">
+											<div  id="sold">
+												SOLD &nbsp;&nbsp;OUT	
+											</div>
+										</div>
+									<% }  else {%>	
+										<img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>" width="300px" height="200px">
+									<% } %>
 								<% } %>				
 							<% } %>
 							
 						</td>
-						<td width="600px">◈<%= m.getPostTitle() %>◈</td>
+						<td width="600px" style="border-top: 1px solid black">◈<%= m.getPostTitle() %>◈</td>
 							
 					</tr>
 						
 					<tr>
-						<td>상태:<%= m.getItemStatus() %></td>
+						<td >상태 : <%= m.getItemStatus() %>급</td>
 					</tr>
 						
 					<tr>
-						<td>가격:<%= m.getItemPrice() %></td>
+						<td >가격 : <%= m.getItemPrice() %>원</td>
 					</tr>
 						
 					<tr>
-						<td>기타:<%= m.getEtc() %></td>
+						<td style="border-bottom: 1px solid black">기타 : <%= m.getEtc() %></td>
 					</tr>
 					<% 		}
 					}
@@ -91,15 +108,16 @@
 					<%-- <% } %> --%>
 				</div>	
 			</div>
-			<br><br>
+			<br><br><br>
 				
-		<div class='pagingArea' align='center'>
+		
 			<% if(!mList.isEmpty()){ %>
-			<!-- 맨 처음으로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
+		<div class="pagingArea" align="center">	
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
 			
-			<!-- 이전 페이지로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn">&lt;</button>
+			
+			<button type="button" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn" class="pagingBtn">&lt;</button>
+			
 			<script>
 				if(<%= currentPage%> <= 1){
 					var before = $('#beforeBtn');
@@ -107,17 +125,17 @@
 				}
 			</script>
 			
-			<!-- 10개의 페이지 목록 -->
+			
 			<% for(int p = startPage; p <= endPage; p++){ %>
 				<% if(p == currentPage){ %>
-					<button id="choosen" disabled><%= p %></button>
+					<button  type="button" id="choosen" disabled><%= p %></button>
 				<% } else {%>
-				<button id="numBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= p %>'"><%= p %></button>
+				<button  type="button" id="numBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= p %>'"><%= p %></button>
 				<% } %>
 			<% } %>
 			
-			<!-- 다음페이지로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage + 1%>'" id="afterBtn">&gt;</button>
+			
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage + 1%>'" id="afterBtn">&gt;</button>
 			<script>
 				if(<%= currentPage%> >= <%= maxPage%>){
 					var after = $("#afterBtn");
@@ -125,16 +143,22 @@
 				}
 			</script>
 			
-			<!-- 맨 끝으로 -->
-			<button onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
 			
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.m?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+		</div>	
 			<% } %>
 			
 		
-		</div>
+		
 	</div>
 	
 	<script>
+    $('.pagingBtn').mouseenter(function(){
+        $(this).css('background','#FFD393');
+     }).mouseout(function(){
+        $(this).css('background','none');
+     });
+	
 		$(function(){
 			$('.listArea img').click(function(){
 				var postno = $(this).prev().val();

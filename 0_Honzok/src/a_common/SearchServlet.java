@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import f_message.model.service.MessageService;
 import f_message.model.vo.Message;
-import f_message.model.vo.PageInfo;
+import a_common.PageInfo;
 
 /**
  * Servlet implementation class SearchServlet
