@@ -2,12 +2,12 @@
     pageEncoding="UTF-8" import = "f_message.model.vo.Message"%>
 <%@ page import="b_member.model.vo.Member"%>
 <%
-	Member loginUser = (Member)session.getAttribute("loginUser");
-	//System.out.println(loginUser);
-	String msg = (String)request.getAttribute("msg"); 
+   Member loginUser = (Member)session.getAttribute("loginUser");
+   //System.out.println(loginUser);
+   String msg = (String)request.getAttribute("msg"); 
 
-	Message m = new Message();
-	int view = m.getView();
+   Message m = new Message();
+   int view = m.getView();
 %>
 
 <!DOCTYPE html>
@@ -18,87 +18,87 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <style>
-	header {width: 100%; height: auto; text-align: center;}
-	#mainHeader {width: 1170px; height: 50px; display: inline-block;}
-	.menuBtn {padding:3px; display: inline-table; float: right;
-			 background-color: transparent; border: none; cursor: pointer;}
-	.messageBtn {padding:3px; display: inline-table; float: right;
-			 background-color: transparent; border: none; cursor: pointer;}
-	#login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
-			font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
-	
-	#icon {height: 50px%; width: 50px; float: right;}
-	#main {width: 100%;text-align: center;overflow: hidden;height: auto;}
-	#realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
-	#subHeader{width : 100%; height : auto;display : inline-block;}
-	#logo {height: 100%; width: auto; float: center;}
-	#travel {position:relative; left:50px; top:100px;}
-	
-	nav {
-		background-color:#fff4c7;
-		position: fixed;
-		width: 99%;
-		height: 90%;
-		top: 60px;
-	}
-	.menu {margin:100px auto;}
-	.circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
-			margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
-			
-	#mainText {
-		margin-top: 100px;
-		border:1px solid black;
-		width: 100%;
-		height: auto;
-		text-align: center;
-	}
-	.textarea {
-		display: inline-table;
-		width: 40%;
-		height: 500px;
-		margin: 10px;
-		border: 1px solid black;
-	}
-	#text1{
-		position: absolute;
-		left: -50%;
-		transition: All 0.5s ease; 
-		-webkit-transition: All 0.5s ease; 
-		-moz-transition: All 0.5s ease; 
-		-o-transition: All 0.5s ease;
-	}
-	#text1.open {
-		left: 20%;
-	}
-	#text2{
-		position: absolute;
-		right: -50%;
-		transition: All 0.5s ease; 
-		-webkit-transition: All 0.5s ease; 
-		-moz-transition: All 0.5s ease; 
-		-o-transition: All 0.5s ease;
-	}
-	#text2.open {
-		right: 20%;
-	}
-	#text3{
-		position: absolute;
-		left: -50%;
-		transition: All 0.5s ease; 
-		-webkit-transition: All 0.5s ease; 
-		-moz-transition: All 0.5s ease; 
-		-o-transition: All 0.5s ease;
-	}
-	#text3.open {
-		left: 20%;
-	}
+   header {width: 100%; height: auto; text-align: center;}
+   #mainHeader {width: 1170px; height: 50px; display: inline-block;}
+   .menuBtn {padding:3px; display: inline-table; float: right;
+          background-color: transparent; border: none; cursor: pointer;}
+   .messageBtn {padding:3px; display: inline-table; float: right;
+          background-color: transparent; border: none; cursor: pointer;}
+   #login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
+         font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
+   #nickname:hover{color:rgb(118,129,73); cursor:pointer;}
+   
+   #icon {height: 50px%; width: 50px; float: right;}
+   #main {width: 100%;text-align: center;overflow: hidden;height: auto;}
+   #realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
+   #subHeader{width : 100%; height : auto;display : inline-block;}
+   #logo {height: 100%; width: auto; float: center;}
+   #travel {position:relative; left:50px; top:100px;}
+   
+   nav {
+      background-color:#fff4c7;
+      position: fixed;
+      width: 99%;
+      height: 90%;
+      top: 60px;
+   }
+   .menu {margin:100px auto;}
+   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
+         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
+         
+   #mainText {
+      margin-top: 100px;
+      border:1px solid black;
+      width: 100%;
+      height: auto;
+      text-align: center;
+   }
+   .textarea {
+      display: inline-table;
+      width: 40%;
+      height: 500px;
+      margin: 10px;
+      border: 1px solid black;
+   }
+   #text1{
+      position: absolute;
+      left: -50%;
+      transition: All 0.5s ease; 
+      -webkit-transition: All 0.5s ease; 
+      -moz-transition: All 0.5s ease; 
+      -o-transition: All 0.5s ease;
+   }
+   #text1.open {
+      left: 20%;
+   }
+   #text2{
+      position: absolute;
+      right: -50%;
+      transition: All 0.5s ease; 
+      -webkit-transition: All 0.5s ease; 
+      -moz-transition: All 0.5s ease; 
+      -o-transition: All 0.5s ease;
+   }
+   #text2.open {
+      right: 20%;
+   }
+   #text3{
+      position: absolute;
+      left: -50%;
+      transition: All 0.5s ease; 
+      -webkit-transition: All 0.5s ease; 
+      -moz-transition: All 0.5s ease; 
+      -o-transition: All 0.5s ease;
+   }
+   #text3.open {
+      left: 20%;
+   }
+
 </style>
 
 </head>
 
 <body>
-	 
 	<header>
 		<div id="mainHeader">
 			<button type="button" class="menuBtn" onclick="slideMenu()">
@@ -233,7 +233,8 @@
 			}
 		});
 	</script>
-	
+
+ 
 </body>
   
 </html>

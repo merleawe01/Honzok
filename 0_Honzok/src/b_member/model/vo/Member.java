@@ -25,9 +25,6 @@ public class Member {
 		this.userId = userId;
 		this.userPwd = userPwd;
 	}
-	
-	
-	
 
 	public Member(String userName, String bAddr, String phone, String email) {
 		super();
@@ -112,6 +109,17 @@ public class Member {
 		this.phone = phone;
 		this.email = email;
 	}
+
+
+	public Member(String userId, String userPwd, String userName, String nickName, String email) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.email = email;
+	}
+
 
 	// getter/setter 메소드
 	public String getUserId() {

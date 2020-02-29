@@ -81,6 +81,7 @@ public class MemberService {
 		close(conn);
 		return member;
 	}
+	
 	public int updatePwd(HashMap<String, String> map) {
 		Connection conn = getConnection();
 		
@@ -103,6 +104,49 @@ public class MemberService {
 		
 		return result;
   }
+
+	public Member getMember(String userName, String email) {
+		Connection conn = getConnection();
+		Member m = new MemberDAO().getMember(conn, userName, email);
+		close(conn);
+		return m;
+	}
+
+	public static int UpdateKeyCode(String userName, String email, String keyCode) {
+		Connection conn = getConnection();
+		int result = new MemberDAO().UpdateKeyCode(conn, userName, email, keyCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+		
+	}
+
+	public int confirmKeyCode(String userName, String email, String keyCode) {
+		Connection conn = getConnection();
+		int result = new MemberDAO().confirmKeyCode(conn, userName, email, keyCode);
+		close(conn);
+		return result;
+	}
+
+	public int updatePwdNew(HashMap<String, String> map) {
+Connection conn = getConnection();
+		
+		MemberDAO mDAO = new MemberDAO();
+		int result = mDAO.updatePwdNew(conn, map);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
 	
 }
 
