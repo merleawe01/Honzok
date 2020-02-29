@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="d_trade.model.vo.*, java.util.*, b_member.model.vo.*"%>
+    pageEncoding="UTF-8" import="d_trade.model.vo.*, java.util.*, b_member.model.vo.* "%>
 <%
-	
+	int myPoint = ((Member)request.getSession().getAttribute("loginUser")).getPoint();
 %>
 <!DOCTYPE html>
 <html>
@@ -76,8 +76,9 @@
 			display: inline-table;
 			text-align: center;
 			cursor: pointer;
+			border : 0px;
 		}
-		#cancle{
+		#cancel{
 			width : 100px;
 			height : 40px;
 			background-color : rgb(224, 224, 224);
@@ -89,6 +90,7 @@
 			display: inline-table;
 			text-align: center;
 			cursor: pointer;
+			border : 0px;
 		}
 		
 		#input_address{
@@ -114,10 +116,11 @@
 	</script>
 	
 	<div id = "main">
-				
+			<form action = "<%= request.getContextPath() %>/bid.gy" method="post" id="bidInform">
 				<div class="input">
 					<div class="left">이름 <span class="must">(필수)</span></div>
-					<input type="text" maxlength="8" placeholder="이름" class="right" value="<%= loginUser.getUserName() %>" style="width: 120px;">
+					<input type="text" maxlength="8" name = "userName" class="right" value="<%= loginUser.getUserName() %>" style="width: 120px;">
+					<input type="hidden" name="pno" value="<%= request.getParameter("postNo") %>">
 				</div>
 				<div class="input">
 					<div class="left">전화번호 <span class="must">(필수)</span></div>
@@ -137,10 +140,10 @@
 				</div>
 				<div class="input">
 					<div class="left">이메일 <span class="must">(필수)</span></div>
-					<input type="text" maxlength="16" class="right" name = "mail1" value="<%= loginUser.getEmail().substring(0, loginUser.getEmail().indexOf("@")) %>" style="width: 200px;"> @ 
-					<input type="text" maxlength="16" class="right" name = "mail2" value="<%= loginUser.getEmail().substring(loginUser.getEmail().indexOf("@")+1) %>" style="width: 150px;">
-					<select class="right" style="height: 30px;">
-  						<option value="직접입력">직접입력</option>
+					<input type="text" maxlength="16" class="right" id="email01" name = "email1" value="<%= loginUser.getEmail().substring(0, loginUser.getEmail().indexOf("@")) %>" style="width: 200px;"> @ 
+					<input type="text" maxlength="16" class="right" id="email02" name = "email2" value="<%= loginUser.getEmail().substring(loginUser.getEmail().indexOf("@")+1) %>" style="width: 150px;">
+					<select name = "selectEmail" id="selectEmail" class="right" style="height: 30px;">
+  						<option value="1">직접입력</option>
                  		<option value="daum.net">daum.net</option>
                  		<option value="empal.com">empal.com</option>
                  		<option value="gmail.com">gmail.com</option>
@@ -150,10 +153,25 @@
                  		<option value="nate.com">nate.com</option>
 					</select>
 				</div>
+				
+				<script>
+		           $('#selectEmail').change(function(){
+		              $("#selectEmail option:selected").each(function () {
+		                 if($(this).val()== '1'){ //직접입력일 경우
+		                    $("#email02").val(''); //값 초기화 
+		                    $("#email02").attr("disabled",false); //활성화
+		                    }else{ //직접입력이 아닐경우 
+		                       $("#email02").val($(this).text()); //선택값 입력
+		                       $("#email02").attr("disabled",true); //비활성화 
+		                       } 
+		                 }); 
+		              });
+	           </script>
+				
 				<div class="input" id = "input_address">
 					<div class="left">주소</div>
 					
-					<input type = "text" class = "right" id="postalCode" name="postalCode" value = "<%= loginUser.getPostalCode() %>" style = "width : 120px;"/>
+					<input type = "number" class = "right" id="postalCode" name="postalCode" value = "<%= loginUser.getPostalCode() %>" style = "width : 120px;"/>
                     <input type="button" onclick="goPopup()" class="mini_bt" style="margin-left:5px;" value="우편번호"/><br>
                      
                     <input type = "text" class = "right address1" id="bAddr" name="bAddr" value = "<%= loginUser.getbAddr() %>" style = "width : 400px;"><label class = address2> 기본 주소</label> <br>
@@ -175,37 +193,36 @@
 				
 				<div class="input">
 					<div class="left">사용 귤<span class="must">(필수)</span></div>
-					<label>입찰</label><input type ="checkbox" class = "check" id = "bid"><input type = "number" class = "price" id = "bid2"><label>귤</label>
-					<label id = "buy_now">즉시구매</label><input type ="checkbox" class = "check" id = "nowbuy"><input type = "number" class = "price" id = "nowbuy2"><label>귤</label>
+					<label>입찰</label><input type ="radio" class = "check" name="check1" id = "bid"><input type = "number" name ="point" class = "price" id = "bid2" value="<%= request.getParameter("point") %>" disabled><label>귤</label>
+					<label id = "buy_now">즉시구매</label><input type ="radio" class = "check" name="check1" id = "nowbuy"><input type = "number" name ="point" class = "price" id = "nowbuy2" value="<%= request.getParameter("max") %>" disabled readonly><label>귤</label>
 				</div>
 				
 				<script>
 					
-					$('#bid').click(function(){
-						 if($('this').is(":checked")){
-					        	$('nowbuy2').attr('disabled', 'disabled');
+				 	$('.check').click(function(){
+						 if($('#bid').is(":checked")){
+						    	$('#bid2').attr("disabled", false);
+					        	$('#nowbuy2').attr("disabled", true);
+					        } else{
+					        	$('#nowbuy2').attr("disabled", false);
+					        	$('#bid2').attr('disabled', true);
 					        }
-						});
+						}); 
 					
-					$('#nowbuy').change(function(){
-				        if($('#nowbuy').is(":checked")){
-				        	$('bid2').attr('disabled', 'disabled');
-				        }
-				    });
 				</script>
 				
 				<br><br>
 				
 				<div id="notice">
 					* 거래전 필독! 주의하세요! <br> 
-					* N띵의 모든 거래 물품은 착불로 접수됩니다.
+					* 물귤교환의 모든 거래 물품은 착불로 접수됩니다.
 				</div>
 				
 				<br>
 				
-				<div id="ok">신청완료</div>
-				<div id="cancle">취소</div>
-	
+				<input id = "ok" value="신청완료"> 
+				<input id="cancel" value="취소">
+		</form>
 	</div>
 
 	<script>
@@ -219,6 +236,54 @@
 				}
 			}
 		});
+	</script>
+	
+	<script>
+		$(function(){
+			$('#ok').click(function(){
+				if($('#bid').is(":checked")){
+					if($('#bid2').val() <= <%= request.getParameter("min") %>){
+						alert("시작 입찰귤 보다 높은 귤을 입력해주세요.\n시작 입찰귤은 <%= request.getParameter("min") %>귤 입니다.");
+						return false;
+					}else if($('#bid2').val() > <%= request.getParameter("max") %>){
+						alert("즉시 구매귤 보다 높은 귤을 입력할 수 없습니다.");
+						return false;
+					}else if($('#bid2').val() <= <%= request.getParameter("point") %>){
+						alert("기존 입찰귤 보다 높은 귤을 입력해주세요.\n현재 입찰귤은 <%= request.getParameter("point") %>귤 입니다.");
+						return false;
+					}else{
+						$("#bidInform").submit();
+					}
+				}else if($('#nowbuy').is(":checked")){
+					var result = confirm("정말 구매하시겠습니까?");
+					
+					if(result){
+						if(<%= myPoint %> >= <%= request.getParameter("max") %>){
+							$("#bidInform").attr("action", "<%= request.getContextPath()%>/update.point?postNo="+<%= request.getParameter("postNo") %>);
+							$("#bidInform").submit();
+						}else{
+							alert("포인트가 부족합니다!!!\n보유 포인트 : <%= myPoint %>");
+							return false;
+						}
+					}else{
+						return false;
+					}
+				}
+			});
+		});
+		
+		
+		
+		$(function(){
+			$('#cancel').click(function(){
+				var result = confirm("정말로 신청작성을 취소하시겠습니까?");
+				if(result){
+					location.href="<%= request.getContextPath()%>/detail.gy?postNo="+<%= request.getParameter("postNo") %>;
+				}else{
+					return false;
+				}
+			})
+		})
 	</script>
 </body>
 </html>

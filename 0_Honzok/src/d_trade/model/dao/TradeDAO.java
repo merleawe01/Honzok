@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import d_trade.model.vo.Bid;
 import d_trade.model.vo.Image;
 import d_trade.model.vo.Trade;
 
@@ -84,7 +85,7 @@ public class TradeDAO {
 								   rset.getString("post_title"),
 								   rset.getInt("max_point"),
 								   rset.getInt("point"),
-								   rset.getDate("dl_time"),
+								   rset.getString("dl_time"),
 								   rset.getString("NICKNAME"));
 				
 				list.add(t);
@@ -218,7 +219,8 @@ public class TradeDAO {
 								  rs.getInt("min_point"),
 								  rs.getInt("point"),
 								  rs.getInt("max_point"),
-								  rs.getDate("dl_time"),
+								  rs.getString("dl_time"),
+								  rs.getString("dl_yn").charAt(0),
 								  rs.getDate("write_date"),
 								  rs.getDate("modify_date"),
 								  rs.getString("delete_yn").charAt(0));
@@ -230,7 +232,6 @@ public class TradeDAO {
 			close(pstmt);
 		}
 
-		
 		return trade;
 	}
 
@@ -441,5 +442,165 @@ public class TradeDAO {
 		
 		return result;
 	}
+
+	public int insertBid(Connection conn, Bid b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertBid");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, b.getPostNo());
+			pstmt.setString(2, b.getUserId());
+			pstmt.setString(3, b.getNickName());
+			pstmt.setString(4, b.getPhone());
+			pstmt.setString(5, b.getEmail());
+			pstmt.setInt(6, b.getPostalCode());
+			pstmt.setString(7, b.getbAddr());
+			pstmt.setString(8, b.getlAddr());
+			pstmt.setInt(9, b.getBpoint());
+			
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateBid(Connection conn, Bid b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBid");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, b.getBpoint());
+			pstmt.setString(2, b.getNickName());
+			pstmt.setInt(3, b.getPostNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updatePoint(Connection conn, Trade td) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, td.getMaxPoint());
+			pstmt.setString(2, td.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updatedlYn(Connection conn, Trade td) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatedlYn");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, td.getPostNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Trade selectWinner(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Trade sw = null;
+		
+		String query = prop.getProperty("selectWinner");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			rset=pstmt.executeQuery();
+			if(rset.next()) {
+				sw = new Trade(rset.getString("user_id"),
+							   rset.getInt("point"),
+							   rset.getString("nickname"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return sw;
+	}
+
+	public int updatePointWinner(Connection conn, Trade sw, int bPoint) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("pointWinner");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bPoint);
+			pstmt.setString(2, sw.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateBidYN(Connection conn, int postNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBidYN");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+
 
 }
