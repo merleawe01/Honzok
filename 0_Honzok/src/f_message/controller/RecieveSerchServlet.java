@@ -40,6 +40,7 @@ public class RecieveSerchServlet extends HttpServlet {
 
 		
 		String select = request.getParameter("searchSelect");
+		System.out.println(select);
 		String keyword = request.getParameter("word");
 		
 		MessageService service = new MessageService();
@@ -54,14 +55,12 @@ public class RecieveSerchServlet extends HttpServlet {
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		// 요청이 들어오면 currentPage --> 페이지 전환 시 전달 받은 페이지로 currentPage 적용	
-		
 		
 		int listCount = service.searchMsgCount(select, keyword, loginUserNickName);
 		ArrayList<Message> mList =service.searchMsgList(currentPage, select, keyword, loginUserNickName);
 		
-		
 		limit = 5;
+		
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit + 0.9)) - 1) * limit + 1;
 		endPage = startPage + limit - 1;
@@ -69,7 +68,6 @@ public class RecieveSerchServlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		// vo에 PageInfo class 만들어주기
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);	
 		
 		String page = null;
@@ -78,6 +76,9 @@ public class RecieveSerchServlet extends HttpServlet {
 			page = "views/f_message/SearchListView.jsp";
 			request.setAttribute("list", mList);
 			request.setAttribute("pi", pi);
+			request.setAttribute("loginUser", loginUserNickName);
+			request.setAttribute("select", select);
+			request.setAttribute("keyword", keyword);
 		} else {
 			page = "views/a_common/error.jsp";
 			request.setAttribute("msg", "쪽지함을 볼 수 없습니다.");

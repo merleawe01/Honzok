@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="b_member.model.vo.*"%>
+<%
+	String msg = (String)request.getAttribute("msg");
+	Member member = (Member)request.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,6 +110,7 @@
 			line-height: 40px;
 			font-weight: bold;
 			text-align: center;
+			border:0px;
 		}
 		
 		
@@ -145,31 +150,28 @@
 	<section>
 		
 		<div id = "main">
-			
-			
 			<div id="realMain">
 				
 				<div id = "box"> 
-				
 					<div id = "confirm_id">
-						아이디는 <span>honzok1</span>입니다.
+						아이디는 <span><%= member.getUserId() %></span>입니다.
 					</div>
-					
-				<a href="login.jsp"><input type = "button" id = "confirm_bt" value = "확인"></a>	
+					<input type = "button" id = "confirm_bt" value = "확인" onclick="location.href='views/b_member/login.jsp'">
 				</div>
 								
-				
-				
 			</div>
-			
-			
 		</div>
 	
 	</section>
+
+	<script>
+	var msg = "<%= msg %>";
 	
-	<footer>
-	
-	</footer>
+	$(function(){
+		if(msg != "null") 
+			alert(msg);
+	});
+	</script>
 
 </body>
 </html>
