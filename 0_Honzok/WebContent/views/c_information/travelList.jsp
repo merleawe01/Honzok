@@ -20,10 +20,10 @@
 	#selectField > span:last-child{color: rgb(230, 126, 34); cursor: pointer;}
 	#selectField > span:first-child{color: rgb(118, 129, 73); cursor: pointer;}
 	#selectArea{
-		width: 100%;
 		height: 50px;
 		padding-bottom: 20px;
 		text-align: center;
+		display: inline-table;
 	}
 	#area{
 		border: 3px solid rgb(241, 131, 50);
@@ -152,12 +152,16 @@
 		background-color : rgb(224, 224, 224);
 		color : rgb(64, 64, 64);
 		border-radius: 5px;
-		margin: 20px;
 		line-height: 40px;
 		font-weight: bold;
 		float: right;
-		margin-left: 100%;
 		cursor: pointer;
+		display: inline-table;
+		margin-top: 10px;
+	}
+	#write:hover {
+		background-color: rgb(241, 131, 50);
+		color: white;
 	}
 	.pageMove{
 		width : 40px;
@@ -313,7 +317,7 @@
 				}
 				var moveLatLon = new kakao.maps.LatLng(x, y);
 				map.panTo(moveLatLon);
-				map.setLevel(7);
+				map.setLevel(8);
 			})
 			</script>
 			
@@ -326,7 +330,7 @@
 		    		<map name="usemap">
 		    			<area shape="poly" coords="182,149,204,132,233,151,234,161,202,168,186,161,184,154" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=서울'">
 		    			<area shape="poly" coords="179,140,182,148,204,133,233,149,234,160,203,170,185,163,169,174,158,202,157,217,185,241,248,240,301,204,306,150,278,141,277,104,237,69,228,47,190,65,190,76,169,89,177,106,155,116,148,128,155,148" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=경기'">
-		    			<area shape="poly" coords="179,141,184,164,168,174,160,190,138,186,112,141,111,126,131,104,153,113,146,127,154,148" onClick="changeArea('인천', 37.45611340275262, 126.70558540958115)">
+		    			<area shape="poly" coords="179,141,184,164,168,174,160,190,138,186,112,141,111,126,131,104,153,113,146,127,154,148" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=인천'">
 		    			<area shape="poly" coords="230,48,285,53,335,44,344,29,369,27,375,13,386,20,494,190,478,215,407,220,355,195,313,207,301,201,309,151,280,138,277,103,237,66" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=강원'">
 		    			<area shape="poly" coords="249,241,305,207,313,210,355,198,393,216,383,256,356,250,317,284,311,327,327,343,314,375,284,378,285,365,274,317,255,301,246,273,260,261" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=충북'">
 		    			<area shape="poly" coords="247,241,258,262,244,272,253,303,236,328,259,347,277,343,283,378,263,378,250,358,235,357,218,371,195,367,173,377,144,365,145,344,121,333,116,301,105,299,98,255,140,218,166,227,184,243" onClick="location.href='<%= request.getContextPath() %>/list.travel?area=충남'">
@@ -344,6 +348,9 @@
 		    	</div>
 		    </div>
 		</div>
+		
+		<div id="write" onclick="location.href='views/c_information/travelWrite.jsp'">글쓰기</div>
+		
 		<script>
 		// Get the modal
 		var modal = document.getElementById('myModal');
@@ -365,10 +372,16 @@
 				modal.style.display = "none";
 			}
 		}
+		
+		$(function() {
+			<% if(loginUser == null) { %>
+			$('#write').hide();
+			<% } %>
+		})
 		</script>
 		
 		<% if(list.isEmpty()) {%>
-			해당하는 데이터가 존재하지 않습니다.
+			<br>해당하는 데이터가 존재하지 않습니다.
 		
 		<% } else { %>
 		<% for(int i = 0; i < list.size(); i++) { %>
@@ -389,7 +402,7 @@
 					
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsup.png"> 
+					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsuup.png"> 
 					<%= list.get(i).getReco_count() %>
 				</div>
 				<div id="bottom">
@@ -401,8 +414,6 @@
 		
 		<% 	} %>
 		<% } %>
-		
-		<div id="write">글쓰기</div>
 		
 		<script>
 			var viewNum = 5;
@@ -427,28 +438,11 @@
 			    }
 			});
 			
-			$(function(){
-				$('.travelList').click(function(){
-					var no = $(this).children('input').val();
-					location.href='<%= request.getContextPath() %>/detail.travel?no=' + no;
-				});
-				
-				$('#write').click(function(){
-					<% if(loginUser == null) { %>
-						alert('로그인한 유저만 글을 작성할 수 있습니다.');
-					<% } else { %>
-						location.href="views/c_information/travelWrite.jsp";
-					<% } %>
-				});
+			$('.travelList').click(function(){
+				var no = $(this).children('input').val();
+				location.href='<%= request.getContextPath() %>/detail.travel?no=' + no;
 			});
 		</script>
-		
-		
-		
-		
-		
-		
-		
 	</div>
 	
 </body>

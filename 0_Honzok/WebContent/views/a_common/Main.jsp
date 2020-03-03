@@ -18,6 +18,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <style>
+   body {overflow-x: hidden;}
    header {width: 100%; height: auto; text-align: center;}
    #mainHeader {width: 1170px; height: 50px; display: inline-block;}
    .menuBtn {padding:3px; display: inline-table; float: right;
@@ -41,6 +42,7 @@
       width: 99%;
       height: 90%;
       top: 60px;
+      z-index: 1;
    }
    .menu {margin:100px auto;}
    .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
@@ -48,17 +50,21 @@
          
    #mainText {
       margin-top: 100px;
-      border:1px solid black;
       width: 100%;
       height: auto;
       text-align: center;
+      
+      /* border:1px solid black; */
    }
    .textarea {
       display: inline-table;
-      width: 40%;
+      width: 45%;
       height: 500px;
-      margin: 10px;
-      border: 1px solid black;
+      
+      /* border: 1px solid black; */
+   }
+   p{
+   	font-size: 22px;
    }
    #text1{
       position: absolute;
@@ -69,7 +75,7 @@
       -o-transition: All 0.5s ease;
    }
    #text1.open {
-      left: 20%;
+      left: 18%;
    }
    #text2{
       position: absolute;
@@ -80,7 +86,7 @@
       -o-transition: All 0.5s ease;
    }
    #text2.open {
-      right: 20%;
+      right: 18%;
    }
    #text3{
       position: absolute;
@@ -91,7 +97,7 @@
       -o-transition: All 0.5s ease;
    }
    #text3.open {
-      left: 20%;
+      left: 18%;
    }
 
 </style>
@@ -155,29 +161,36 @@
 	<div id="mainText">
 		<div class="textarea">
 			<div id="text1">
-				<br>
+				<br><br><br>
 				<h1>혼족옵서예?</h1>
+				<br>
 				<p>혼족들을 위한 커뮤니티 사이트로</p> 
 				<p>당신의 빛나는 Single Life를 응원합니다.</p>
 			</div>
 		</div>
-		<div class="textarea"><br><img src="images/blanket.png" width=auto height=450px></div>
-		<div class="textarea"><br><img src="images/pork.PNG" width=auto height=450px></div>
+		<div class="textarea"><br><img src="images/main1.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="images/main2.jpg" width=auto height=450px></div>
 		<div class="textarea">
 			<div id="text2">
-				<br>
+				<br><br><br>
 				<h1>욜로홀로솔로</h1>
-				<p>혼자만 알고있기 아까운 좋은 여행지나 숨은 맛집이 있나요?</p>
+				<br>
+				<p>혼자만 알고있기 아까운</p> 
+				<p>좋은 여행지나 숨은 맛집이 있나요?</p>
+				<p>좋은 정보는 우리 함께 공유해요</p>
 			</div>
 		</div>
 		<div class="textarea">
 			<div id="text3">
+				<br><br><br>
+				<h1>물귤교환 & 혼플리마켓</h1>
 				<br>
-				<h1>여기는 쓸말이 안떠올라서</h1>
-				<p>대충 사이트 좋다는 내용</p>
+				<p>함께 나누고 싶은 물건이 있나요?</p>
+				<p>아니면 나한테는 필요하지 않지만</p>
+				<p>다른 누군가한테는 필요할 것 같다고요?</p>
 			</div>
 		</div>
-		<div class="textarea">그림</div>
+		<div class="textarea"><br><img src="images/main3.jpg" width=auto height=450px></div>
 	</div>
 
 	<section></section>
@@ -214,19 +227,19 @@
 		    var scrolltop = $(window).scrollTop();
 		    var winheight = $(window).height();
 			
-			if(scrolltop > 907 - winheight && scrolltop < 390) {
+			if(scrolltop > 887 - winheight && scrolltop < 410) {
 				$("#text1").addClass("open");
 			} else {
 				$("#text1").removeClass("open");
 			}
 			
-			if(scrolltop > 1430 - winheight && scrolltop < 910) {
+			if(scrolltop > 1410 - winheight && scrolltop < 930) {
 				$("#text2").addClass("open");
 			} else {
 				$("#text2").removeClass("open");
 			}
 			
-		    if(scrolltop >= $(document).height() - $(window).height() - 10){
+		    if(scrolltop >= $(document).height() - $(window).height() - 30){
 		    	$("#text3").addClass("open");
 			} else {
 				$("#text3").removeClass("open");

@@ -135,6 +135,13 @@
 		float: right;
 		cursor: pointer;
 	}
+	.button {
+		background-color: rgb(224, 224, 224);
+	}
+	.button:hover{
+		background-color: rgb(241, 131, 50);
+		color: white;
+	}
 	#thumbsImg{
 		width: 40px;
 		height: 40px;
@@ -209,7 +216,12 @@
 				});
 				
 				$('#leftPhoto img').click(function(){
-					if(temp == 1){
+					if(photoSrc.length == 2) {
+						temp--;
+						$('#leftPhoto').children().hide();
+						$('#rightPhoto').children().show();
+						$('#mainPhoto').attr('src', photoSrc[temp]);
+					} else if(temp == 1){
 						temp--;
 						$('#leftPhoto').children().hide();
 						$('#mainPhoto').attr('src', photoSrc[temp]);
@@ -224,7 +236,12 @@
 				});
 				
 				$('#rightPhoto img').click(function(){
-					if(temp == photoSrc.length-2){
+					if(photoSrc.length == 2) {
+						temp++;
+						$('#rightPhoto').children().hide();
+						$('#leftPhoto').children().show();
+						$('#mainPhoto').attr('src', photoSrc[temp]);
+					} else if(temp == photoSrc.length-2){
 						temp++;
 						$('#rightPhoto').children().hide();
 						$('#mainPhoto').attr('src', photoSrc[temp]);
@@ -319,7 +336,7 @@
 		
 		<div class="btnList">
 			<% if(loginUser.getNickName().equals(board.getWriter())) { %>
-				<div id="delete" style="background-color: rgb(224, 224, 224);">삭제</div>
+				<div id="delete" class="button">삭제</div>
 				
 				<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
 					<input type="hidden" name="no" value="<%= board.getNo() %>">
@@ -341,12 +358,12 @@
 						<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
 					<% } %>
 					
-					<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
+					<div id="update" class="button">수정</div>
 				</form>
 			<% } else { %>
-				<div id= "recommend" style="background-color: rgb(241, 131, 50); color: white;">추천</div>
+				<div id="recommend" class="button">추천</div>
 				<div>
-					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsup.png"> 
+					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsdown.png"> 
 					<span id = recNum><%= board.getReco_count() %></span>
 				</div>
 			<% } %>
@@ -367,9 +384,11 @@
 			
 			$(function(){
 				<% if(recCheck.equals("Y")) {%>
+					$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsuup.png")
 					$('#recommend').css('background-color', 'rgb(241, 131, 50)');
 					$('#recommend').css('color', 'white');
 				<% } else { %>
+				$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsdown.png")
 					$('#recommend').css('background-color', 'rgb(224, 224, 224)');
 					$('#recommend').css('color', 'black');
 				<% }%>
@@ -391,10 +410,12 @@
 							if(data[0] == "Y") {
 								$('#recommend').css('background-color', 'rgb(241, 131, 50)');
 								$('#recommend').css('color', 'white');
+								$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsuup.png")
 								recCheck="Y";
 							} else {
 								$('#recommend').css('background-color', 'rgb(224, 224, 224)');
 								$('#recommend').css('color', 'black');
+								$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsdown.png")
 								recCheck="N";
 							}
 							$('#recNum').text(data[1]);
@@ -631,7 +652,7 @@
 		</div>
 		
 		<div class="btnList">
-			<div style="background-color: rgb(224, 224, 224);" onclick="history.go(-1);">목록으로</div>
+			<div class="button" onclick="history.go(-1);">목록으로</div>
 		</div>
 		
 	</div>
