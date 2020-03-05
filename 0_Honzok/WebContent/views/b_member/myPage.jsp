@@ -9,6 +9,7 @@
     
     Member member = (Member)request.getAttribute("member");
 	String userId = member.getUserId();
+	String userPwd = member.getUserPwd();
 	String userName = member.getUserName();
 	String nickName = member.getNickName();
 	int postalCode = member.getPostalCode();
@@ -110,7 +111,7 @@
 	#btns{margin : 20px; display : inline-table;}
 	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
 	#updateBtn{width: 100px; height: 40px; background-color: #f18332; color: white; font-weight: bold; cursor:pointer;
-		margin: auto; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
+		margin: auto; font-size: 14pt; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
 	#cancle{width: 100px; height: 40px; background-color: #5f5f5f; color: white; font-weight: bold; cursor:pointer;
 		margin: auto; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
 	input[name^=addr]{width:300px;}
@@ -167,7 +168,7 @@
 					<!-- 비밀번호 -->
 					<div class="input">
 						<div class="left">비밀번호 <span class="must">(필수)</span></div>
-						<input type="password" class="right" maxlength="16" name="userPwd" id="userPwd"  required>
+						<input type="password"  class="right" name="userPwd" id="userPwd" required>
 							<a href="views/b_member/pwdUpdateForm.jsp"><span id="changePwd">비밀번호 변경하기</span></a>
 					</div>
 					<div class="border"></div>
@@ -287,6 +288,13 @@
 							tmp += num.substr(7);
 							$("#phone").val(tmp);
 						}
+						
+						var msg = "<%= msg %>";
+						$(function(){
+							if(msg != "null"){
+								alert(msg);
+							}
+						});
 					</script>
 					<div class="border"></div>
 					
@@ -302,14 +310,15 @@
 						<div class="left">닉네임</div>
 						<input type="text" class="right" name="nickName" value="<%=nickName %>">
 					</div>
+					<div class="border"></div>
 					<div class="input">
-						<div class="left">포인트</div>
+						<div class="left">포인트 <img src="images/orange.png" height="25px" width="25px"></div>
 						<span class="right"><input type="hidden" class="right" name="point" value="<%=point %>"><%=point %></span>
 					</div>
 					
 				</div>
 				
-				<input id="updateBtn" type="submit" value="적용" class="updateBtn" > 
+				<input id="updateBtn" type="submit" value="적용" > 
 					
 				<div id="cancle" onclick="location.href='javascript:history.go(-1)'">취소하기</div>
 				
@@ -320,6 +329,7 @@
 		</div>
 
 	</section>
+
 
 	<footer> </footer>
 

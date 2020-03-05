@@ -145,7 +145,6 @@
 					<tr class="boardTr"><td class="td" onclick="moveLink('');">자유게시판</td></tr>
 					<tr class="boardTr"><td class="td" onclick="moveLink('list.gy');">물귤교환</td></tr>
 					<tr class="boardTr"><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
-					<tr><td><a id="topBtn" href="#"></a>Top</td></tr>
 				</table>
 				
 				<br>
