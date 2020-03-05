@@ -48,7 +48,7 @@
 	</script>
 	
 	<div id="main">
-		<form action="<%= request.getContextPath() %>/insert.m" method="post" encType="multipart/form-data">
+		<form action="<%= request.getContextPath() %>/insert.m" method="post" encType="multipart/form-data" id="detail">
 			<div class="form">
 					<div class="imageArea">
 						<div id="titleImgArea" class="titleImgArea">
@@ -114,7 +114,7 @@
 					
 					<!--기타    -->		
 					<div class="input">
-						<div class="left"><b>기타</b><span class="must">(필수)</span></div>
+						<div class="left"><b>기타사항</b><span class="must">(필수)</span></div>
 						<input type="text" id="etc" name="etc" placeholder="내용을 입력해주세요."  class="right" style="width: 350px;">
 					</div>
 					<br><br>
@@ -160,17 +160,30 @@
 				
 			</script>
 				<div>
-					<div id="ok" onclick="insertBoard();">확인</div> 
+					 <div id="ok" onclick="insertList();">확인</div> 
+						<!-- <button type="button" id="ok" onclick="insertBoard();">확인</button> -->
 						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
 				</div>
 				<script>
-					/* $('#ok').click(function(){
-						if($('#fileArea thumbnailImg1').val() == "" || $('#fileArea thumbnailImg1').val() == ""){
-								event.preventDefault();
-								alert("사진을 다 채워주세요.");
-							};
-						}); */
-					
+				  function insertList(){
+					  if($('#thumbnailImg1').val() == ''){
+							alert('첫번째 사진을 첨부해주세요');
+						} else if($('#thumbnailImg2').val() == ''){
+							alert('두번째 사진을 첨부해주세요');
+						} else if($('#product').val() == "") {
+							alert("물품명을 입력해주세요.");
+						} else if(!($('.status')[0].checked || $('.status')[1].checked || $('.status')[2].checked)) {
+		                     alert("상태를 선택해주세요.");
+		                } else if($('#price').val() == ""){
+							alert("가격을 입력해주세요.");
+						} else if($('#useDate').val() == ""){
+							alert("사용기한을 입력해주세요.");
+						}else if($('#etc').val() == ""){
+							alert("기타사항을 입력해주세요.");
+						}else if(confirm("글을 작성하시겠습니까?")) {
+							$('#detail').submit();
+						}
+					};
 			
 				</script>
 			</div>
