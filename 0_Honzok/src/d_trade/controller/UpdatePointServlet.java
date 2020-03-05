@@ -35,13 +35,16 @@ public class UpdatePointServlet extends HttpServlet {
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		int maxPoint = Integer.parseInt(request.getParameter("point"));
 		int point = ((Member)request.getSession().getAttribute("loginUser")).getPoint();
+		String writerId = request.getParameter("writer");
+		
+		System.out.println("writer:"+writerId);
 		
 		Trade td = new Trade();
 		td.setPostNo(postNo);
 		td.setUserId(userId);
 		td.setMaxPoint(maxPoint);
 		td.setPoint(point);
-		
+		td.setWriter(writerId);
 		
 		
 		int result = new TradeService().udatePoint(td);

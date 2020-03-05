@@ -206,19 +206,25 @@ public class TradeService {
 		Connection conn = getConnection();
 		TradeDAO dao = new TradeDAO();
 		
-		int result1 = dao.updatePoint(conn, td);
-		int result2 = dao.updatedlYn(conn, td);
+		int result1 = dao.updatePoint1(conn, td);
+		int result2 = dao.updatePoint2(conn, td);
+		int result3 = dao.updatedlYn(conn, td);
+		
 		
 		if(result1>0) {
 			if(result2>0) {
-				commit(conn);
+				if(result3>0) {
+					commit(conn);
+				}else {
+					rollback(conn);
+				}
 			}else {
 				rollback(conn);
 			}
 		}else {
 			rollback(conn);
 		}
-		return result2;
+		return result3;
 	}
 
 	public int selectWinner(int postNo, int bPoint) {
@@ -243,7 +249,12 @@ public class TradeService {
 				rollback(conn);
 			}
 		}else {
-			rollback(conn);
+			result2 = dao.updateBidYN(conn,postNo);
+			if(result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
 		}
 		return result2;
 	}
