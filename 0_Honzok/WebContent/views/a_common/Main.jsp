@@ -36,10 +36,10 @@
    #travel {position:relative; left:50px; top:100px;}
    
    nav {
-      background-color:#fff4c7;
+      background-color:white;
       position: fixed;
-      width: 99%;
-      height: 90%;
+      width: 100%;
+      height: 100%;
       top: 60px;
    }
    .menu {margin:100px auto;}
@@ -139,7 +139,7 @@
             <tr>
                <td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
                <td></td>
-               <td><div class="circle" id="circle2"></div></td>
+               <td><div class="circle" id="circle2" onclick="goBoard();">자유게시판</div></td>
                <td></td>
             </tr>
             <tr>
@@ -198,6 +198,9 @@
       
       function goInfo(){
          location.href="<%= request.getContextPath()%>/list.food";
+      }
+      function goBoard(){
+    	  location.href="<%= request.getContextPath()%>/list.bo";
       }
       function goMarket(){
          location.href="<%= request.getContextPath()%>/list.m";

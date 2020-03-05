@@ -52,7 +52,6 @@ public class InsertMemberServlet extends HttpServlet {
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
 		int result = new MemberService().insertMember(member);
 
-	    new MessageService().welcomeMessage(nickName);
 
 		
 		
@@ -60,6 +59,7 @@ public class InsertMemberServlet extends HttpServlet {
 		if(result > 0) {
 			page = "index.jsp";
 			request.setAttribute("msg", "회원가입에 성공하였습니다.");
+			new MessageService().welcomeMessage(nickName);
 		} else {
 			page = "views/a_common/errorPage.jsp";
 			request.setAttribute("msg", "회원가입에 실패하였습니다.");

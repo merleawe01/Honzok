@@ -64,7 +64,6 @@ public class Market {
 		this.email = email;
 	}
 
-	public Market() {}
 	
 	public Market(int postNo, String postTitle, int boardNo, String writer, String content, int viewCount,
 			Date writeDate, Date modifyDate, int recoCount) {
@@ -146,10 +145,11 @@ public class Market {
 		this.content = content;
 	}
 
-	public Market(int postNo, String itemStatus, int itemPrice, String useDate, String etc, String sellYn,
+	public Market(int postNo, String writer, String itemStatus, int itemPrice, String useDate, String etc, String sellYn,
 			String postTitle) {
 		super();
 		this.postNo = postNo;
+		this.writer = writer;
 		this.itemStatus = itemStatus;
 		this.itemPrice = itemPrice;
 		this.useDate = useDate;

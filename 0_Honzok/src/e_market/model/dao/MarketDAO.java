@@ -118,6 +118,7 @@ public class MarketDAO {
 			
 			while(rs.next()) {
 				list.add(new Market(rs.getInt("post_no"),
+									rs.getString("NICKNAME"),
 									 rs.getString("item_status"),
 									 rs.getInt("item_price"),
 									 rs.getString("use_date"),
@@ -125,8 +126,6 @@ public class MarketDAO {
 									 rs.getString("sell_yn"),
 									 rs.getString("post_title")));
 			}
-			
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

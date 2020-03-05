@@ -160,7 +160,7 @@
 				
 			</script>
 				<div>
-					<div id="ok" onclick="insertBoard();">확인</div> 
+					<input type="submit" id="ok" value="확인"> 
 						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
 				</div>
 				<script>
@@ -170,8 +170,6 @@
 								alert("사진을 다 채워주세요.");
 							};
 						}); */
-					
-			
 				</script>
 			</div>
 		</form>	

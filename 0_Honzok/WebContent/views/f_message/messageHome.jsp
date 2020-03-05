@@ -30,7 +30,7 @@
 			 padding:5px; margin:5px;}
 	.buttonArea {display:block; height:30px;}
 	.pagingArea{display:block;}
-	.pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;}
+	.pagingArea > button{background:none; border-radius:50px; color:#805959; padding:10px auto;  margin:3px;}
 	#numBtn{background:none; margin:3px; padding:10px auto;}
 	#choosen{background:#f18332; border-radius:50px; color:white;}
 	.searchArea{text-align:center;}

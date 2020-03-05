@@ -85,21 +85,24 @@
 	
 	#quicklink {
 		position: fixed;
-		top: 300px;
+		top: 250px;
 	}
 	#quicklink table {
 		display: inline-table;
 		text-align: center;
-		background-color: rgb(252, 223, 212);
 		border-top: 2px solid gray;
 		border-bottom: 2px solid gray;
 	}
+	.boardTr{width:50px; height:100px; background-color: white;}
 	#quicklink td {
 		cursor: pointer;
 	}
 	.td {
 		border-bottom: 1px solid gray;
 	}
+	
+	#topBt{
+	 display: none;}
 	
 	#main {
 		width : 900px;
@@ -132,16 +135,32 @@
 			
 			<div id="quicklink">
 				<table>
-					<tr><td class="td" onclick="moveLink('list.food');">욜로홀로솔로</td></tr>
-					<tr><td class="td" onclick="moveLink('');">자유게시판</td></tr>
-					<tr><td class="td" onclick="moveLink('list.gy');">물귤교환</td></tr>
-					<tr><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
+					<tr class="boardTr"><td class="td" onclick="moveLink('list.food');">욜로홀로솔로</td></tr>
+					<tr class="boardTr"><td class="td" onclick="moveLink('');">자유게시판</td></tr>
+					<tr class="boardTr"><td class="td" onclick="moveLink('list.gy');">물귤교환</td></tr>
+					<tr class="boardTr"><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
+					<tr><td><a id="topBtn" href="#"></a>Top</td></tr>
 				</table>
 				
 				<script>
 					function moveLink(link){
 						location.href="<%= request.getContextPath() %>/" + link;
 					}
+					
+				   $(function(){
+					   $( window ).scroll( function() {
+							if ( $( this ).scrollTop() > 200 ) {
+								$( '#topBtn' ).fadeIn();
+							} else {
+								$( '#topBtn' ).fadeOut();
+							}
+						});
+					   
+					   $( '#topBtn' ).click( function() {
+							$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+							return false;
+						} );
+				   });
 				</script>
 				
 			</div>

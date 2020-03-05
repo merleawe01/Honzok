@@ -6,6 +6,7 @@
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
 	
 	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
+	String recCheck = (String)request.getAttribute("recCheck");
 %>
 <!DOCTYPE html>
 <html>

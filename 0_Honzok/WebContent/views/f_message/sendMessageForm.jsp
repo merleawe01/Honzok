@@ -122,9 +122,15 @@
 				var inputLength = $(this).val().length;
 				$('#count').html('<b>'+inputLength+'<b>');
 				
+				
 				if(inputLength > 1000){
 					$('#count').css('color', 'red');
 					$('#endBtn').attr('disabled', 'true');
+				} else if (inputLength < 10){
+					$('#endBtn').click(function(){
+						alert("최소 10자 이상 입력해주세요.");	
+						$('#content').focus();
+					});
 				} else{
 					$('#count').css('color', 'black');
 					$('#endBtn').attr('disabled', 'false');
