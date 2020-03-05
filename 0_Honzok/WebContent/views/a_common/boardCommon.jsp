@@ -92,6 +92,7 @@
 		text-align: center;
 		border-top: 2px solid gray;
 		border-bottom: 2px solid gray;
+		margin-bottom: 20px;
 	}
 	.boardTr{width:50px; height:100px; background-color: white;}
 	#quicklink td {
@@ -99,6 +100,11 @@
 	}
 	.td {
 		border-bottom: 1px solid gray;
+	}
+	#quicklink img {
+		width: 50px;
+		height: auto;
+		cursor: pointer;
 	}
 	
 	#topBt{
@@ -142,25 +148,20 @@
 					<tr><td><a id="topBtn" href="#"></a>Top</td></tr>
 				</table>
 				
+				<br>
+				<img id="goTop" src="<%= request.getContextPath() %>/images/top_button2.png">
+				
 				<script>
 					function moveLink(link){
 						location.href="<%= request.getContextPath() %>/" + link;
 					}
-					
-				   $(function(){
-					   $( window ).scroll( function() {
-							if ( $( this ).scrollTop() > 200 ) {
-								$( '#topBtn' ).fadeIn();
-							} else {
-								$( '#topBtn' ).fadeOut();
-							}
-						});
-					   
-					   $( '#topBtn' ).click( function() {
-							$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-							return false;
-						} );
-				   });
+				
+					$("#goTop").click(function() {
+			            $('html, body').animate({
+			                scrollTop : 0
+			            }, 300);
+			            return false;
+			        });
 				</script>
 				
 			</div>

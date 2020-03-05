@@ -19,8 +19,6 @@ public class FBoardService {
 		
 		InformationDAO dao = new InformationDAO();
 		
-		System.out.println("area : " + board.getLocal_name());
-		
 		int result1 = dao.insertBoard(conn, board);
 		int result2 = dao.insertFBoard(conn, board);
 		int result3 = dao.insertCateBoard(conn, board);
@@ -40,30 +38,13 @@ public class FBoardService {
 		
 		InformationDAO dao = new InformationDAO();
 		
-		ArrayList<FoodBoard> FList = new ArrayList<FoodBoard>();
+		ArrayList<FoodBoard> result = null;
 		
-		for(int i = 0; i < cateArr.length; i++) {
-			ArrayList<FoodBoard> result = dao.listFBoard(conn, area, cateArr[i]);
-			
-			for(FoodBoard fb : result) {
-				boolean check = false;
-				
-				for(FoodBoard fbb : FList) {
-					if(fbb.getNo() == fb.getNo()) {
-						check = true;
-						break;
-					}
-				}
-				
-				if(check == false) {
-					FList.add(fb);
-				}
-			}
-		}
+		result = dao.listFBoard(conn, area, cateArr);
 		
 		close(conn);
 		
-		return FList;
+		return result;
 	}
 
 	public FoodBoard selectBoard(int no) {
@@ -120,6 +101,21 @@ public class FBoardService {
 		}
 		
 		return result1;
+	}
+
+	public int deleteFBoard(int no) {
+		Connection conn = getConnection();
+		InformationDAO dao = new InformationDAO();
+		
+		int result = dao.deleteBoard(conn, no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
 	}
 
 }

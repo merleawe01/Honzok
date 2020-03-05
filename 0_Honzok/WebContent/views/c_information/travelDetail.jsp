@@ -4,8 +4,7 @@
 	TravelBoard board = (TravelBoard)request.getAttribute("board");
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
-	
-	// 댓글 구현해야되고 추천이랑 조회수 작성자 어디에 나타낼지 로그인된 유저에 따라 수정삭제, 추천기능
+	String recCheck = (String)request.getAttribute("recCheck");
 %>
 <!DOCTYPE html>
 <html>
@@ -119,13 +118,13 @@
 		margin-top: 10px;
 		padding-bottom: 10px;
 	}
-	#btnList{
+	.btnList{
 		width: 100%;
 		height: 50px;
 		margin-top: 10px;
 		padding-bottom: 10px;
 	}
-	#btnList div{
+	.btnList div{
 		width : 100px;
 		height : 40px;
 		border-radius: 5px;
@@ -135,6 +134,19 @@
 		display: inline-table;
 		float: right;
 		cursor: pointer;
+	}
+	.button {
+		background-color: rgb(224, 224, 224);
+	}
+	.button:hover{
+		background-color: rgb(241, 131, 50);
+		color: white;
+	}
+	#thumbsImg{
+		width: 40px;
+		height: 40px;
+		vertical-align: middle;
+		margin-right: 10px;
 	}
 	#commentMain{
 		width : 100%;
@@ -204,7 +216,12 @@
 				});
 				
 				$('#leftPhoto img').click(function(){
-					if(temp == 1){
+					if(photoSrc.length == 2) {
+						temp--;
+						$('#leftPhoto').children().hide();
+						$('#rightPhoto').children().show();
+						$('#mainPhoto').attr('src', photoSrc[temp]);
+					} else if(temp == 1){
 						temp--;
 						$('#leftPhoto').children().hide();
 						$('#mainPhoto').attr('src', photoSrc[temp]);
@@ -219,7 +236,12 @@
 				});
 				
 				$('#rightPhoto img').click(function(){
-					if(temp == photoSrc.length-2){
+					if(photoSrc.length == 2) {
+						temp++;
+						$('#rightPhoto').children().hide();
+						$('#leftPhoto').children().show();
+						$('#mainPhoto').attr('src', photoSrc[temp]);
+					} else if(temp == photoSrc.length-2){
 						temp++;
 						$('#rightPhoto').children().hide();
 						$('#mainPhoto').attr('src', photoSrc[temp]);
@@ -312,41 +334,93 @@
 			</div>
 		</div>
 		
-		<div id="btnList">
-			<div style="background-color: rgb(224, 224, 224);">목록으로</div>
-			<div style="background-color: rgb(224, 224, 224);">삭제</div>
-			
-			<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
-				<input type="hidden" name="no" value="<%= board.getNo() %>">
-				<input type="hidden" name="title" value="<%= board.getTitle() %>">
-				<input type="hidden" name="star" value="<%= board.getStar() %>">
-				<input type="hidden" name="content" value="<%= board.getContent() %>">
-				<input type="hidden" name="caution" value="<%= (board.getCaution() == null) ? "" : board.getCaution() %>">
-				<input type="hidden" name="best_time" value="<%= board.getBest_time() %>">
-				<input type="hidden" name="address" value="<%= board.getAddress() %>">
-				<input type="hidden" name="local_name" value="<%= board.getLocal_name() %>">
-				<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
-				<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
-				<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
+		<div class="btnList">
+			<% if(loginUser.getNickName().equals(board.getWriter())) { %>
+				<div id="delete" class="button">삭제</div>
 				
-				<% for(Image img : imgList){ %>
-					<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
-					<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
-				<% } %>
-				
-				<div id="update" style="background-color: rgb(241, 131, 50); color: white;">수정</div>
-			</form>
-			
-			<div style="background-color: rgb(241, 131, 50); color: white;">추천</div>
-			<!-- 접근 유저에 따라 보여지는 버튼 및 이벤트 다르게 구현 -->
+				<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
+					<input type="hidden" name="no" value="<%= board.getNo() %>">
+					<input type="hidden" name="title" value="<%= board.getTitle() %>">
+					<input type="hidden" name="star" value="<%= board.getStar() %>">
+					<input type="hidden" name="content" value="<%= board.getContent() %>">
+					<input type="hidden" name="caution" value="<%= (board.getCaution() == null) ? "" : board.getCaution() %>">
+					<input type="hidden" name="best_time" value="<%= board.getBest_time() %>">
+					<input type="hidden" name="address" value="<%= board.getAddress() %>">
+					<input type="hidden" name="local_name" value="<%= board.getLocal_name() %>">
+					<input type="hidden" name="area_x" value="<%= board.getArea_x() %>">
+					<input type="hidden" name="area_y" value="<%= board.getArea_y() %>">
+					<input type="hidden" name="imgSize" value="<%= imgList.size() %>">
+					
+					<% for(Image img : imgList){ %>
+						<input type="hidden" value="<%= img.getImg_id() %>" name="imgId<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getOrigin_name() %>" name="imgOrigin<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getChange_name() %>" name="imgChange<%= img.getFileLevel() %>">
+						<input type="hidden" value="<%= img.getFileLevel() %>" name="imgLevel<%= img.getFileLevel() %>">
+					<% } %>
+					
+					<div id="update" class="button">수정</div>
+				</form>
+			<% } else { %>
+				<div id="recommend" class="button">추천</div>
+				<div>
+					<img id= "thumbsImg" src= "<%= request.getContextPath() %>/images/thumbsdown.png"> 
+					<span id = recNum><%= board.getReco_count() %></span>
+				</div>
+			<% } %>
 		</div>
 		
 		<script>
+			$('#delete').click(function(){
+			 	if(confirm("글을 삭제하시겠습니까?")) {
+			 		location.href='<%= request.getContextPath() %>/delete.travel?no=<%= board.getNo() %>'
+				}
+			})
+			
 			$('#update').click(function(){
 			 	if(confirm("글을 수정하시겠습니까?")) {
 					$('#updateForm').submit();
+				}
+			})
+			
+			$(function(){
+				<% if(recCheck.equals("Y")) {%>
+					$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsuup.png")
+					$('#recommend').css('background-color', 'rgb(241, 131, 50)');
+					$('#recommend').css('color', 'white');
+				<% } else { %>
+				$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsdown.png")
+					$('#recommend').css('background-color', 'rgb(224, 224, 224)');
+					$('#recommend').css('color', 'black');
+				<% }%>
+			})
+			
+			var recCheck = '<%= recCheck %>';
+			
+			$('#recommend').click(function(){
+				if('<%= loginUser.getUserId() %>' == "") {
+					alert('로그인한 유저만 추천을 할 수 있습니다.');
+				} else {
+					var writer = '<%= loginUser.getUserId() %>';
+					var bid = <%= board.getNo() %>;
+					$.ajax({
+						url: '<%= request.getContextPath() %>/check.recommend',
+						type: 'post',
+						data: {recCheck: recCheck, writer: writer, bid: bid},
+						success: function(data){
+							if(data[0] == "Y") {
+								$('#recommend').css('background-color', 'rgb(241, 131, 50)');
+								$('#recommend').css('color', 'white');
+								$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsuup.png")
+								recCheck="Y";
+							} else {
+								$('#recommend').css('background-color', 'rgb(224, 224, 224)');
+								$('#recommend').css('color', 'black');
+								$('#thumbsImg').attr('src', "<%= request.getContextPath() %>/images/thumbsdown.png")
+								recCheck="N";
+							}
+							$('#recNum').text(data[1]);
+						}
+					});
 				}
 			})
 		</script>
@@ -368,10 +442,11 @@
 							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter())) { %>
 								<span><input type="hidden" value='<%= replyList.get(i).getCno() %>'><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span></span>
 							<% } %>
-							
 						</td>
 					</tr>
-					<tr><td><%= replyList.get(i).getContent() %></td></tr>
+					<tr>
+						<td><%= replyList.get(i).getContent() %></td>
+					</tr>
 				</table>
 				<br>
 			<% 	}
@@ -506,11 +581,80 @@
 				})
 				
 				$(document).on('click', '.replyUpdate', function(){
-					console.log($(this).parent().parent().parent().next().children()); // 댓글 보여주는 부분의 td까지 왔음
+					if(($(this).parent().parent().parent().next().children().children()[0]) == undefined) {
+						var content = $(this).parent().parent().parent().next().children().text();
+						$(this).parent().parent().parent().next().children().html("<textarea style='resize:none; border:0;' cols=80>" + content + "</textarea>");
+					} else {
+						var cno = $(this).parent().children()[0].value;
+						var content = $(this).parent().parent().parent().next().children().children()[0].value;
+						var bid = <%= board.getNo() %>;
+						
+						$.ajax({
+							url: '<%= request.getContextPath() %>/update.reply',
+							type: 'post',
+							data: {cno: cno, content: content, bid: bid},
+							success: function(data){
+								$replyTable = $('#replyTable');
+								$replyTable.html("");
+								
+								$('#replyCount').text(data.length);
+								
+								if(data.length == 0) {
+									var $span = $('<span>').text('등록된 댓글이 없습니다.').css('margin-right', '200px');
+									
+									$replyTable.append('<br>');
+									$replyTable.append($span);
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									
+								} else {
+									for(var key in data){
+										var $table = $('<table>').css('text-align', 'left');
+										
+										var $tr1 = $('<tr>');
+										var $tr2 = $('<tr>');
+										
+										var $td1 = $('<td>').attr('rowspan', 2);
+										var $td2 = $('<td>');
+										var $td3 = $('<td>').text(data[key].content);
+										
+										var $span1 = $('<span>').html(data[key].writer + '&nbsp; &nbsp; ').css('font-weight', 'bold');
+										var $span2 = $('<span>').html(data[key].write_date + '&nbsp; &nbsp; ').css('font-weight', 'bold').css('color', 'rgb(190, 190, 190)');
+										var $span3 = $('<span>').html('<input type="hidden" value=' + data[key].cno + '><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span>');
+										
+										var $img = $('<img>').attr('src', "<%= request.getContextPath() %>/images/blanket.png").css('width', 'auto').css('height', '50px');
+										
+										$td1.append($img);
+										$td2.append($span1);
+										$td2.append($span2);
+										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+											$td2.append($span3);	
+										}
+										
+										$tr1.append($td1);
+										$tr1.append($td2);
+										$tr2.append($td3);
+										$table.append($tr1);
+										$table.append($tr2);
+										
+										$replyTable.append($table);
+										$replyTable.append('<br>');
+									}
+								}
+								
+								$('#commentLeft').val('');
+							}
+						});
+					}
 				})
 			</script>
-			
 		</div>
+		
+		<div class="btnList">
+			<div class="button" onclick="history.go(-1);">목록으로</div>
+		</div>
+		
 	</div>
 </body>
 </html>

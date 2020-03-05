@@ -18,29 +18,67 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <style>
-   body {overflow-x: hidden;}
+   body {overflow-x: hidden; height: auto;}
    header {width: 100%; height: auto; text-align: center;}
    #mainHeader {width: 1170px; height: 50px; display: inline-block;}
    .menuBtn {padding:3px; display: inline-table; float: right;
           background-color: transparent; border: none; cursor: pointer;}
    .messageBtn {padding:3px; display: inline-table; float: right;
           background-color: transparent; border: none; cursor: pointer;}
-   #login {float: right; padding: 10px; color: rgb(241, 131, 50); border:0;
-         font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-   #nickname:hover{color:rgb(118,129,73); cursor:pointer;}
-   
    #icon {height: 50px%; width: 50px; float: right;}
    #main {width: 100%;text-align: center;overflow: hidden;height: auto;}
    #realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
-   #subHeader{width : 100%; height : auto;display : inline-block;}
+   #subHeader{width:100%; height:250px; margin-top: 150px;}
    #logo {height: 100%; width: auto; float: center;}
    #travel {position:relative; left:50px; top:100px;}
    
+   #login {
+   		margin-top: 100px;
+   		width: 100%;
+   		height: 100px;
+   		text-align: center;
+   		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 15pt;
+   }
+   #loginbtn{
+		width : 150px;
+		height : 60px;
+		background-color : rgba(118, 129, 73, 0.8);
+		color : white;
+		border-radius: 10px;
+		line-height: 60px;
+		font-weight: bold;
+		display: inline-table;
+		cursor: pointer;
+	}
+   #nickname{
+	   border: 3px solid rgb(241, 131, 50);
+		padding: 10px;
+		margin: 5px;
+		border-radius: 10px;
+		font-weight: bold;
+		font-size: 15pt;
+		display: inline-block;
+		cursor: pointer;
+   }
+   #readmore {
+   		position: fixed;
+   		bottom: 0%;
+   		height: 100px;
+   		width: 100%;
+   }
+   #readmoreImg {
+   		float: center;
+   		height: 100%;
+   		width: auto;
+   		cursor: pointer;
+   }
+   
    nav {
-      background-color:white;
+      background-color:#fff4c7;
       position: fixed;
-      width: 100%;
-      height: 100%;
+      width: 99%;
+      height: 90%;
       top: 60px;
       z-index: 1;
    }
@@ -49,7 +87,7 @@
          margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
          
    #mainText {
-      margin-top: 100px;
+      margin-top: 400px;
       width: 100%;
       height: auto;
       text-align: center;
@@ -110,7 +148,7 @@
 			<button type="button" class="menuBtn" onclick="slideMenu()">
 				<img alt="메뉴" src="images/list.png" style="width: 30px; heigth: 30px;">
 			</button>
-      
+
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
@@ -121,23 +159,43 @@
 				</button>
 			</span>
       	</div>
-			
+		
+		<div id="subHeader">
+			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
+		</div>
+		
+		<!-- html 높이는 654 -->
 		<div id="login">
-			<img src="images/blanket.png" id="icon">
 			<% if(loginUser == null){ %>
-			<a href="views/b_member/login.jsp" target="_self">로그인</a>
+			<div id="loginbtn">로그인</div>
+			<script>
+				$('#loginbtn').click(function(){
+					location.href="views/b_member/login.jsp";
+				})
+			</script>
+			
 			<%}else{ %>
-			<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+			환영합니다 <span id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %></span> 님.
 			<div id="logout">
+			<br>
 			<a href="logout.me">로그아웃</a>
 			<%} %>
 			</div>
 		</div>
 		
-		
-		<div id="subHeader">
-			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
+		<div id="readmore">
+			<img id="readmoreImg" src="images/readmore.png" >
 		</div>
+		
+		<script>
+			$('#readmoreImg').click(function(){
+				$('#readmoreImg').hide();
+				$('#mainText').show();
+				
+				var offset = $('#mainText').offset(); //선택한 태그의 위치를 반환
+	        	$('html').animate({scrollTop : offset.top}, 400);
+			});
+		</script>
 		
 		<!-- 메뉴 -->
 		<nav hidden="">
@@ -158,7 +216,8 @@
 		</nav>
 	</header>
 	
-	<div id="mainText">
+	<br>
+	<div id="mainText" hidden="">
 		<div class="textarea">
 			<div id="text1">
 				<br><br><br>
@@ -220,32 +279,34 @@
 		}
 		
 		$(window).scroll(function(){
-			/* console.log($(window).scrollTop()) // 이거는 보고있는 창의 최상단
-			console.log($(document).height()) // 이거는 페이지 길이 밑에거는 보고있는 화면길이
+			console.log($(window).scrollTop()) // 이거는 보고있는 창의 최상단
+			/* console.log($(document).height()) // 이거는 페이지 길이 밑에거는 보고있는 화면길이
 			console.log($(window).height())  */
 			
 		    var scrolltop = $(window).scrollTop();
 		    var winheight = $(window).height();
 			
-			if(scrolltop > 887 - winheight && scrolltop < 410) {
+			if(scrolltop > 880 && scrolltop < 1150) {
 				$("#text1").addClass("open");
 			} else {
 				$("#text1").removeClass("open");
 			}
 			
-			if(scrolltop > 1410 - winheight && scrolltop < 930) {
+			if(scrolltop > 1250 && scrolltop < 1650) {
 				$("#text2").addClass("open");
 			} else {
 				$("#text2").removeClass("open");
 			}
 			
-		    if(scrolltop >= $(document).height() - $(window).height() - 30){
+		    if(scrolltop >= $(document).height() - $(window).height() - 100){
 		    	$("#text3").addClass("open");
 			} else {
 				$("#text3").removeClass("open");
 			}
 		});
 	</script>
+
+ 
 </body>
   
 </html>

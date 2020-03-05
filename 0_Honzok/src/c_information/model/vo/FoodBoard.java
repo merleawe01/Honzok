@@ -40,12 +40,11 @@ public class FoodBoard {
 	}
 	
 	// 리스트 뷰에서 사용할 생성자.
-	public FoodBoard(int no, String title, String writer, int reco_count, String address, int star,
+	public FoodBoard(int no, String title, int reco_count, String address, int star,
 			double area_x, double area_y, String img_src) {
 		super();
 		this.no = no;
 		this.title = title;
-		this.writer = writer;
 		this.reco_count = reco_count;
 		this.address = address;
 		this.star = star;

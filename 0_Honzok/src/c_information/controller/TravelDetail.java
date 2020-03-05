@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import c_information.model.service.FBoardService;
+import b_member.model.vo.Member;
+import c_information.model.service.RecommendService;
 import c_information.model.service.ReplyService;
 import c_information.model.service.TBoardService;
 import c_information.model.vo.Image;
@@ -38,10 +39,15 @@ public class TravelDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = Integer.parseInt(request.getParameter("no"));
 		
+		String userId = "";
+		if(((Member)request.getSession().getAttribute("loginUser")) != null) {
+			userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+		}
+		
 		TravelBoard board = new TBoardService().selectBoard(no);
 		ArrayList<Image> imgList = new TBoardService().selectImage(no);
-		
 		ArrayList<Reply> replyList = new ReplyService().selectReplyList(no);
+		String recCheck = new RecommendService().checkRec(no, userId);
 		
 		String page = null;
 		if(board != null) {
@@ -49,6 +55,7 @@ public class TravelDetail extends HttpServlet {
 			request.setAttribute("board", board);
 			request.setAttribute("imgList", imgList);
 			request.setAttribute("replyList", replyList);
+			request.setAttribute("recCheck", recCheck);
 		} else {
 			page = "views/a_common/errorPage.jsp";
 			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다.");

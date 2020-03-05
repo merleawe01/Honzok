@@ -100,7 +100,7 @@
 					
 					<br><br>
 					<div id="updateArea">
-						<% if(loginUser != null/*  && loginUser.getNickName().equals(m.getWriter()) */){ %>
+						<% if(loginUser != null  && loginUser.getNickName().equals(m.getNickname()) ){ %>
 						<input type="submit" id="updateBtn"value="수정">
 						<input type="button" onclick="deleteMarket();"id="deleteBtn"value="삭제">
 						
