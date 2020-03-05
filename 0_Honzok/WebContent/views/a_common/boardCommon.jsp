@@ -168,7 +168,7 @@
 		
 		<div id="subHeader">
 			<div id="boardName">
-				게시판이름
+				게시판이름 작성하기
 			</div>
 		</div>
 	</header>
