@@ -140,8 +140,31 @@
 		#searchOption{
 			height:25px;
 		}
+		button:hover{
+			cursor: pointer;}
+		
+		#numBtn{
+			background:none;
+			margin:3px; 
+			padding:10px auto;}
+		#choosen{
+			background:#f18332; 
+			border-radius:50px; 
+			color:white;}
+		
+		.pagingArea{
+			display:block;
+		}
+		
+		.pagingArea > button{
+			background:none; 
+			border-radius:50px; 
+			color:#805959; 
+			padding:10px auto;
+			}
 </style>
 </head>
+<body onresize="parent.resizeTo(530,600)" onload="parent.resizeTo(530,600)">
 <body>
 	<%@ include file="../a_common/boardCommon.jsp" %>
 	<script>
@@ -172,8 +195,8 @@
 						 for(Board b : List){ 
 						
 							 %>
-							<tr>
-						<td class = "list_line2" id="td1"  ><input type = "hidden"   value="<%= b.getPostNo() %>"><%= b.getPostNo() %></td>
+							<tr id="contentTr">
+						<td class = "list_line2" id="td1"  ><input type = "hidden" name="select"   value="<%= b.getPostNo() %>"><%= b.getPostNo() %></td>
 							<td class = "list_line2" id="td2" ><%= b.getPostTitle() %></td>
 							<td class="list_line2" id="td3"><%= b.getWriteDate() %></td>
 							<td class="list_line2" id="td4"><%= b.getViewCount() %></td>
@@ -193,9 +216,9 @@
 				<div class = 'pagingArea' align='center'>
 					<% if(!List.isEmpty()){ %>
 					<!-- 맨 처음으로 -->
-					<button onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=1'">◀◀</button>
+					<button class="pagingBtn" onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=1'">&lt;&lt;</button>
 					<!-- 이전 페이지로 -->
-                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.bo?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">◀</button>
+                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.bo?currentPage=<%= currentPage-1 %>'" id = "beforeBtn"  class="pagingBtn">pre</button>
                     <script>
                     	if(<%= currentPage %> <= 1){
                     		var before = $('#beforeBtn');
@@ -213,7 +236,7 @@
                     <% } %>
                     
                     <!-- 다음 페이지로 -->
-                    <button onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=<%= currentPage + 1 %>'"id = "afterBtn">▶</button>
+                    <button class="pagingBtn" onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=<%= currentPage + 1 %>'"id = "afterBtn">next</button>
                     <script>
                     	if(<%= currentPage %> >= <%= maxPage %>){
                     		var after = $("#afterBtn");
@@ -222,7 +245,7 @@
                     </script>
                     
                     <!-- 맨 끝으로 -->
-                    <button onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=<%= maxPage %>'">▶▶</button>
+                    <button class="pagingBtn" onclick = "location.href='<%= request.getContextPath() %>/list.bo?currentPage=<%= maxPage %>'">&gt;&gt;</button>
                      
                    <% } %>
 				</div>
@@ -240,12 +263,30 @@
 	
 	</div>
 	<script>
-		$(function(){
+	$(function(){
+		$('#tablearea2 td').mouseenter(function(){
+			$(this).parent().css({'background':'#FFD393', 'cursor':'pointer'});
+		}).mouseout(function(){
+			$(this).parent().css('background', 'none');
+		}).click(function(){
+			var pn = $(this).parent().children().children('input').val();
+		});
+	});
+			
+	$(function(){
 			$('.list_line2').click(function(){
 				var pn = $(this).parent().children().eq(0).children().val();
 				location.href="<%= request.getContextPath()%>/detail.bo?postNo="+pn;
 			});
 		});
+		$(function(){
+			$('.pagingBtn').mouseenter(function(){
+				$(this).css('background','#FFD393');
+			}).mouseout(function(){
+				$(this).css('background','none');
+			});
+		});
+	
 	</script>
 </body>
 </html>

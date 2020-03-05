@@ -89,8 +89,8 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				  font-size : 10pt;
 				  width : 80px;
 				  height : 30px;
-			      background-color : lightgray;
-			      color : black;
+				   background-color: #f18332;
+				    color: white; 
 			      border-radius: 5px;
 			      border:0;
 			      font-weight: bold;
@@ -176,7 +176,6 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 	<form action="<%= request.getContextPath() %>/views/g_board/boardUpdateView.jsp" id="detailForm" method="post">
 		<div id="boardTitle">
 		
-		
 	
 					<div id="titleTitle">
 						<%= b.getPostTitle() %>
@@ -187,11 +186,10 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 					<div id="titleRight">
 						<%= b.getWriteDate() %>
 					</div>
-				
 				</div>
 				
 				<div id="boardWriter">
-					<%= loginUser.getNickName() %> | 조회 : <%= b.getViewCount() %>
+					<%= b.getWriter() %> | 조회 : <%= b.getViewCount() %>
 				</div>
 				
 				<table style="margin-left: auto; margin-right: auto;">
@@ -203,7 +201,6 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 			
 				<div>
 					<table id = "detail_content">
-				
 						<tr>
 							<td id = "content_td"></td>
 							<td>
@@ -215,7 +212,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				</div>
 		
 				<div id = "btn1">
-					<% if(loginUser != null && loginUser.getNickName().equals(loginUser.getNickName())){ %>
+					<% if(loginUser != null && loginUser.getUserId().equals(b.getWriter())){ %>
 					<input id = "revise" type="submit" value="수정"> 
 					<input id = "delete" type="submit" value="삭제" onclick="deleteBo();" >
 					<% } %>

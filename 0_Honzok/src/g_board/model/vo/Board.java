@@ -10,7 +10,6 @@ public class Board {
 	private String writer;
 	private String content;
 	private int viewCount;
-//	private Date writeDate;
 	private Date modifyDate;
 	private int recoCount;
 	private char deleteYN;
@@ -46,10 +45,11 @@ public class Board {
 
 
 
-	public Board(int postNo, int boardNo, String postTitle, String content, int viewCount, String writeDate,
+	public Board(int postNo,String writer, int boardNo, String postTitle, String content, int viewCount, String writeDate,
 			Date modifyDate, char deleteYN) {
 		super();
 		this.postNo = postNo;
+		this.writer = writer;
 		this.boardNo = boardNo;
 		this.postTitle = postTitle;
 		this.content = content;

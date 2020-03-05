@@ -189,6 +189,9 @@ header {
 	line-height: 40px;
 	font-weight: bold;
 	text-align: center;
+	border: 0;
+	font-size: 14pt;
+	
 }
 
 #cancle {

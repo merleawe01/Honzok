@@ -53,7 +53,6 @@
 </style>
 </head>
 <body>
-<body>
 
 	<header>
 		<div id="mainHeader">
@@ -131,16 +130,16 @@
 				
 				<!-- <button onclick="naver_login();" id="N_loginBtn" class="center">
 					<img src="images/naver_icon.png" width="50px" height="50px">
-					<b>네이버 아이디로 로그인/회원가입</b>
+					<b>혼족 아이디로 로그인/회원가입</b>
 					<div id="naver_id_login"></div>
 					
 				</button> -->
 			
-			<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+			<!-- 혼족아이디로로그인 버튼 노출 영역 -->
 			<button id="N_loginBtn" class="center">
-		 		  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+		 		  <!-- 혼족아이디로로그인 버튼 노출 영역 -->
 			<div id="naver_id_login"></div>
-			  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+			  <!-- //혼족아이디로로그인 버튼 노출 영역 -->
 <!-- 			<script type="text/javascript">
 			  	var naver_id_login = new naver_id_login("PUOQo9pPnn5wJXhNF0v6", "http://localhost:9580/0_Honzok/views.jsp");
 			  	var state = naver_id_login.getUniqState();

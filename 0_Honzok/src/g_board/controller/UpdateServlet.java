@@ -35,7 +35,7 @@ public class UpdateServlet extends HttpServlet {
 
 
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
-
+		String writer = request.getParameter("writer");
 		String postTitle = request.getParameter("post_Title");
 		String content = request.getParameter("content");	
 		String writeDate = request.getParameter("writeDate");
@@ -43,6 +43,7 @@ public class UpdateServlet extends HttpServlet {
 		
 
 		Board b = new Board();
+		b.setWriter(writer);
 		b.setPostNo(postNo);
 		b.setPostTitle(postTitle);
 		b.setWriteDate(writeDate);
