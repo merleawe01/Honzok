@@ -494,7 +494,7 @@ public class TradeDAO {
 		return result;
 	}
 
-	public int updatePoint(Connection conn, Trade td) {
+	public int updatePoint1(Connection conn, Trade td) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -504,6 +504,7 @@ public class TradeDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, td.getMaxPoint());
 			pstmt.setString(2, td.getUserId());
+			
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -599,6 +600,27 @@ public class TradeDAO {
 		
 		return result;
 		
+	}
+
+	public int updatePoint2(Connection conn, Trade td) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePlusPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, td.getMaxPoint());
+			pstmt.setString(2, td.getWriter());
+			
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 

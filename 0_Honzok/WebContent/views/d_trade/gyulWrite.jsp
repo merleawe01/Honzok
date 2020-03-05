@@ -58,7 +58,6 @@
 		#btn{ margin-top : 50px;}
 		
 		#onebu{text-align : center;
-				  font-size : 15pt;
 				  width : 100px;
 				  height : 40px;
 			      background-color : rgb(241, 131, 50);
@@ -70,7 +69,6 @@
 			      cursor:pointer;
 		}
 		#twobu{text-align : center;
-				  font-size : 15pt;
 				  width : 100px;
 				  height : 40px;
 			      background-color : lightgray;
@@ -182,7 +180,12 @@
 		<script>
 			$(function(){
 				$('#onebu').click(function(){
-					if($('#input_start').val() > 0 && $('#input_buy').val() > 0){
+					var start=$("#input_start").val();
+				    var buy=$("#input_buy").val();
+					if(Number(start) > Number(buy)){
+						alert("시작 귤의 값을 즉시구매 귤의 값보다 높게 설정하실 수 없습니다.");
+						return false;
+					}else if(Number(start) > 0 && Number(buy) > 0){
 						var result = confirm("시작 귤과 즉시구매 귤은 등록 이후 수정하실 수 없습니다.\n게시글을 등록 하시겠습니까?");
 						if(result){
 							$('insertInform').submit();
@@ -190,7 +193,7 @@
 							return false;
 						}
 					}else{
-						alert("시작귤 과 즉시구입귤의 값은 0 이상이어야 합니다.");
+						alert("시작 귤과 즉시구매귤의 값은 0 이상이어야 합니다.");
 						return false;
 					}
 				})

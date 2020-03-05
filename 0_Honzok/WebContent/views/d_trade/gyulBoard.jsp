@@ -60,7 +60,6 @@
 			font-size: 12pt;
 		}
 		#nickname::after{
-			content: "님";
 			color : black;
 		}
 		#boardName{
@@ -124,7 +123,7 @@
 		#td3{ width:250px; }
 		#td4{ width:130px; }
 		#td5{ width:130px; }
-		#td6{ width:150px; }
+		.td6{ width:150px; }
 		#td7{ width:150px; }
 		
 		.name{
@@ -138,8 +137,9 @@
 			height : 40px;
 			border : 0px;
 			border-radius: 5px;
-			background-color: rgb(224, 224, 224);
+			background-color: rgb(241, 131, 50);
 			cursor: pointer;
+			color : white;
 		}
 		
 		#write{
@@ -157,6 +157,11 @@
 			height:300px;
 		}
 		
+		
+		.pagingArea{display:block; border:0px;}
+        .pagingArea > button{ border:0px;background:none; border-radius:50px; color:#805959; padding:10px auto; font-size:20px;}
+        #numBtn{background:none; margin:3px; padding:10px auto; border:0px;}
+        #choosen{background:#f18332; border-radius:50px; color:white; border:0px;}
 		
 </style>
 </head>
@@ -189,89 +194,92 @@
 					<td id = "no_exist">존재하는 게시글이 없습니다.</td>
 				</tr>
 				<% } else{ 
-						 for(Trade t : tList){ 
-							 
-							 Double timer = Double.parseDouble(t.getDlTime()) - Double.parseDouble(timeNow);
-		                      
-		                      String timeCheck = "";
-		                      
-		                      int hour = 0;
-		                      int min = 0;
-		                      int sec = 0;
-		                      
-		                      if(timer < 0) {
-		                         timeCheck = "마감";
-		                      } else {
-		                        int sec1 = Integer.parseInt(t.getDlTime().substring(8, 10)) * 3600
-		                              + Integer.parseInt(t.getDlTime().substring(10, 12)) * 60
-		                              + Integer.parseInt(t.getDlTime().substring(12, 14));
-		                        int sec2 = Integer.parseInt(timeNow.substring(8, 10)) * 3600
-		                              + Integer.parseInt(timeNow.substring(10, 12)) * 60
-		                              + Integer.parseInt(timeNow.substring(12, 14));
-		                        
-		                        int timeAll = sec1 - sec2;
-		                        if(timeAll <= 0) {
-		                           timeAll = timeAll + 84600;
-		                        }
-		                        hour = timeAll / 3600;
-		                        min = (timeAll - hour * 3600) / 60;
-		                        sec = timeAll - hour * 3600 - min * 60;
+					for(Trade t : tList){ 
+	                      
+	                      Double timer = Double.parseDouble(t.getDlTime()) - Double.parseDouble(timeNow);
+	                            
+	                            String timeCheck = "";
+	                            
+	                            int hour = 0;
+	                            int min = 0;
+	                            int sec = 0;
+	                            
+	                            if(timer < 0) {
+	                               timeCheck = "마감";
+	                            } else {
+	                              int sec1 = Integer.parseInt(t.getDlTime().substring(8, 10)) * 3600
+	                                    + Integer.parseInt(t.getDlTime().substring(10, 12)) * 60
+	                                    + Integer.parseInt(t.getDlTime().substring(12, 14));
+	                              int sec2 = Integer.parseInt(timeNow.substring(8, 10)) * 3600
+	                                    + Integer.parseInt(timeNow.substring(10, 12)) * 60
+	                                    + Integer.parseInt(timeNow.substring(12, 14));
+	                              
+	                              int timeAll = sec1 - sec2;
+	                              if(timeAll <= 0) {
+	                                 timeAll = timeAll + 86400;
+	                              }
+	                              hour = timeAll / 3600;
+	                              min = (timeAll - hour * 3600) / 60;
+	                              sec = timeAll - hour * 3600 - min * 60;
 
-		                        
-		                        timeCheck = hour+":"+min+":"+sec;
-		                      }
-						 %>
-						 
-						 <script> // 카운트해주는 스크립트
-                           // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
-                           // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
-                           var hours<%= t.getrNo() %> = <%if(hour<10){%>
-                                       "0<%= hour %>"
-                                       <%}else{%>
-                                       "<%= hour %>"
-                                       <%}%>;
-                          
-                           
-                           var minutes<%= t.getrNo() %> = <%if(min<10){%>
-                                     "0<%= min %>"
-                                     <%}else{%>
-                                     "<%= min %>"
-                                     <%}%>;
-                           
-                           var seconds<%= t.getrNo() %> = <%if(sec<10){%>
-                                     "0<%= sec %>"
-                                     <%}else{%>
-                                     "<%= sec %>"
-                                      <%}%>;
-                           
-                           $(function(){
-                              var timer = setInterval(function() {
-                                 seconds<%= t.getrNo() %>--;
-                                 if(seconds<%= t.getrNo() %> == -1){
-                                    seconds<%= t.getrNo() %> = 59;
-                                    minutes<%= t.getrNo() %>--;
-                                    if(minutes<%= t.getrNo() %> < 10){
-                                       minutes<%= t.getrNo() %> = "0" + minutes<%= t.getrNo() %>;
-                                    }
-                                 }
-                                 if(minutes<%= t.getrNo() %> == -1){
-                                    minutes<%= t.getrNo() %> = 59;
-                                    hours<%= t.getrNo() %>--;
-                                    if(hours<%= t.getrNo() %> < 10){
-                                       hours<%= t.getrNo() %> = "0" + hours<%= t.getrNo() %>;
-                                    }
-                                 }
-                                 if(seconds<%= t.getrNo() %> < 10){
-                                    seconds<%= t.getrNo() %> = "0" + seconds<%= t.getrNo() %>;
-                                 }
-                                 if(hours<%= t.getrNo() %> == 0 && minutes<%= t.getrNo() %> == 0 && seconds<%= t.getrNo() %> == 0){
-                                    $("#td6<%= t.getrNo() %>").html("마감"); 
-                                    clearInterval(timer);
-                                 }
-                                 $("#td6<%= t.getrNo() %>").html(hours<%= t.getrNo() %> + ":" + minutes<%= t.getrNo() %> + ":" + seconds<%= t.getrNo() %>);
-                              }, 1000);
-                           });
-                        </script>
+	                              
+	                              timeCheck = hour+":"+min+":"+sec;
+	                            }
+	                   %>
+	                   
+	                   <script> // 카운트해주는 스크립트
+	                           // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
+	                           // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
+	                           var hours<%= t.getrNo() %> = <%if(hour<10){%>
+	                                       "0<%= hour %>"
+	                                       <%}else{%>
+	                                       "<%= hour %>"
+	                                       <%}%>;
+	                          
+	                           
+	                           var minutes<%= t.getrNo() %> = <%if(min<10){%>
+	                                     "0<%= min %>"
+	                                     <%}else{%>
+	                                     "<%= min %>"
+	                                     <%}%>;
+	                           
+	                           var seconds<%= t.getrNo() %> = <%if(sec<10){%>
+	                                     "0<%= sec %>"
+	                                     <%}else{%>
+	                                     "<%= sec %>"
+	                                      <%}%>;
+	                           
+	                           $(function(){
+	                              var timer<%= t.getrNo() %> = setInterval(function() {
+	                                 if(hours<%= t.getrNo() %> == "00" && minutes<%= t.getrNo() %> == "00" && seconds<%= t.getrNo() %> == "00"){
+	                                    $("#td6<%= t.getrNo() %>").html("마감"); 
+	                                      clearInterval(timer<%= t.getrNo() %>);
+	                                 } else {
+	                                    seconds<%= t.getrNo() %>--;
+	                                    
+	                                    if(seconds<%= t.getrNo() %> == -1){
+	                                          seconds<%= t.getrNo() %> = 59;
+	                                          minutes<%= t.getrNo() %>--;
+	                                          if(minutes<%= t.getrNo() %> < 10){
+	                                             minutes<%= t.getrNo() %> = "0" + minutes<%= t.getrNo() %>;
+	                                          }
+	                                       }
+	                                       if(minutes<%= t.getrNo() %> == -1){
+	                                          minutes<%= t.getrNo() %> = 59;
+	                                          hours<%= t.getrNo() %>--;
+	                                          if(hours<%= t.getrNo() %> < 10){
+	                                             hours<%= t.getrNo() %> = "0" + hours<%= t.getrNo() %>;
+	                                          }
+	                                       }
+	                                       if(seconds<%= t.getrNo() %> < 10){
+	                                          seconds<%= t.getrNo() %> = "0" + seconds<%= t.getrNo() %>;
+	                                       }
+	                                       
+	                                       $("#td6<%= t.getrNo() %>").html(hours<%= t.getrNo() %> + ":" + minutes<%= t.getrNo() %> + ":" + seconds<%= t.getrNo() %>);
+	                                 }
+	                              }, 1000);
+	                           });
+	                        </script>
 						 
 						<tr class = "list_line">
 							<td class="list_line2" id="td1"><input type = "hidden" value = "<%= t.getPostNo() %>"><%= t.getrNo() %></td>
@@ -289,8 +297,8 @@
 							<td class = "name list_line2" id="td3"><%= t.getPostTitle() %></td>
 							<td class="list_line2" id="td4"><%= t.getPoint() %> <img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
 							<td class="list_line2" id="td5"><%= t.getMaxPoint() %><img alt="귤" src="<%= request.getContextPath() %>/images/orange.png" id="gyul"></td>
-							 <td class="list_line2" id="td6<%= t.getrNo() %>"><%= timeCheck %></td>
-							<td class="list_line2" id="td7"><%= t.getWriter() %></td>
+							<td class="list_line2 td6" id="td6<%= t.getrNo() %>"><%= timeCheck %></td>
+							<td class="list_line2" id="td7" name="writer"><%= t.getWriter() %></td>
 						</tr>
 						<% }
 							}%>
@@ -306,9 +314,9 @@
 				<!-- 페이징 -->
 				<div class = 'pagingArea' align='center'>
 					<% if(!tList.isEmpty()){ %>
-					<button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=1'">◀◀</button>
+					<button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=1'">&lt;&lt;</button>
 				
-                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">◀</button>
+                    <button onclick = "location.href ='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage-1 %>'" id = "beforeBtn">pre</button>
                     <script>
                     	if(<%= currentPage %> <= 1){
                     		var before = $('#beforeBtn');
@@ -324,7 +332,7 @@
                     	<% } %>	
                     <% } %>
                     
-                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage + 1 %>'"id = "afterBtn">▶</button>
+                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= currentPage + 1 %>'"id = "afterBtn">next</button>
                     <script>
                     	if(<%= currentPage %> >= <%= maxPage %>){
                     		var after = $("#afterBtn");
@@ -332,7 +340,7 @@
                     	}
                     </script>
                     
-                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= maxPage %>'">▶▶</button>
+                    <button onclick = "location.href='<%= request.getContextPath() %>/list.gy?currentPage=<%= maxPage %>'">&gt;&gt;</button>
                      
                    <% } %>
 				</div>

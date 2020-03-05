@@ -10,6 +10,7 @@
 	String timeNow = format.format(time.getTime());
 	
 	Trade sw = (Trade)request.getAttribute("sw");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -107,20 +108,21 @@
 		
 		#revise{
 				  font-size : 10pt;
-				  width : 80px;
-				  height : 30px;
+				  width : 100px;
+				  height : 40px;
 			      background-color : lightgray;
 			      color : black;
 			      border-radius: 5px;
 			      border:0;
 			      font-weight: bold;
 			      cursor:pointer;
-			      margin-left : 80%
+			      margin-left : 76%;
+			      font-size : 15px;
 		}
 		#delete{
 				  font-size : 10pt;
-				  width : 80px;
-				  height : 30px;
+				  width : 100px;
+				  height : 40px;
 			      background-color : lightgray;
 			      color : black;
 			      border-radius: 5px;
@@ -128,10 +130,11 @@
 			      font-weight: bold;
 			      margin-left:10px;
 			      cursor:pointer;
+			      font-size : 15px;
 		}
 		
-		#onebu,#onebu2{text-align : center;
-				  font-size : 15pt;
+		#onebu{
+				  text-align : center;
 				  width : 100px;
 				  height : 40px;
 			      background-color : rgb(241, 131, 50);
@@ -141,9 +144,10 @@
 			      font-weight: bold;
 			      line-height: 40px;
 			      cursor:pointer;
+			      font-size : 15px;
 		}
-		#twobu{text-align : center;
-				  font-size : 15pt;
+		#twobu{
+				  text-align : center;
 				  width : 100px;
 				  height : 40px;
 			      background-color : lightgray;
@@ -154,6 +158,7 @@
 			      font-weight: bold;
 			      margin-left:50px;
 			      cursor:pointer;
+			      font-size : 15px;
 		}
 		
 		.sold_txt{
@@ -168,10 +173,7 @@
 			top:80%;
 		}
 		
-		.txt{
-			
-		}
-		
+
 		
 </style>
 </head>
@@ -179,6 +181,7 @@
 	<%@ include file="../a_common/boardCommon.jsp" %>
 	<script>
 		$('#boardName').text('물귤교환');
+		
 	</script>
 	
 	<div id = "main">
@@ -250,26 +253,30 @@
                         int min = 0;
                         int sec = 0;
                         
-                        
-                        int sec1 = Integer.parseInt(t.getDlTime().substring(8, 10)) * 3600
-                              + Integer.parseInt(t.getDlTime().substring(10, 12)) * 60
-                              + Integer.parseInt(t.getDlTime().substring(12, 14));
-                        int sec2 = Integer.parseInt(timeNow.substring(8, 10)) * 3600
-                              + Integer.parseInt(timeNow.substring(10, 12)) * 60
-                              + Integer.parseInt(timeNow.substring(12, 14));
-                        
-                        int timeAll = sec1 - sec2;
-                        if(timeAll <= 0) {
-                           timeAll = timeAll + 84600;
+                        if(timer>0){
+	                        int sec1 = Integer.parseInt(t.getDlTime().substring(8, 10)) * 3600
+	                              + Integer.parseInt(t.getDlTime().substring(10, 12)) * 60
+	                              + Integer.parseInt(t.getDlTime().substring(12, 14));
+	                        int sec2 = Integer.parseInt(timeNow.substring(8, 10)) * 3600
+	                              + Integer.parseInt(timeNow.substring(10, 12)) * 60
+	                              + Integer.parseInt(timeNow.substring(12, 14));
+	                        
+	                        int timeAll = sec1 - sec2;
+	                        if(timeAll <= 0) {
+	                           timeAll = timeAll + 84600;
+	                        }
+	                        hour = /* timeAll / 3600; */0;
+	                        min = /* (timeAll - hour * 3600) / 60; */0;
+	                        sec = /* timeAll - hour * 3600 - min * 60; */10;
                         }
-                        hour = /* timeAll / 3600; */0;
-                        min = /* (timeAll - hour * 3600) / 60; */0;
-                        sec = /* timeAll - hour * 3600 - min * 60; */10;
 
                        %>
                         <script> // 카운트해주는 스크립트
                            // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
                            // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
+                           
+                           var check = '<%= t.getDlYN() %>';
+                           
                            var hours = <%if(hour<10){%>
                                        "0<%= hour %>"
                                        <%}else{%>
@@ -286,17 +293,30 @@
                                      "0<%= sec %>"
                                      <%}else{%>
                                      "<%= sec %>"
-                                      <%}%>;
+                                     <%}%>;
                            
                            $(function(){
                               var timer = setInterval(function() {
                                  if(hours == "00" && minutes == "00" && seconds == "00"){
-                                      /* $("#time").html("마감"); */
-                                      $("#detailForm").attr('action', "<%= request.getContextPath()%>/ac.point?postNo=<%= request.getParameter("postNo") %>&point=<%= t.getPoint() %>");
-          							  $("#detailForm").submit();
-          							  
+                                	
+                                	 var pp = {postNo : <%= request.getParameter("postNo") %>,
+                                			   point : <%= t.getPoint() %>}
+                                	  $.ajax({
+                                		  url: 'ac.point',
+                                		  type : 'post',
+                                		  data : pp,
+                                		  success : function(data){
+                          					$('.soldImg').css("opacity","0.3");
+                          					$('.sold_txt').html("경매가 종료된 상품입니다.");
+                          					check = 'Y';
+                          				}
+                                	  });
+                                	
+                                      <%-- $("#detailForm").attr('action', "<%= request.getContextPath()%>/ac.point?postNo=<%= request.getParameter("postNo") %>&point=<%= t.getPoint() %>");
+          							  $("#detailForm").submit(); --%>
+          							 
                                       clearInterval(timer);
-                                      
+                                      $("#time").html("마감");
                                    } else {
                                       seconds--;
                                        if(seconds == -1){
@@ -336,42 +356,48 @@
 					</table>
 				</div>
 			
-				<div id = "btn1">
-					<% if(loginUser != null && loginUser.getNickName().equals(t.getNickname()) && (t.getDlYN()=='N')){ %>
+				
+					<% if(loginUser != null && loginUser.getNickName().equals(t.getNickname())){ %>
 						<input id = "revise" type="submit" value="수정"> 
 						<input id = "delete" type="submit" value="삭제" onclick="deleteGy();" >
 					<% } %>
-				</div>
+				
+				<script>
+					$(function(){
+						$('#revise').click(function(){
+							if(check=='Y'){
+								alert("경매가 마감된 게시글은 수정하실 수 없습니다.");
+								return false;
+							}
+						})
+					});
+				</script>
 			</form>
 			
-			<% if(t.getDlYN()=='Y') {%>
-			<script>
-				$(function(){
-					$('.soldImg').css("opacity","0.3");
-				});
-			</script>
+			
+			
 				<div class="sold_txt">
-					<span class = "txt">경매가 종료된 상품입니다.</span>
+				<!-- 경매종료 안내문구 넣을 div -->
 				</div>
-			<% } %>
+			
+	 		
 	 	
-	 	<div id = "btn2">
-				 <% if(t.getDlYN()=='N'){ %>
-				<button id = "onebu" onclick = "location.href = 'views/d_trade/gyulBid.jsp?postNo=<%= request.getParameter("postNo") %>&min=<%= t.getMinPoint() %>&point=<%= t.getPoint() %>&max=<%= t.getMaxPoint() %>'">입찰하기</button>
-				<% }else{ %>
-				<button id="onebu2" >입찰하기</button>
-					<script>
-						$(function(){
-							$('#onebu2').click(function(){
-								alert("경매가 종료된 상품입니다!");
-							});
-						});
-					</script>
-				<% } %>  
-				
+		<% if(loginUser != null && !(loginUser.getNickName().equals(t.getNickname()))){ %>	
+		  <button id="onebu">입찰하기</button>
+          <% } %>
+          <script>
+          
+             $('#onebu').click(function(){
+                if(check == 'N') {
+                   location.href = "views/d_trade/gyulBid.jsp?postNo=<%= request.getParameter("postNo") %>&min=<%= t.getMinPoint() %>&point=<%= t.getPoint() %>&max=<%= t.getMaxPoint() %>&writer=<%= t.getNickname() %>"
+                } else {
+                   alert("경매가 종료된 상품입니다!");
+                }
+             });
+          </script>
 				
 				<button id="twobu" onclick="location.href='<%= request.getContextPath() %>/list.gy'">목록으로</button>
-		</div>
+		
 		
 	</div>
 	

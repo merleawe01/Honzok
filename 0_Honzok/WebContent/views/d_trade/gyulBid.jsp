@@ -77,6 +77,7 @@
 			text-align: center;
 			cursor: pointer;
 			border : 0px;
+			font-size : 15px;
 		}
 		#cancel{
 			width : 100px;
@@ -91,6 +92,7 @@
 			text-align: center;
 			cursor: pointer;
 			border : 0px;
+			font-size : 15px;
 		}
 		
 		#input_address{
@@ -241,15 +243,19 @@
 	<script>
 		$(function(){
 			$('#ok').click(function(){
+				var input_point = $('#bid2').val();
 				if($('#bid').is(":checked")){
-					if($('#bid2').val() <= <%= request.getParameter("min") %>){
+					if(Number(input_point) <= <%= request.getParameter("min") %>){
 						alert("시작 입찰귤 보다 높은 귤을 입력해주세요.\n시작 입찰귤은 <%= request.getParameter("min") %>귤 입니다.");
 						return false;
-					}else if($('#bid2').val() > <%= request.getParameter("max") %>){
+					}else if(Number(input_point) > <%= request.getParameter("max") %>){
 						alert("즉시 구매귤 보다 높은 귤을 입력할 수 없습니다.");
 						return false;
-					}else if($('#bid2').val() <= <%= request.getParameter("point") %>){
+					}else if(Number(input_point) <= <%= request.getParameter("point") %>){
 						alert("기존 입찰귤 보다 높은 귤을 입력해주세요.\n현재 입찰귤은 <%= request.getParameter("point") %>귤 입니다.");
+						return false;
+					}else if(<%= myPoint %> < Number(input_point)){
+						alert("보유하신 포인트가 부족합니다!");
 						return false;
 					}else{
 						$("#bidInform").submit();
@@ -259,7 +265,7 @@
 					
 					if(result){
 						if(<%= myPoint %> >= <%= request.getParameter("max") %>){
-							$("#bidInform").attr("action", "<%= request.getContextPath()%>/update.point?postNo="+<%= request.getParameter("postNo") %>);
+							$("#bidInform").attr("action", "<%= request.getContextPath()%>/update.point?postNo="+<%= request.getParameter("postNo") %>+"&writer=<%= request.getParameter("writer") %>");
 							$("#bidInform").submit();
 						}else{
 							alert("포인트가 부족합니다!!!\n보유 포인트 : <%= myPoint %>");
