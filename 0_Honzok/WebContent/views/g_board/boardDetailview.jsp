@@ -189,7 +189,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				</div>
 				
 				<div id="boardWriter">
-					<%= b.getWriter() %> | 조회 : <%= b.getViewCount() %>
+					<%= b.getNickname() %> | 조회 : <%= b.getViewCount() %>
 				</div>
 				
 				<table style="margin-left: auto; margin-right: auto;">
@@ -204,7 +204,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 						<tr>
 							<td id = "content_td"></td>
 							<td>
-								<label id = "content"><%= b.getContent() %></label>
+								<textarea cols=60 rows=15 id = "content"><%= b.getContent() %></textarea>
 								<input type="hidden" value="<%= b.getContent() %>" name = "content">
 							</td>
 						</tr>

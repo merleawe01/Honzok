@@ -124,12 +124,12 @@
 			  $('#text-length').html(remain);
 
 
-	        if($(this).val().length > 780) {
+/* 	        if($(this).val().length > 780) {
 	        	 $('#text-length').css('color','red');
 	            $(this).val($(this).val().substring(0, 780));
 	        }else{
 				   $('#text-length').css('color','black');
-			  }
+			  } */
 
 
 	    });

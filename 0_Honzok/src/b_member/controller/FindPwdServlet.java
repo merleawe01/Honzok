@@ -89,7 +89,7 @@ public class FindPwdServlet extends HttpServlet {
 	        	// 1. 전달받은 값 인코딩
 
 				final String sender = "yocon_o3o@naver.com"; // 보내는 사람 ID (Ex: @naver.com 까지..)
-				final String password = "qkwndu12"; // 보내는 사람 Password
+				final String password = "password"; // 보내는 사람 Password
 
 				String receiver = email; // 받는 사용자 (Ex: @naver.com 까지..)
 				String title = "인증 번호 메일입니다 :)";
@@ -138,6 +138,7 @@ public class FindPwdServlet extends HttpServlet {
 					request.setAttribute("msg", "인증번호가 발송되었습니다. 이메일을 확인해주세요 :D");
 					request.setAttribute("member", m);
 					page = "views/b_member/inputKeyCode2.jsp";
+					
 				} catch (MessagingException e) {
 					System.out.println("전송 실패!! ㅠㅠ");
 					e.printStackTrace();
@@ -149,8 +150,9 @@ public class FindPwdServlet extends HttpServlet {
 	            request.setAttribute("msg", "다시 한 번 시도해주세요.");
 	            
 	        }
+	        
     		RequestDispatcher view = request.getRequestDispatcher(page);
-        	view.forward(request, response);	
+        	view.forward(request, response);
 	    }
 
 	}
