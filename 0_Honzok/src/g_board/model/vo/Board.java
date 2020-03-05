@@ -8,6 +8,7 @@ public class Board {
 	private int boardNo;
 	private String postTitle;
 	private String writer;
+	private String nickname;
 	private String content;
 	private int viewCount;
 	private Date modifyDate;
@@ -17,13 +18,6 @@ public class Board {
 	
 	
 	public Board() {}
-
-
-
-
-
-
-
 
 	public Board(int postNo, String postTitle, int viewCount, String writeDate) {
 		super();
@@ -45,11 +39,11 @@ public class Board {
 
 
 
-	public Board(int postNo,String writer, int boardNo, String postTitle, String content, int viewCount, String writeDate,
+	public Board(int postNo, String nickname, int boardNo, String postTitle, String content, int viewCount, String writeDate,
 			Date modifyDate, char deleteYN) {
 		super();
 		this.postNo = postNo;
-		this.writer = writer;
+		this.nickname = nickname;
 		this.boardNo = boardNo;
 		this.postTitle = postTitle;
 		this.content = content;
@@ -98,10 +92,17 @@ public class Board {
 
 
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public int getPostNo() {
 		return postNo;
 	}
-
 
 
 	public void setPostNo(int postNo) {

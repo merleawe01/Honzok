@@ -136,7 +136,7 @@ public class BoardDAO {
 			
 			if(rs.next()) {
 				board = new Board(rs.getInt("post_no"),
-								 rs.getString("writer"),
+								  rs.getString("nickname"),
 								  rs.getInt("board_no"),
 								  rs.getString("post_title"),
 								  rs.getString("content"),

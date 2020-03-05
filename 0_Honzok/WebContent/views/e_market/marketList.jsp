@@ -21,7 +21,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
-   body{background:#fff9f0}
+   body{background:#fffcf7}
    .tableArea{width:800px; height:auto; margin-left:auto; margin-right:auto;}
    .listArea{text-align:left; height:250px;}
    

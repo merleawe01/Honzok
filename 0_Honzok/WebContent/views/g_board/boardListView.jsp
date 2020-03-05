@@ -187,10 +187,10 @@
 				<div id = "tablearea2">
 					<table id = "list_table">
 						<!-- 게시글 불러오는곳 -->
-						<% if(List.isEmpty()){ %>
-				<tr>
-					<td colspan="4">존재하는 게시글이 없습니다.</td>
-				</tr>
+				<% if(List.isEmpty()){ %>
+					<tr>
+						<td colspan="4">존재하는 게시글이 없습니다.</td>
+					</tr>
 				<% } else{ 
 						 for(Board b : List){ 
 						
