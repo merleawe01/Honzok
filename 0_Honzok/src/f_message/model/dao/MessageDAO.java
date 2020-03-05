@@ -106,6 +106,7 @@ public class MessageDAO {
 			pstmt.setString(2, "운영자");
 			pstmt.setString(3, "가입하신걸 환영합니다!");
 			pstmt.setString(4, "혼족옵서예에서 당신의 빛나는 싱글라이프를 즐겨주세요 *^^*");
+			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,7 +116,7 @@ public class MessageDAO {
 		
 		return result;
 	}
-
+	
 	public int deleteMessage(Connection conn, String[] mNoList) {
 		PreparedStatement pstmt = null;
 		int result = 0;

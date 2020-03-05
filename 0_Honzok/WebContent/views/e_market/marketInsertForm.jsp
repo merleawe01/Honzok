@@ -160,6 +160,7 @@
 				
 			</script>
 				<div>
+          
 					 <div id="ok" onclick="insertList();">확인</div> 
 						<!-- <button type="button" id="ok" onclick="insertBoard();">확인</button> -->
 						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>

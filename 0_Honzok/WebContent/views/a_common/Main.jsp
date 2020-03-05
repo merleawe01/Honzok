@@ -37,10 +37,10 @@
    #travel {position:relative; left:50px; top:100px;}
    
    nav {
-      background-color:#fff4c7;
+      background-color:white;
       position: fixed;
-      width: 99%;
-      height: 90%;
+      width: 100%;
+      height: 100%;
       top: 60px;
       z-index: 1;
    }
@@ -110,7 +110,7 @@
 			<button type="button" class="menuBtn" onclick="slideMenu()">
 				<img alt="메뉴" src="images/list.png" style="width: 30px; heigth: 30px;">
 			</button>
-
+      
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
@@ -246,8 +246,6 @@
 			}
 		});
 	</script>
-
- 
 </body>
   
 </html>

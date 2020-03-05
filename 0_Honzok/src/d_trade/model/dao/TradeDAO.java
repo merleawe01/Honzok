@@ -167,8 +167,6 @@ public class TradeDAO {
 //			pstmt.setInt(3, t.getPoint());
 			pstmt.setString(3, t.getNickname());
 			
-
-			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

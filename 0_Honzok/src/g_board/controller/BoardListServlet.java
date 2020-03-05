@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import a_common.PageInfo;
 import g_board.model.service.BoardService;
 import g_board.model.vo.Board;
-import a_common.PageInfo;
 
 /**
  * Servlet implementation class BoardListServlet

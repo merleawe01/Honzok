@@ -48,7 +48,7 @@ public class FindPwdServlet extends HttpServlet {
 		Member m = new MemberService().getMember(userName, email);
 		
 		String page = null;
-		if(m == null || !m.getEmail().equals(email))
+		if(m == null || !m.getEmail().equals(email) || !m.getUserName().equals(userName))
 	        {
 				page = "views/b_member/find_Pwd.jsp";
 				request.setAttribute("m", m);

@@ -4,6 +4,7 @@
 	FoodBoard board = (FoodBoard)request.getAttribute("board");
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
+  
 	String recCheck = (String)request.getAttribute("recCheck");
 %>
 <!DOCTYPE html>
