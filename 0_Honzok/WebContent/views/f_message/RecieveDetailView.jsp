@@ -18,7 +18,7 @@
 	#center{text-align:center;}
 	#menuBtn{background: #AEBF2A; color:white; display:inline-block;
 			 padding:5px; margin:5px; align:center;}
-	#send{background: powderblue;}
+	#recieve{background: powderblue;}
 </style>
 </head>
 <body onresize="parent.resizeTo(530,600)" onload="parent.resizeTo(530,600)">
@@ -81,9 +81,9 @@
 		});
 		
 		$('.menu').mouseout(function() {
-			$('#send').css('background', 'powderblue');
+			$('#recieve').css('background', 'powderblue');
 			$('#store').css('background', '#e0e0e0');
-			$('#recieve').css('background', '#e0e0e0');
+			$('#send').css('background', '#e0e0e0');
 		});
 
 	</script>

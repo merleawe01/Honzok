@@ -10,6 +10,9 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	String select = (String)request.getAttribute("select");
+	String keyword = (String)request.getAttribute("keyword");
 %>
 <!DOCTYPE html>
 <html>
@@ -113,11 +116,11 @@
 		<div class="pagingArea" align="center">
 			<% if(!list.isEmpty()) { %>
 			<!-- 맨 처음으로 -->
-			<button class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.re?currentPage=1'">&lt;&lt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=1&searchSelect=<%= select %>&word=<%= keyword %>'">&lt;&lt;</button>
 			<!-- 버튼을 클릭하면 Servlet으로 넘어가서 currentPage가 1로 바뀐다. -->
 				
 			<!-- 이전 페이지로 -->
-			<button onclick="location.href='<%= request.getContextPath()%>/list.re?currentPage=<%= currentPage - 1%>'"
+			<button type="button" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= currentPage - 1%>&searchSelect=<%= select %>&word=<%= keyword %>'"
 					id="beforeBtn" class="pagingBtn">pre</button>
 			
 			<script>
@@ -130,40 +133,26 @@
 			<!-- 5개의 페이지 목록 -->
 			<% for(int p = startPage; p <= endPage; p++){ %>
 				<% if(p == currentPage){ %> <!-- 현재 페이지랑 똑같다면  -->
-					<button id="choosen" disabled><%= p %></button>
+					<button type="button" id="choosen" disabled><%= p %></button>
 				<% } else { %>
-					<button id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/list.re?currentPage=<%= p %>'"><%= p %></button>
+					<button type="button" id="numBtn" onclick ="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= p %>&searchSelect=<%= select %>&word=<%= keyword %>'"><%= p %></button>
 				<% } %> 
 			<% } %>
 			
 			<!-- 다음 페이지로  -->
-			<button class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/list.re?currentPage=<%= currentPage + 1 %>'" id="afterBtn">next</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/search.re?currentPage=<%= currentPage + 1 %>&searchSelect=<%= select %>&word=<%= keyword %>'" id="afterBtn">next</button>
 			<script>
-				if(<%= currentPage%> >= <%=maxPage%>){
+				if(<%= currentPage %> >= <%= maxPage %>){
 					var after = $("#afterBtn");
 					after.attr('disabled', 'true');
 				}
 			</script>
 				
 			<!-- 맨 끝으로 -->
-			<button class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.re?currentPage=<%= maxPage %>'">&gt;&gt;</button>
+			<button type="button" class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/search.re?currentPage=<%= maxPage %>&searchSelect=<%= select %>&word=<%= keyword %>'">&gt;&gt;</button>
 				
 			<% } %>
 			
-		</div>
-		<div class="searchArea">
-			<div class="selectArea">
-				<select name="search" id="search">
-					<option value="from" selected>보낸 사람</option>
-					<option value="title">제목</option>
-					<option value="content">내용</option>
-				</select> 
-				<input type="hidden" name="searchSelect" id="searchSelect">
-			</div>
-			<div class="wordArea">
-				<input type="text" placeholder="검색어 입력" name="word" id="word">
-				<button id="searchBtn" onclick="searchMessage();">검색</button>
-			</div>
 		</div>
 	</form>
 	</div>
@@ -247,13 +236,11 @@
 			}
 		}
 		
-		
 		function searchMessage(){
 			var isSearchChecked = false;
 			var search = $("#search");
 			var searchWord = $('#word');
 			
-
 			$('#word').change(function(){
 				if(searchWord.val().trim().length< 1){
 					alert('검색어를 입력해주세요.');
@@ -268,22 +255,12 @@
 			var option = $('#search').val();
 			switch(option){
 				case "from" : $('#searchSelect').val("from"); break;
-				case "title" : $('#searchSelect').val(option); break;
-				case "content" : $('#searchSelect').val(option); break;
+				case "title" : $('#searchSelect').val("title"); break;
+				case "content" : $('#searchSelect').val("content"); break;
 			}
-			console.log(option);
-			console.log($('#searchSelect').val());
 			
 			$('#RListForm').attr('action', '<%= request.getContextPath()%>/search.re');
 			$('#RListForm').submit();
-			
-<%-- 			var opLength = $("option").length;
-        	for(var i = 0; i < opLength; i++){
-            	if($("option")[i].text == "<%=category%>") {
-				$("option")[i].selected = true;
-			} else {
-				$("option")[i].selected = false;
-			} --%>
 		}
 
 	</script>
