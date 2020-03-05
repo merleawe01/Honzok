@@ -93,12 +93,18 @@
 		background-color: rgb(252, 223, 212);
 		border-top: 2px solid gray;
 		border-bottom: 2px solid gray;
+		margin-bottom: 20px;
 	}
 	#quicklink td {
 		cursor: pointer;
 	}
 	.td {
 		border-bottom: 1px solid gray;
+	}
+	#quicklink img {
+		width: 50px;
+		height: auto;
+		cursor: pointer;
 	}
 	
 	#main {
@@ -138,10 +144,20 @@
 					<tr><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
 				</table>
 				
+				<br>
+				<img id="goTop" src="<%= request.getContextPath() %>/images/top_button2.png">
+				
 				<script>
 					function moveLink(link){
 						location.href="<%= request.getContextPath() %>/" + link;
 					}
+					
+					$("#goTop").click(function() {
+			            $('html, body').animate({
+			                scrollTop : 0
+			            }, 300);
+			            return false;
+			        });
 				</script>
 				
 			</div>
