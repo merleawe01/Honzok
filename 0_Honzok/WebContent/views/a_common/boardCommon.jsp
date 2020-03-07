@@ -2,10 +2,10 @@
     pageEncoding="UTF-8" import = "f_message.model.vo.*, b_member.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
-	/* String msg = (String)request.getAttribute("msg"); 
+	String msg = (String)request.getAttribute("msg"); 
 
 	Message m = new Message();
-	int view = m.getView(); */
+	int view = m.getView();
 %>
 <!DOCTYPE html>
 <html>
@@ -18,6 +18,9 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a37066af0c038845c5bf58548af2378b&libraries=services"></script>
 
 <style>
+	body {
+		background-color: #fff9f0;
+	}
 	header {
 		width : 100%;
 		height : 170px;
@@ -43,12 +46,16 @@
 		height : 100%;
 		width : auto;
 		float : right;
+		cursor: pointer;
+		margin-left: 10px;
 	}
 	#icon {
 		height : 100%;
 		width : auto;
 		float : right;
 	}
+	.messageBtn {padding:3px; display: inline-table; float: right;
+          background-color: transparent; border: none; cursor: pointer;}
 	#nickname {
 		float : right;
 		padding : 10px;
@@ -56,11 +63,20 @@
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 12pt;
 		cursor: pointer;
+		font-weight: bold;
 	}
 	/* #nickname::after{
 		content : "님";
 		color : black;
 	} */
+	#logout {
+		float : right;
+		padding : 10px;
+		color: rgb(118,129,73);
+		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 12pt;
+		cursor: pointer;
+	}
 	#boardName{
 		margin : 20px;
 		width : 100%;
@@ -124,16 +140,30 @@
 
 </head>
 <body>
+
+<script>
+	console.log()
+</script>
+
 	<header>
 		<div id="mainHeader">
 			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
 			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
 			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
+			<span id="message">
+				<button type="button" class="messageBtn" onclick="goMessage();">
+ 				<% if(view == 0) {%> 
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/receive_letter.png" style="width:40px; height:40px;">
+				<% } else { %>
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/basic_letter.png" style="width:40px; height:40px;">
+				<% } %>
+				</button>
+			</span>
 			
 			<% if(loginUser == null){ %>
 				<div id="nickname" onclick="location.href='views/b_member/login.jsp'">로그인</div>
 			<%}else{ %>
+				<div id="logout">로그아웃</div>
 				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
 			<%} %>
 					
@@ -151,6 +181,10 @@
 				<img id="goTop" src="<%= request.getContextPath() %>/images/top_button2.png">
 				
 				<script>
+					$('#logout').click(function(){
+						location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+					})
+					
 					function moveLink(link){
 						location.href="<%= request.getContextPath() %>/" + link;
 					}
@@ -161,6 +195,14 @@
 			            }, 300);
 			            return false;
 			        });
+					
+					function goMessage(){
+						<% if(loginUser != null) {%>
+							window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
+						<% } else {%>
+							alert("로그인 후 이용해주세요.");
+						<% } %>
+					}
 				</script>
 				
 			</div>
