@@ -94,7 +94,7 @@ public class FBoardService {
 		int result4 = dao.updateCateBoard(conn, board);
 		int result5 = dao.updateImage(conn, fileList, imgInfo, board.getNo());
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0 && result5 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
