@@ -145,23 +145,11 @@
 <body>
 <header>
 	
-		<div id="mainHeader"><a href="../../index.jsp">	
-			<img alt="로고" src="../../images/Logo.png" id="logo"></a>
-			<img alt="메뉴" src="../../images/list.png" id="list">
-			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			<div id="nickname">
-				<span id="loginText" onclick="goLogin();">로그인</span>
-			</div>
-			
-			
-		</div>
-		
-		<div id="subHeader">
-			<div id="boardName">
-				비밀번호 찾기
-			</div>
-		</div>
+	<%@ include file="../a_common/boardCommon.jsp" %>
+	<script>
+		$('#boardName').text('비밀번호 찾기');
+		$('#quicklink').css('display','none');
+	</script>
 	
 	</header>
 	
