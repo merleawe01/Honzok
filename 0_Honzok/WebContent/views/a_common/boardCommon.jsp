@@ -4,8 +4,8 @@
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String msg = (String)request.getAttribute("msg"); 
 
-	Message m = new Message();
-	int view = m.getView();
+	Message message = new Message();
+	int view = message.getView();
 %>
 <!DOCTYPE html>
 <html>
@@ -136,19 +136,28 @@
 		margin-bottom: 20px;
 		text-align: center;
 	}
+	
+	 nav {
+      background-color:#fff4c7;
+      position: fixed;
+      width: 99%;
+      height: 90%;
+      top: 60px;
+      z-index: 3;
+   }
+   .menu {margin:100px auto;}
+   .menu img {width: 100%; height: 100%; cursor: pointer;}
+   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
+         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
+         
 </style>
 
 </head>
 <body>
-
-<script>
-	console.log()
-</script>
-
 	<header>
 		<div id="mainHeader">
 			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
-			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
+			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list" onclick="slideMenu()">
 			
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
@@ -213,10 +222,53 @@
 				게시판이름 작성하기
 			</div>
 		</div>
+		
+		<nav hidden="">
+			<table class="menu">
+				<tr>
+					<td><div class="circle" id="circle1" onclick="goInfo();"><img src="<%= request.getContextPath() %>/images/menu_info.png"></div></td>
+					<td></td>
+					<td><div class="circle" id="circle2" onclick="goFree();"><img src="<%= request.getContextPath() %>/images/menu_free.png"></div></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><div class="circle" id="circle1" onclick="goGy();"><img src="<%= request.getContextPath() %>/images/menu_barter.png"></div></td>
+					<td></td>
+					<td><div class="circle" id="circle2" onclick="goMarket();"><img src="<%= request.getContextPath() %>/images/menu_market.png"></div></td>
+				</tr>
+			</table>
+		</nav>
+		
+		<script>
+			$('nav').height($(document).height()-50)
+			var updownCheck = true;
+			
+			function slideMenu() {
+				if(updownCheck) {
+					$('nav').slideDown(300);
+					updownCheck = false;
+					document.body.style.overflow= 'hidden';
+				} else {
+					$('nav').slideUp(300);
+					updownCheck = true;
+					document.body.style.overflow= 'visible';
+				}
+			}
+		
+			function goInfo(){
+				location.href="<%= request.getContextPath()%>/list.food";
+			}
+			function goFree(){
+				location.href="<%= request.getContextPath()%>/list.bo";
+			}
+			function goMarket(){
+				location.href="<%= request.getContextPath()%>/list.m";
+			}
+			function goGy(){
+				location.href="<%= request.getContextPath()%>/list.gy";
+			};
+		</script>
 	</header>
-	
-	
-	
 </body>
-
 </html>

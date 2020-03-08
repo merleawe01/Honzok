@@ -97,6 +97,7 @@
       z-index: 1;
    }
    .menu {margin:100px auto;}
+   .menu img {width: 100%; height: 100%; cursor: pointer;}
    .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
          margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
          
@@ -188,7 +189,7 @@
       	</div>
 		
 		<div id="subHeader">
-			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
+			<img alt="로고" src="images/BigLogo.png" id="logo" onclick="location.href='index.jsp'">
 		</div>
 		
 		<!-- html 높이는 454 -->
@@ -211,16 +212,16 @@
 		<nav hidden="">
 			<table class="menu">
 				<tr>
-					<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
+					<td><div class="circle" id="circle1" onclick="goInfo();"><img src="images/menu_info.png"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="goFree();"><img src="images/menu_free.png"></div></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><div class="circle" id="circle1" onclick="goGy();">물귤교환</div></td>
+					<td><div class="circle" id="circle1" onclick="goGy();"><img src="images/menu_barter.png"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2" onclick="goMarket();">혼플리마켓</div></td>
+					<td><div class="circle" id="circle2" onclick="goMarket();"><img src="images/menu_market.png"></div></td>
 				</tr>
 			</table>
 		</nav>
@@ -266,8 +267,19 @@
 	<footer></footer>
 	
 	<script>
+		$('nav').height($(document).height()-50)
+		var updownCheck = true;
+		
 		function slideMenu() {
-			$('nav').slideToggle(300);
+			if(updownCheck) {
+				$('nav').slideDown(300);
+				updownCheck = false;
+				document.body.style.overflow= 'hidden';
+			} else {
+				$('nav').slideUp(300);
+				updownCheck = true;
+				document.body.style.overflow= 'visible';
+			}
 		}
 	
 		function goMessage(){
@@ -280,6 +292,9 @@
 		
 		function goInfo(){
 			location.href="<%= request.getContextPath()%>/list.food";
+		}
+		function goFree(){
+			location.href="<%= request.getContextPath()%>/list.bo";
 		}
 		function goMarket(){
 			location.href="<%= request.getContextPath()%>/list.m";
