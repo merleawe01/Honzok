@@ -3,8 +3,10 @@
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 
-	Message m = new Message();
-	int view = m.getView();
+	String msg = (String)request.getAttribute("msg"); 
+
+	Message message = new Message();
+	int view = message.getView();
 %>
 <!DOCTYPE html>
 <html>
@@ -17,6 +19,9 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a37066af0c038845c5bf58548af2378b&libraries=services"></script>
 
 <style>
+	body {
+		background-color: #fff9f0;
+	}
 	header {
 		width : 100%;
 		height : 170px;
@@ -42,25 +47,39 @@
 		height : 85%;
 		width : auto;
 		float : right;
+		cursor: pointer;
+		margin-left: 10px;
 	}
 	#icon {
 		height : 90%;
 		width : auto;
 		float : right;
 	}
-	.nickname {
+
+	.messageBtn {padding:3px; display: inline-table; float: right;
+          background-color: transparent; border: none; cursor: pointer;}
+  .nickname {
 		float : right;
 		padding : 10px;
 		color: rgb(241,131,50);
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 15pt;
 		cursor: pointer;
+		font-weight: bold;
 	}
 	.messageBtn {padding:3px; display: inline-table; float: right; margin-right:5px;
           background-color: transparent; border: none; cursor: pointer;}
 	#nickname::after{
 		content : "님";
 		color : black;
+	}
+	#logout {
+		float : right;
+		padding : 10px;
+		color: rgb(118,129,73);
+		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 12pt;
+		cursor: pointer;
 	}
 	#boardName{
 		margin : 20px;
@@ -129,6 +148,20 @@
 		margin-bottom: 20px;
 		text-align: center;
 	}
+	
+	 nav {
+      background-color:#fff4c7;
+      position: fixed;
+      width: 99%;
+      height: 90%;
+      top: 60px;
+      z-index: 3;
+   }
+   .menu {margin:100px auto;}
+   .menu img {width: 100%; height: 100%; cursor: pointer;}
+   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
+         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
+         
 </style>
 
 </head>
@@ -136,26 +169,8 @@
 	<header>
 		<div id="mainHeader">
 			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
-			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list">
+			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list" onclick="slideMenu()">
 			
-			<!-- 메뉴 -->
-			<nav hidden="">
-				<table class="menu">
-					<tr>
-						<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
-						<td></td>
-						<td><div class="circle" id="circle2"></div></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><div class="circle" id="circle1" onclick="goGy();">물귤교환</div></td>
-						<td></td>
-						<td><div class="circle" id="circle2" onclick="goMarket();">혼플리마켓</div></td>
-					</tr>
-				</table>
-			</nav>
-
 			<div id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
@@ -166,12 +181,11 @@
 				</button>
 			</div>		
 			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			
 			<% if(loginUser == null){ %>
 				<div class="nickname" onclick="location.href='<%= request.getContextPath() %>/views/b_member/login.jsp'"><b>로그인</b></div>
 			<%}else{ %>
 				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
+				<div id="logout">로그아웃</div>
 			<%} %>
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
 			
@@ -216,6 +230,10 @@
 				<img id="goTop" src="<%= request.getContextPath() %>/images/top_button2.png" style="width:40px; heigth:30px;">
 				
 				<script>
+					$('#logout').click(function(){
+						location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+					})
+					
 					function moveLink(link){
 						location.href="<%= request.getContextPath() %>/" + link;
 					}
@@ -226,7 +244,14 @@
 			            }, 300);
 			            return false;
 			        });
-			
+					
+					function goMessage(){
+						<% if(loginUser != null) {%>
+							window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
+						<% } else {%>
+							alert("로그인 후 이용해주세요.");
+						<% } %>
+					}
 				</script>
 				
 			</div>
@@ -237,91 +262,121 @@
 				게시판이름
 			</div>
 		</div>
-	</header>
-	
-	<script>
-	function slideMenu() {
-		$('nav').slideToggle(300);
-	}
-
-	function goMessage(){
-		<% if(loginUser != null) {%>
-			window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
-		<% } else {%>
-			alert("로그인 후 이용해주세요.");
-		<% } %>
-	}	
-	
-	function goInfo(){
-		location.href="<%= request.getContextPath()%>/list.food";
-	}
-	function goMarket(){
-		location.href="<%= request.getContextPath()%>/list.m";
-	}
-	function goGy(){
-		location.href="<%= request.getContextPath()%>/list.gy";
-	}
-
-	$(function(){
-		var obTimeOut;
 		
-		var ObjectArray = new Array();
-		ObjectArray[1] = "<%= request.getContextPath() %>/images/breakfast_icon.png";
-		ObjectArray[2] = "<%= request.getContextPath() %>/images/travel_icon.png";
-
-		var nObjectCnt = 0;
-
-		// 스스로 자신을 호출하는 재귀함수 (Recursive Function)
-		function ShowDefaultRotate(){
-			nObjectCnt++;
-
-			if(nObjectCnt < ObjectArray.length) {
-				$("#infoImg").src = ObjectArray[nObjectCnt];		 
-				obTimeOut = setTimeout("ShowDefaultRotate()", 2000); 
-			} else {
-				nObjectCnt = 0;
-			}
+		<nav hidden="">
+			<table class="menu">
+				<tr>
+					<td><div class="circle" id="circle1" onclick="goInfo();"><img src="<%= request.getContextPath() %>/images/menu_info.png"></div></td>
+					<td></td>
+					<td><div class="circle" id="circle2" onclick="goFree();"><img src="<%= request.getContextPath() %>/images/menu_free.png"></div></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><div class="circle" id="circle1" onclick="goGy();"><img src="<%= request.getContextPath() %>/images/menu_barter.png"></div></td>
+					<td></td>
+					<td><div class="circle" id="circle2" onclick="goMarket();"><img src="<%= request.getContextPath() %>/images/menu_market.png"></div></td>
+				</tr>
+			</table>
+		</nav>
+		
+		<script>
+			$('nav').height($(document).height()-50)
+			var updownCheck = true;
 			
-		}
-		
-		function startAnimation(){
-		      obTimeOut = window.setTimeout(ShowDefaultRotate,100);
-		}
+			function slideMenu() {
+				if(updownCheck) {
+					$('nav').slideDown(300);
+					updownCheck = false;
+					document.body.style.overflow= 'hidden';
+				} else {
+					$('nav').slideUp(300);
+					updownCheck = true;
+					document.body.style.overflow= 'visible';
+				}
+			}
+      
+      function goMessage(){
+        <% if(loginUser != null) {%>
+          window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
+        <% } else {%>
+          alert("로그인 후 이용해주세요.");
+        <% } %>
+      }	
 
-		window.onload = startAnimation;
+			function goInfo(){
+				location.href="<%= request.getContextPath()%>/list.food";
+			}
+			function goFree(){
+				location.href="<%= request.getContextPath()%>/list.bo";
+			}
+			function goMarket(){
+				location.href="<%= request.getContextPath()%>/list.m";
+			}
+			function goGy(){
+				location.href="<%= request.getContextPath()%>/list.gy";
+			};
+      
+      $(function(){
+        var obTimeOut;
 
-		
-		// hover //
-		$(function(){
-			$("#imgDiv1").mouseenter(function(){
-				$('#quickCircle1').css('display','block');
-			}).mouseleave(function(){
-				$('#quickCircle1').css('display','none');
-			});
+        var ObjectArray = new Array();
+        ObjectArray[1] = "<%= request.getContextPath() %>/images/breakfast_icon.png";
+        ObjectArray[2] = "<%= request.getContextPath() %>/images/travel_icon.png";
 
-			$("#imgDiv2").mouseenter(function(){
-				$('#quickCircle2').css({'display':'block','border-radius':'5%'});
-			}).mouseleave(function(){
-				$('#quickCircle2').css('display','none');
-			});
+        var nObjectCnt = 0;
 
-			$("#imgDiv3").mouseenter(function(){
-				$('#quickCircle3').css({'display':'block', 'border-radius':'5%'});
-			}).mouseleave(function(){
-				$('#quickCircle3').css('display','none');
-			});
+        // 스스로 자신을 호출하는 재귀함수 (Recursive Function)
+        function ShowDefaultRotate(){
+          nObjectCnt++;
 
-			$("#imgDiv4").mouseenter(function(){
-				$('#quickCircle4').css({'display':'block','border-radius':'5%'});
-			}).mouseleave(function(){
-				$('#quickCircle4').css('display','none');
-			});
-		})
-		
-	});
-	
-	</script>
-	
+          if(nObjectCnt < ObjectArray.length) {
+            $("#infoImg").src = ObjectArray[nObjectCnt];		 
+            obTimeOut = setTimeout("ShowDefaultRotate()", 2000); 
+          } else {
+            nObjectCnt = 0;
+          }
+
+        }
+
+        function startAnimation(){
+              obTimeOut = window.setTimeout(ShowDefaultRotate,100);
+        }
+
+        window.onload = startAnimation;
+
+
+        // hover //
+        $(function(){
+          $("#imgDiv1").mouseenter(function(){
+            $('#quickCircle1').css('display','block');
+          }).mouseleave(function(){
+            $('#quickCircle1').css('display','none');
+          });
+
+          $("#imgDiv2").mouseenter(function(){
+            $('#quickCircle2').css({'display':'block','border-radius':'5%'});
+          }).mouseleave(function(){
+            $('#quickCircle2').css('display','none');
+          });
+
+          $("#imgDiv3").mouseenter(function(){
+            $('#quickCircle3').css({'display':'block', 'border-radius':'5%'});
+          }).mouseleave(function(){
+            $('#quickCircle3').css('display','none');
+          });
+
+          $("#imgDiv4").mouseenter(function(){
+            $('#quickCircle4').css({'display':'block','border-radius':'5%'});
+          }).mouseleave(function(){
+            $('#quickCircle4').css('display','none');
+          });
+        })
+
+      });
+      
+		</script>
+	</header>
+
 </body>
-
 </html>

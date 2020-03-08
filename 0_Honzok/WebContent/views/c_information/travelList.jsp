@@ -192,6 +192,17 @@
 		display: inline-table;
 		cursor: pointer;
 	}
+	#more {
+		margin-top: 40px;
+		font-size: 15pt;
+		height: 40px;
+		background-color: rgba(118,129,73,0.5);
+		line-height: 40px;
+		display: inline-table;
+		width: 200px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
 </style>
 
 </head>
@@ -381,7 +392,7 @@
 		</script>
 		
 		<% if(list.isEmpty()) {%>
-			<br>해당하는 데이터가 존재하지 않습니다.
+			<br>해당하는 게시글이 없습니다.
 		
 		<% } else { %>
 		<% for(int i = 0; i < list.size(); i++) { %>
@@ -415,6 +426,8 @@
 		<% 	} %>
 		<% } %>
 		
+		<div id="more">더보기</div>
+		
 		<script>
 			var viewNum = 5;
 			
@@ -423,24 +436,26 @@
 					<% for(int i = 5; i < list.size(); i++) {%>
 						$('#num<%= i %>').hide();
 					<% } %>
+				<% } else { %>
+					$('#more').hide();
 				<% } %>
 			});
 			
-			$(window).scroll(function(){
-			    var scrolltop = $(window).scrollTop(); 
-			    if( scrolltop == $(document).height() - $(window).height() ){
-			        if(<%= list.size() %> > viewNum) {
-			        	for(var i = viewNum; i < viewNum + 5; i++) {
-			        		$('#num'+i).show();
-			        	}
-			        	viewNum += 5;
-			        }
-			    }
+			$('#more').click(function(){ 
+				if(<%= list.size() %> > viewNum) {
+		        	for(var i = viewNum; i < viewNum + 5; i++) {
+		        		$('#num'+i).show();
+		        	}
+		        	viewNum += 5;
+		        }
+				if(viewNum > <%= list.size() %>) {
+					$('#more').hide();
+				}
 			});
 			
 			$('.travelList').click(function(){
 				var no = $(this).children('input').val();
-				location.href='<%= request.getContextPath() %>/detail.travel?no=' + no;
+				location.href='<%= request.getContextPath() %>/detail.travel?no=' + no + '&area=<%= area %>';
 			});
 		</script>
 	</div>

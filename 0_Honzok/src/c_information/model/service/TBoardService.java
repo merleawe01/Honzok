@@ -96,7 +96,7 @@ public class TBoardService {
 		int result2 = dao.updateTBoard(conn, board);
 		int result3 = dao.updateImage(conn, fileList, imgInfo, board.getNo());
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
