@@ -393,9 +393,9 @@ public class MessageDAO {
 			pstmt.setString(1, sw.getNickname());
 			pstmt.setString(2, "운영자");
 			pstmt.setString(3, "[물귤교환]입찰하신 물품이 낙찰되었습니다 :)");
-			pstmt.setString(4, "안녕하세요" + sw.getNickname() + "님!\n" 
-					+ "입찰하신 " + sw.getPostTitle() + "에 낙찰 성공하셨습니다. \n"
-					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+			pstmt.setString(4, "안녕하세요 " + sw.getNickname() + "님!<br>" 
+					+ "입찰하신 물품에 낙찰 성공하셨습니다.<br>"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.<br>"
 					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
 			
 			result = pstmt.executeUpdate();
@@ -407,7 +407,7 @@ public class MessageDAO {
 		}
 	}
 	
-	public void sendToBuyer(Connection conn, Trade td) {
+	public void SendToBuyer(Connection conn, Trade td) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -420,9 +420,9 @@ public class MessageDAO {
 			pstmt.setString(1, td.getNickname());
 			pstmt.setString(2, "운영자");
 			pstmt.setString(3, "[물귤교환]구매하신 물품 안내 메세지입니다 :)");
-			pstmt.setString(4, "안녕하세요" + td.getNickname() + "님!\n" 
-					+ "즉시 구매하신 " + td.getPostTitle() + "에 구매 성공하셨습니다. \n"
-					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+			pstmt.setString(4, "안녕하세요 " + td.getNickname() + "님!<br>" 
+					+ "즉시 구매하신 물품에 구매 성공하셨습니다.<br>"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.<br>"
 					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
 			
 			result = pstmt.executeUpdate();
@@ -602,17 +602,5 @@ public class MessageDAO {
 		}
 		return list;
 	}
-
-
-	public void sendToWinner(Connection conn, Trade sw) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void SendToBuyer(Connection conn, Trade td) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

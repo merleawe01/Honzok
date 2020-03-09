@@ -52,7 +52,13 @@ public class Trade {
 		this.nickname = nickname;
 		this.postTitle = postTitle;
 	}
-
+	
+	public Trade(String userId, int point, String nickname) {
+		super();
+		this.userId = userId;
+		this.point = point;
+		this.nickname = nickname;
+	}
 
 
 	public Trade(int minPoint, int maxPoint, int point, String nickname) {

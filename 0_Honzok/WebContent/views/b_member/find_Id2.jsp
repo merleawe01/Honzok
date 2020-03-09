@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
-	String msg = (String)request.getAttribute("msg");
 	Member member = (Member)request.getAttribute("member");
 %>
 <!DOCTYPE html>
@@ -67,14 +66,6 @@
 		}
 		
 	</style>
-	<script>
-	var msg = "<%= msg %>";
-	
-	$(function(){
-		if(msg != "null") 
-			alert(msg);
-	});
-	</script>
 
 </head>
 <body>
@@ -102,6 +93,15 @@
 		</div>
 	
 	</section>
+	
+	<script>
+		var msg = "<%= msg %>";
+		
+		$(function(){
+			if(msg != "null") 
+				alert(msg);
+		});
+	</script>
 
 </body>
 </html>

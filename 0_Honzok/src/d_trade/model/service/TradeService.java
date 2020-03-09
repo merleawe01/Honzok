@@ -215,6 +215,7 @@ public class TradeService {
 				if(result3>0) {
 					commit(conn);
 					new MessageDAO().SendToBuyer(conn,td);
+					commit(conn);
 				}else {
 					rollback(conn);
 				}
@@ -242,6 +243,7 @@ public class TradeService {
 			if(result1>0 && result2>0) {
 				result3 = dao.updateBidYN(conn,postNo);
 				if(result3 > 0) {
+					commit(conn);
 					new MessageDAO().sendToWinner(conn,sw);
 					commit(conn);
 				}else {

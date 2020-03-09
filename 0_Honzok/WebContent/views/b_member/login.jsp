@@ -13,11 +13,17 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <title>Insert title here</title>
 <style>
-
+	body{background-color: #fff9f0;
+		font-family: 'Nanum Gothic', sans-serif;}
    header {width: 100%; height: 170px; text-align: center;}
    #mainHeader {width: 1170px; height: 50px; display: inline-block;}
-   .menuBtn {padding:3px; display: inline-table; float: right;
-          background-color: transparent; border: none; cursor: pointer;}
+   #list {
+		height : 85%;
+		width : auto;
+		float : right;
+		cursor: pointer;
+		margin-left: 10px;
+	}
    #login {float: right; padding: 10px; color: rgb(241, 131, 50);
          font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
    
@@ -25,7 +31,7 @@
    #subHeader {width : 1170px; height : 100px;display : inline-block;}
    #logo {height: auto; width: auto; float: center;}
    
-   #main {width: 100%; text-align: center; height: 1170px;}
+   #main {width: 100%; text-align: center; height:100%}
    #realMain {width : 900px; display : inline-table; height: auto;}
 
    .center {width:400px; margin: 0 auto; position: relative; top:80px; left:25px;}
@@ -44,12 +50,27 @@
     #link_list li a {display: block; padding: 0 10px; font-size: 14px; font-weight: 600; color:rgb(118,129,73);}
     #link_list li a:hover {color:rgb(241,131,50);}
     a {text-decoration: none; cursor:pointer;}
-    p {display: block; margin: 0 0 20px; font-size: 14px; text-align: center;
-       background: url("image/line.png") repeat-x center;}
     #N_loginBtn {width:300px; hegith:150px; margin-top:10px;
              cursor:pointer; background-color:white; border:2px solid #d3d3d3; border-radius: 5px;}
     #N_loginBtn img {vertical-align: middle; border-right:2px solid #d3d3d3;}
     #N_loginBtn b {font-size:14px;}
+    
+    nav {
+      background-color:#fff9f0;
+      position: fixed;
+      width: 99%;
+      height: 100%;
+      top: 45px;
+      z-index: 3;
+   }
+   .menu {margin:10px auto;}
+   .menu img {width: 100%; height: 100%; cursor: pointer;}
+   .circle {width:300px; height: 300px; border-radius: 80%; background-color:gray;
+         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block; position:relative;}
+   .hoverCircle {position: absolute; background: rgba(0, 0, 0, 0.5); color: #fff; width: 100%; height: 100%;
+   				 top: 0; left: 0; border-radius:5%; display:none; z-index: 1; text-align:center; border-radius: 80%;}
+	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;
+		font-size:30px; font-weight:bold; font-family: 'Nanum Gothic', sans-serif;}
 </style>
 </head>
 <body>
@@ -57,9 +78,7 @@
 
 	<header>
 		<div id="mainHeader">
-			<button type="button" class="menuBtn" onclick="">
-				<img src="../../images/list.png" style="width: 30px; heigth: 30px;">
-			</button>
+			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list" onclick="slideMenu()">
 		<script>
 				$(function() {
 					$(".menuBtn").click(function() {
@@ -76,6 +95,53 @@
 		<div id="subHeader">
 			<a href="../../index.jsp"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
 		</div>
+		
+		<nav hidden="">
+			<table class="menu">
+				<tr>
+					<td><div class="circle" id="circle1" onclick="goInfo();">
+							<img src="<%= request.getContextPath() %>/images/menu_info.png">
+							<div class="hoverCircle" id="hoverCircle1"><p class="p">욜로홀로솔로</p></div>
+						</div></td>
+					<td></td>
+					<td><div class="circle" id="circle2" onclick="goFree();">
+							<img src="<%= request.getContextPath() %>/images/menu_free.png">
+							<div class="hoverCircle" id="hoverCircle2"><p class="p">자유게시판</p></div>
+						</div></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><div class="circle" id="circle3" onclick="goGy();">
+							<img src="<%= request.getContextPath() %>/images/menu_barter.png">
+							<div class="hoverCircle" id="hoverCircle3"><p class="p">물귤교환</p></div>
+						</div></td>
+					<td></td>
+					<td><div class="circle" id="circle4" onclick="goMarket();">
+							<img src="<%= request.getContextPath() %>/images/menu_market.png">
+							<div class="hoverCircle" id="hoverCircle4"><p class="p">혼플리마켓</p></div>
+						</div></td>
+				</tr>
+			</table>
+		</nav>
+		
+		<script>
+			$('nav').height($(document).height()-50)
+			var updownCheck = true;
+			
+			function slideMenu() {
+				if(updownCheck) {
+					$('nav').slideDown(300);
+					updownCheck = false;
+					document.body.style.overflow= 'hidden';
+				} else {
+					$('nav').slideUp(300);
+					updownCheck = true;
+					document.body.style.overflow= 'visible';
+				}
+			}
+		</script>
+		
 	</header>
 
 	<section>
@@ -97,81 +163,73 @@
 	            </div>
 
             </div>
-            <script>
-               function login(){
-                  
-                  if($('#userId').val() == ""){
-                     alert("아이디를 입력해주세요.");
-                  } else if($("#userPwd").val() == "") {
-                     alert("비밀번호를 입력해주세요.");
-                  } else {
-                     $('form').submit();
-                  }
-               };
-            </script>
             
 
 			<div id="linkArea">
 				<!-- ID/PWD 찾기 + 회원 가입 -->
 				<ul id="link_list" class="center">
-					<li><a href="../b_member/find_Id.jsp">아이디 찾기</a></li>
-					<li><a href="../b_member/find_Pwd1.jsp">비밀번호 찾기</a></li>
-					<li><a href="../b_member/memberJoin.jsp">회원 가입</a></li>
+					<li><a href="<%= request.getContextPath() %>/views/b_member/find_Id.jsp">아이디 찾기</a></li>
+					<li><a href="<%= request.getContextPath() %>/views/b_member/find_Pwd1.jsp">비밀번호 찾기</a></li>
+					<li><a href="<%= request.getContextPath() %>/views/b_member/memberJoin.jsp">회원 가입</a></li>
 				</ul>
 			
 			</div>
-			
-			<p class="center">
-				<span id="text">또는</span>
-			</p>
-			
 		
 	</div>	
-				
-				
-				<!-- <button onclick="naver_login();" id="N_loginBtn" class="center">
-					<img src="images/naver_icon.png" width="50px" height="50px">
-					<b>네이버 아이디로 로그인/회원가입</b>
-					<div id="naver_id_login"></div>
-					
-				</button> -->
-			
-			<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-			<button id="N_loginBtn" class="center">
-		 		  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-			<div id="naver_id_login"></div>
-			  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<!-- 			<script type="text/javascript">
-			  	var naver_id_login = new naver_id_login("PUOQo9pPnn5wJXhNF0v6", "http://localhost:9580/0_Honzok/views.jsp");
-			  	var state = naver_id_login.getUniqState();
-			  	naver_id_login.setButton("white", 2,40);
-			  	naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
-			  	naver_id_login.setState(state);
-			  	naver_id_login.setPopup();
-			  	naver_id_login.init_naver_id_login();
-			</script>
-			
-			<script type="text/javascript">
-					var clientId = "PUOQo9pPnn5wJXhNF0v6";
-					var callbackUrl = "http://localhost:9580/0_Honzok/views.jsp";
-					var naver_id_login = new naver_id_login(clientId, callbackUrl);
-					var state = naver_id_login.getUniqState();
-					naver_id_login.setButton("white", 3, 40);
-					naver_id_login.setDomain("http://localhost:9580/0_Honzok/index.jsp");
-					naver_id_login.setState(state);
-					naver_id_login.setPopup();
-					naver_id_login.init_naver_id_login();
-			</script> -->
-			
-			</button>
-			
 
-		
 	</section>
+	<script>
+		function login(){
+			if($('#userId').val() == ""){
+				alert("아이디를 입력해주세요.");
+			} else if($("#userPwd").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+			} else {
+				$('form').submit();
+			}
+		};
+	               
+		function goInfo(){
+			location.href="<%=request.getContextPath()%>/list.food";
+		}
+		function goFree(){
+			location.href="<%=request.getContextPath()%>/list.bo";
+		}
+		function goMarket(){
+			location.href="<%=request.getContextPath()%>/list.m";
+		}
+		function goGy(){
+			location.href="<%=request.getContextPath()%>/list.gy";
+		};
+		
+        // hover //
+        $(function(){
+          $("#circle1").mouseenter(function(){
+            $('#hoverCircle1').css('display','block');
+          }).mouseleave(function(){
+            $('#hoverCircle1').css('display','none');
+          });
 
-	<footer> 
-	
-	</footer>
-	
+          $("#circle2").mouseenter(function(){
+            $('#hoverCircle2').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle2').css('display','none');
+          });
+
+          $("#circle3").mouseenter(function(){
+            $('#hoverCircle3').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle3').css('display','none');
+          });
+
+          $("#circle4").mouseenter(function(){
+            $('#hoverCircle4').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle4').css('display','none');
+          });
+        });
+
+	</script>
+
 </body>
 </html>

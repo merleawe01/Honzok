@@ -2,9 +2,7 @@
     pageEncoding="UTF-8" import = "f_message.model.vo.*, b_member.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
-
-	String msg = (String)request.getAttribute("msg"); 
-
+	String msg = (String)request.getAttribute("msg");
 	Message message = new Message();
 	int view = message.getView();
 %>
@@ -21,6 +19,7 @@
 <style>
 	body {
 		background-color: #fff9f0;
+		font-family: 'Nanum Gothic', sans-serif;
 	}
 	header {
 		width : 100%;
@@ -78,7 +77,7 @@
 		padding : 10px;
 		color: rgb(118,129,73);
 		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 12pt;
+		font-size: 15pt;
 		cursor: pointer;
 	}
 	#boardName{
@@ -184,8 +183,8 @@
 			<% if(loginUser == null){ %>
 				<div class="nickname" onclick="location.href='<%= request.getContextPath() %>/views/b_member/login.jsp'"><b>로그인</b></div>
 			<%}else{ %>
-				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
 				<div id="logout">로그아웃</div>
+				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
 			<%} %>
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
 			
