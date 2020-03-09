@@ -798,9 +798,64 @@ public class InformationDAO {
 		
 		return result;
 	}
-	
-	
-	
-	
-	
+
+	public int addPoint(Connection conn, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("addPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deletePoint(Connection conn, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deletePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int addSPoint(Connection conn, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("addSPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }

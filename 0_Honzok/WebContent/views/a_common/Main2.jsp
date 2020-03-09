@@ -98,7 +98,7 @@
    }
    .menu {margin:100px auto;}
    .menu img {width: 100%; height: 100%; cursor: pointer;}
-   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
+   .circle {width:300px; height: 300px; border-radius: 80%; background-color:gray;
          margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
          
    #mainText {
@@ -173,7 +173,7 @@
 			</span>
 			
 			<% if(loginUser == null){ %>
-				<div id="nickname" onclick="location.href='views/b_member/login.jsp'">로그인</div>
+				<div id="nickname" class="login">로그인</div>
 			<%}else{ %>
 				<div id="logout">로그아웃</div>
 				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
@@ -182,6 +182,14 @@
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
 			
 			<script>
+				$('.login').click(function(){
+					location.href='views/b_member/login.jsp?page=' + window.location.pathname.substring(10);
+				})
+				
+				$('#login').click(function(){
+					location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+				})
+				
 				$('#logout').click(function(){
 					location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
 				})

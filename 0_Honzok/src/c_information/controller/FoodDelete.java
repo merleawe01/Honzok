@@ -36,8 +36,9 @@ public class FoodDelete extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		int no = Integer.parseInt(request.getParameter("no"));
+		String writer = request.getParameter("writer");
 		
-		int result = new FBoardService().deleteFBoard(no);
+		int result = new FBoardService().deleteFBoard(no, writer);
 		
 		if(result > 0) {
 			response.sendRedirect("list.food");

@@ -39,6 +39,8 @@ public class LoginServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");
 		Member member = new Member(userId, userPwd);
 		
+		String page = request.getParameter("page") == "" ? "index.jsp" : request.getParameter("page");
+		
 		Member loginUser = new MemberService().loginMember(member);
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -48,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 			session.setMaxInactiveInterval(6000); //10분(60 * 10) 기본은 30분 시간 지정 방법 
 			session.setAttribute("loginUser", loginUser);
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(page);
 		
 		}else { // 로그인 실패 시 
 			request.setAttribute("msg", "로그인 실패");

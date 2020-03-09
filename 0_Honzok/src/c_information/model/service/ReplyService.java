@@ -16,10 +16,11 @@ public class ReplyService {
 		Connection conn = getConnection();
 		InformationDAO dao = new InformationDAO();
 		
-		int result = dao.insertReply(conn, r);
+		int result1 = dao.insertReply(conn, r);
+		int result2 = dao.addSPoint(conn, r.getWriter());
 		
 		ArrayList<Reply> list = null;
-		if(result > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 			list = dao.selectReplyList(conn, r.getPost_no());
 		} else {
@@ -39,10 +40,10 @@ public class ReplyService {
 		Connection conn = getConnection();
 		InformationDAO dao = new InformationDAO();
 		
-		int result = dao.deleteReply(conn, r);
+		int result1 = dao.deleteReply(conn, r);
 		
 		ArrayList<Reply> list = null;
-		if(result > 0) {
+		if(result1 > 0) {
 			commit(conn);
 			list = dao.selectReplyList(conn, r.getPost_no());
 		} else {

@@ -31,10 +31,9 @@ public class LogoutServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		String page = request.getParameter("page");
+		String page = request.getParameter("page") == "" ? "index.jsp" : request.getParameter("page");
 		
 		response.sendRedirect(page);
-		
 	}
 
 	/**
