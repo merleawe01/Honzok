@@ -74,7 +74,7 @@
 					<br>
 				</div>
 					
-				<form action="<%=request.getContextPath() %>/issue.kc" id="findIdForm" method="post">
+				<form action="<%=request.getContextPath() %>/issue.idkc" id="findIdForm" method="post">
 					<div id="input">
 						<div class="left">이름</div>
 						<input type="text" class="right" name="name" id="name" required autofocus><br>
@@ -120,7 +120,7 @@
 					}
 				}
 			}); --%>
-			$('#findIdForm').attr('action','<%=request.getContextPath() %>/issue.kc');
+			$('#findIdForm').attr('action','<%=request.getContextPath() %>/issue.idkc');
 	        $('#findIdForm').submit();
 		});
 		
