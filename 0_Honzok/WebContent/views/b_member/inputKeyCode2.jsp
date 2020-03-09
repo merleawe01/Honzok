@@ -34,7 +34,7 @@
 		
 		.left{font-size : 20px; font-bold:600; width : 150px; display : inline-table;}
 		.right{text-align: left; border-radius: 5px; width: 300px; height: 35px; margin-bottom: 20px;
-				heigth:10px; border:1px solid gray; padding:5px;}
+				border:1px solid gray; padding:5px; margin-left:50px;}
 		.center{text-align:center; margin:auto;}
 		tr {width:350px;}
 		#td1 {width:300px;}
@@ -77,9 +77,8 @@
 			<div id="realMain">
 
 			<div id="box">
-				<div id="confirm_comment1">본인확인 이메일로 인증</div>
-				<div id="confirm_comment2">본인확인 이메일 주소와 입력한 이메일 주소가 같아야,
-						인증번호를 받을 수 있습니다.</div>
+				<div id="confirm_comment1">인증번호 입력</div>
+				<div id="confirm_comment2">이메일로 발송된 인증코드를 입력해주세요.</div>
 				<br>
 					
 				<form id="inputKeyCodeForm" method="post">

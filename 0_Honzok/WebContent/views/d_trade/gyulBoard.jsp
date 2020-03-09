@@ -251,7 +251,7 @@
 	                           
 	                           $(function(){
 	                              var timer<%= t.getrNo() %> = setInterval(function() {
-	                                 if(hours<%= t.getrNo() %> == "00" && minutes<%= t.getrNo() %> == "00" && seconds<%= t.getrNo() %> == "00"){
+	                                 if((hours<%= t.getrNo() %> == "00" && minutes<%= t.getrNo() %> == "00" && seconds<%= t.getrNo() %> == "00")||'<%= t.getDlYN() %>' == ('Y')){
 	                                    $("#td6<%= t.getrNo() %>").html("마감"); 
 	                                      clearInterval(timer<%= t.getrNo() %>);
 	                                 } else {

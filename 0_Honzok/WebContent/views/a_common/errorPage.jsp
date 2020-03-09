@@ -11,5 +11,6 @@
 </head>
 <body>
 	<h1 align="center"><%= msg %></h1>
+	<img src="<%= request.getContextPath() %>/images/errorPage.png" width="100%" style="margin:0;">
 </body>
 </html>

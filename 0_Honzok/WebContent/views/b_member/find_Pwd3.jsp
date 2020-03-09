@@ -71,7 +71,6 @@
 		
 	</style>
 
-<!-- 비밀번호가 같은지 다른지 확인하는 유효성검사도 넣기 -->
 <title>Insert title here</title>
 </head>
 <body>
@@ -150,13 +149,13 @@
 	   } else {
 		   $('#pwdResult').text("영어와 숫자를 혼합하여 8~16자로 만들어주세요");
 		   $('#pwdResult').css('color', '#f18332');
-		   
+		   isUsable = false;
 	      $(this).focus();
 	   }
 	});
 	
-		var newPwd = $("input[name='userPwd']");
-		var newPwd2 = $("input[name='userPwd2']");
+		var newPwd = $("#pwd1");
+		var newPwd2 = $("#pwd2");
 		
 	$('#pwd2').on('change paste keyup',function(){
 		
@@ -172,10 +171,10 @@
 	});
 	
 	function validate(){
-		if(isUsable && isIdChecked){
+		if(isUsable && pwdCheck){
 			return true;
 		} else{
-			alert('아이디 중복확인을 해주세요');
+			alert('비밀번호를 확인해주세요');
 			return false;
 		}
 	}

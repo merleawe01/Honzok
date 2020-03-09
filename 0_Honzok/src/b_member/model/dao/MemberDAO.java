@@ -252,16 +252,6 @@ public class MemberDAO {
 		ResultSet rs = null;
 		int result = 0;
 		
-		pstmt.setString(1, member.getUserName());
-		pstmt.setString(2, member.getNickName());
-		pstmt.setInt(3, member.getPostalCode());
-		pstmt.setString(4, member.getbAddr());
-		pstmt.setString(5, member.getlAddr());
-		pstmt.setString(6, member.getPhone());
-		pstmt.setString(7, member.getEmail());
-		pstmt.setInt(8, member.getPoint());
-		pstmt.setString(9, member.getUserId());
-		pstmt.setString(10, member.getUserPwd());
 		String query = prop.getProperty("nickNameCheck");
 		
 		try {

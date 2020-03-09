@@ -22,9 +22,9 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <style>
    body{background:#fffcf7}
-   .tableArea{width:800px; height:auto; margin-left:auto; margin-right:auto;}
-   .listArea{text-align:left; height:250px;}
-   
+   .tableArea{width:900px; height:auto;}
+   .listArea{ width:900px; text-align:left; height:250px; cursor:pointer;}
+   #nolist{width:900px; text-align:center; border-top:1px solid gray; border-bottom:1px solid gray;}
    td{padding-left:5px;}
    #title{font-size:1.5em; font-weight:bolder; height:20px; padding:7px; 
           color:#768149}
@@ -34,10 +34,10 @@
    #etc{font-size:13px; color:#808080;}
    
    
-   .buttonArea {width:80px; margin-left:auto; margin-right:auto; float:right;}
+   .buttonArea {width:100px; margin-left:auto; margin-right:auto; float:right;}
    #insertBtn{background-color : rgb(241, 131, 50); border-radius: 5px; border:0px; font-size:17px;
-            color: white; width: 100px; height: 40px; cursor: pointer; font-weight: bold; }
-   .listArea{cursor:pointer; border-spacing: 10px;}
+            color: white; width: 100px; height: 40px; cursor: pointer; font-weight: bold;}
+  
       
    button{border: 0px; border-radius: 5px; background:gray; padding:5px auto;}
    button:hover{cursor: pointer;}
@@ -66,7 +66,7 @@
             <% if(mList.isEmpty()){ %>
             
                <tr>
-                  <td colspan="5">조회된 리스트가 없습니다.</td>
+                  <td rowspan="5" id="nolist">존재하는 게시글이 없습니다.</td>
                </tr>
             
             <% } else{ 
@@ -83,17 +83,16 @@
                      
                         <% if(m.getPostNo() == a.getPostNo()){%>
                            <% if(m.getSellYn().equals("Y")) {%>
-                           
                               <div style="position: relative;">
                                  <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
-                                    width="300px" height="200px" style="opacity:0.3;">
+                                    width="300px" height="246px" style="opacity:0.3;">
                                  <div id="sold">
                                     SOLD &nbsp;&nbsp; OUT   
                                  </div>
                               </div>
                            <% }  else {%>   
                               <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
-                                 width="300px" height="200px" class="detail">
+                                 width="300px" height="246px" class="detail">
                            <% } %>
                         <% } %>            
                      <% } %>
@@ -136,16 +135,17 @@
             </table>
                
             <br><br>
-               
+               </form>
+            
             <div class="buttonArea">
-               <%-- <% if(loginUser != null) { %> --%>
+                <% if(loginUser != null) { %> 
                   <button type="button" onclick="location.href='views/e_market/marketInsertForm.jsp'" id="insertBtn">글쓰기</button>
-               <%-- <% } %> --%>
+                <% } %> 
             </div>
             
             <br><br><br>
 				
-		
+	
 			
 		<div class="pagingArea" align="center">	
 			<% if(!mList.isEmpty()){ %>
@@ -185,7 +185,8 @@
 			<% } %>
 		</div>	
 		
-		
+			
+		</div>
 	</div>
 	
 	<script>

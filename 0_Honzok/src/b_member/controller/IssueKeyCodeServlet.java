@@ -48,13 +48,10 @@ public class IssueKeyCodeServlet extends HttpServlet {
 		Member m = new MemberService().getMember(userName, email);
 		
 		String page = null;
-		if(m == null || !m.getEmail().equals(email))
+		if(m == null || !m.getEmail().equals(email) || !m.getUserName().equals(userName))
 	        {
 				page = "views/b_member/find_Id.jsp";
 	            request.setAttribute("msg", "아이디나 이메일 정보가 맞지 않습니다");
-	            
-	    		RequestDispatcher view = request.getRequestDispatcher(page);
-	        	view.forward(request, response);
 	            
 	    } else {
 	    	
@@ -86,21 +83,42 @@ public class IssueKeyCodeServlet extends HttpServlet {
 	        
 	        if(keyResult > 0) {
 	        	// 1. 전달받은 값 인코딩
+	        	String root = request.getSession().getServletContext().getRealPath("/");
+	        	System.out.println(root);
 
 				final String sender = "yocon_o3o@naver.com"; // 보내는 사람 ID (Ex: @naver.com 까지..)
-				final String password = "password"; // 보내는 사람 Password
+				final String password = "momo0915"; // 보내는 사람 Password
 
 				String receiver = email; // 받는 사용자 (Ex: @naver.com 까지..)
 				String title = "인증 번호 메일입니다 :)";
-
-				String contents = "당신의 빛나는 Single Life를 위한 커뮤니티 사이트 혼족옵서예 입니다.\n"
-						+ "인증번호는 " + keyCode + "입니다.";
+				String contents = 
+						"<head><link href=\"https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap\" rel=\"stylesheet\"></head>" +
+						"<body>\r\n" + 
+						"	<table style=\"width:80%; margin:auto; background-color:#fff9f0\">\r\n" + 
+						"		<tr style=\"margin:10px auto;\">\r\n" + 
+						"			<th style=\"border-bottom: 1px solid lightgray; padding-bottom:20px;\"><img alt=\"혼족옵서예\" src=\" " + root + "images/Logo.png\"></th>\r\n" + 
+						"		</tr>\r\n" + 
+						"		<tr>\r\n" + 
+						"			<td style=\"font-size:25px; font-weight:bold; padding:10px; padding-top:20px;\">인증번호 <br>"
+						+ "			<label style=\" font-size:30px; color:#f18332\">" + keyCode + "</label></td>\r\n" + 
+						"		</tr>\r\n" + 
+						"		<tr>\r\n" + 
+						"			<td style=\"padding:10px; font-size:15px\">" + userName + "님, 안녕하세요!<br>\r\n" + 
+						"				당신의 빛나는 Single Life를 위한 커뮤니티 사이트 혼족옵서예 입니다<br>\r\n" + 
+						"				혼족옵서예 계정 본인 확인 메일입니다. 인증번호를 입력하고, 본인 인증을 완료하여 주세요.</td>\r\n" + 
+						"		</tr>\r\n" + 
+						"		<tr>\r\n" + 
+						"			<td style=\"font-size:10px;padding:10px; margin-top:20px\">본 메일은 관계 법령상 광고성 메일 수신 동의 여부와 무관하게 보내드리는 이메일입니다.<br>\r\n" + 
+						"				다른 문의 사항이 있으시면 혼족옵서예로 방문하여 문의해주십시오.</td>\r\n" + 
+						"		</tr>\r\n" + 
+						"	</table>\r\n" + 
+						"</body>";
 				String host = "smtp.naver.com"; // 사용하는 메일
 
 				System.out.println("---------recv Data Check--------");
 				System.out.println("recvID : " + receiver);
 				System.out.println("title : " + title);
-				System.out.println("content : " + contents);
+				//System.out.println("content : " + contents);
 				System.out.println("--------------------------");
 
 				// Get the session object
@@ -134,9 +152,9 @@ public class IssueKeyCodeServlet extends HttpServlet {
 					Transport.send(message);
 					System.out.println("전송 완료!!!!");
 					
+					page = "views/b_member/inputKeyCode.jsp";
 					request.setAttribute("msg", "인증번호가 발송되었습니다. 이메일을 확인해주세요 :D");
 					request.setAttribute("member", m);
-					page = "views/b_member/inputKeyCode.jsp";
 
 				} catch (MessagingException e) {
 					System.out.println("전송 실패!! ㅠㅠ");

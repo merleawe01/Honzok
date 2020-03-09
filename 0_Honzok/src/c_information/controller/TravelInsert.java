@@ -64,7 +64,7 @@ public class TravelInsert extends HttpServlet {
 					originFiles.add(multipartRequest.getOriginalFileName(name));
 				}
 			}
-			
+
 			String title = multipartRequest.getParameter("title");
 			int star = Integer.parseInt(multipartRequest.getParameter("star"));
 			String content = multipartRequest.getParameter("content");

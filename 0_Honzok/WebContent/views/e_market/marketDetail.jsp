@@ -51,13 +51,13 @@
 		}
 		#updateArea{float : right; }
 		#updateBtn{background-color : rgb(241, 131, 50); color:white; border-radius: 5px; border:0px;
-				   width:80px; height:40px; font-size:15px; cursor:pointer; font-weight: bold; line-height: 40px;}
+				   width:80px; height:40px; font-size:18px; cursor:pointer; font-weight: bold; line-height: 40px;}
 		#deleteBtn{background-color : rgb(224, 224, 224); color : rgb(64, 64, 64); border-radius: 5px; border:0px; 
-				   width:80px; height:40px; margin-left:10px; font-size:15px; cursor:pointer; font-weight: bold; line-height: 40px;}
-		#threebu{text-align : center; font-size : 17px; width : 100px; height : 40px;
+				   width:80px; height:40px; margin-left:10px; font-size:18px; cursor:pointer; font-weight: bold; line-height: 40px;}
+		#threebu{text-align : center; font-size : 18px; width : 100px; height : 40px;
 			     background-color : rgb(241, 131, 50); color : white; border-radius: 5px;
 			     border: 0; font-weight: bold; line-height: 40px; cursor:pointer;}
-		#fourbu{text-align : center; font-size : 17px; width : 100px; height : 40px;
+		#fourbu{text-align : center; font-size : 18px; width : 100px; height : 40px;
 			    background-color : rgb(224, 224, 224); color : rgb(64, 64, 64);  border-radius: 5px;
 			    border: 0; line-height: 40px; font-weight: bold; cursor:pointer;}				   
 		#caution{background : lightgray; text-align:left; font-size: 18px;}	    
@@ -196,7 +196,6 @@
 					var buy = confirm("정말로 구매하시겠습니까?");
 					
 					if(buy){
-						/* location.href='views/e_market/marketBuy.jsp' */
 						location.href='<%= request.getContextPath()%>/buy.m?postNo=' + <%= m.getPostNo()%>;
 				
 					}

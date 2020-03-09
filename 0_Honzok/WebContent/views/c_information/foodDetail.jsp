@@ -6,6 +6,8 @@
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
   
 	String recCheck = (String)request.getAttribute("recCheck");
+	String area = (String)request.getParameter("area");
+	String category = (String)request.getParameter("category");
 %>
 <!DOCTYPE html>
 <html>
@@ -362,7 +364,7 @@
 		<script>
 			$('#delete').click(function(){
 			 	if(confirm("글을 삭제하시겠습니까?")) {
-			 		location.href='<%= request.getContextPath() %>/delete.food?no=<%= board.getNo() %>'
+			 		location.href='<%= request.getContextPath() %>/delete.food?no=<%= board.getNo() %>&writer=<%= loginUser.getUserId() %>'
 				}
 			})
 			
@@ -641,7 +643,13 @@
 		</div>
 		
 		<div class="btnList">
-			<div class="button" onclick="history.go(-1);">목록으로</div>
+			<div class="button" id="goback">목록으로</div>
+			
+			<script>
+				$('#goback').click(function(){
+					location.href='<%= request.getContextPath() %>/list.food?area=<%= area %>&category=<%= category %>';
+				})
+			</script>
 		</div>
 		
 	</div>

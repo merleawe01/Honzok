@@ -41,8 +41,9 @@ public class TBoardService {
 		int result1 = dao.insertBoard(conn, board);
 		int result2 = dao.insertTBoard(conn, board);
 		int result3 = dao.insertImage(conn, fileList);
+		int result4 = dao.addPoint(conn, board.getWriter());
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -96,7 +97,7 @@ public class TBoardService {
 		int result2 = dao.updateTBoard(conn, board);
 		int result3 = dao.updateImage(conn, fileList, imgInfo, board.getNo());
 		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -105,19 +106,20 @@ public class TBoardService {
 		return result1;
 	}
 
-	public int deleteTBoard(int no) {
+	public int deleteTBoard(int no, String writer) {
 		Connection conn = getConnection();
 		InformationDAO dao = new InformationDAO();
 		
-		int result = dao.deleteBoard(conn, no);
+		int result1 = dao.deleteBoard(conn, no);
+		int result2 = dao.deletePoint(conn, writer);
 		
-		if(result > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		
-		return result;
+		return result1;
 	}
 
 }

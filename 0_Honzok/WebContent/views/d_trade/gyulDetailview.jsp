@@ -263,17 +263,15 @@
 	                        
 	                        int timeAll = sec1 - sec2;
 	                        if(timeAll <= 0) {
-	                           timeAll = timeAll + 84600;
+	                           timeAll = timeAll + 86400;
 	                        }
-	                        hour = /* timeAll / 3600; */0;
-	                        min = /* (timeAll - hour * 3600) / 60; */0;
-	                        sec = /* timeAll - hour * 3600 - min * 60; */10;
+	                        hour = timeAll / 3600;
+	                        min = (timeAll - hour * 3600) / 60;
+	                        sec = timeAll - hour * 3600 - min * 60;
                         }
 
                        %>
-                        <script> // 카운트해주는 스크립트
-                           // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
-                           // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
+                        <script> 
                            
                            var check = '<%= t.getDlYN() %>';
                            
@@ -300,7 +298,9 @@
                                  if(hours == "00" && minutes == "00" && seconds == "00"){
                                 	
                                 	 var pp = {postNo : <%= request.getParameter("postNo") %>,
-                                			   point : <%= t.getPoint() %>}
+                                			   point : <%= t.getPoint() %>,
+                                	 		   writer : "<%= t.getNickname() %>",
+                                	 		   title : "<%= t.getPostTitle() %>"}
                                 	  $.ajax({
                                 		  url: 'ac.point',
                                 		  type : 'post',
@@ -311,12 +311,14 @@
                           					check = 'Y';
                           				}
                                 	  });
-                                	
-                                      <%-- $("#detailForm").attr('action', "<%= request.getContextPath()%>/ac.point?postNo=<%= request.getParameter("postNo") %>&point=<%= t.getPoint() %>");
-          							  $("#detailForm").submit(); --%>
-          							 
                                       clearInterval(timer);
                                       $("#time").html("마감");
+                                   } else if(check =='Y'){
+                                	 	$(function(){
+                                	 		$('#time').html("마감");
+                    	 					$('.soldImg').css("opacity","0.3");
+                    	 					$('.sold_txt').html("경매가 종료된 상품입니다.");
+                                	 	});
                                    } else {
                                       seconds--;
                                        if(seconds == -1){
@@ -341,8 +343,6 @@
                                    }
                               }, 1000);
                            });
-                           
-                           
                            
                         </script>
 						
@@ -380,6 +380,8 @@
 				<!-- 경매종료 안내문구 넣을 div -->
 				</div>
 			
+
+	 		
 	 		
 	 	
 		<% if(loginUser != null && !(loginUser.getNickName().equals(t.getNickname()))){ %>	
@@ -389,7 +391,7 @@
           
              $('#onebu').click(function(){
                 if(check == 'N') {
-                   location.href = "views/d_trade/gyulBid.jsp?postNo=<%= request.getParameter("postNo") %>&min=<%= t.getMinPoint() %>&point=<%= t.getPoint() %>&max=<%= t.getMaxPoint() %>&writer=<%= t.getNickname() %>"
+                   location.href = "views/d_trade/gyulBid.jsp?postNo=<%= request.getParameter("postNo") %>&min=<%= t.getMinPoint() %>&point=<%= t.getPoint() %>&max=<%= t.getMaxPoint() %>&writer=<%= t.getNickname() %>&title=<%= t.getPostTitle() %>"
                 } else {
                    alert("경매가 종료된 상품입니다!");
                 }

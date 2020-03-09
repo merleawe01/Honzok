@@ -29,7 +29,7 @@
          font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
    #nickname:hover{color:rgb(118,129,73); cursor:pointer;}
    
-   #icon {height: 50px%; width: 50px; float: right;}
+   #icon {height: 50px; width: 50px; float: left;}
    #main {width: 100%;text-align: center;overflow: hidden;height: auto;}
    #realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
    #subHeader{width : 100%; height : auto;display : inline-block;}
@@ -108,31 +108,33 @@
 	<header>
 		<div id="mainHeader">
 			<button type="button" class="menuBtn" onclick="slideMenu()">
-				<img alt="메뉴" src="images/list.png" style="width: 30px; heigth: 30px;">
+				<img alt="메뉴" src="images/list.png" style="width: 50px; heigth: 50px;">
 			</button>
       
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
-					<img alt="메세지" src="images/receive_letter.png" style="width:30px; height:30px;">
+					<img alt="메세지" src="images/receive_letter.png" style="width:50px; height:50px;">
 				<% } else { %>
-					<img alt="메세지" src="images/basic_letter.png" style="width:30px; height:30px;">
+					<img alt="메세지" src="images/basic_letter.png" style="width:50px; height:50px;">
 				<% } %>
 				</button>
 			</span>
+			
+			<div id="login">
+				<img src="images/blanket.png" id="icon">
+				<% if(loginUser == null){ %>
+				<a href="views/b_member/login.jsp" target="_self">로그인</a>
+				<%}else{ %>
+				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+				<div id="logout">
+				<a href="logout.me">로그아웃</a>
+				<%} %>
+				</div>
+			</div>
       	</div>
 			
-		<div id="login">
-			<img src="images/blanket.png" id="icon">
-			<% if(loginUser == null){ %>
-			<a href="views/b_member/login.jsp" target="_self">로그인</a>
-			<%}else{ %>
-			<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
-			<div id="logout">
-			<a href="logout.me">로그아웃</a>
-			<%} %>
-			</div>
-		</div>
+		
 		
 		
 		<div id="subHeader">
