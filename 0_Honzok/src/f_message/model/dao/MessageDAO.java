@@ -461,5 +461,89 @@ public class MessageDAO {
 		return list;
 	}
 
+	public int searchMsgCount2(Connection conn, String select, String keyword, String loginUserNickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String query = null;
+		
+		if(select.equals("to")) {
+			query = prop.getProperty("toMsgCount");
+		} else if(select.equals("content")){
+			query = prop.getProperty("contentMsgCount2");
+		} else if(select.equals("title")){
+			query = prop.getProperty("titleMsgCount2");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setString(2, loginUserNickName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Message> searchMsgList2(Connection conn, int currentPage, String select, String keyword,
+			String loginUserNickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Message> list = null;
+		
+		int messages = 5;
+		
+		int startRow = (currentPage - 1) * messages + 1;   // 현재 페이지에서 나타나는 게시글 시작 번호
+		int endRow = startRow + messages - 1; 			  // 현재 페이지에서 게시글 끝 번호
+		
+		String query = null;
+		
+		if(select.equals("to")) {
+			query = prop.getProperty("toMsgList");
+		} else if(select.equals("content")){
+			query = prop.getProperty("contentMsgList2");
+		} else {
+			query = prop.getProperty("titleMsgList2");
+		}
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, loginUserNickName);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Message>();
+			
+			while(rs.next()) {
+				Message m = new Message(rs.getInt("MNO"),
+										rs.getString("MTO"),
+										rs.getString("MFROM"),
+										rs.getString("MTITLE"),
+										rs.getString("MCONTENT"),
+										rs.getDate("MDATE"),
+										rs.getInt("MVIEW"));
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
 
 }

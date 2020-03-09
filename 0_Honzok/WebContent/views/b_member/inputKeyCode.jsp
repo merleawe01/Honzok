@@ -62,21 +62,11 @@
 <body>
 <header>
 	
-		<div id="mainHeader"><a href="index.jsp">	
-			<img alt="로고" src="images/Logo.png" id="logo"></a>
-			<img alt="메뉴" src="images/list.png" id="list">
-			
-			<!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-			<div id="nickname">
-				<a href="login.jsp">로그인</a> 
-			</div>
-			
-			
-		</div>
-		
-		<div id="subHeader">
-			<div id="boardName">인증번호 입력</div>
-		</div>
+	<%@ include file="../a_common/boardCommon.jsp" %>
+	<script>
+		$('#boardName').text('인증번호 입력');
+		$('#quicklink').css('display','none');
+	</script>
 	
 	</header>
 

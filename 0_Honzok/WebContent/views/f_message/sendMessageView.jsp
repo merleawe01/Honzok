@@ -33,6 +33,15 @@
 	.pagingArea button{background:none; border-radius:50px; color:#805959; margin:3px; padding:10px auto;}
 	#numBtn{background:none; margin:3px; padding:10px auto;}
 	#choosen{background:#f18332; border-radius:50px; color:white;}
+	
+	.searchArea{text-align:center;}
+	.wordArea{height:25px; width:250px; margin-top:10px; border:1px solid #f18332; background:#fff; 
+				display:inline-block; vertical-align:bottom;}
+	.selectArea{height:27px; margin-top:0px; display:inline-block;}
+	select{height:27px; border:1px solid #f18332;}
+	option{border:1px solid #f18332;}
+	#word{font-size:12px; width:195px; padding:5px; margin-left:5px; border: 0px; outline:none; float:left;}
+	#searchBtn{width:40px; height:100%; border: 0px; border-radius:0px; background: #f18332; outline: none; float:right; color: #fff;}
 
 </style>
 </head>
@@ -58,8 +67,8 @@
 			<tr id="contentTr">
 				
 				<td class="detail" width=100px>
-				<input type="hidden" name="mNo" id="mNo" value="<%= m.getmNo()%>"/>
-				<%= m.getTo()%>
+					<%= m.getTo()%>
+					<input type="hidden" name="mNo" id="mNo" value="<%= m.getmNo()%>"/>
 				</td>
 				
 			<% if(m.getmTitle().length() > 11) {
@@ -126,6 +135,22 @@
 		
 	</div>
 	</form>
+	<form id="searchForm" action="<%= request.getContextPath() %>/search.se" method="get">
+			<div class="searchArea">
+					<div class="selectArea">
+						<select name="searchSelect" id="searchSelect">
+							<option value="to" selected>받은 사람</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<!-- <input type="hidden" name="searchSelect" id="searchSelect"> -->
+					</div>
+					<div class="wordArea">
+						<input type="text" placeholder="검색어 입력" name="word" id="word">
+						<button type="button" id="searchBtn" onclick="searchMessage();">검색</button>
+					</div>
+				</div>
+		</form>
 	</div>
 		
 	<script>
@@ -152,6 +177,33 @@
 			$('#recieve').css('background', '#e0e0e0');
 		});
 
+				function searchMessage(){
+			var isSearchChecked = false;
+			var search = $("#searchSelect");
+			var searchWord = $('#word');
+			
+			$('#word').change(function(){
+				if($('#word').val().trim().length()< 1){
+					alert('검색어를 입력해주세요.');
+					$('#word').focus();
+					isSearchChecked = false;
+				} else{
+					isSearchChecked = true;
+				}
+				
+			});
+			
+			var option = $('#searchSelect').val();
+			switch(option){
+				case "to" : $('#searchSelect').val("to"); break;
+				case "title" : $('#searchSelect').val("title"); break;
+				case "content" : $('#searchSelect').val("content"); break;
+			}
+			
+			// console.log($('#searchSelect').val());
+			$('#searchForm').attr('action', '<%= request.getContextPath()%>/search.se');
+			$('#searchForm').submit();
+		}
 	</script>
 </body>
 </html>

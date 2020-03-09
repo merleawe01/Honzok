@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
 	String msg = (String)request.getAttribute("msg");
-	Member m = (Member)request.getAttribute("m");
+
 %>
 <!DOCTYPE html>
 <html>

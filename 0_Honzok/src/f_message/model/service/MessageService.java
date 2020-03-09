@@ -167,5 +167,19 @@ public class MessageService {
 		return mlist;
 	}
 
+	public int searchMsgCount2(String select, String keyword, String loginUserNickName) {
+		Connection conn = getConnection();
+		int result = new MessageDAO().searchMsgCount2(conn, select, keyword, loginUserNickName);
+		close(conn);
+		return result;
+	}
+
+	public ArrayList<Message> searchMsgList2(int currentPage, String select, String keyword, String loginUserNickName) {
+		Connection conn = getConnection();
+		ArrayList<Message> mlist = new MessageDAO().searchMsgList2(conn, currentPage, select, keyword, loginUserNickName);
+		close(conn);
+		return mlist;
+	}
+
 
 }

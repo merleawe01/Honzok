@@ -17,16 +17,16 @@ import f_message.model.service.MessageService;
 import f_message.model.vo.Message;
 
 /**
- * Servlet implementation class RecieveSerchServlet
+ * Servlet implementation class SendSearchServlet
  */
-@WebServlet("/search.re")
-public class RecieveSerchServlet extends HttpServlet {
+@WebServlet("/search.se")
+public class SendSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecieveSerchServlet() {
+    public SendSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -56,8 +56,8 @@ public class RecieveSerchServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = service.searchMsgCount(select, keyword, loginUserNickName);
-		ArrayList<Message> mList =service.searchMsgList(currentPage, select, keyword, loginUserNickName);
+		int listCount = service.searchMsgCount2(select, keyword, loginUserNickName);
+		ArrayList<Message> mList =service.searchMsgList2(currentPage, select, keyword, loginUserNickName);
 		
 		limit = 5;
 		
@@ -73,7 +73,7 @@ public class RecieveSerchServlet extends HttpServlet {
 		String page = null;
 		
 		if(mList != null) {
-			page = "views/f_message/SearchListView.jsp";
+			page = "views/f_message/SearchSendListView.jsp";
 			request.setAttribute("list", mList);
 			request.setAttribute("pi", pi);
 			request.setAttribute("loginUser", loginUserNickName);
@@ -93,7 +93,6 @@ public class RecieveSerchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
