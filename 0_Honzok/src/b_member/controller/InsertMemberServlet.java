@@ -46,8 +46,7 @@ public class InsertMemberServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		
-	
-		
+		System.out.println("email : " + email);
 		
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
 		int result = new MemberService().insertMember(member);

@@ -56,22 +56,18 @@
 			font-size: 12pt;
 		}
 		
-		#boardName{
-			margin : 20px;
-			width : 100%;
-			height : 70px;
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 30pt;
-			font-weight: bold;
-			display : inline-table;
-			border-bottom: 2px solid gray;
-		}
-
+		
 		
 		#title_table {
 			border-collapse: collapse;
 			border-spacing: 0;
 			margin-left : 90px;
+			font-weight: bold;
+			height:60px;
+			font-family: 'Nanum Gothic', sans-serif;
+			font-size: 17pt;
+			display : inline-table;
+		
 		}
 		
 		.list_title{
@@ -82,8 +78,8 @@
 		#th1{ width:90px; height:50px; border-radius : 10px 0px 0px 10px;}
 		#th2{ width:380px;  }
 		#th3{ width:145px; }
-		#th4{ width:100px; border-radius : 0px 10px 10px 0px; }
-				
+		#th4{ width:100px; }
+		#th5{ width:100px; border-radius : 0px 10px 10px 0px; }		
 		
 		#list_table{
 			margin-top : 30px;
@@ -106,40 +102,77 @@
 			height : 50px;
 		}
 		
-		#td1{ width:100px; }
-		#td2{ width:380px; height : 50px; }
+		#td1{ width:100px; height:30px; }
+		#td2{ width:380px;}
 		#td3{ width:145px; }
 		#td4{ width:100px; }
-		.name{
-			font-size : 20px;
-			font-weight : bold;
+		#td5{ width:100px; }
+		.list_line2{
+			font-size : 15px;
 		}
 		
 		#go_write{
 			font-weight : bold;
+			font-size : 18px;
 			width : 100px;
 			height : 40px;
 			border : 0px;
 			border-radius: 5px;
 			background-color: rgb(224, 224, 224);
 			cursor: pointer;
-		}
-		
-		#write{
 			margin-left : 800px;
 			margin-top : 15px;
-			
+			font-weight: bold;
+		}
+		#go_write:hover {
+		background-color: rgb(241, 131, 50);
+		color: white;
+		}
+	
+		
+		.searchArea{text-align:center;
 		}
 		
-		#search{
-			margin-top : 20px; 
+		.wordArea{height:25px; 
+		width:250px; 
+		margin-top:10px; 
+		border:1px solid #f18332; 
+		background:#fff; 
+		display:inline-block; 
+		vertical-align:bottom;
 		}
-		#keyWord{
-			height:20px;
+		
+		.selectArea{height:27px; 
+		margin-top:0px; 
+		display:inline-block;
 		}
-		#searchOption{
-			height:25px;
+		
+		select{height:27px; 
+		border:1px solid #f18332;
 		}
+		
+		option{border:1px solid #f18332;
+		}
+		
+		#word{font-size:12px; 
+		width:195px; 
+		padding:5px; 
+		margin-left:5px; 
+		border: 0px; 
+		outline:none; 
+		float:left;
+		}
+		
+		#searchBtn{width:40px; 
+		height:100%; 
+		border: 0px; 
+		border-radius:0px; 
+		background: #f18332; 
+		outline: none; 
+		float:right; 
+		color: #fff;
+		}
+
 		button:hover{
 			cursor: pointer;}
 		
@@ -161,10 +194,10 @@
 			border-radius:50px; 
 			color:#805959; 
 			padding:10px auto;
+			border:0;
 			}
 </style>
 </head>
-<body onresize="parent.resizeTo(530,600)" onload="parent.resizeTo(530,600)">
 <body>
 	<%@ include file="../a_common/boardCommon.jsp" %>
 	<script>
@@ -180,6 +213,7 @@
 							<th class="list_title" id="th2">제목</th>
 							<th class="list_title" id="th3">작성일</th>
 							<th class="list_title" id="th4">조회수</th>
+							<th class="list_title" id="th5">작성자</th>
 						</tr>
 					</table>
 				</div>
@@ -198,8 +232,9 @@
 							<tr id="contentTr">
 						<td class = "list_line2" id="td1"  ><input type = "hidden" name="select"   value="<%= b.getPostNo() %>"><%= b.getPostNo() %></td>
 							<td class = "list_line2" id="td2" ><%= b.getPostTitle() %></td>
-							<td class="list_line2" id="td3"><%= b.getWriteDate() %></td>
-							<td class="list_line2" id="td4"><%= b.getViewCount() %></td>
+							<td class="list_line2" id="td3"><%= b.getViewCount() %></td>
+							<td class="list_line2" id="td4"><%= b.getWriteDate() %></td>
+							<td class="list_line2" id="td5"><%= b.getNickname() %></td>
 						</tr>
 						<% }
 							}%>
@@ -251,20 +286,23 @@
 				</div>
 				
 				<div id = "search">
-                    <select id="searchOption">
-                        <option value='title'>제목</option>
-                        <option value='content'>내용</option>
-                        <option value='title_content'>제목+내용</option>
-                        <option value='nickname'>닉네임</option>
-                    </select>
-                    <input id="keyWord">
-                    <input type='button' value='검색'>
-                </div>
+                        <div class="selectArea">
+						<select name="searchSelect" id="searchSelect">
+							<option value="from" selected>보낸 사람</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+					</div>
+					<div class="wordArea">
+						<input type="text" placeholder="검색어 입력" name="word" id="word">
+						<button type="button" id="searchBtn" onclick="searchMessage();">검색</button>
+					</div>
+				</div>
 	
 	</div>
 	<script>
 	$(function(){
-		$('#tablearea2 td').mouseenter(function(){
+		$('#contentTr td').mouseenter(function(){
 			$(this).parent().css({'background':'#FFD393', 'cursor':'pointer'});
 		}).mouseout(function(){
 			$(this).parent().css('background', 'none');
