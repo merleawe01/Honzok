@@ -66,7 +66,7 @@
             <% if(mList.isEmpty()){ %>
             
                <tr>
-                  <td rowspan="5" id="nolist">조회된 리스트가 없습니다.</td>
+                  <td rowspan="5" id="nolist">존재하는 게시글이 없습니다.</td>
                </tr>
             
             <% } else{ 
@@ -86,14 +86,14 @@
                            
                               <div style="position: relative;">
                                  <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
-                                    width="306px" height="246px" style="opacity:0.3;">
+                                    width="300px" height="246px" style="opacity:0.3;">
                                  <div id="sold">
                                     SOLD &nbsp;&nbsp; OUT   
                                  </div>
                               </div>
                            <% }  else {%>   
                               <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
-                                 width="306px" height="246px" class="detail">
+                                 width="300px" height="246px" class="detail">
                            <% } %>
                         <% } %>            
                      <% } %>
