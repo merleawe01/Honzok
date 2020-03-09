@@ -5,6 +5,7 @@
 	ArrayList<Image> imgList = (ArrayList<Image>)request.getAttribute("imgList");
 	ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList");
 	String recCheck = (String)request.getAttribute("recCheck");
+	String area = (String)request.getParameter("area");
 %>
 <!DOCTYPE html>
 <html>
@@ -652,7 +653,13 @@
 		</div>
 		
 		<div class="btnList">
-			<div class="button" onclick="history.go(-1);">목록으로</div>
+			<div class="button" id="goback">목록으로</div>
+			
+			<script>
+				$('#goback').click(function(){
+					location.href='<%= request.getContextPath() %>/list.travel?area=<%= area %>';
+				})
+			</script>
 		</div>
 		
 	</div>

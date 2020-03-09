@@ -32,6 +32,13 @@
    #logo {height: 100%; width: auto; float: center;}
    #travel {position:relative; left:50px; top:100px;}
    
+   #list {
+		height : 100%;
+		width : auto;
+		float : right;
+		cursor: pointer;
+		margin-left: 10px;
+	}
    #login {
    		margin-top: 100px;
    		width: 100%;
@@ -51,16 +58,23 @@
 		display: inline-table;
 		cursor: pointer;
 	}
-   #nickname{
-	   border: 3px solid rgb(241, 131, 50);
-		padding: 10px;
-		margin: 5px;
-		border-radius: 10px;
-		font-weight: bold;
-		font-size: 15pt;
-		display: inline-block;
+   #nickname {
+		float : right;
+		padding : 10px;
+		color: rgb(241,131,50);
+		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 12pt;
 		cursor: pointer;
-   }
+		font-weight: bold;
+	}
+	#logout {
+		float : right;
+		padding : 10px;
+		color: rgb(118,129,73);
+		font-family: 'Nanum Gothic', sans-serif;
+		font-size: 12pt;
+		cursor: pointer;
+	}
    #readmore {
    		position: fixed;
    		bottom: 0%;
@@ -83,6 +97,7 @@
       z-index: 1;
    }
    .menu {margin:100px auto;}
+   .menu img {width: 100%; height: 100%; cursor: pointer;}
    .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
          margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
          
@@ -145,43 +160,39 @@
 <body>
 	<header>
 		<div id="mainHeader">
-			<button type="button" class="menuBtn" onclick="slideMenu()">
-				<img alt="메뉴" src="images/list.png" style="width: 30px; heigth: 30px;">
-			</button>
-
+			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list" onclick="slideMenu()">
+			
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
-					<img alt="메세지" src="images/receive_letter.png" style="width:30px; height:30px;">
+					<img alt="메세지" src="images/receive_letter.png" style="width:40px; height:40px;">
 				<% } else { %>
-					<img alt="메세지" src="images/basic_letter.png" style="width:30px; height:30px;">
+					<img alt="메세지" src="images/basic_letter.png" style="width:40px; height:40px;">
 				<% } %>
 				</button>
 			</span>
+			
+			<% if(loginUser == null){ %>
+				<div id="nickname" onclick="location.href='views/b_member/login.jsp'">로그인</div>
+			<%}else{ %>
+				<div id="logout">로그아웃</div>
+				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+			<%} %>
+					
+			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
+			
+			<script>
+				$('#logout').click(function(){
+					location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+				})
+			</script>
       	</div>
 		
 		<div id="subHeader">
-			<img alt="로고" src="images/Logo.png" id="logo" onclick="location.href='index.jsp'">
+			<img alt="로고" src="images/BigLogo.png" id="logo" onclick="location.href='index.jsp'">
 		</div>
 		
-		<!-- html 높이는 654 -->
-		<div id="login">
-			<% if(loginUser == null){ %>
-			<div id="loginbtn">로그인</div>
-			<script>
-				$('#loginbtn').click(function(){
-					location.href="views/b_member/login.jsp";
-				})
-			</script>
-			
-			<%}else{ %>
-			환영합니다 <span id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %></span> 님.
-			<div id="logout">
-			<br>
-			<a href="logout.me">로그아웃</a>
-			<%} %>
-			</div>
-		</div>
+		<!-- html 높이는 454 -->
 		
 		<div id="readmore">
 			<img id="readmoreImg" src="images/readmore.png" >
@@ -201,16 +212,16 @@
 		<nav hidden="">
 			<table class="menu">
 				<tr>
-					<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
+					<td><div class="circle" id="circle1" onclick="goInfo();"><img src="images/menu_info.png"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="goFree();"><img src="images/menu_free.png"></div></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><div class="circle" id="circle1" onclick="goGy();">물귤교환</div></td>
+					<td><div class="circle" id="circle1" onclick="goGy();"><img src="images/menu_barter.png"></div></td>
 					<td></td>
-					<td><div class="circle" id="circle2" onclick="goMarket();">혼플리마켓</div></td>
+					<td><div class="circle" id="circle2" onclick="goMarket();"><img src="images/menu_market.png"></div></td>
 				</tr>
 			</table>
 		</nav>
@@ -256,8 +267,19 @@
 	<footer></footer>
 	
 	<script>
+		$('nav').height($(document).height()-50)
+		var updownCheck = true;
+		
 		function slideMenu() {
-			$('nav').slideToggle(300);
+			if(updownCheck) {
+				$('nav').slideDown(300);
+				updownCheck = false;
+				document.body.style.overflow= 'hidden';
+			} else {
+				$('nav').slideUp(300);
+				updownCheck = true;
+				document.body.style.overflow= 'visible';
+			}
 		}
 	
 		function goMessage(){
@@ -271,6 +293,9 @@
 		function goInfo(){
 			location.href="<%= request.getContextPath()%>/list.food";
 		}
+		function goFree(){
+			location.href="<%= request.getContextPath()%>/list.bo";
+		}
 		function goMarket(){
 			location.href="<%= request.getContextPath()%>/list.m";
 		}
@@ -279,20 +304,20 @@
 		}
 		
 		$(window).scroll(function(){
-			console.log($(window).scrollTop()) // 이거는 보고있는 창의 최상단
-			/* console.log($(document).height()) // 이거는 페이지 길이 밑에거는 보고있는 화면길이
+			/* console.log($(window).scrollTop()) // 이거는 보고있는 창의 최상단
+			console.log($(document).height()) // 이거는 페이지 길이 밑에거는 보고있는 화면길이
 			console.log($(window).height())  */
 			
 		    var scrolltop = $(window).scrollTop();
 		    var winheight = $(window).height();
 			
-			if(scrolltop > 880 && scrolltop < 1150) {
+			if(scrolltop > 680 && scrolltop < 950) {
 				$("#text1").addClass("open");
 			} else {
 				$("#text1").removeClass("open");
 			}
 			
-			if(scrolltop > 1250 && scrolltop < 1650) {
+			if(scrolltop > 1050 && scrolltop < 1450) {
 				$("#text2").addClass("open");
 			} else {
 				$("#text2").removeClass("open");

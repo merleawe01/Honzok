@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Properties;import b_member.model.vo.Member;
+
+import java.util.Properties;
+import b_member.model.vo.Member;
+
 import d_trade.model.vo.Trade;
 import f_message.model.vo.Message;
 
@@ -378,7 +379,63 @@ public class MessageDAO {
 		}
 		return result;
 	}
-
+	
+	public void sendToWinner(Connection conn, Trade sw) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendToWinner");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, sw.getNickname());
+			pstmt.setString(2, "운영자");
+			pstmt.setString(3, "[물귤교환]입찰하신 물품이 낙찰되었습니다 :)");
+			pstmt.setString(4, "안녕하세요" + sw.getNickname() + "님!\n" 
+					+ "입찰하신 " + sw.getPostTitle() + "에 낙찰 성공하셨습니다. \n"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+	
+	public void sendToBuyer(Connection conn, Trade td) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendToBuyer");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, td.getNickname());
+			pstmt.setString(2, "운영자");
+			pstmt.setString(3, "[물귤교환]구매하신 물품 안내 메세지입니다 :)");
+			pstmt.setString(4, "안녕하세요" + td.getNickname() + "님!\n" 
+					+ "즉시 구매하신 " + td.getPostTitle() + "에 구매 성공하셨습니다. \n"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	// 검색 영역
 	public int searchMsgCount(Connection conn, String select, String keyword, String loginUserNickName) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -430,6 +487,90 @@ public class MessageDAO {
 			query = prop.getProperty("contentMsgList");
 		} else {
 			query = prop.getProperty("titleMsgList");
+		}
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, loginUserNickName);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Message>();
+			
+			while(rs.next()) {
+				Message m = new Message(rs.getInt("MNO"),
+										rs.getString("MTO"),
+										rs.getString("MFROM"),
+										rs.getString("MTITLE"),
+										rs.getString("MCONTENT"),
+										rs.getDate("MDATE"),
+										rs.getInt("MVIEW"));
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int searchMsgCount2(Connection conn, String select, String keyword, String loginUserNickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		String query = null;
+		
+		if(select.equals("to")) {
+			query = prop.getProperty("toMsgCount");
+		} else if(select.equals("content")){
+			query = prop.getProperty("contentMsgCount2");
+		} else if(select.equals("title")){
+			query = prop.getProperty("titleMsgCount2");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setString(2, loginUserNickName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Message> searchMsgList2(Connection conn, int currentPage, String select, String keyword,
+			String loginUserNickName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Message> list = null;
+		
+		int messages = 5;
+		
+		int startRow = (currentPage - 1) * messages + 1;   // 현재 페이지에서 나타나는 게시글 시작 번호
+		int endRow = startRow + messages - 1; 			  // 현재 페이지에서 게시글 끝 번호
+		
+		String query = null;
+		
+		if(select.equals("to")) {
+			query = prop.getProperty("toMsgList");
+		} else if(select.equals("content")){
+			query = prop.getProperty("contentMsgList2");
+		} else {
+			query = prop.getProperty("titleMsgList2");
 		}
 
 		try {
