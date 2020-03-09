@@ -373,7 +373,7 @@
 		<script>
 			$('#delete').click(function(){
 			 	if(confirm("글을 삭제하시겠습니까?")) {
-			 		location.href='<%= request.getContextPath() %>/delete.travel?no=<%= board.getNo() %>'
+			 		location.href='<%= request.getContextPath() %>/delete.travel?no=<%= board.getNo() %>&writer=<%= loginUser.getUserId() %>'
 				}
 			})
 			

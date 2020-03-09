@@ -111,10 +111,6 @@
       top: 60px;
       z-index: 1;
    }
-   .menu {margin:100px auto;}
-   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
-         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
-	
 	#quicklink {
 		position: fixed;
 		top: 250px;
@@ -159,7 +155,7 @@
    }
    .menu {margin:100px auto;}
    .menu img {width: 100%; height: 100%; cursor: pointer;}
-   .circle {width:250px; height: 250px; border-radius: 80%; background-color:gray;
+   .circle {width:300px; height: 300px; border-radius: 80%; background-color:gray;
          margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
          
 </style>
@@ -182,7 +178,7 @@
 			</div>		
 			
 			<% if(loginUser == null){ %>
-				<div class="nickname" onclick="location.href='<%= request.getContextPath() %>/views/b_member/login.jsp'"><b>로그인</b></div>
+				<div class="nickname" id="login"><b>로그인</b></div>
 			<%}else{ %>
 				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
 				<div id="logout">로그아웃</div>
@@ -230,8 +226,12 @@
 				<img id="goTop" src="<%= request.getContextPath() %>/images/top_button2.png" style="width:40px; heigth:30px;">
 				
 				<script>
+					$('#login').click(function(){
+						location.href='<%= request.getContextPath() %>/views/b_member/login.jsp?page=' + window.location.pathname.substring(10) + window.location.search;
+					})
+					
 					$('#logout').click(function(){
-						location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+						location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10) + window.location.search;
 					})
 					
 					function moveLink(link){
