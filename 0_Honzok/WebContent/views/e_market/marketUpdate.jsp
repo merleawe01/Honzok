@@ -57,12 +57,12 @@
     		width : 100%; text-align: left; height: 150px; 
     		background-color: rgba(224, 224, 224, 0.45);font-size: 11pt;}
     	#upBtn{
-			width : 100px; height : 40px; background-color : rgb(241, 131, 50);
+			width : 100px; height : 40px; background-color : rgb(241, 131, 50); font-size : 18px;
 			color : white; border-radius: 5px; margin: 10px; border:0px; cursor:pointer;
 			line-height: 40px; font-weight: bold; display: inline-table; text-align:center;
 		}
 		#cancle{
-			width : 100px; height : 40px; background-color : rgb(224, 224, 224);
+			width : 100px; height : 40px; background-color : rgb(224, 224, 224); font-size : 18px;
 			color : rgb(64, 64, 64); border-radius: 5px; margin: 10px; cursor:pointer;
 			line-height: 40px; font-weight: bold; display: inline-table; text-align:center;
 		}
@@ -98,7 +98,7 @@
 								<input type="hidden" id="cContent1" name="cContent1">
 						</div>
 					</div>
-					<div id="size">※사진은 300x300크기만 입력해주세요.※</div>
+					<div id="size">※사진은 꼭 입력해주세요.※</div>
 					<br><br>
 					
 					<div class="input">
