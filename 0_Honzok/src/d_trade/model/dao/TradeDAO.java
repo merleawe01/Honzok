@@ -548,8 +548,7 @@ public class TradeDAO {
 			if(rset.next()) {
 				sw = new Trade(rset.getString("user_id"),
 							   rset.getInt("point"),
-							   rset.getString("nickname"),
-							   rset.getString("post_title"));
+							   rset.getString("nickname"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
-	String msg = (String)request.getAttribute("msg");
 	Member member = (Member)request.getAttribute("member");
+	 String msg = (String)request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>

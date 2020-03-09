@@ -63,7 +63,7 @@
 		padding : 10px;
 		color: rgb(241,131,50);
 		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 12pt;
+		font-size: 15pt;
 		cursor: pointer;
 		font-weight: bold;
 	}
@@ -72,7 +72,7 @@
 		padding : 10px;
 		color: rgb(118,129,73);
 		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 12pt;
+		font-size: 15pt;
 		cursor: pointer;
 	}
    #readmore {
