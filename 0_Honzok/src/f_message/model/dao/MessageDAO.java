@@ -6,13 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Properties;import b_member.model.vo.Member;
+import java.util.Properties;
+
+import d_trade.model.vo.Trade;
 import f_message.model.vo.Message;
 
 public class MessageDAO {
@@ -377,7 +377,63 @@ public class MessageDAO {
 		}
 		return result;
 	}
-
+	
+	public void sendToWinner(Connection conn, Trade sw) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendToWinner");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, sw.getNickname());
+			pstmt.setString(2, "운영자");
+			pstmt.setString(3, "[물귤교환]입찰하신 물품이 낙찰되었습니다 :)");
+			pstmt.setString(4, "안녕하세요" + sw.getNickname() + "님!\n" 
+					+ "입찰하신 " + sw.getPostTitle() + "에 낙찰 성공하셨습니다. \n"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+	
+	public void sendToBuyer(Connection conn, Trade td) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("sendToBuyer");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, td.getNickname());
+			pstmt.setString(2, "운영자");
+			pstmt.setString(3, "[물귤교환]구매하신 물품 안내 메세지입니다 :)");
+			pstmt.setString(4, "안녕하세요" + td.getNickname() + "님!\n" 
+					+ "즉시 구매하신 " + td.getPostTitle() + "에 구매 성공하셨습니다. \n"
+					+ "배송까지는 일주일정도 소요되며, 문의사항은 혼족옵서예 honzok@moakt.cc로 이메일을 보내시거나 운영자에게 쪽지 부탁드립니다.\n"
+					+ "앞으로도 당신의 빛나는 Single Life를 응원하겠습니다. 감사합니다.");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	// 검색 영역
 	public int searchMsgCount(Connection conn, String select, String keyword, String loginUserNickName) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
