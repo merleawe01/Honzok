@@ -83,7 +83,6 @@
                      
                         <% if(m.getPostNo() == a.getPostNo()){%>
                            <% if(m.getSellYn().equals("Y")) {%>
-                           
                               <div style="position: relative;">
                                  <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
                                     width="300px" height="246px" style="opacity:0.3;">
