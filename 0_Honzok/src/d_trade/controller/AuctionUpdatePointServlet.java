@@ -31,13 +31,11 @@ public class AuctionUpdatePointServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
 		int bPoint = Integer.parseInt(request.getParameter("point"));
-		
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("titel");
 		
 		TradeService service = new TradeService();
-		int result = service.selectWinner(postNo,bPoint);
-		
-		
-		
+		int result = service.selectWinner(postNo,bPoint,writer,title);
 		
 		String page = "";
 		

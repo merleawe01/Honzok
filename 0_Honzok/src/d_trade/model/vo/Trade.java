@@ -45,11 +45,12 @@ public class Trade {
 
 	
 
-	public Trade(String userId, int point, String nickname) {
+	public Trade(String userId, int point, String nickname, String postTitle) {
 		super();
 		this.userId = userId;
 		this.point = point;
 		this.nickname = nickname;
+		this.postTitle = postTitle;
 	}
 
 
@@ -83,7 +84,7 @@ public class Trade {
 		this.point = point;
 	}
 
-	public Trade(int postNo, int rNo, String postTitle, int maxPoint, int point, String dlTime, String writer) {
+	public Trade(int postNo, int rNo, String postTitle, int maxPoint, int point, String dlTime, String writer, char dlYN) {
 		super();
 		this.postNo = postNo;
 		this.rNo = rNo;
@@ -92,6 +93,7 @@ public class Trade {
 		this.dlTime = dlTime;
 		this.maxPoint = maxPoint;
 		this.point = point;
+		this.dlYN = dlYN;
 	}
 	
 
