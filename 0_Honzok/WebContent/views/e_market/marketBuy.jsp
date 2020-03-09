@@ -14,6 +14,9 @@
 </head>
 <body>
 <%@ include file="../a_common/boardCommon.jsp" %>
+<script>
+	$('#boardName').text('혼플리마켓');
+</script>
 	<input type="hidden" name="sellYN" id="sellYN" value="<%= m.getSellYn()%>">
 	<input type="hidden" name="postNo" id="postNo" value="<%= m.getPostNo()%>">
 
@@ -40,14 +43,16 @@
 		        msg += '결제 금액 ' + rsp.paid_amount + '원이 결제 되었습니다.';
 		        sell = 'Y';
 		        $('#sellYN').val(sell);
+		       
 		    } else {
 		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		        sell = 'N';
 		        $('#sellYN').val(sell);
+		       
 		    }
 		  
-		    location.href="<%= request.getContextPath()%>/buy2.m?postNo=" + <%= m.getPostNo()%> + "&sellYN=" + $('#sellYN').val();
+		    location.href="<%= request.getContextPath()%>/buy2.m?postNo=" + <%= m.getPostNo()%> + "&sellYN=" + $('#sellYN').val(); 
 		    alert(msg);
 		});
 	</script>	

@@ -518,7 +518,8 @@ public class MarketDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-	         pstmt.setInt(1, postNo);
+			pstmt.setString(1, sellYN);
+			pstmt.setInt(2, postNo);
 	         
 	         result = pstmt.executeUpdate();
 
