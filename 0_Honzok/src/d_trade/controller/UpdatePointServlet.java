@@ -33,11 +33,12 @@ public class UpdatePointServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postNo = Integer.parseInt(request.getParameter("pno"));
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+		String nickName = ((Member)request.getSession().getAttribute("loginUser")).getNickName();
 		int maxPoint = Integer.parseInt(request.getParameter("point"));
 		int point = ((Member)request.getSession().getAttribute("loginUser")).getPoint();
 		String writerId = request.getParameter("writer");
+		String postTitle = request.getParameter("postTitle");
 		
-		System.out.println("writer:"+writerId);
 		
 		Trade td = new Trade();
 		td.setPostNo(postNo);
@@ -45,7 +46,8 @@ public class UpdatePointServlet extends HttpServlet {
 		td.setMaxPoint(maxPoint);
 		td.setPoint(point);
 		td.setWriter(writerId);
-		
+		td.setNickname(nickName);
+		td.setPostTitle(postTitle);
 		
 		int result = new TradeService().udatePoint(td);
 		

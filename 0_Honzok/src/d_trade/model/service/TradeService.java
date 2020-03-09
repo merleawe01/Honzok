@@ -8,12 +8,11 @@ import static a_common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import org.apache.tomcat.jni.File;
-
 import d_trade.model.dao.TradeDAO;
 import d_trade.model.vo.Bid;
 import d_trade.model.vo.Image;
 import d_trade.model.vo.Trade;
+import f_message.model.dao.MessageDAO;
 
 public class TradeService {
 
@@ -215,6 +214,7 @@ public class TradeService {
 			if(result2>0) {
 				if(result3>0) {
 					commit(conn);
+					new MessageDAO().SendToBuyer(conn,td);
 				}else {
 					rollback(conn);
 				}
@@ -227,20 +227,22 @@ public class TradeService {
 		return result3;
 	}
 
-	public int selectWinner(int postNo, int bPoint) {
+	public int selectWinner(int postNo, int bPoint, String writer, String title) {
 		Connection conn = getConnection();
 		TradeDAO dao = new TradeDAO();
 		
-		Trade sw = dao.selectWinner(conn, postNo);
+		Trade sw = dao.selectWinner(conn, postNo, title);
 		int result1 = 0;
 		int result2 = 0;
-		
+		int result3 = 0;
 		
 		if(sw != null) {
 			result1 = dao.updatePointWinner(conn, sw, bPoint);
-			if(result1>0) {
-				result2 = dao.updateBidYN(conn,postNo);
-				if(result2 > 0) {
+			result2 = dao.updateSellPoint(conn, writer, bPoint);
+			if(result1>0 && result2>0) {
+				result3 = dao.updateBidYN(conn,postNo);
+				if(result3 > 0) {
+					new MessageDAO().sendToWinner(conn,sw);
 					commit(conn);
 				}else {
 					rollback(conn);
@@ -249,14 +251,14 @@ public class TradeService {
 				rollback(conn);
 			}
 		}else {
-			result2 = dao.updateBidYN(conn,postNo);
-			if(result2>0) {
+			result3 = dao.updateBidYN(conn,postNo);
+			if(result3>0) {
 				commit(conn);
 			}else {
 				rollback(conn);
 			}
 		}
-		return result2;
+		return result3;
 	}
 
 	

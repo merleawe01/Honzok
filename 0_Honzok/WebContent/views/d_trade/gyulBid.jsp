@@ -123,6 +123,7 @@
 					<div class="left">이름 <span class="must">(필수)</span></div>
 					<input type="text" maxlength="8" name = "userName" class="right" value="<%= loginUser.getUserName() %>" style="width: 120px;">
 					<input type="hidden" name="pno" value="<%= request.getParameter("postNo") %>">
+					<input type="hidden" name="postTitle" value="<%= request.getParameter("title") %>">
 				</div>
 				<div class="input">
 					<div class="left">전화번호 <span class="must">(필수)</span></div>
@@ -265,7 +266,7 @@
 					
 					if(result){
 						if(<%= myPoint %> >= <%= request.getParameter("max") %>){
-							$("#bidInform").attr("action", "<%= request.getContextPath()%>/update.point?postNo="+<%= request.getParameter("postNo") %>+"&writer=<%= request.getParameter("writer") %>");
+							$("#bidInform").attr("action", "<%= request.getContextPath()%>/update.point?postNo=<%= request.getParameter("postNo") %>&writer=<%= request.getParameter("writer") %>");
 							$("#bidInform").submit();
 						}else{
 							alert("포인트가 부족합니다!!!\n보유 포인트 : <%= myPoint %>");

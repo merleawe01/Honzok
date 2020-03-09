@@ -86,7 +86,8 @@ public class TradeDAO {
 								   rset.getInt("max_point"),
 								   rset.getInt("point"),
 								   rset.getString("dl_time"),
-								   rset.getString("NICKNAME"));
+								   rset.getString("NICKNAME"),
+								   rset.getString("dl_yn").charAt(0));
 				
 				list.add(t);
 
@@ -532,7 +533,7 @@ public class TradeDAO {
 		return result;
 	}
 
-	public Trade selectWinner(Connection conn, int postNo) {
+	public Trade selectWinner(Connection conn, int postNo, String title) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Trade sw = null;
@@ -547,7 +548,8 @@ public class TradeDAO {
 			if(rset.next()) {
 				sw = new Trade(rset.getString("user_id"),
 							   rset.getInt("point"),
-							   rset.getString("nickname"));
+							   rset.getString("nickname"),
+							   rset.getString("post_title"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -618,6 +620,28 @@ public class TradeDAO {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int updateSellPoint(Connection conn, String writer, int bPoint) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateSellPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bPoint);
+			pstmt.setString(2, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
 		return result;
 	}
 
