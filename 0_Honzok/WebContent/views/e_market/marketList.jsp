@@ -138,9 +138,9 @@
             <br><br>
                
             <div class="buttonArea">
-               <%-- <% if(loginUser != null) { %> --%>
+                <% if(loginUser != null) { %> 
                   <button type="button" onclick="location.href='views/e_market/marketInsertForm.jsp'" id="insertBtn">글쓰기</button>
-               <%-- <% } %> --%>
+                <% } %> 
             </div>
             
             <br><br><br>

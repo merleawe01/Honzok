@@ -196,7 +196,6 @@
 					var buy = confirm("정말로 구매하시겠습니까?");
 					
 					if(buy){
-						/* location.href='views/e_market/marketBuy.jsp' */
 						location.href='<%= request.getContextPath()%>/buy.m?postNo=' + <%= m.getPostNo()%>;
 				
 					}

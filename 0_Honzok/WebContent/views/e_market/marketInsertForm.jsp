@@ -36,7 +36,9 @@
 					   margin-left:40px; margin-right:40px; margin-bottom:20px; 
 		}
 		#titleImgArea{cursor : pointer;}
-		#contentImgArea1{cursor : pointer;			   
+		#contentImgArea1{cursor : pointer;}
+		#size{font-size:15px; color : gray;}
+					   
 		
 		
 </style>
@@ -60,7 +62,7 @@
 								
 						</div>
 					</div>
-					
+					<div id="size">※사진은 꼭 입력해주세요.※</div>
 					
 					<br><br>
 					
@@ -160,10 +162,8 @@
 				
 			</script>
 				<div>
-          
-					 <div id="ok" onclick="insertList();">확인</div> 
-						<!-- <button type="button" id="ok" onclick="insertBoard();">확인</button> -->
-						<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
+					<div id="ok" onclick="insertList();">확인</div> 
+					<div id="cancle" onclick="location.href='<%= request.getContextPath()%>/list.m'">취소</div>
 				</div>
 				<script>
 				  function insertList(){
