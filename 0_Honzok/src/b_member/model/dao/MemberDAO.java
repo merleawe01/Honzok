@@ -246,7 +246,7 @@ public class MemberDAO {
 		
 		return result;
 	}
-
+/*
 	public int nickNameCheck(Connection conn, String nickName) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -280,6 +280,7 @@ public class MemberDAO {
 		
 		return result;
 	}
+*/
 
 	public Member getMember(Connection conn, String userName, String email) {
 		PreparedStatement pstmt = null;

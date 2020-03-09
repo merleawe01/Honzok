@@ -97,24 +97,108 @@
 			/* 현재 임시값 입력해놓음 */
 			margin-left : 40px; 
 		}
-	#info{margin: 50px auto; width:950px; background-color: #f0f0f0; border: 2px solid #b0b0b0;}
-	.input{ /* height: 30px;  */ text-align: left; padding:10px auto; margin:10px auto;}
-	.border{display: block; width: 940px; border-bottom: 2px solid #d3d3d3; margin:5px auto;}
-	.left{margin-left: 20px; width : 180px; display: inline-table; font-size: 13pt;}
-	.must{font-size: 11pt; color: gray;}
-	.right{height: 25px; font-size: 12pt; border:0px; border-radius:3px;}
-	#changePwd{font-weight: 550; color:rgb(118,129,73); margin-left:10px}
-	#changePwd:hover{color:#f18332; cursor:pointer;}
-	a{text-decoration: none; cursor:pointer;}
-	table{display: inline; vertical-align:top;}
-	.addr{font-size:13px; margin-left:5px;}
-	#btns{margin : 20px; display : inline-table;}
-	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
-	#updateBtn{width: 100px; height: 40px; background-color: #f18332; color: white; font-weight: bold; cursor:pointer;
-		margin: auto; font-size: 14pt; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
-	#cancle{width: 100px; height: 40px; background-color: #5f5f5f; color: white; font-weight: bold; cursor:pointer;
-		margin: auto; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
-	input[name^=addr]{width:300px;}
+		
+		#info{margin: 50px auto; 
+				width:950px; 
+				background-color: #f0f0f0; 
+				border: 2px solid #b0b0b0;
+		}
+		
+		.input{text-align: left; 
+		padding:10px auto; 
+		margin:10px auto;
+		}
+		
+		.border{display: block; 
+		width: 940px; 
+		border-bottom: 2px solid #d3d3d3; 
+		margin:5px auto;
+		}
+		
+		.left{margin-left: 20px; 
+		width : 180px; 
+		display: inline-table; 
+		font-size: 13pt;
+		}
+		
+		.must{font-size: 11pt; 
+		color: gray;
+		}
+		
+		.right{height: 25px; 
+		font-size: 12pt; 
+		border:0px; 
+		border-radius:3px;
+		}
+		
+		#changePwd{font-weight: 550; 
+		color:rgb(118,129,73); 
+		margin-left:10px
+		}
+		
+		#changePwd:hover{color:#f18332; 
+		cursor:pointer;
+		}
+		
+		a{text-decoration: none; 
+		cursor:pointer;
+		}
+		
+		table{display: inline; 
+		vertical-align:top;
+		}
+		
+		.addr{font-size:13px; 
+		margin-left:5px;
+		}
+		
+		#btns{margin : 20px; 
+		display : inline-table;
+		}
+		
+		#nickname:hover{color:rgb(118,129,73); 
+		cursor:pointer;
+		}
+		
+		#updateBtn{width: 100px; 
+		height: 40px; 
+		background-color: #f18332; 
+		color: white; 
+		font-weight: bold; 
+		cursor:pointer;
+		margin: auto; 
+		font-size: 12.5pt; 
+		line-height: 40px;
+		display: inline-table; 
+	    text-align: center; 
+		border: 0; 
+		border-radius: 5px;
+	    }
+	    
+	  
+		 .wow:hover{color:#f18332; 
+		cursor:pointer;
+		border: 0; 
+		}
+		
+		#cancle{width: 100px; 
+		height: 40px; 
+		background-color: #5f5f5f; 
+		color: white; 
+		cursor:pointer;
+		font-weight: bold;
+			margin: auto; 
+			line-height: 40px; 
+			display: inline-table; 
+			text-align: center; 
+			border: 0; 
+			border-radius: 5px;
+			}
+			
+		input[name^=addr]{width:300px;
+		}
+		
+	
 </style>
 <title>Insert title here</title>
 
@@ -149,14 +233,14 @@
 			<form action="<%= request.getContextPath() %>/update.me" method="post" id="updateForm" name="updateForm" >
 				<div id="info">
 					<div class="input" style="font-size: 25px; margin:10px;"> <b>기본 정보</b></div>
-					<div class="border"></div><!-- 구분선 -->
+					<div class="border"></div>
 
 					<!-- 이름 -->
 					<div class="input">
 						<div class="left">이름 <span class="must">(필수)</span></div>
 						<input type="text" class="right"  id="userName" maxlength="8" name="userName" value="<%= userName %>"  required >
 					</div>
-					<div class="border"></div><!-- 구분선 -->
+					<div class="border"></div>
 
 					<!-- 아이디 -->
 					<div class="input">
@@ -217,7 +301,7 @@
 							<tr>
 								<td colspan="2">
 								<input type="text" class="right" id="postalCode" name="postalCode" value="<%=postalCode %>"  required>
-								<input type="button" onclick="goPopup()" style="margin-left:5px;" value="우편번호"/>
+								<input type="button" class="wow" onclick="goPopup()"value="우편번호"/>
 								</td>
 							</tr>
 							<tr>
@@ -252,7 +336,6 @@
 						}
 					</script>
 					<div class="border"></div>
-					
 					<!-- 핸드폰 번호 -->
 					<div class="input">
 						<div class="left">핸드폰 번호</div>

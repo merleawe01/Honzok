@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,10 +122,11 @@
       .mini_bt{
          background-color : lightgray;
          height : 25px;
-         width : 60px;
+         width : 64px;
          font-size : 10px;
          border-radius : 5px;
          margin-left : 10px;
+         font-size : 13px;
       }
       
       .address2{
@@ -261,9 +263,9 @@
             
             <div class = "input">
                <div class = "left">아이디<span class = "must">(필수)</span></div>
-               <input type = "text" class = "right" name="joinUserId" id="joinUserId"  required> <input type="button" id="idCheck" class="mini_bt" onclick="checkId();" value="중복확인"/>
+               <input type = "text" class = "right" name="joinUserId" id="joinUserId"  required> 
                   <label id="idResult"></label>
-                  <span id="spanteg1" >영어로 시작하며 영어와 숫자가 섞인 8~12자</span>
+                  <span id="spanteg1" >영어로 시작하며 영어와 숫자가 섞인 4자 이상 </span>
             </div>
                      
             <div class = "input">
@@ -348,38 +350,41 @@
             
             
             <div class = "input"  id = "end_line">
+            	<input id="emailfix" type="hidden" name="email">
                <div class = "left">이메일<span class = "must">(필수)</span></div>
                <div> 
-              		 <input type = "text" class = "right email" id="email01" maxlength="16" placeholder="이메일을 입력해주세요." name="email"  required> 
-             	 	 @ <input type = "text" class = "right email" id="email02"> 
+              		<input type = "text" class = "right email" id="email01" maxlength="16" placeholder="이메일을 입력해주세요." name="email01"  required> 
+             	 	 @ <input type = "text" class = "right email" id="email02"  name="email02" required> 
                <select name="selectEmail" id="selectEmail">
                   <option value="1">직접입력</option>
                   <option value="daum.net">daum.net</option>
                   <option value="empal.com" >empal.com</option>
-                  <option  value="gmail.com" >gmail.com</option>
-                  <option  value="hanmail.com">hanmail.net</option>
-                  <option  value="msn.com">msn.com</option>
-                  <option  value="naver.com">naver.com</option>
-                  <option  value="nate.com">nate.com</option>
+                  <option value="gmail.com" >gmail.com</option>
+                  <option value="hanmail.com">hanmail.net</option>
+                  <option value="msn.com">msn.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="nate.com">nate.com</option>
                </select> <br>
             </div>
                <label class = "must" style = "margin-bottom : 10px;">메일주소는 메일인증 후 비밀번호 변경이나 찾기 등에 사용됩니다.</label>
            </div>
            <script>
+           var selectEmail = $("#selectEmail");
            $('#selectEmail').change(function(){
         	   $("#selectEmail option:selected").each(function () {
-        		   if($(this).val()== '1'){ //직접입력일 경우
+        		   if($('#selectEmail').val()== '1'){ //직접입력일 경우
         			   $("#email02").val(''); //값 초기화 
         			   $("#email02").attr("disabled",false); //활성화
-        			   }else{ //직접입력이 아닐경우 
-        				   $("#email02").val($(this).text()); //선택값 입력
-        				   $("#email02").attr("disabled",true); //비활성화 
-        				   } 
-        		   }); 
+        			}else{ //직접입력이 아닐경우 
+        				$("#email02").val(selectEmail.val()); //선택값 입력
+        				$("#email02").attr("disabled",true); //비활성화 
+                    }
+        		   });
+        	   $('#emailfix').val($("#email01").val() + "@" + $('#email02').val());
         	   });
 
            </script>
-            
+     
             
             <div id = "access_terms1" ><b>약관 동의</b></div>
             
@@ -454,18 +459,18 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
 　　　　　　　　　디지털 마케팅 업무</textarea>
                </div>
                <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
-               이용약관에 동의하시겠습니까?(선택) <input type="checkbox"  class="access_terms3" >동의함
+               이용약관에 동의하시겠습니까?(필수) <input type="checkbox"  class="access_terms3" >동의함
                </div>
-               
             </div>
-            
             <input type = "submit" id = "finish_bt" value = "회원가입">
-               
+            <!-- <button type="button" onclick="console.log($('#email02').val())">확인</button> -->
             </form>
-         
-         
          </div>
+         
          <script>
+         
+         
+ 
                   $(document).ready(function(){
                       var flag = true;
                      var access_terms3= $('.access_terms3');
@@ -497,62 +502,78 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
                   </script>
             
          <script>
-         function checkId(){
-             window.open("idCheckForm.jsp", "checkForm", "width=500, height=300");
-             
-             
-          }
-         $('#joinUserId').focus(function(){
-             $(this).parent().css('background', 'beige');
-          });
-          $('#joinUserId').blur(function(){
-             var str = $(this).val();
-             var regExp1 = /^[a-z]/gi; 
-             var regExp2 = /[^a-z][^0-9]/gi; 
-             var regExp3 = /[0-9]/gi; 
-             
-             if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 12){
-                $('#idResult').text("정상입력");
-                $('#idResult').css('color', 'green');
-                $(this).parent().css('background', '');
-                $(this).css('background', '');
-                $("#spanteg1").attr("hidden", true);
-             } else {
-                $('#idResult').text("알맞은 아이디를 입력하세요");
-                $('#idResult').css('color', 'red');
-              
-                $(this).focus();
-             }
-          });
-        
-    		
-         
-         
-      $('#userName').focus(function(){
-         $(this).parent().css('background', 'beige');
-      });
       $('#userName').blur(function(){
          var str = $(this).val();
          var regExp = /[^가-힣]/g;
          
          if(!regExp.test(str) && str.length >= 2){
             $('#nameResult').text("정상입력");
-            $('#nameResult').css('color', 'green');
-            $(this).parent().css('background', '');
-            $(this).css('background', '');
+            $('#nameResult').css({'color':'#768149', 'diplay':'inline-block'});
             $("#spanteg").attr("hidden", true);
          } else {
             $('#nameResult').text("알맞은 이름을 입력하세요");
-            $('#nameResult').css('color', 'red');
+            $('#nameResult').css({'color':'#f18332', 'diplay':'inline-block'});
            
             $(this).focus();
          }
       });
-     
+      var isUsable = false;
+		var isIdChecked = false;
+		
+		
+		$('#joinUserId').on('change paste keyup', function(){
+			isIdChecked = false;
+		});
+		
+		$('#joinUserId').change(function(){
+			var userId = $('#joinUserId');
+			
+			var str = $(this).val();
+            var regExp1 = /^[a-z]/gi; 
+            var regExp2 = /[^a-z][^0-9]/gi; 
+            var regExp3 = /[0-9]/gi; 
+			if(userId.val().trim().length < 4 ){
+				alert('아이디는 최소 4자리 이상이어야 합니다.');
+				userId.focus();
+			} else if (!regExp1.test(str) || regExp2.test(str) || !regExp3.test(str)){
+				alert('알맞은 아이디를 입력하세요');
+				userId.focus();
+			} else{
+				$.ajax({
+					url: "<%= request.getContextPath()%>/idCheck.me",
+					data: {userId: userId.val()},
+					success: function(data){
+						if(data == 'success'){
+							$('#idResult').text("이미 사용 중인 아이디입니다.");
+							$('#idResult').css({'color':'#f18332', 'diplay':'inline-block'});
+							userId.focus();
+							isUsable = true;
+							isIdChecked = true;
+							
+						} else {
+							$('#idResult').text('사용 가능한 아이디입니다.');
+							
+							$('#idResult').css({'color':'#768149', 'diplay':'inline-block'});
+							$("#spanteg1").attr("hidden", true);
+					            isUsable = false;
+							isIdChecked = false;
+							
+						}
+					}
+				});
+			}
+		});
+	      
+		
+		function validate(){
+			if(isUsable && isIdChecked){
+				return true;
+			} else{
+				alert('아이디 중복확인을 해주세요');
+				return false;
+			}
+		}
       
-      $('#joinUserPwd').focus(function(){
-         $(this).parent().css('background', 'beige');
-      });
       $('#joinUserPwd').blur(function(){
          var str = $(this).val();
          var regExp1 = /^[a-z]/gi; 
@@ -561,13 +582,11 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
          
          if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 16){
             $('#pwd1Result').text("정상입력");
-            $('#pwd1Result').css('color', 'green');
-            $(this).parent().css('background', '');
-            $(this).css('background', '');
+            $('#pwd1Result').css({'color':'#768149', 'diplay':'inline-block'});
             $("#spanteg2").attr("hidden", true);
          } else {
             $('#pwd1Result').text("알맞은 비밀번호를 입력하세요");
-            $('#pwd1Result').css('color', 'red');
+            $('#pwd1Result').css({'color':'#f18332', 'diplay':'inline-block'});
          
             $(this).focus();
          }
@@ -581,11 +600,11 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
             $('#pwd2Result').text("");
          } else if($('#joinUserPwd').val() == $('#joinUserPwd2').val()){
             $('#pwd2Result').text("비밀번호 일치");
-            $('#pwd2Result').css('color', 'green');
+            $('#pwd2Result').css({'color':'#768149', 'diplay':'inline-block'});
             $("#spanteg3").attr("hidden", true);
          } else{
             $('#pwd2Result').text("비밀번호 불일치");
-            $('#pwd2Result').css('color', 'red');
+            $('#pwd2Result').css({'color':'#f18332', 'diplay':'inline-block'});
          }
       }
       $('#joinUserPwd2').keyup(function(){
@@ -597,6 +616,8 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
       $('#joinUserPwd2').blur(function(){
          $(this).parent().css('background', '');
       });
+     
+    
      
      
    </script>

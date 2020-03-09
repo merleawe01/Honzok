@@ -28,7 +28,6 @@ public class MemberService {
 		MemberDAO mDAO = new MemberDAO();
 		int result = mDAO.insertMember(conn, member);
 		
-		System.out.println("result : " + result);
 		
 		if(result > 0) {
 			commit(conn);
@@ -98,14 +97,14 @@ public class MemberService {
 		return result;
 	}
 
-	public int nickNameCheck(String nickName) {
-		Connection conn = getConnection();
-		int result = new MemberDAO().nickNameCheck(conn, nickName);
-		
-		close(conn);
-		
-		return result;
-  }
+//	public int nickNameCheck(String nickName) {
+//		Connection conn = getConnection();
+//		int result = new MemberDAO().nickNameCheck(conn, nickName);
+//		
+//		close(conn);
+//		
+//		return result;
+//  }
 
 	public Member getMember(String userName, String email) {
 		Connection conn = getConnection();

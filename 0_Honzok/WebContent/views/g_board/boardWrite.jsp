@@ -23,7 +23,9 @@
 			width : 150px;
 			height : 60px;
 		}		
-		#content{ height : 400px; }
+		#content{ height : 400px;
+			
+		 }
 		
 		#input_contents{ width : 750px;}
 		
@@ -45,8 +47,8 @@
 				
 		#btn{ margin-top : 50px;}
 		
-		#onebu{text-align : center;
-				  font-size : 15pt;
+		#onebu{	  text-align : center;
+				  font-size : 11pt;
 				  width : 100px;
 				  height : 40px;
 			      background-color : rgb(241, 131, 50);
@@ -56,9 +58,10 @@
 			      font-weight: bold;
 			      line-height: 40px;
 			      cursor:pointer;
+			      display: inline-table;
 		}
 		#twobu{text-align : center;
-				  font-size : 15pt;
+				  font-size : 11pt;
 				  width : 100px;
 				  height : 40px;
 			      background-color : lightgray;
@@ -93,11 +96,7 @@
 						
 						<tr>
 							<td class = "content_title" id = "content">내용<label class = "must">(필수)</label></td>
-							<td><textarea  id = "input_content" placeholder = "내용을 입력해주세요." name = "content"></textarea>
-							<span ><span id="text-length">0</span>/780</span></td>
-						</td>
-
-       							
+							<td><textarea  id = "input_content" placeholder = "내용을 입력해주세요." name = "content" style="resize: none;" ></textarea></td>
 						</tr>
 					
 					</table>
@@ -113,32 +112,6 @@
 				
 			</form>
 		</div>
-			<script>
-	$(document).ready(function() {
-
-
-	    $('#input_content').on('keyup', function() {
-	    	 var inputLength=$(this).val().length;
-			  var remain=780-inputLength;
-			  
-			  $('#text-length').html(remain);
-
-
-/* 	        if($(this).val().length > 780) {
-	        	 $('#text-length').css('color','red');
-	            $(this).val($(this).val().substring(0, 780));
-	        }else{
-				   $('#text-length').css('color','black');
-			  } */
-
-
-	    });
-
-
-	});
-	
-	
-</script>
 	
 
 </body>

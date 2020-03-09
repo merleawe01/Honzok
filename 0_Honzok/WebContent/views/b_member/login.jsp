@@ -84,13 +84,12 @@
 				
 				<!-- 로그인 박스 -->
 	            <div class="center">
-	            <form action="<%= request.getContextPath() %>/login.me" method="post">
+	            <form action="<%= request.getContextPath() %>/login.me" onsubmit="return validate();" method="post">
 	            	<div id="login_box">
-		            	<input type="text" name="userId" id="userId" placeholder="아이디"><br>
-		            	<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호">
+		            	<input type="text" name="userId" id="userId" placeholder="아이디" ><br>
+		            	<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호" >
 	            	</div>
 	            	<div id="loginBtnArea">
-	            		<!-- <input type="submit" onclick="login();" name="loginBtn" id="loginBtn"class="center" value="로그인"> -->
 	            		<button type="submit"  name="loginBtn" id="loginBtn">로그인</button>
 	            	</div>
 	            </form>
@@ -98,16 +97,23 @@
 
             </div>
             <script>
-               function login(){
-                  
-                  if($('#userId').val() == ""){
-                     alert("아이디를 입력해주세요.");
-                  } else if($("#userPwd").val() == "") {
-                     alert("비밀번호를 입력해주세요.");
-                  } else {
-                     $('form').submit();
-                  }
-               };
+            function validate(){
+    			if($('#userId').val().trim().length == 0){
+    				alert('아이디를 입력해주세요.');
+    				$('#userId').focus();
+    				
+    				return false;
+    			}
+    			
+    			if($('#userPwd').val().trim().length == 0){
+    				alert('비밀번호를 입력해주세요.');
+    				$('#userPwd').focus();
+    				
+    				return false;
+    			}
+    			
+    			return true;
+    		}
             </script>
             
 

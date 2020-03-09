@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "f_message.model.vo.Message"%>
+    pageEncoding="UTF-8" import = "f_message.model.vo.Message"  import="b_member.model.vo.Member"%>
 <%@ page import="b_member.model.vo.Member"%>
 <%
    Member loginUser = (Member)session.getAttribute("loginUser");
@@ -203,7 +203,7 @@
 				<tr>
 					<td><div class="circle" id="circle1" onclick="goInfo();">욜로홀로솔로</div></td>
 					<td></td>
-					<td><div class="circle" id="circle2"></div></td>
+					<td><div class="circle" id="circle2" onclick="goBoard();">자유게시판</div></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -271,6 +271,9 @@
 		function goInfo(){
 			location.href="<%= request.getContextPath()%>/list.food";
 		}
+		function goBoard(){
+			location.href="<%= request.getContextPath()%>/list.bo";
+		}
 		function goMarket(){
 			location.href="<%= request.getContextPath()%>/list.m";
 		}
@@ -302,6 +305,12 @@
 		    	$("#text3").addClass("open");
 			} else {
 				$("#text3").removeClass("open");
+			}
+		});
+		var msg = "<%= msg %>";
+		$(function(){
+			if(msg != "null"){
+				alert(msg);
 			}
 		});
 	</script>

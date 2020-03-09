@@ -142,7 +142,7 @@
 			<div id="quicklink">
 				<table>
 					<tr class="boardTr"><td class="td" onclick="moveLink('list.food');">욜로홀로솔로</td></tr>
-					<tr class="boardTr"><td class="td" onclick="moveLink('list.bo');">자유게시판</td></tr>
+					<tr class="boardTr"><td class="td" onclick="moveLink('list.board');">자유게시판</td></tr>
 					<tr class="boardTr"><td class="td" onclick="moveLink('list.gy');">물귤교환</td></tr>
 					<tr class="boardTr"><td onclick="moveLink('list.m');">혼플리마켓</td></tr>
 				</table>

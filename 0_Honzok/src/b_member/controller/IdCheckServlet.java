@@ -1,8 +1,8 @@
 package b_member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +32,20 @@ public class IdCheckServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String userId = request.getParameter("inputId");
-		
+		String userId = request.getParameter("userId");
 		int result = new MemberService().idCheck(userId);
-		
-		request.setAttribute("result", result);
-		request.setAttribute("checkedId", userId);
-		
-		RequestDispatcher view = request.getRequestDispatcher("views/b_member/idCheckForm.jsp");
-		view.forward(request, response);
-	}
 
+		PrintWriter out = response.getWriter();
+		
+		if(result > 0 ) {
+			out.append("success");
+		} else {
+			out.append("fail");
+		}
+		
+		out.flush();
+		out.close();
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

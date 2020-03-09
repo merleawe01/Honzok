@@ -204,7 +204,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 						<tr>
 							<td id = "content_td"></td>
 							<td>
-								<textarea cols=60 rows=15 id = "content"><%= b.getContent() %></textarea>
+								<textarea cols=60 rows=15 id = "content" style="resize: none;" readonly ><%= b.getContent() %></textarea>
 								<input type="hidden" value="<%= b.getContent() %>" name = "content">
 							</td>
 						</tr>
@@ -212,7 +212,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				</div>
 		
 				<div id = "btn1">
-					<% if(loginUser != null && loginUser.getUserId().equals(b.getWriter())){ %>
+					<% if(loginUser != null && loginUser.getNickName().equals(b.getNickname())){ %>
 					<input id = "revise" type="submit" value="수정"> 
 					<input id = "delete" type="submit" value="삭제" onclick="deleteBo();" >
 					<% } %>

@@ -321,8 +321,6 @@ header {
 										$("#alert-danger").css(
 												'display',
 												'none');
-									
-										
 									} else {
 										alert("비밀번호가 일치하지 않습니다. 비밀번호를 재확인해주세요.");
 										$("#alert-success")
