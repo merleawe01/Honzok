@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
 	String msg = (String)request.getAttribute("msg");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -12,17 +11,6 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
-		header {width: 100%; height: 170px; text-align: center;}
-		#mainHeader {width: 1170px; height: 50px; display: inline-block;}
-		#subHeader {width: 1170px; height: 100px; display: inline-block;}
-		#logo {height: 100%; width: auto; float:left;}
-		#list, #icon {height: 100%; width: auto; float: right;}
-		#nickname {float: right; padding: 10px; color: rgb(241,131,50);
-					font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-		#nickname::after {color : black;}
-		#boardName{margin : 20px;width : 100%;height : 70px; display : inline-table; border-bottom: 2pt solid gray;
-					font-family: 'Nanum Gothic', sans-serif;font-size: 30pt;font-weight: bold;} 
-		
 		#main{width : 100%; text-align: center; height : 1170px;}
 		#realMain {display: inline-table; width: 1170px; display: inline-table; height: 1100px; margin-left: 40px;}
 		
@@ -98,21 +86,9 @@
 		});
 
 		$('#getNumBtn').click(function(){
-			$('#findPwdForm').attr('action','<%=request.getContextPath() %>/find.pwd');
+			$('#findPwdForm').attr('action','<%=request.getContextPath() %>/issue.pwdkc');
 	        $('#findPwdForm').submit();
 		});
-		
-<%-- 		$('#getNumBtn').click(function(){
-			$.ajax({
-				url : "<%=request.getContextPath()%>/find.pwd",
-				data : {name:$('#name').val(), email:$('#email').val()},
-				success : function(data){
-					
-					$('#name').val('<%= data.name %>');
-					
-				}
-			})
-		}); --%>
 		
 	</script>
 			            

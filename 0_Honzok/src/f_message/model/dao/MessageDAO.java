@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.Properties;
+import b_member.model.vo.Member;
 
 import d_trade.model.vo.Trade;
 import f_message.model.vo.Message;
@@ -599,6 +601,17 @@ public class MessageDAO {
 			close(pstmt);
 		}
 		return list;
+	}
+
+
+	public void sendToWinner(Connection conn, Trade sw) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void SendToBuyer(Connection conn, Trade td) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

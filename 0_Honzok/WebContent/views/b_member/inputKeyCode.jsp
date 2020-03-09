@@ -13,29 +13,17 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<style>
-		header {width: 100%; height: 170px; text-align: center;}
-		#mainHeader {width: 1170px; height: 50px; display: inline-block;}
-		#subHeader {width: 1170px; height: 100px; display: inline-block;}
-		#logo {height: 100%; width: auto; float:left;}
-		#list {height: 100%; width: auto; float: right;}
-		#icon {height: 45px; width: 45px; float: right; vertical-align:center;}
-		#nickname {float: right; padding: 10px; color: rgb(241,131,50);
-					font-family: 'Nanum Gothic', sans-serif; font-size: 12pt;}
-		#nickname::after {color : black;}
-		#boardName{margin : 20px;width : 100%; height : 70px; display : inline-table; border-bottom: 2pt solid gray;
-					font-family: 'Nanum Gothic', sans-serif;font-size: 30pt;font-weight: bold;} 
-		
 		#main{width : 100%; text-align: center; height : 1170px;}
 		#realMain {display: inline-table; width: 1170px; display: inline-table; height: 1100px; margin-left: 40px;}
 		
-		#box{margin-top: 2%; border: solid 2px gray; width: 100%; text-align: left;
+		#box{margin-top: 2%; border: solid 2px gray; width: 1170px; text-align: left;
 			padding: 20px 0px 20px 0px; background: rgb(242, 242, 242);}
 		#confirm_comment1{padding-left: 30px; font-weight: bold; font-size: 20px; margin-bottom: 5px;}
 		#confirm_comment2{font-size : 15px;color : gray;padding-left : 30px;margin-bottom : 20px;}
 		
 		.left{font-size : 20px; font-bold:600; width : 150px; display : inline-table;}
 		.right{text-align: left; border-radius: 5px; width: 300px; height: 35px; margin-bottom: 20px;
-				heigth:10px; border:1px solid gray; padding:5px;}
+				 border:1px solid gray; padding:5px; }
 		#center{text-align:center;}
 		#nextBtn{width:100px; height:40px; background-color:RGB(84,84,84); color:white;
 				border-radius:5px; font-weight:bold; font-size:15px; border:0px; margin-top:5px;}
@@ -60,11 +48,11 @@
 
 </head>
 <body>
-<header>
+	<header>
 	
 	<%@ include file="../a_common/boardCommon.jsp" %>
 	<script>
-		$('#boardName').text('인증번호 입력');
+		$('#boardName').text('아이디 찾기');
 		$('#quicklink').css('display','none');
 	</script>
 	
@@ -75,9 +63,8 @@
 			<div id="realMain">
 
 			<div id="box">
-				<div id="confirm_comment1">본인확인 이메일로 인증</div>
-				<div id="confirm_comment2">본인확인 이메일 주소와 입력한 이메일 주소가 같아야,
-						인증번호를 받을 수 있습니다.</div>
+				<div id="confirm_comment1">인증번호 입력</div>
+				<div id="confirm_comment2">이메일로 발송된 인증코드를 입력해주세요.</div>
 				<br>
 					
 				<form id="inputKeyCodeForm" method="post">

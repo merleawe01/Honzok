@@ -63,7 +63,18 @@ public class Market {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	public Market(int postNo, String itemStatus, int itemPrice, String useDate, String etc, String sellYn,
+	         String postTitle) {
+	      super();
+	      this.postNo = postNo;
+	      this.itemStatus = itemStatus;
+	      this.itemPrice = itemPrice;
+	      this.useDate = useDate;
+	      this.etc = etc;
+	      this.sellYn = sellYn;
+	      this.postTitle = postTitle;
+	   }
 	
 	public Market(int postNo, String postTitle, int boardNo, String writer, String content, int viewCount,
 			Date writeDate, Date modifyDate, int recoCount) {
