@@ -91,8 +91,6 @@
 		});
 		
 		$('#nextBtn').click(function(){
-			console.log($('#email').val());
-			console.log($('#name').val());
 			$('#inputKeyCodeForm').attr('action','<%=request.getContextPath() %>/input.kc');
 	        $('#inputKeyCodeForm').submit();
 		});

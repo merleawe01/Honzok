@@ -91,7 +91,6 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
@@ -151,8 +150,6 @@ public class MemberDAO {
 		return result;
 	}
 	
-		
-	
 	
 	public int updateMember(Connection conn, Member member) {
 		PreparedStatement pstmt = null;
@@ -175,7 +172,6 @@ public class MemberDAO {
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(pstmt);

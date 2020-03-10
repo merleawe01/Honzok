@@ -44,7 +44,7 @@ public class InputKeyCodeServlet extends HttpServlet {
 			request.setAttribute("msg", "본인인증이 완료되었습니다.");
 			request.setAttribute("member", m);
 		} else {
-			page = "views/b_member/inputKeyCode.jsp";
+			page = "views/b_member/find_Id1.jsp";
 			request.setAttribute("msg", "인증에 실패했습니다.");
 		}
 		

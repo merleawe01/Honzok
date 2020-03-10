@@ -65,10 +65,10 @@
 		}
 		
 		
-		#input_title{ width:400px; height:30px; border-radius : 5px; border : 1px gray solid; }
-		#input_start{ width:200px; height:30px; border-radius : 5px; border : 1px gray solid; }
-		#input_buy{ width:200px; height:30px; border-radius : 5px; border : 1px gray solid; }
-		#input_time{ font-weight : bold; font-size : 25px; }
+		#input_title{ width:400px; height:30px; border-radius : 5px; border : 1px gray solid;}
+		#input_start{ width:200px; height:30px; border-radius : 5px; color:#f18332; font-weight : bold;}
+		#input_buy{ width:200px; height:30px; border-radius : 5px; color:#f18332; font-weight : bold;}
+		#input_time{ font-weight : bold; font-size : 20px;}
 		#input_content{ width:750px; height:350px; border-radius : 5px; border : 1px gray solid; }
 
 				
@@ -143,15 +143,21 @@
 						</tr>
 						<tr>
 							<td class = "content_title" id = "start">시작귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_start" name = "gstart" value="<%= min %>" readonly><label><b> 귤</b></label></td>
+							<td>
+								<span id = "input_start"><%= min %></span><label><b> 귤</b></label>
+								<input type="hidden" name = "gstart" value="<%= min %>">
+							</td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "buy">즉시구매귤<label class = "must">(필수)</label></td>
-							<td><input type = "number" id = "input_buy" name = "gbuy" value="<%= max %>" readonly><label><b> 귤</b></label></td>
+							<td>
+								<span id = "input_buy"><%= max %></span><label><b> 귤</b></label>
+								<input type = "hidden" name = "gbuy" value="<%= max %>">
+							</td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "time">남은시간</td>
-							<td><label id = "input_time">24 : 00</label></td>
+							<td><label id = "input_time">─</label></td>
 						</tr>
 						<tr>
 							<td class = "content_title" id = "content">내용<label class = "must">(필수)</label></td>

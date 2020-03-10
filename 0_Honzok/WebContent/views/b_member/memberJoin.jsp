@@ -9,57 +9,7 @@
 <script src="<%= request.getContextPath() %>/js/jquery-3.4.1.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
    <style>
-      header {
-         width : 100%;
-         height : 170px;
-         text-align: center;
-      }
-      #mainHeader{
-         width : 1170px;
-         height : 50px;
-         display : inline-block;
-      }
-      #subHeader{
-         width : 1170px;
-         height : 100px;
-         display : inline-block;
-      }
-      #logo {
-         height : 100%;
-         width : auto;
-         float : left;
-      }
-      #list {
-         height : 100%;
-         width : auto;
-         float : right;
-      }
-      #icon {
-         height : 100%;
-         width : auto;
-         float : right;
-      }
-      #nickname {
-         float : right;
-         padding : 10px;
-         color: rgb(241,131,50);
-         font-family: 'Nanum Gothic', sans-serif;
-         font-size: 12pt;
-      }
-      #nickname::after{
-         
-         color : black;
-      }
-      #boardName{
-         margin : 20px;
-         width : 100%;
-         height : 70px;
-         font-family: 'Nanum Gothic', sans-serif;
-         font-size: 30pt;
-         font-weight: bold;
-         display : inline-table;
-         border-bottom: 2pt solid gray;
-      }
+
       
       #information{
          text-align:left;
@@ -230,27 +180,13 @@
 <body>
 <body>
    
-   <header>
-   
-      <div id="mainHeader"><a href="../../index.jsp">   
-         <img alt="로고" src="../../images/Logo.png" id="logo"></a>
-         <img alt="메뉴" src="../../images/list.png" id="list">
-         
-         <!-- 추후에 로그인 이전과 이후로 구분할 예정 -->
-         <div id="nickname">
-            <a href="login.jsp">로그인</a> 
-         </div>
-         
-         
-      </div>
-      
-      <div id="subHeader">
-         <div id="boardName">
-            회원가입
-         </div>
-      </div>
-   
-   </header>
+	<header>
+		<%@ include file="../a_common/boardCommon.jsp" %>
+		<script>
+			$('#boardName').text('회원가입');
+			$('#quicklink').css('display','none');
+		</script>
+	</header>
    
    <section>
       
@@ -295,7 +231,7 @@
             
             <div class = "input">
                <div class = "left">닉네임<span class = "must">(필수)</span></div>
-                <input type = "text" class = "right" name="nickName"> <input type="button" id="nickCheck" class="mini_bt" onclick="checkNickName();" value="중복확인"  required/>
+                <input type = "text" class = "right" name="nickName"><input type="button" id="nickCheck" class="mini_bt" onclick="checkNickName();" value="중복확인"  required/>
             </div>
             
             <div class ="input">

@@ -89,7 +89,7 @@
 				<div id = "box"> 
 					<div id = "confirm_comment1"> 비밀번호 변경</div><br>
 				
-					<form action="<%= request.getContextPath() %>/updatePwd.new" id="pwdUpdateForm" method="post" onsubmit="send();">
+					<form action="<%= request.getContextPath() %>/updatePwd.new" id="pwdUpdateForm" method="post">
 						<div id = "input" >
 							<input type="hidden" name="id" value="<%= member.getUserId() %>">
 							<input type="hidden" name="userPwd" value="<%= member.getUserPwd() %>">
@@ -101,7 +101,7 @@
 								<input type = "password" class = "right" name="newPwd2" id="pwd2" required>
 								<label id="pwdResult2"></label><br>
 							<div class="center">
-								<button type="submit" id="next_bt" onclick="validate()">확인</button>
+								<button type="button" id="next_bt" onclick="validate();">확인</button>
 							</div>
 							
 							</div>
@@ -171,11 +171,10 @@
 	
 	function validate(){
 		if(isUsable && pwdCheck){
-			$('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');
+	        $('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');
 	        $('#pwdUpdateForm').submit();
-		} else{
+		} else {
 			alert('비밀번호를 확인해주세요');
-			return false;
 		}
 	}
 	
