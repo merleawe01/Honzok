@@ -24,7 +24,7 @@
 	<%@ include file="messageMenuBar.jsp"%>
 	<div class="outer">
 		<h3 align="center">쪽지 보내기</h3>
-		<form action="<%= request.getContextPath()%>/send.msg" method="post">
+		<form id="sendMsgForm" action="<%= request.getContextPath()%>/send.msg" method="post">
 		<div id="writeForm">
 			<table>
 				<tr>
@@ -48,7 +48,7 @@
 			</table>
 		</div>
 			<div align="center">
-				<button type="submit" class="Btn" id="sendBtn">보내기</button>
+				<button type="button" class="Btn" id="sendBtn" onclick="validate();">보내기</button>
 				<button type="button" class="Btn" id="cancleBtn"
 					onclick="location.href='<%= request.getContextPath()%>/list.re'">취소</button>
 			</div>
@@ -109,9 +109,12 @@
 		});
 		
 		function validate(){
-			if(isExisst && isToChecked){
-				return true;
-			} else{
+			var inputLength = $('#mcontent').val().length;
+			if(inputLength > 1000) {
+				alert('내용은 1000자 이상 보낼 수 없습니다.');
+			} else if(isExisst && isToChecked){
+				$('#sendMsgForm').submit();
+			} else {
 				alert('받을 사람의 닉네임을 확인해주세요');
 				return false;
 			}
