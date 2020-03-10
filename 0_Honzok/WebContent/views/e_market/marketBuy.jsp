@@ -52,7 +52,7 @@
 		       
 		    }
 		  
-		    location.href="<%= request.getContextPath()%>/buy2.m?postNo=" + <%= m.getPostNo()%> + "&sellYN=" + $('#sellYN').val(); 
+		    location.href="<%= request.getContextPath()%>/buy2.m?postNo=" + <%= m.getPostNo()%> + "&sellYN=" + $('#sellYN').val();
 		    alert(msg);
 		});
 	</script>	

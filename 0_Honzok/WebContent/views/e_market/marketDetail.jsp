@@ -174,12 +174,11 @@
 					</p>
 				</div>
 				<br>
-				
+			
 				<div align="center">
 					<% if(loginUser != null){ %>
-					<button id = "threebu" type="button" onclick="buyMarket()" value="구매">구매</button>
-					
-					<button id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">목록으로</button>
+						<button id = "threebu" type="button" onclick="buyMarket()" value="구매">구매</button>
+						<button id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">목록으로</button>
 					<% } %>
 				</div>
 		</form>

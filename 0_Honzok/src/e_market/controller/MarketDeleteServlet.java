@@ -36,7 +36,7 @@ public class MarketDeleteServlet extends HttpServlet {
 		if(result > 0) {
 			response.sendRedirect("list.m");
 		} else {
-			request.setAttribute("msg", "게시판 삭제에 실패하였습니다.");
+			request.setAttribute("msg", "게시글 삭제에 실패하였습니다.");
 			RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
 			view.forward(request, response);
 		}

@@ -34,7 +34,7 @@ public class MarketListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MarketService service = new MarketService(); // 두 개의 서비스를 호출할 것이기 때문에 참조변수로 생성, 전체개수가지고오는거랑 리스트정보를 가지고 오기위해
+		MarketService service = new MarketService(); 
 		
 		int listCount = service.getListCount(); // 게시판 리스트 개수 전체 게시글 개수
 		
@@ -67,7 +67,7 @@ public class MarketListServlet extends HttpServlet {
 		if(mList != null && fList != null) {
 			request.setAttribute("mList", mList);
 			request.setAttribute("fList", fList);
-			request.setAttribute("pi", pi); //페이징에 대한것이고
+			request.setAttribute("pi", pi); 
 			page = "views/e_market/marketList.jsp";
 		} else {
 			page = "views/a_common/errorPage.jsp";
