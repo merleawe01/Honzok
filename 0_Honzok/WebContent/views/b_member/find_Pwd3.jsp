@@ -101,7 +101,7 @@
 								<input type = "password" class = "right" name="newPwd2" id="pwd2" required>
 								<label id="pwdResult2"></label><br>
 							<div class="center">
-								<button type="submit" id="next_bt" onclick="pwdUpdate()">확인</button>
+								<button type="submit" id="next_bt" onclick="validate()">확인</button>
 							</div>
 							
 							</div>
@@ -171,17 +171,14 @@
 	
 	function validate(){
 		if(isUsable && pwdCheck){
-			return true;
+			$('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');
+	        $('#pwdUpdateForm').submit();
 		} else{
 			alert('비밀번호를 확인해주세요');
 			return false;
 		}
 	}
 	
-	$('#next_bt').click(function(){
-			$('#pwdUpdateForm').attr('action','<%= request.getContextPath() %>/updatePwd.new');
-	        $('#pwdUpdateForm').submit();
-	});
 	</script>
 
 </body>
