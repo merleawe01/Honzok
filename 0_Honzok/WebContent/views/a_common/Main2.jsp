@@ -16,9 +16,11 @@
 <meta charset="UTF-8">
 <title>혼족옵서예</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <style>
-   body {overflow-x: hidden; height: auto;}
+   body {overflow-x: hidden; height: auto; background-color: #fff9f0;
+		font-family: 'Nanum Gothic', sans-serif;}
    header {width: 100%; height: auto; text-align: center;}
    #mainHeader {width: 1170px; height: 50px; display: inline-block;}
    .menuBtn {padding:3px; display: inline-table; float: right;
@@ -58,7 +60,7 @@
 		display: inline-table;
 		cursor: pointer;
 	}
-   #nickname {
+  .nickname {
 		float : right;
 		padding : 10px;
 		color: rgb(241,131,50);
@@ -66,6 +68,10 @@
 		font-size: 15pt;
 		cursor: pointer;
 		font-weight: bold;
+	}
+	#nickname::after{
+		content : "님";
+		color : black;
 	}
 	#logout {
 		float : right;
@@ -88,18 +94,22 @@
    		cursor: pointer;
    }
    
-   nav {
-      background-color:#fff4c7;
+    nav {
+      background-color:#fff9f0;
       position: fixed;
       width: 99%;
-      height: 90%;
+      height: 100%;
       top: 60px;
-      z-index: 1;
+      z-index: 3;
    }
-   .menu {margin:100px auto;}
-   .menu img {width: 100%; height: 100%; cursor: pointer;}
-   .circle {width:300px; height: 300px; border-radius: 80%; background-color:gray;
-         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block;}
+   .menu {margin:10px auto;}
+   .menu img {width: 300PX; height: 300px; cursor: pointer;}
+   .circle {width:300px; height: 300px; border-radius: 80%; background-color:#C7C7BF;
+         margin:20px auto; margin-left:20px; margin-right:20px; display:inline-block; position:relative;}
+   .hoverCircle {position: absolute; background: rgba(0, 0, 0, 0.5); color: #fff; width: 100%; height: 100%;
+   				 top: 0; left: 0; border-radius:5%; display:none; z-index: 1; text-align:center; border-radius: 80%;}
+	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;
+		font-size:30px; font-weight:bold; font-family: 'Nanum Gothic', sans-serif;}
          
    #mainText {
       margin-top: 400px;
@@ -173,10 +183,10 @@
 			</span>
 			
 			<% if(loginUser == null){ %>
-				<div id="nickname" class="login">로그인</div>
+				<div class="nickname" id="login"><b>로그인</b></div>
 			<%}else{ %>
 				<div id="logout">로그아웃</div>
-				<div id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><%= loginUser.getUserName() %>님</div>
+				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
 			<%} %>
 					
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
@@ -220,16 +230,28 @@
 		<nav hidden="">
 			<table class="menu">
 				<tr>
-					<td><div class="circle" id="circle1" onclick="goInfo();"><img src="images/menu_info.png"></div></td>
+					<td><div class="circle" id="circle1" onclick="goInfo();">
+							<img src="<%= request.getContextPath() %>/images/menu_info.png">
+							<div class="hoverCircle" id="hoverCircle1"><p class="p">욜로홀로솔로</p></div>
+						</div></td>
 					<td></td>
-					<td><div class="circle" id="circle2" onclick="goFree();"><img src="images/menu_free.png"></div></td>
+					<td><div class="circle" id="circle2" onclick="goFree();">
+							<img src="<%= request.getContextPath() %>/images/menu_free.png">
+							<div class="hoverCircle" id="hoverCircle2"><p class="p">자유게시판</p></div>
+						</div></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><div class="circle" id="circle1" onclick="goGy();"><img src="images/menu_barter.png"></div></td>
+					<td><div class="circle" id="circle3" onclick="goGy();">
+							<img src="<%= request.getContextPath() %>/images/menu_barter.png">
+							<div class="hoverCircle" id="hoverCircle3"><p class="p">물귤교환</p></div>
+						</div></td>
 					<td></td>
-					<td><div class="circle" id="circle2" onclick="goMarket();"><img src="images/menu_market.png"></div></td>
+					<td><div class="circle" id="circle4" onclick="goMarket();">
+							<img src="<%= request.getContextPath() %>/images/menu_market.png">
+							<div class="hoverCircle" id="hoverCircle4"><p class="p">혼플리마켓</p></div>
+						</div></td>
 				</tr>
 			</table>
 		</nav>
@@ -337,6 +359,33 @@
 				$("#text3").removeClass("open");
 			}
 		});
+		
+        // hover //
+        $(function(){
+          $("#circle1").mouseenter(function(){
+            $('#hoverCircle1').css('display','block');
+          }).mouseleave(function(){
+            $('#hoverCircle1').css('display','none');
+          });
+
+          $("#circle2").mouseenter(function(){
+            $('#hoverCircle2').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle2').css('display','none');
+          });
+
+          $("#circle3").mouseenter(function(){
+            $('#hoverCircle3').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle3').css('display','none');
+          });
+
+          $("#circle4").mouseenter(function(){
+            $('#hoverCircle4').css({'display':'block'});
+          }).mouseleave(function(){
+            $('#hoverCircle4').css('display','none');
+          });
+        });
 	</script>
 
  

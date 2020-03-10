@@ -65,8 +65,8 @@
    }
    .menu {margin:10px auto;}
    .menu img {width: 100%; height: 100%; cursor: pointer;}
-   .circle {width:300px; height: 300px; border-radius: 80%; background-color:gray;
-         margin:30px auto; margin-left:20px; margin-right:20px; display:inline-block; position:relative;}
+   .circle {width:300px; height: 300px; border-radius: 80%; background-color:#C7C7BF;
+         margin:20px auto; margin-left:20px; margin-right:20px; display:inline-block; position:relative;}
    .hoverCircle {position: absolute; background: rgba(0, 0, 0, 0.5); color: #fff; width: 100%; height: 100%;
    				 top: 0; left: 0; border-radius:5%; display:none; z-index: 1; text-align:center; border-radius: 80%;}
 	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;

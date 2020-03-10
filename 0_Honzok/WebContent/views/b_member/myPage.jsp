@@ -315,7 +315,10 @@
 						<div class="left">포인트 <img src="images/orange.png" height="25px" width="25px"></div>
 						<span class="right"><input type="hidden" class="right" name="point" value="<%=point %>"><%=point %></span>
 					</div>
-					
+					<div class="input">
+						<div class="left"></div>
+						<div class="right" onclick="deleteMember();">탈퇴하기</div>
+					</div>
 				</div>
 				
 				<input id="updateBtn" type="submit" value="적용" > 
@@ -329,9 +332,16 @@
 		</div>
 
 	</section>
-
-
-	<footer> </footer>
+	<script>
+		function deleteMember(){
+			var bool = confirm("정말로 탈퇴하시겠습니까?");
+			if(bool){
+				$('#updateForm').attr('action', '<%= request.getContextPath()%>/delete.me');
+				$('#updateForm').submit();
+			}
+		}
+	
+	</script>
 
 </body>
 </html>

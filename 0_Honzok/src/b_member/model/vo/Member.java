@@ -12,10 +12,11 @@ public class Member {
 	private String lAddr;
 	private String phone;
 	private String email;
-	private String naver_YN;
 	private Date enrollDate;
 	private String status;
 	private int point;
+	private Date leaveDate;
+	private String keyCode;
 	
 	// 기본 생성자
 	public Member() {}
@@ -63,8 +64,10 @@ public class Member {
 
 	}
 
+
+
 	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
-			String lAddr, String phone, String email, String naver_YN, Date enrollDate, String status, int point) {
+			String lAddr, String phone, String email, Date enrollDate, String status, Date leaveDate, int point) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -75,10 +78,30 @@ public class Member {
 		this.lAddr = lAddr;
 		this.phone = phone;
 		this.email = email;
-		this.naver_YN = naver_YN;
+		this.enrollDate = enrollDate;
+		this.status = status;
+		this.leaveDate = leaveDate;
+		this.point = point;
+	}
+
+	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
+			String lAddr, String phone, String email, Date enrollDate, String status, int point, Date leaveDate,
+			String keyCode) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.postalCode = postalCode;
+		this.bAddr = bAddr;
+		this.lAddr = lAddr;
+		this.phone = phone;
+		this.email = email;
 		this.enrollDate = enrollDate;
 		this.status = status;
 		this.point = point;
+		this.leaveDate = leaveDate;
+		this.keyCode = keyCode;
 	}
 
 	public Member(String userId, String userName, String nickName, int postalCode, String bAddr, String lAddr,
@@ -194,14 +217,6 @@ public class Member {
 		this.email = email;
 	}
 
-	public String getNaver_YN() {
-		return naver_YN;
-	}
-
-	public void setNaver_YN(String naver_YN) {
-		this.naver_YN = naver_YN;
-	}
-
 	public Date getEnrollDate() {
 		return enrollDate;
 	}
@@ -216,6 +231,14 @@ public class Member {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public Date getLeaveDate() {
+		return leaveDate;
+	}
+
+	public void setLeaveDate(Date leaveDate) {
+		this.leaveDate = leaveDate;
 	}
 
 	public int getPoint() {
