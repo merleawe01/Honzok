@@ -25,13 +25,13 @@
    .tableArea{width:900px; height:auto;}
    .listArea{ width:900px; text-align:left; height:250px; cursor:pointer;}
    #nolist{width:900px; text-align:center; border-top:1px solid gray; border-bottom:1px solid gray;}
-   td{padding-left:5px;}
-   #title{font-size:1.5em; font-weight:bolder; height:20px; padding:7px; 
+   td{padding-left:10px;}
+   #title{font-size:1.5em; font-weight:bolder; height:20px; padding-left:30px; 
           color:#768149}
    #writer{font-size:14px; color:#606060; font-weight:bold;}
-   #status{font-weight:bold; font-size:18px;}
-   #price{font-size:25px; font-weight:bold;}
-   #etc{font-size:13px; color:#808080;}
+   #status{font-weight:bold; font-size:18px; padding-left:30px;}
+   #price{font-size:25px; font-weight:bold; padding-left:30px;}
+   #etc{font-size:13px; color:#808080; padding-left:30px;}
    
    
    .buttonArea {width:100px; margin-left:auto; margin-right:auto; float:right;}
@@ -49,7 +49,7 @@
     #sold{left:0px; width:300px; height:50px; font-size:2.5em; font-weight:bolder; bottom:78px; text-align:center;
              position:absolute; color:white; background: #A80013; transform: rotate(-15deg );}
    }
-       
+     
 </style>
 
 </head>
@@ -98,33 +98,33 @@
                      <% } %>
                      
                   </td>
-                     <td width="600px" id="title" class="detail"><%= m.getPostTitle() %></td>
+                     <td width="600px" id="title" class="detail" style="font-size:30px;"><%= m.getPostTitle() %></td>
                </tr>
                <tr>
-                  <td class="detail" id="writer" style="text-align:right" height=10px;><%= m.getWriter() %></td>
+                  <td class="detail" id="writer" style="text-align:right; font-size:20px;" height=10px;><%= m.getWriter() %></td>
                </tr>
                   
                <tr>
                   <% if(m.getItemStatus().equals("A")){ %>
-                     <td class="detail" id="status" style="color:orangered"><%= m.getItemStatus() %>급</td>
+                     <td class="detail" id="status" style="color:orangered; font-size:25px;"><%= m.getItemStatus() %>급</td>
                     <% } else if(m.getItemStatus() == "B" ){  %>
-                     <td class="detail" id="status" style="color:#FF7F00"><%= m.getItemStatus() %>급</td>
+                     <td class="detail" id="status" style="color:#FF7F00; font-size:25px;"><%= m.getItemStatus() %>급</td>
                    <% } else { %>
-                     <td class="detail" id="status" style="color:#F6BB43"><%= m.getItemStatus() %>급</td>
+                     <td class="detail" id="status" style="color:#F6BB43; font-size:25px;"><%= m.getItemStatus() %>급</td>
                    <% } %>
                </tr>
                   
                <tr>
-                  <td class="detail" id="price"> <%= formatter.format(m.getItemPrice()) %>원</td>
+                  <td class="detail" id="price" style="font-size:25px;"> <%= formatter.format(m.getItemPrice()) %>원</td>
                </tr>
                   
                <tr>
                   <% if(m.getEtc().length() > 43) { 
                      String etc = m.getEtc().substring(0,43);
                   %>
-                     <td class="detail" id="etc"><%= etc + "..." %></td>
+                     <td class="detail" id="etc" style="font-size:25px;"><%= etc + "..." %></td>
                   <% } else { %>
-                     <td class="detail" id="etc"><%= m.getEtc() %></td>
+                     <td class="detail" id="etc" style="font-size:25px;"><%= m.getEtc() %></td>
                   <% } %>
                </tr>
                

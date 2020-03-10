@@ -98,7 +98,7 @@
 								<input type="hidden" id="cContent1" name="cContent1">
 						</div>
 					</div>
-					<div id="size">※사진은 꼭 입력해주세요.※</div>
+					<div id="size">※사진은 꼭 등록해주세요.※</div>
 					<br><br>
 					
 					<div class="input">

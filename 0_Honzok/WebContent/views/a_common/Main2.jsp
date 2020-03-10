@@ -442,7 +442,7 @@
 		    var scrolltop = $(window).scrollTop();
 		    var winheight = $(window).height();
 			
-			if(scrolltop > 680 && scrolltop < 950) {
+			if(scrolltop > 550 && scrolltop < 950) {
 				$("#text1").addClass("open");
 			} else {
 				$("#text1").removeClass("open");
