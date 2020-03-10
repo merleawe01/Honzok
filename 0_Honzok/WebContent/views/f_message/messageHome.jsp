@@ -214,7 +214,6 @@
 			
 	        var bool = confirm("선택한 쪽지를 삭제하시겠습니까?");
 			if(bool){
-	            
 				var check = document.getElementsByName("select");
 
 				for (var i = 1; i < check.length; i++) {
@@ -273,7 +272,6 @@
 				case "content" : $('#searchSelect').val("content"); break;
 			}
 			
-			// console.log($('#searchSelect').val());
 			$('#searchForm').attr('action', '<%= request.getContextPath()%>/search.re');
 			$('#searchForm').submit();
 		}

@@ -11,7 +11,7 @@
 		#main{width : 100%; text-align: center; height : 1170px;}
 		#realMain {display: inline-table; width: 1170px; display: inline-table; height: 1100px; margin-left: 40px;}
 		
-		#box{margin-top: 2%; border: solid 2px gray; width: 100%; 
+		#box{margin-top: 2%; border: solid 2px gray; width: 1170px; 
 			padding: 20px 0px 20px 0px; background: rgb(242, 242, 242);}
 		#text{text-align:left;}
 		#confirm_comment1{padding-left: 30px; font-weight: bold; font-size: 20px; margin-bottom: 5px;}

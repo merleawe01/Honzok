@@ -82,11 +82,9 @@ public class IdKeyCodeServlet extends HttpServlet {
 	        
 	        if(keyResult > 0) {
 	        	// 1. 전달받은 값 인코딩
-	        	String root = request.getSession().getServletContext().getRealPath("/");
-	        	System.out.println(root);
 
 				final String sender = "yocon_o3o@naver.com"; 
-				final String password = "";
+				final String password = "@@dpffltm12";
 
 				String receiver = email;
 				String title = "인증 번호 메일입니다 :)";

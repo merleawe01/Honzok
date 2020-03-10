@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
-<%
-	Member loginUser = (Member) session.getAttribute("loginUser");
-	String msg = (String)request.getAttribute("msg");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -228,25 +224,13 @@ header {
 <body>
 
 
-	<header>
-		<div id="mainHeader">
-			<a href="../../index.jsp"> <img alt="로고"
-				src="../../images/Logo.png" id="logo"></a> <img alt="메뉴"
-				src="../../images/list.png" id="list">
-
-			<div id="nickname"
-				onclick="location.href='<%=request.getContextPath()%>/myPage.me'"><%=loginUser.getUserName()%>님
-			</div>
-
-
-
-		</div>
-
-		<div id="subHeader">
-			<div id="boardName">비밀번호 변경</div>
-		</div>
-
-	</header>
+	   <header>
+      <%@ include file="../a_common/boardCommon.jsp" %>
+      <script>
+         $('#boardName').text('비밀번호 변경');
+         $('#quicklink').css('display','none');
+      </script>
+   </header>
 
 	<section>
 
