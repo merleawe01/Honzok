@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" import="b_member.model.vo.*"%>
 <%
 	Member member = (Member)request.getAttribute("member");
-	 String msg = (String)request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
@@ -93,7 +92,7 @@
 					<form action="<%= request.getContextPath() %>/updatePwd.new" id="pwdUpdateForm" method="post" onsubmit="send();">
 						<div id = "input" >
 							<input type="hidden" name="id" value="<%= member.getUserId() %>">
-							<input type="hidden" name="userPwd" value="<%= member.getUserId() %>">
+							<input type="hidden" name="userPwd" value="<%= member.getUserPwd() %>">
 							<div class = "left">새비밀번호</div> 
 								<input type="password" class = "right" name="newPwd" id="pwd1" required>
 								<label id="pwdResult"></label>

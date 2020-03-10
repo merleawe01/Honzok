@@ -100,7 +100,7 @@ public class PwdKeyCodeServlet extends HttpServlet {
 						"<body>\r\n" + 
 						"	<table style=\"width:70%; margin:auto; background-color:#fff9f0\">\r\n" + 
 						"		<tr style=\"margin:10px auto;\">\r\n" + 
-						"			<th style=\"border-bottom: 1px solid lightgray; padding-bottom:20px;\"><img alt=\"혼족옵서예\" src=\\\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FSiGU0%2FbtqCxPWxsAS%2FGA9UXP6dtnWYJmz312Ofzk%2Fimg.png\"></th>\r\n" + 
+						"			<th style=\"border-bottom: 1px solid lightgray; padding-bottom:20px;\"><img alt=\"혼족옵서예\" src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FSiGU0%2FbtqCxPWxsAS%2FGA9UXP6dtnWYJmz312Ofzk%2Fimg.png\"></th>\r\n" + 
 						"		</tr>\r\n" + 
 						"		<tr>\r\n" + 
 						"			<td style=\"font-size:25px; font-weight:bold; padding:10px; padding-top:20px;\">인증번호 <br>"
