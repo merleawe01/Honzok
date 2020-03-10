@@ -341,7 +341,7 @@
 		</div>
 		
 		<div class="btnList">
-			<% if(loginUser.getNickName().equals(board.getWriter())) { %>
+			<% if(loginUser.getNickName().equals(board.getWriter()) || loginUser.getNickName().equals("운영자")) { %>
 				<div id="delete" class="button">삭제</div>
 				
 				<form action="<%= request.getContextPath() %>/views/c_information/travelUpdate.jsp" id="updateForm" method="post">
@@ -445,7 +445,7 @@
 						<td>
 							<span style="font-weight: bold;"><%= replyList.get(i).getWriter() %></span>&nbsp; &nbsp; 
 							<span style="font-weight: bold; color: rgb(190, 190, 190);"><%= replyList.get(i).getWrite_date() %></span>&nbsp; &nbsp; 
-							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter())) { %>
+							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter()) || loginUser.getNickName().equals("운영자")) { %>
 								<span><input type="hidden" value='<%= replyList.get(i).getCno() %>'><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span></span>
 							<% } %>
 						</td>
@@ -502,7 +502,7 @@
 									$td1.append($img);
 									$td2.append($span1);
 									$td2.append($span2);
-									if(data[key].writer == '<%= loginUser.getNickName() %>') {
+									if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 										$td2.append($span3);	
 									}
 									
@@ -565,7 +565,7 @@
 										$td1.append($img);
 										$td2.append($span1);
 										$td2.append($span2);
-										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+										if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 											$td2.append($span3);	
 										}
 										
@@ -636,7 +636,7 @@
 										$td1.append($img);
 										$td2.append($span1);
 										$td2.append($span2);
-										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+										if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 											$td2.append($span3);	
 										}
 										
