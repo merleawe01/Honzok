@@ -295,13 +295,13 @@ header {
 			         
 			         if(regExp1.test(str) && !regExp2.test(str) && regExp3.test(str) && str.length >= 8 && str.length <= 16){
 			            $('#pwd2Result').text("정상입력");
-			            $('#pwd2Result').css('color', 'green');
+			            $('#pwd2Result').css({'color':'#768149', 'diplay':'inline-block'});
 			            $(this).parent().css('background', '');
 			            $(this).css('background', '');
 			        	$("#spanteg1").attr("hidden", true);
 			         } else {
 			            $('#pwd2Result').text("알맞은 비밀번호를 입력하세요");
-			            $('#pwd2Result').css('color', 'red');
+			            $('#pwd2Result').css({'color':'#f18332', 'diplay':'inline-block'});
 			           
 			            $(this).focus();
 			         }
@@ -321,8 +321,6 @@ header {
 										$("#alert-danger").css(
 												'display',
 												'none');
-									
-										
 									} else {
 										alert("비밀번호가 일치하지 않습니다. 비밀번호를 재확인해주세요.");
 										$("#alert-success")

@@ -33,24 +33,26 @@ public class BoardService {
 	
 		List = dDAO.viewList(conn, currentPage);
 
-		
+		 
 		return List;
 	}
 	public int insertBoard(Board board) {
 		Connection conn = getConnection();
 		BoardDAO dao = new BoardDAO();
 		
-		int result = dao.insertBoard(conn, board);
+		int result1 = dao.insertBoard(conn, board);
+		int result2 = dao.addPoint(conn, board.getWriter());
+	
 		
-		if(result > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
 		}
 		
-		return result;
+		return result1;
 	}
-	
+
 	public int updateBoard(Board board) {
 		Connection conn = getConnection();
 		BoardDAO dao = new BoardDAO();
@@ -95,6 +97,7 @@ public class BoardService {
 		BoardDAO dao = new BoardDAO();
 		
 		int result = dao.insertReply(conn, r);
+		int result2 = dao.addPoint2(conn, r.getWriter());
 		
 		ArrayList<Reply> list = null;
 		if(result > 0) {

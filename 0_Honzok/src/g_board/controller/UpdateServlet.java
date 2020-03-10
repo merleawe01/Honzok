@@ -1,6 +1,7 @@
 package g_board.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,15 +39,14 @@ public class UpdateServlet extends HttpServlet {
 		String writer = request.getParameter("writer");
 		String postTitle = request.getParameter("post_Title");
 		String content = request.getParameter("content");	
-		String writeDate = request.getParameter("writeDate");
 		
 		
+		 
 
 		Board b = new Board();
 		b.setWriter(writer);
 		b.setPostNo(postNo);
 		b.setPostTitle(postTitle);
-		b.setWriteDate(writeDate);
 		b.setContent(content);
 
 		int result = new BoardService().updateBoard(b);

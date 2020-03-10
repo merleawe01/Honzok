@@ -31,7 +31,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
-
+ 
 	public int getListCount(Connection conn) {
 		
 		Statement stmt = null;
@@ -76,13 +76,12 @@ public class BoardDAO {
 			
 			rset = pstmt.executeQuery();
 			List = new ArrayList<Board>();
-			System.out.println(startRow);
-			System.out.println(endRow);
 			while(rset.next()) {
 				Board b = new Board(rset.getInt("post_No"),
 								   rset.getString("post_Title"),
+								   rset.getDate("write_Date"),
 								   rset.getInt("view_Count"),
-								   rset.getString("write_Date"));
+								   rset.getString("nickName"));
 				
 				List.add(b);
 
@@ -136,12 +135,12 @@ public class BoardDAO {
 			
 			if(rs.next()) {
 				board = new Board(rs.getInt("post_no"),
-								  rs.getString("nickname"),
+								  rs.getString("NICKNAME"),
 								  rs.getInt("board_no"),
 								  rs.getString("post_title"),
 								  rs.getString("content"),
 								  rs.getInt("view_count"),
-								  rs.getString("write_date"),
+								  rs.getDate("write_date"),
 								  rs.getDate("modify_date"),
 								  rs.getString("delete_yn").charAt(0));
 			}
@@ -300,6 +299,49 @@ public class BoardDAO {
 		} finally {
 			close(pstmt);
 		}		
+		
+		return result;
+	}
+
+	public int addPoint(Connection conn, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("addPoint");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		
+		
+		return result;
+	}
+	public int addPoint2(Connection conn, String writer) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("addPoint2");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, writer);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}		
+		
 		
 		return result;
 	}

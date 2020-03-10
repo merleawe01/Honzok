@@ -120,20 +120,27 @@
       }
       
       .mini_bt{
-         background-color : lightgray;
+         background-color :#A0CEDE;
          height : 25px;
          width : 64px;
          font-size : 10px;
          border-radius : 5px;
          margin-left : 10px;
          font-size : 13px;
+         border:0px;
+         font-weight:bold;
+         color:black;
       }
+      .mini_bt:hover{cursor:pointer;}
       
       .address2{
          font-size: 9pt;
          color : gray; 
          margin-left : 8px;
       }
+      
+      span{padding-left:10px;}
+      label{padding-left:10px;}
       
       #main{
          width : 100%;
@@ -216,6 +223,8 @@
          }
       }
       
+      select{height:27px; border:2px solid #768149;}
+      
    </style>
 </head>
 <body>
@@ -265,7 +274,7 @@
                <div class = "left">아이디<span class = "must">(필수)</span></div>
                <input type = "text" class = "right" name="joinUserId" id="joinUserId"  required> 
                   <label id="idResult"></label>
-                  
+                  <span id="spanteg1" >영어로 시작하며 영어와 숫자가 섞인 4자 이상 </span>
             </div>
                      
             <div class = "input">
@@ -316,7 +325,7 @@
             <div class = "input">
                
                <div class = "left">핸드폰 번호 </div>
-                     <input type="text" class="right" name="phone" id="phone" placeholder="phone number" maxlength="11"  />
+                     <input type="text" class="right" name="phone" id="phone" placeholder="ㅡ빼고 입력해주세요" maxlength="11"  />
                </div>
             <script>
 
@@ -350,10 +359,11 @@
             
             
             <div class = "input"  id = "end_line">
+            	<input id="emailfix" type="hidden" name="email">
                <div class = "left">이메일<span class = "must">(필수)</span></div>
                <div> 
-                    <input type = "text" class = "right email" id="email01" maxlength="16" placeholder="이메일을 입력해주세요." name="email01"  required> 
-                     @ <input type = "text" class = "right email" id="email02" name="email02" required> 
+              		<input type = "text" class = "right email" id="email01" maxlength="16" placeholder="이메일을 입력해주세요." name="email01"  required> 
+             	 	 @ <input type = "text" class = "right email" id="email02"  name="email02" required> 
                <select name="selectEmail" id="selectEmail">
                   <option value="1">직접입력</option>
                   <option value="daum.net">daum.net</option>
@@ -370,18 +380,18 @@
            <script>
            var selectEmail = $("#selectEmail");
            $('#selectEmail').change(function(){
-              $("#selectEmail option:selected").each(function () {
-                 if($('#selectEmail').val()== '1'){ //직접입력일 경우
-                    $("#email02").val(''); //값 초기화 
-                    $("#email02").attr("disabled",false); //활성화
-                 }else{ //직접입력이 아닐경우 
-                    $("#email02").val(selectEmail.val()); //선택값 입력
-                    $("#email02").attr("disabled",true); //비활성화 
+        	   $("#selectEmail option:selected").each(function () {
+        		   if($('#selectEmail').val()== '1'){ //직접입력일 경우
+        			   $("#email02").val(''); //값 초기화 
+        			   $("#email02").attr("disabled",false); //활성화
+        			}else{ //직접입력이 아닐경우 
+        				$("#email02").val(selectEmail.val()); //선택값 입력
+        				$("#email02").attr("disabled",true); //비활성화 
                     }
-                 }); 
-              });
+        		   });
+        	   $('#emailfix').val($("#email01").val() + "@" + $('#email02').val());
+        	   });
 
-           
            </script>
      
             
@@ -446,7 +456,7 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
 참고로 혼족는 ‘개인정보 유효기간제’에 따라 1년간 서비스를 이용하지 않은 회원의 개인정보를 별도로 분리 보관하여 관리하고 있습니다.</textarea>
                 </div>    
          <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
-                  개인정보 수집 및 이용에 대한 안내(필수) <input type="checkbox"  class="access_terms3" >동의함
+            	   개인정보 수집 및 이용에 대한 안내(필수) <input type="checkbox"  class="access_terms3" >동의함
                </div>
                
                    <div class = "access_terms3" style = "margin : 10px 30px 10px 0px;">
@@ -462,7 +472,7 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
                </div>
             </div>
             <input type = "submit" id = "finish_bt" value = "회원가입">
-            <!-- <button type="button" onclick="console.log($('input[name=email02]').val())">확인</button> -->
+            <!-- <button type="button" onclick="console.log($('#email02').val())">확인</button> -->
             </form>
          </div>
          
@@ -517,52 +527,61 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
          }
       });
       var isUsable = false;
-      var isIdChecked = false;
-      
-      
-      $('#joinUserId').on('change paste keyup', function(){
-         isIdChecked = false;
-      });
-      
-      $('#joinUserId').change(function(){
-         var userId = $('#joinUserId');
-         if(userId.val().trim().length < 4 ){
-            alert('아이디는 최소 4자리 이상이어야 합니다.');
-            userId.focus();
-         } else{
-            $.ajax({
-               url: "<%= request.getContextPath()%>/idCheck.me",
-               data: {userId: userId.val()},
-               success: function(data){
-                  if(data == 'success'){
-                     $('#idResult').text("이미 사용 중인 아이디입니다.");
-                     $('#idResult').css({'color':'#f18332', 'diplay':'inline-block'});
-                     userId.focus();
-                     isUsable = true;
-                     isIdChecked = true;
-                     
-                  } else {
-                     $('#idResult').text('사용 가능한 아이디입니다.');
-                     $('#idResult').css({'color':'#768149', 'diplay':'inline-block'});
-                          
-                           isUsable = false;
-                     isIdChecked = false;
-                     
-                  }
-               }
-            });
-         }
-      });
-         
-      
-      function validate(){
-         if(isUsable && isIdChecked){
-            return true;
-         } else{
-            alert('아이디 중복확인을 해주세요');
-            return false;
-         }
-      }
+		var isIdChecked = false;
+		
+		
+		$('#joinUserId').on('change paste keyup', function(){
+			isIdChecked = false;
+		});
+		
+		$('#joinUserId').change(function(){
+			var userId = $('#joinUserId');
+			
+			var str = $(this).val();
+            var regExp1 = /^[a-z]/gi; 
+            var regExp2 = /[^a-z][^0-9]/gi; 
+            var regExp3 = /[0-9]/gi; 
+			if(userId.val().trim().length < 4 ){
+				alert('아이디는 최소 4자리 이상이어야 합니다.');
+				userId.focus();
+			} else if (!regExp1.test(str) || regExp2.test(str) || !regExp3.test(str)){
+				alert('알맞은 아이디를 입력하세요');
+				userId.focus();
+			} else{
+				$.ajax({
+					url: "<%= request.getContextPath()%>/idCheck.me",
+					data: {userId: userId.val()},
+					success: function(data){
+						if(data == 'success'){
+							$('#idResult').text("이미 사용 중인 아이디입니다.");
+							$('#idResult').css({'color':'#f18332', 'diplay':'inline-block'});
+							userId.focus();
+							isUsable = true;
+							isIdChecked = true;
+							
+						} else {
+							$('#idResult').text('사용 가능한 아이디입니다.');
+							
+							$('#idResult').css({'color':'#768149', 'diplay':'inline-block'});
+							$("#spanteg1").attr("hidden", true);
+					            isUsable = false;
+							isIdChecked = false;
+							
+						}
+					}
+				});
+			}
+		});
+	      
+		
+		function validate(){
+			if(isUsable && isIdChecked){
+				return true;
+			} else{
+				alert('아이디 중복확인을 해주세요');
+				return false;
+			}
+		}
       
       $('#joinUserPwd').blur(function(){
          var str = $(this).val();
@@ -590,11 +609,11 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
             $('#pwd2Result').text("");
          } else if($('#joinUserPwd').val() == $('#joinUserPwd2').val()){
             $('#pwd2Result').text("비밀번호 일치");
-            $('#pwd2Result').css('color', 'green');
+            $('#pwd2Result').css({'color':'#768149', 'diplay':'inline-block'});
             $("#spanteg3").attr("hidden", true);
          } else{
             $('#pwd2Result').text("비밀번호 불일치");
-            $('#pwd2Result').css('color', 'red');
+            $('#pwd2Result').css({'color':'#f18332', 'diplay':'inline-block'});
          }
       }
       $('#joinUserPwd2').keyup(function(){
@@ -602,7 +621,7 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
       });
       $('#joinUserPwd').change(function(){
          checkPwd();
-      });
+      }); 
       $('#joinUserPwd2').blur(function(){
          $(this).parent().css('background', '');
       });

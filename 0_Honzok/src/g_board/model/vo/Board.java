@@ -14,33 +14,24 @@ public class Board {
 	private Date modifyDate;
 	private int recoCount;
 	private char deleteYN;
-	private String writeDate;
+	private Date writeDate;
 	
 	
 	public Board() {}
 
-	public Board(int postNo, String postTitle, int viewCount, String writeDate) {
+	public Board(int postNo, String postTitle, Date writeDate, int viewCount ,String nickname) {
 		super();
 		this.postNo = postNo;
 		this.postTitle = postTitle;
 		this.viewCount = viewCount;
 		this.writeDate = writeDate;
+		this.nickname = nickname;
+		
+		 
 	}
 
-
-	public Board(int postNo, String postTitle, String content, int viewCount, Date modifyDate) {
-		super();
-		this.postNo = postNo;
-		this.postTitle = postTitle;
-		this.content = content;
-		this.viewCount = viewCount;
-		this.modifyDate = modifyDate;
-	}
-
-
-
-	public Board(int postNo, String nickname, int boardNo, String postTitle, String content, int viewCount, String writeDate,
-			Date modifyDate, char deleteYN) {
+	public Board(int postNo, String nickname, int boardNo, String postTitle,  String content, int viewCount,
+			Date writeDate,Date modifyDate, char deleteYN ) {
 		super();
 		this.postNo = postNo;
 		this.nickname = nickname;
@@ -51,6 +42,44 @@ public class Board {
 		this.writeDate = writeDate;
 		this.modifyDate = modifyDate;
 		this.deleteYN = deleteYN;
+	
+	}
+
+	public Board(int postNo, int boardNo, String postTitle, String nickname, String content, int viewCount,
+			Date modifyDate, char deleteYN, Date writeDate) {
+		super();
+		this.postNo = postNo;
+		this.boardNo = boardNo;
+		this.postTitle = postTitle;
+		this.nickname = nickname;
+		this.content = content;
+		this.viewCount = viewCount;
+		this.modifyDate = modifyDate;
+		this.deleteYN = deleteYN;
+		this.writeDate = writeDate;
+	}
+
+	public Board(int postNo, String postTitle, String content, Date writeDate) {
+		super();
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.content = content;
+		this.writeDate = writeDate;
+	}
+
+
+	public Board(int postNo, String postTitle, String nickname, String content, int viewCount, Date modifyDate,
+			int recoCount, char deleteYN, Date writeDate) {
+		super();
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.nickname = nickname;
+		this.content = content;
+		this.viewCount = viewCount;
+		this.modifyDate = modifyDate;
+		this.recoCount = recoCount;
+		this.deleteYN = deleteYN;
+		this.writeDate = writeDate;
 	}
 
 
@@ -59,32 +88,21 @@ public class Board {
 
 
 
-
-	public Board(int postNo, int boardNo, String postTitle, String writer, String content, int viewCount,
-			String writeDate, Date modifyDate, int recoCount, char deleteYN) {
+	public Board(int postNo, int boardNo, String postTitle, String writer, String nickname, String content,
+			int viewCount, Date modifyDate, int recoCount, char deleteYN, Date writeDate) {
 		super();
 		this.postNo = postNo;
 		this.boardNo = boardNo;
 		this.postTitle = postTitle;
 		this.writer = writer;
+		this.nickname = nickname;
 		this.content = content;
 		this.viewCount = viewCount;
-		this.writeDate = writeDate;
 		this.modifyDate = modifyDate;
 		this.recoCount = recoCount;
 		this.deleteYN = deleteYN;
-	}
-
-
-
-	public Board(int postNo, String postTitle, String content, String writeDate) {
-		super();
-		this.postNo = postNo;
-		this.postTitle = postTitle;
-		this.content = content;
 		this.writeDate = writeDate;
 	}
-
 
 
 
@@ -171,13 +189,13 @@ public class Board {
 
 
 
-	public String getWriteDate() {
+	public Date getWriteDate() {
 		return writeDate;
 	}
 
 
 
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
 
