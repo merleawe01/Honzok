@@ -84,7 +84,7 @@ public class IdKeyCodeServlet extends HttpServlet {
 	        	// 1. 전달받은 값 인코딩
 
 				final String sender = "yocon_o3o@naver.com"; 
-				final String password = "@@dpffltm12";
+				final String password = "";
 
 				String receiver = email;
 				String title = "인증 번호 메일입니다 :)";
