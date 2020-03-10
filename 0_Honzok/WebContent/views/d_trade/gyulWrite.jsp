@@ -67,6 +67,7 @@
 			      font-weight: bold;
 			      line-height: 40px;
 			      cursor:pointer;
+			      font-size : 18px;
 		}
 		#twobu{text-align : center;
 				  width : 100px;
@@ -79,6 +80,7 @@
 			      font-weight: bold;
 			      margin-left:50px;
 			      cursor:pointer;
+			      font-size : 18px;
 		}
 </style>
 </head>

@@ -77,7 +77,7 @@
 			text-align: center;
 			cursor: pointer;
 			border : 0px;
-			font-size : 15px;
+			font-size : 18px;
 		}
 		#cancel{
 			width : 100px;
@@ -92,7 +92,7 @@
 			text-align: center;
 			cursor: pointer;
 			border : 0px;
-			font-size : 15px;
+			font-size : 18px;
 		}
 		
 		#input_address{
@@ -135,8 +135,8 @@
   						<option value="018">018</option>
   						<option value="019">019</option>
 					</select> - 
-					<input type="number" class="right" name="phone2" value="<%=loginUser.getPhone().substring(3, 7)%>" style="width: 80px;"> - 
-					<input type="number" class="right" name="phone3" value="<%=loginUser.getPhone().substring(7, 11)%>" style="width: 80px;"> 
+					<input type="number" class="right" name="phone2" value="<%=loginUser.getPhone().substring(4, 8)%>" style="width: 80px;"> - 
+					<input type="number" class="right" name="phone3" value="<%=loginUser.getPhone().substring(9, 13)%>" style="width: 80px;"> 
 					
 
 					
@@ -160,12 +160,12 @@
 				<script>
 		           $('#selectEmail').change(function(){
 		              $("#selectEmail option:selected").each(function () {
-		                 if($(this).val()== '1'){ //직접입력일 경우
-		                    $("#email02").val(''); //값 초기화 
-		                    $("#email02").attr("disabled",false); //활성화
-		                    }else{ //직접입력이 아닐경우 
-		                       $("#email02").val($(this).text()); //선택값 입력
-		                       $("#email02").attr("disabled",true); //비활성화 
+		                 if($(this).val()== '1'){ 
+		                    $("#email02").val(''); 
+		                    $("#email02").attr("disabled",false); 
+		                    }else{ 
+		                       $("#email02").val($(this).text()); 
+		                       $("#email02").attr("disabled",true);
 		                       } 
 		                 }); 
 		              });

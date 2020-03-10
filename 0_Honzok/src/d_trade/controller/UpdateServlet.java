@@ -130,7 +130,7 @@ public class UpdateServlet extends HttpServlet {
 				}
 			}
 			
-			System.out.println(newInsertFile);
+			
 			
 	
 			int result = 0;

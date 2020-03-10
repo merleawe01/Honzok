@@ -75,7 +75,7 @@
 		#btn{ margin-top : 50px;}
 		
 		#onebu{text-align : center;
-				  font-size : 15px;
+				  font-size : 18px;
 				  width : 100px;
 				  height : 40px;
 			      background-color : rgb(241, 131, 50);
@@ -87,7 +87,7 @@
 			      cursor:pointer;
 		}
 		#twobu{text-align : center;
-				  font-size : 15px;
+				  font-size : 18px;
 				  width : 100px;
 				  height : 40px;
 			      background-color : lightgray;

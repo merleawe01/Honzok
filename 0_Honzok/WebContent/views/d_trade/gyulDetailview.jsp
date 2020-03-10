@@ -117,7 +117,7 @@
 			      font-weight: bold;
 			      cursor:pointer;
 			      margin-left : 76%;
-			      font-size : 15px;
+			      font-size : 18px;
 		}
 		#delete{
 				  font-size : 10pt;
@@ -130,7 +130,7 @@
 			      font-weight: bold;
 			      margin-left:10px;
 			      cursor:pointer;
-			      font-size : 15px;
+			      font-size : 18px;
 		}
 		
 		#onebu{
@@ -144,7 +144,7 @@
 			      font-weight: bold;
 			      line-height: 40px;
 			      cursor:pointer;
-			      font-size : 15px;
+			      font-size : 18px;
 		}
 		#twobu{
 				  text-align : center;
@@ -158,7 +158,7 @@
 			      font-weight: bold;
 			      margin-left:50px;
 			      cursor:pointer;
-			      font-size : 15px;
+			      font-size : 18px;
 		}
 		
 		.sold_txt{
