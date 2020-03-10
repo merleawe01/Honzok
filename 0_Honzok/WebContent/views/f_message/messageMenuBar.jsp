@@ -12,8 +12,9 @@
 <meta charset="UTF-8">
 <title>쪽지함</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <style>
-	body {align:center; background:#FFF6E6;}
+	body {align:center; background:#FFF6E6; font-family: 'Nanum Gothic', sans-serif;}
 	#userMessage {text-align:center; width:480px; height:40px; background:#A0CEDE; color:white;
 					font-weight:bold; margin:0 auto;}
 	.wrap{width: 100%; height: 40px; align:center;}

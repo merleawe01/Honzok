@@ -166,10 +166,15 @@
 		float : left;
 	}
 	#commentRight{
-		width : 60px;
+		width : 80px;
 		height : 60px;
-		background-color: white;
+		background-color: #A0CEDE;
+		color:white;
+		font-size:17px;
+		font-weight:bold;
 		display : inline-table;
+		border:0px;
+		border-radius:5px;
 	}
 	.replyUpdate{cursor: pointer;}
 	.replyDelete{cursor: pointer;}
@@ -454,7 +459,7 @@
 			}%>
 			</div>
 			
-			<textarea id="commentLeft" rows="4" cols="100"></textarea>
+			<textarea id="commentLeft" rows="4" cols="110"></textarea>
 			<button id="commentRight">등록</button>
 			
 			<script>

@@ -149,6 +149,20 @@ Connection conn = getConnection();
 		
 		return result;
 	}
+
+	public int deleteMember(String userId) {
+		Connection conn = getConnection();
+		MemberDAO mDAO = new MemberDAO();
+		int result = mDAO.deleteMember(conn, userId);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		return result;
+	}
 	
 }
 

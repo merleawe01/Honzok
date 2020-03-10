@@ -18,6 +18,7 @@
 <title>쪽지함</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
+	body{font-family: 'Nanum Gothic', sans-serif;}
     .tableArea{width:480px; margin-left:auto; margin-right:auto;}
     #recieve{background: powderblue;}
 	#list{text-align:center; table-layout: fixed}

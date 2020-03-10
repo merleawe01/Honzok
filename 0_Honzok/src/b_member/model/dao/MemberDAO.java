@@ -56,9 +56,9 @@ public class MemberDAO {
 										    rset.getString("L_ADDRESS"),
 										    rset.getString("PHONE"),
 										    rset.getString("EMAIL"),
-										    rset.getString("NAVER_YN"),
 										    rset.getDate("ENROLL_DATE"),
 											rset.getString("STATUS"),
+											rset.getDate("LEAVE_DATE"),
 											rset.getInt("POINT"));
 				}
 				
@@ -200,19 +200,19 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				member = new Member(rs.getString("user_id"),
-						rs.getString("user_pwd"),
-						rs.getString("user_Name"),
-						rs.getString("nickName"),
-						rs.getInt("postal_Code"),
-						rs.getString("b_Address"),
-						rs.getString("l_Address"),
-						rs.getString("phone"),
-						rs.getString("email"),
-						rs.getString("naver_Yn"),
-						rs.getDate("enroll_Date"),
-						rs.getString("status"),
-						rs.getInt("point"));
+				member = new Member( rs.getString("USER_ID"),
+						rs.getString("USER_PWD"),
+						rs.getString("USER_NAME"),
+						rs.getString("NICKNAME"),
+						rs.getInt("POSTAL_CODE"),
+						rs.getString("B_ADDRESS"),
+						rs.getString("L_ADDRESS"),
+						rs.getString("PHONE"),
+						rs.getString("EMAIL"),
+						rs.getDate("ENROLL_DATE"),
+						rs.getString("STATUS"),
+						rs.getDate("LEAVE_DATE"),
+						rs.getInt("POINT"));;
 						
 			}
 		} catch (SQLException e) {
@@ -365,6 +365,26 @@ public class MemberDAO {
 			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	public int deleteMember(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMember");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return result;
 	}
 }
