@@ -46,7 +46,7 @@ public class MarketDetailServlet extends HttpServlet {
 			request.setAttribute("fileList", fileList);
 			page = "views/e_market/marketDetail.jsp";
 		} else {
-			request.setAttribute("msg", "사진 게시판 상세보기에 실패하였습니다.");
+			request.setAttribute("msg", "게시글 상세보기에 실패하였습니다.");
 			page = "views/a_common/errorPage.jsp";
 		}
 		

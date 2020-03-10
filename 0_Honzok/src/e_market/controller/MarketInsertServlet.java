@@ -113,7 +113,7 @@ public class MarketInsertServlet extends HttpServlet {
 					failedFile.delete();
 				}
 				
-				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
+				request.setAttribute("msg", "게시글 등록에 실패하였습니다.");
 				request.getRequestDispatcher("views/a_common/errorPage.jsp").forward(request, response);
 			}
 		}

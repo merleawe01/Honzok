@@ -91,8 +91,8 @@
                                  </div>
                               </div>
                            <% }  else {%>   
-                              <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
-                                 width="300px" height="246px" class="detail">
+                             <div> <img src="<%= request.getContextPath() %>/thumbnail_uploadFiles/<%= a.getChangeName()%>"
+                                 width="300px" height="246px" class="detail"></div>
                            <% } %>
                         <% } %>            
                      <% } %>
@@ -198,7 +198,7 @@
 	
 		$(function(){
 			$('.listArea img').click(function(){
-				var postno = $(this).prev().val();
+				var postno = $(this).parent().prev().val();
 				location.href="<%= request.getContextPath() %>/detail.m?postNo=" + postno;
 			})
 		});

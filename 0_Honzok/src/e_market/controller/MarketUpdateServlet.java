@@ -142,7 +142,7 @@ public class MarketUpdateServlet extends HttpServlet {
 				}
 				
 				page = "views/a_common/errorPage.jsp";
-				request.setAttribute("msg", "사진 게시판 등록에 실패하였습니다.");
+				request.setAttribute("msg", "업데이트에 실패하였습니다.");
 			}
 			request.getRequestDispatcher(page).forward(request, response);
 			
