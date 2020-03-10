@@ -7,7 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	body{padding:15px;}
+	body{padding:15px;
+		background-color: #fff9f0;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
 	#inputNick{height:25px;}
 	#checkBtn, #usedId, #cancle{border-radius:5px; border:0px; background-color:lightgray; height:30px; font-weight:bold;}
 	#checkBtn:hover, #usedId:hover{background-color:#f18332; color:white;}
