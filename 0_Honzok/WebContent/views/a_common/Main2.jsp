@@ -19,150 +19,255 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <style>
-   body {overflow-x: hidden; height: auto; background-color: #fff9f0;
-		font-family: 'Nanum Gothic', sans-serif;}
-   header {width: 100%; height: auto; text-align: center;}
-   #mainHeader {width: 1170px; height: 50px; display: inline-block;}
-   .menuBtn {padding:3px; display: inline-table; float: right;
-          background-color: transparent; border: none; cursor: pointer;}
-   .messageBtn {padding:3px; display: inline-table; float: right;
-          background-color: transparent; border: none; cursor: pointer;}
-   #icon {height: 50px%; width: 50px; float: right;}
-   #main {width: 100%;text-align: center;overflow: hidden;height: auto;}
-   #realMain {width: 900px; display: inline-table; min-height: 600px; overflow: hidden; height: auto;}
-   #subHeader{width:100%; height:250px; margin-top: 150px;}
-   #logo {height: 100%; width: auto; float: center;}
-   #travel {position:relative; left:50px; top:100px;}
-   
-   #list {
-		height : 100%;
-		width : auto;
-		float : right;
+	body {
+		overflow-x: hidden;
+		height: auto;
+		background-color: #fff9f0;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+	
+	header {
+		width: 100%;
+		height: auto;
+		text-align: center;
+	}
+	
+	#mainHeader {
+		width: 1170px;
+		height: 50px;
+		display: inline-block;
+	}
+	
+	.menuBtn {
+		padding: 3px;
+		display: inline-table;
+		float: right;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+	}
+	
+	.messageBtn {
+		padding: 3px;
+		display: inline-table;
+		float: right;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+	}
+	
+	#icon {
+		height: 50px;
+		width: 50px;
+		float: right;
+	}
+	
+	#main {
+		width: 100%;
+		text-align: center;
+		overflow: hidden;
+		height: auto;
+	}
+	
+	#realMain {
+		width: 900px;
+		display: inline-table;
+		min-height: 600px;
+		overflow: hidden;
+		height: auto;
+	}
+	
+	#subHeader {
+		width: 100%;
+		height: 250px;
+		margin-top: 150px;
+	}
+	
+	#logo {
+		height: 100%;
+		width: auto;
+		float: center;
+	}
+	
+	#travel {
+		position: relative;
+		left: 50px;
+		top: 100px;
+	}
+	
+	#list {
+		height: 100%;
+		width: auto;
+		float: right;
 		cursor: pointer;
 		margin-left: 10px;
 	}
-   #login {
-   		margin-top: 100px;
-   		width: 100%;
-   		height: 100px;
-   		text-align: center;
-   		font-family: 'Nanum Gothic', sans-serif;
+	
+	.nickname {
+		float: right;
+		padding: 10px;
+		color: rgb(241, 131, 50);
+		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 15pt;
-   }
-   #loginbtn{
-		width : 150px;
-		height : 60px;
-		background-color : rgba(118, 129, 73, 0.8);
-		color : white;
-		border-radius: 10px;
-		line-height: 60px;
+		cursor: pointer;
 		font-weight: bold;
+	}
+	
+	.messageBtn {
+		padding: 3px;
 		display: inline-table;
+		float: right;
+		margin-right: 5px;
+		background-color: transparent;
+		border: none;
 		cursor: pointer;
 	}
-  .nickname {
-		float : right;
-		padding : 10px;
-		color: rgb(241,131,50);
-		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 15pt;
-		cursor: pointer;
-		font-weight: bold;
+	
+	#nickname::after {
+		content: "님";
+		color: black;
 	}
-	#nickname::after{
-		content : "님";
-		color : black;
-	}
+	
 	#logout {
-		float : right;
-		padding : 10px;
-		color: rgb(118,129,73);
+		float: right;
+		padding: 10px;
+		color: rgb(118, 129, 73);
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 15pt;
 		cursor: pointer;
 	}
-   #readmore {
-   		position: fixed;
-   		bottom: 0%;
-   		height: 100px;
-   		width: 100%;
-   }
-   #readmoreImg {
-   		float: center;
-   		height: 100%;
-   		width: auto;
-   		cursor: pointer;
-   }
-   
-    nav {
-      background-color:#fff9f0;
-      position: fixed;
-      width: 99%;
-      height: 100%;
-      top: 60px;
-      z-index: 3;
-   }
-   .menu {margin:10px auto;}
-   .menu img {width: 300PX; height: 300px; cursor: pointer;}
-   .circle {width:300px; height: 300px; border-radius: 80%; background-color:#C7C7BF;
-         margin:20px auto; margin-left:20px; margin-right:20px; display:inline-block; position:relative;}
-   .hoverCircle {position: absolute; background: rgba(0, 0, 0, 0.5); color: #fff; width: 100%; height: 100%;
-   				 top: 0; left: 0; border-radius:5%; display:none; z-index: 1; text-align:center; border-radius: 80%;}
-	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;
-		font-size:30px; font-weight:bold; font-family: 'Nanum Gothic', sans-serif;}
-         
-   #mainText {
-      margin-top: 400px;
-      width: 100%;
-      height: auto;
-      text-align: center;
-      
-      /* border:1px solid black; */
-   }
-   .textarea {
-      display: inline-table;
-      width: 45%;
-      height: 500px;
-      
-      /* border: 1px solid black; */
-   }
-   p{
-   	font-size: 22px;
-   }
-   #text1{
-      position: absolute;
-      left: -50%;
-      transition: All 0.5s ease; 
-      -webkit-transition: All 0.5s ease; 
-      -moz-transition: All 0.5s ease; 
-      -o-transition: All 0.5s ease;
-   }
-   #text1.open {
-      left: 18%;
-   }
-   #text2{
-      position: absolute;
-      right: -50%;
-      transition: All 0.5s ease; 
-      -webkit-transition: All 0.5s ease; 
-      -moz-transition: All 0.5s ease; 
-      -o-transition: All 0.5s ease;
-   }
-   #text2.open {
-      right: 18%;
-   }
-   #text3{
-      position: absolute;
-      left: -50%;
-      transition: All 0.5s ease; 
-      -webkit-transition: All 0.5s ease; 
-      -moz-transition: All 0.5s ease; 
-      -o-transition: All 0.5s ease;
-   }
-   #text3.open {
-      left: 18%;
-   }
-
+	
+	#readmore {
+		position: fixed;
+		bottom: 0%;
+		height: 100px;
+		width: 100%;
+	}
+	
+	#readmoreImg {
+		float: center;
+		height: 100%;
+		width: auto;
+		cursor: pointer;
+	}
+	
+	nav {
+		background-color: #fff9f0;
+		position: fixed;
+		width: 99%;
+		height: 100%;
+		top: 60px;
+		z-index: 3;
+	}
+	
+	.menu {
+		margin: 10px auto;
+	}
+	
+	.menu img {
+		width: 300PX;
+		height: 300px;
+		cursor: pointer;
+	}
+	
+	.circle {
+		width: 300px;
+		height: 300px;
+		border-radius: 80%;
+		background-color: #C7C7BF;
+		margin: 20px auto;
+		margin-left: 20px;
+		margin-right: 20px;
+		display: inline-block;
+		position: relative;
+	}
+	
+	.hoverCircle {
+		position: absolute;
+		background: rgba(0, 0, 0, 0.5);
+		color: #fff;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		border-radius: 5%;
+		display: none;
+		z-index: 1;
+		text-align: center;
+		border-radius: 80%;
+	}
+	
+	.p {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+		width: 300px;
+		height: 300px;
+		line-height: 100%;
+		font-size: 30px;
+		font-weight: bold;
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+	
+	#mainText {
+		margin-top: 400px;
+		width: 100%;
+		height: auto;
+		text-align: center;
+	
+		/* border:1px solid black; */
+	}
+	
+	.textarea {
+		display: inline-table;
+		width: 45%;
+		height: 500px;
+	
+		/* border: 1px solid black; */
+	}
+	
+	p {
+		font-size: 22px;
+	}
+	
+	#text1 {
+		position: absolute;
+		left: -50%;
+		transition: All 0.5s ease;
+		-webkit-transition: All 0.5s ease;
+		-moz-transition: All 0.5s ease;
+		-o-transition: All 0.5s ease;
+	}
+	
+	#text1.open {
+		left: 18%;
+	}
+	
+	#text2 {
+		position: absolute;
+		right: -50%;
+		transition: All 0.5s ease;
+		-webkit-transition: All 0.5s ease;
+		-moz-transition: All 0.5s ease;
+		-o-transition: All 0.5s ease;
+	}
+	
+	#text2.open {
+		right: 18%;
+	}
+	
+	#text3 {
+		position: absolute;
+		left: -50%;
+		transition: All 0.5s ease;
+		-webkit-transition: All 0.5s ease;
+		-moz-transition: All 0.5s ease;
+		-o-transition: All 0.5s ease;
+	}
+	
+	#text3.open {
+		left: 18%;
+	}
 </style>
 
 </head>
@@ -188,16 +293,12 @@
 				<div id="logout">로그아웃</div>
 				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
 			<%} %>
-					
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
+					
 			
 			<script>
-				$('.login').click(function(){
-					location.href='views/b_member/login.jsp?page=' + window.location.pathname.substring(10);
-				})
-				
 				$('#login').click(function(){
-					location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+					location.href='views/b_member/login.jsp?page=' + window.location.pathname.substring(10);
 				})
 				
 				$('#logout').click(function(){

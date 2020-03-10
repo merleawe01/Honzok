@@ -67,7 +67,7 @@ public class Member {
 
 
 	public Member(String userId, String userPwd, String userName, String nickName, int postalCode, String bAddr,
-			String lAddr, String phone, String email, Date enrollDate, String status, Date leaveDate, int point) {
+			String lAddr, String phone, String email, Date enrollDate, String status, int point) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -80,7 +80,6 @@ public class Member {
 		this.email = email;
 		this.enrollDate = enrollDate;
 		this.status = status;
-		this.leaveDate = leaveDate;
 		this.point = point;
 	}
 

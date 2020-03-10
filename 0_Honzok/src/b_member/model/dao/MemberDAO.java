@@ -58,10 +58,8 @@ public class MemberDAO {
 										    rset.getString("EMAIL"),
 										    rset.getDate("ENROLL_DATE"),
 											rset.getString("STATUS"),
-											rset.getDate("LEAVE_DATE"),
 											rset.getInt("POINT"));
 				}
-				
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
@@ -69,9 +67,8 @@ public class MemberDAO {
 				close(rset);
 				close(pstmt);
 			}
+			
 			return loginUser;
-			
-			
 			
 		}
 	public int insertMember(Connection conn, Member member) {
@@ -200,19 +197,18 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				member = new Member( rs.getString("USER_ID"),
-						rs.getString("USER_PWD"),
-						rs.getString("USER_NAME"),
-						rs.getString("NICKNAME"),
-						rs.getInt("POSTAL_CODE"),
-						rs.getString("B_ADDRESS"),
-						rs.getString("L_ADDRESS"),
-						rs.getString("PHONE"),
-						rs.getString("EMAIL"),
-						rs.getDate("ENROLL_DATE"),
-						rs.getString("STATUS"),
-						rs.getDate("LEAVE_DATE"),
-						rs.getInt("POINT"));;
+				member = new Member(rs.getString("USER_ID"),
+									rs.getString("USER_PWD"),
+									rs.getString("USER_NAME"),
+									rs.getString("NICKNAME"),
+									rs.getInt("POSTAL_CODE"),
+									rs.getString("B_ADDRESS"),
+									rs.getString("L_ADDRESS"),
+									rs.getString("PHONE"),
+									rs.getString("EMAIL"),
+									rs.getDate("ENROLL_DATE"),
+									rs.getString("STATUS"),
+									rs.getInt("POINT"));
 						
 			}
 		} catch (SQLException e) {
