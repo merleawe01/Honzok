@@ -90,7 +90,7 @@ public class PwdKeyCodeServlet extends HttpServlet {
 	        	String root = request.getSession().getServletContext().getRealPath("/");
 
 				final String sender = "yocon_o3o@naver.com"; // 보내는 사람 ID (Ex: @naver.com 까지..)
-				final String password = "@@dpffltm12"; // 보내는 사람 Password
+				final String password = ""; // 보내는 사람 Password
 
 				String receiver = email; // 받는 사용자 (Ex: @naver.com 까지..)
 				String title = "인증 번호 메일입니다 :)";
