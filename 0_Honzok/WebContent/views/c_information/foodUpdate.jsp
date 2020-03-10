@@ -258,19 +258,19 @@
 					<span class="bigText">음식점에 대한 평가 </span><br><br>
 					
 					<input type="hidden" id="star" name="star" value=<%= star %>>
-					<img src="../../images/empty_star.png" class="star" id="star1">
-					<img src="../../images/empty_star.png" class="star" id="star2">
-					<img src="../../images/empty_star.png" class="star" id="star3">
-					<img src="../../images/empty_star.png" class="star" id="star4">
-					<img src="../../images/empty_star.png" class="star" id="star5">
+					<img src="../../images/empty_star_new.png" class="star" id="star1">
+					<img src="../../images/empty_star_new.png" class="star" id="star2">
+					<img src="../../images/empty_star_new.png" class="star" id="star3">
+					<img src="../../images/empty_star_new.png" class="star" id="star4">
+					<img src="../../images/empty_star_new.png" class="star" id="star5">
 					<script>
 						$(function(){
 							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
 							for(var i = 0; i < 5; i++){
 								if(i <= <%= star %>){
-									findStar[i].attr('src','../../images/star.PNG');
+									findStar[i].attr('src','../../images/star_new.PNG');
 								} else{
-									findStar[i].attr('src','../../images/empty_star.png');
+									findStar[i].attr('src','../../images/empty_star_new.png');
 								}
 							}
 						})
@@ -278,10 +278,10 @@
 						$('.star').mouseenter(function(){
 							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
 							for(var i = 0; i < 5; i++){
-								findStar[i].attr('src','../../images/empty_star.png');
+								findStar[i].attr('src','../../images/empty_star_new.png');
 							}
 							for(var i = 0; i < 5; i++){
-								findStar[i].attr('src','../../images/star.PNG');
+								findStar[i].attr('src','../../images/star_new.PNG');
 								if(findStar[i][0].id == this.id){
 									$('#star').val(i);
 									break;

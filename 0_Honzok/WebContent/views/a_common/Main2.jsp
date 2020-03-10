@@ -246,8 +246,8 @@
 				<p>당신의 빛나는 Single Life를 응원합니다.</p>
 			</div>
 		</div>
-		<div class="textarea"><br><img src="images/main1.jpg" width=auto height=450px></div>
-		<div class="textarea"><br><img src="images/main2.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="images/menuImg1.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="images/menuImg2.jpg" width=auto height=450px></div>
 		<div class="textarea">
 			<div id="text2">
 				<br><br><br>
@@ -268,7 +268,7 @@
 				<p>다른 누군가한테는 필요할 것 같다고요?</p>
 			</div>
 		</div>
-		<div class="textarea"><br><img src="images/main3.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="images/menuImg3.jpg" width=auto height=450px></div>
 	</div>
 
 	<section></section>

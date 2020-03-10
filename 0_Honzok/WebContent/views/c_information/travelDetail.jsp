@@ -275,9 +275,9 @@
 			<div class="right">
 				<% for(int i = 0; i < 5; i++) {
 						if(i > board.getStar()) {%>
-						<img src="<%= request.getContextPath() %>/images/empty_star.png" class="star">
+						<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star">
 						<% } else { %>
-						<img src="<%= request.getContextPath() %>/images/star.PNG" class="star">
+						<img src="<%= request.getContextPath() %>/images/star_new.PNG" class="star">
 						<% } %>
 					<% } %>
 			</div>

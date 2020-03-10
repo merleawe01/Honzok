@@ -405,9 +405,9 @@
 				<div id="middle">
 					<% for(int j = 0; j < 5; j++) {
 						if(j > list.get(i).getStar()) {%>
-						<img src="<%= request.getContextPath() %>/images/empty_star.png" class="star">
+						<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star">
 						<% } else { %>
-						<img src="<%= request.getContextPath() %>/images/star.PNG" class="star">
+						<img src="<%= request.getContextPath() %>/images/star_new.PNG" class="star">
 						<% } %>
 					<% } %>
 					
