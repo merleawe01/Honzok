@@ -328,7 +328,7 @@
                                              minutes = "0" + minutes;
                                           }
                                        }
-                                       if(minutes == -1){
+                                       if(minutes == 0-1){
                                           minutes = 59;
                                           hours--;
                                           if(hours < 10){
