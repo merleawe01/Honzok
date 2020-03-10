@@ -111,10 +111,12 @@
 	#btns{margin : 20px; display : inline-table;}
 	#nickname:hover{color:rgb(118,129,73); cursor:pointer;}
 	#updateBtn{width: 100px; height: 40px; background-color: #f18332; color: white; font-weight: bold; cursor:pointer;
-		margin: auto; font-size: 14pt; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
-	#cancle{width: 100px; height: 40px; background-color: #5f5f5f; color: white; font-weight: bold; cursor:pointer;
+		margin: auto; font-size: 18px; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
+	#cancle{width: 100px; height: 40px; background-color: #5f5f5f; color: white; font-weight: bold; cursor:pointer; font-size: 18px;
 		margin: auto; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
 	input[name^=addr]{width:300px;}
+	#deleteBtn{width: 100px; height: 40px; background-color: #768149; color: white; font-weight: bold; cursor:pointer;
+		margin: auto; font-size: 18px; line-height: 40px; display: inline-table; text-align: center; border: 0; border-radius: 5px;}
 </style>
 <title>Insert title here</title>
 
@@ -315,16 +317,13 @@
 						<div class="left">포인트 <img src="images/orange.png" height="25px" width="25px"></div>
 						<span class="right"><input type="hidden" class="right" name="point" value="<%=point %>"><%=point %></span>
 					</div>
-					<div class="input">
-						<div class="left"></div>
-						<div class="right" onclick="deleteMember();">탈퇴하기</div>
-					</div>
 				</div>
 				
 				<input id="updateBtn" type="submit" value="적용" > 
 					
 				<div id="cancle" onclick="location.href='javascript:history.go(-1)'">취소하기</div>
 				
+				<button type="button" id="deleteBtn" onclick="deleteMember();">회원 탈퇴</button>
 				
 				</form>
 			</div>
