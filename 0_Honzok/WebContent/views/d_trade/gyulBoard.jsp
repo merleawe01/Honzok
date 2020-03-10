@@ -140,6 +140,7 @@
 			background-color: rgb(241, 131, 50);
 			cursor: pointer;
 			color : white;
+			font-size : 18px;
 		}
 		
 		#write{
@@ -227,9 +228,7 @@
 	                            }
 	                   %>
 	                   
-	                   <script> // 카운트해주는 스크립트
-	                           // db에서 받아온 시간값에서 현재시간을 뺐다고 가정하고
-	                           // 받아올 때 시, 분, 초가 한자리수면 앞에 0을 포함하도록 할 것
+	                   <script> 
 	                           var hours<%= t.getrNo() %> = <%if(hour<10){%>
 	                                       "0<%= hour %>"
 	                                       <%}else{%>
