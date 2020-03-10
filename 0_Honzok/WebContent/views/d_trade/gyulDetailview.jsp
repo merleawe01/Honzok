@@ -357,7 +357,7 @@
 				</div>
 			
 				
-					<% if(loginUser != null && loginUser.getNickName().equals(t.getNickname())){ %>
+					<% if((loginUser != null && loginUser.getNickName().equals(t.getNickname()))||loginUser.getNickName().equals("운영자")){ %>
 						<input id = "revise" type="submit" value="수정"> 
 						<input id = "delete" type="submit" value="삭제" onclick="deleteGy();" >
 					<% } %>

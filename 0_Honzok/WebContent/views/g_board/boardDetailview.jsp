@@ -217,7 +217,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				</div>
 		
 				<div id = "btn1">
-					<% if(loginUser != null && loginUser.getNickName().equals(b.getNickname())){ %>
+					<% if((loginUser != null && loginUser.getNickName().equals(b.getNickname())) || loginUser.getNickName().equals("운영자")){ %>
 					<input id = "revise" type="submit" value="수정"> 
 					<input id = "delete" type="submit" value="삭제" onclick="deleteBo();" >
 					<% } %>
@@ -242,7 +242,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 						<td>
 							<span style="font-weight: bold;"><%= replyList.get(i).getWriter() %></span>&nbsp; &nbsp; 
 							<span style="font-weight: bold; color: rgb(190, 190, 190);"><%= replyList.get(i).getWrite_date() %></span>&nbsp; &nbsp; 
-							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter())) { %>
+							<% if(loginUser.getNickName().equals(replyList.get(i).getWriter()) || loginUser.getNickName().equals("운영자")) { %>
 								<span><input type="hidden" value='<%= replyList.get(i).getCno() %>'><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span></span>
 							<% } %>
 							
@@ -302,7 +302,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 									$td1.append($img);
 									$td2.append($span1);
 									$td2.append($span2);
-									if(data[key].writer == '<%= loginUser.getNickName() %>') {
+									if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 										$td2.append($span3);	
 									}
 									
@@ -365,7 +365,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 										$td1.append($img);
 										$td2.append($span1);
 										$td2.append($span2);
-										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+										if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 											$td2.append($span3);	
 										}
 										
@@ -434,7 +434,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 										$td1.append($img);
 										$td2.append($span1);
 										$td2.append($span2);
-										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+										if(data[key].writer == '<%= loginUser.getNickName() %>' || '<%= loginUser.getNickName() %>' == '운영자') {
 											$td2.append($span3);	
 										}
 										
