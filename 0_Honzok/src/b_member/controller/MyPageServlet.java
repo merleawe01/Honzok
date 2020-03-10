@@ -27,7 +27,7 @@ public class MyPageServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+ 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -37,7 +37,6 @@ public class MyPageServlet extends HttpServlet {
 //		Member loginUser = (Member)session.getAttribute("loginUser");
 //		String loginUserId = loginUser.getUserId();
 		String loginUserId = ((Member)session.getAttribute("loginUser")).getUserId();
-		System.out.print(loginUserId);
 		
 		b_member.model.vo.Member member = new b_member.model.service.MemberService().selectMember(loginUserId);
 		System.out.print("member : "+ member);

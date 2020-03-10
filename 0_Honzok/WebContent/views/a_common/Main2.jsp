@@ -175,7 +175,7 @@
 		height: 300px;
 		border-radius: 80%;
 		background-color: #C7C7BF;
-		margin: 20px auto;
+		margin: 50px auto;
 		margin-left: 20px;
 		margin-right: 20px;
 		display: inline-block;

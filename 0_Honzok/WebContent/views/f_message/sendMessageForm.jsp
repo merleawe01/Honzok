@@ -10,8 +10,8 @@
 	h3{margin:8px;}
 	#writerForm{background: rgba(255, 255, 255, 0.4); border: 5px solid white;
 		margin-left: auto; margin-right: auto; margin-top: 50px;}
-	table{width:450px; align:center;}
-	th{text-align:left;}
+	table{ align:center;}
+	th{text-align:left; width:100px; margin-bottom:5px;}
 	td{padding-left:5px;}
 	th, td{cellpadding:5px; margin-bottom:5px;}
 	#to_th{width:200px;}
@@ -33,7 +33,7 @@
 				</tr>
 				<tr>
 					<th id="to_th">받는사람</th>
-					<td width=50><input type="text" name="mto" id="mto" size="15" required ></td>
+					<td width=50px><input type="text" name="mto" id="mto" size="15" required ></td>
 					<td style="margin-left:5px;"><label id="checkMember"></label></td>
 				</tr>
 				<tr>

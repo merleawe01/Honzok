@@ -37,7 +37,7 @@ public class DetailviewServlet extends HttpServlet {
 		
 		Board board = new BoardService().selectBoard(postNo);
 		ArrayList<Reply> replyList = new BoardService().selectReplyList(postNo);
-		
+		 
 		String page =null;
 		if(board != null ) {
 			request.setAttribute("board", board);

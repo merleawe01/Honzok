@@ -12,12 +12,14 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 <style>
 		#boardTitle {
 			width : 100%;
-			height : 25px;
+			height : 40px;
 			display : inline-block;
 			font-family: 'Nanum Gothic', sans-serif;
-			padding-bottom: 5px;
+			padding-bottom: 10px;
 			border-bottom : 1pt solid gray;
 		}
+		
+		#titleTitle{font-size:30px; font-weight:bold;}
 		#titleLeft {
 			display : inline-block;
 			font-size: 13pt;
@@ -44,11 +46,10 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 			font-family: 'Nanum Gothic', sans-serif;
 			font-size: 10pt;
 			text-align: right;
-			margin-top: 10px;
+			margin-top: 5px;
 		}
 		
-
-
+		#content{font-size:15px;}
 		#detail_content{ border-bottom : 1px solid gray; margin-bottom : 20px; margin-top : 30px;width : 100%;}
 
 		.td1{
@@ -86,9 +87,9 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 		}
 		
 		#revise{
-				  font-size : 10pt;
+				  font-size : 18px;
 				  width : 80px;
-				  height : 30px;
+				  height : 40px;
 				   background-color: #f18332;
 				    color: white; 
 			      border-radius: 5px;
@@ -100,9 +101,9 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 			     
 		}
 		#delete{
-				  font-size : 10pt;
+				  font-size : 18px;
 				  width : 80px;
-				  height : 30px;
+				  height : 40px;
 			      background-color : lightgray;
 			      color : black;
 			      border-radius: 5px;
@@ -125,7 +126,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 			      cursor:pointer;
 		}
 		#twobu{text-align : center;
-				  font-size : 15pt;
+				  font-size : 18px;
 				  width : 100px;
 				  height : 40px;
 			      background-color : lightgray;
@@ -156,12 +157,17 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 		float : left;
 	}
 	#commentRight{
-		width : 60px;
+		width : 80px;
 		height : 60px;
-		background-color: white;
+		background-color: #A0CEDE;
+		color:white;
+		font-size:18px;
+		font-weight:bold;
 		display : inline-table;
+		border:0px;
+		border-radius:5px;
 	}
-	.replyUpdate{cursor: pointer;}
+	.replyUpdate{cursor: pointer;} 
 	.replyDelete{cursor: pointer;}
 		
 </style>
@@ -175,7 +181,6 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 	<div id = "main">
 	<form action="<%= request.getContextPath() %>/views/g_board/boardUpdateView.jsp" id="detailForm" method="post">
 		<div id="boardTitle">
-		
 	
 					<div id="titleTitle">
 						<%= b.getPostTitle() %>
@@ -186,7 +191,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 					<div id="titleRight">
 						<%= b.getWriteDate() %>
 					</div>
-				</div>
+		</div>
 				
 				<div id="boardWriter">
 					<%= b.getNickname() %> | 조회 : <%= b.getViewCount() %>
@@ -204,7 +209,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 						<tr>
 							<td id = "content_td"></td>
 							<td>
-								<textarea cols=60 rows=15 id = "content"><%= b.getContent() %></textarea>
+								<textarea cols=60 rows=15 id = "content" style="resize: none;" readonly ><%= b.getContent() %></textarea>
 								<input type="hidden" value="<%= b.getContent() %>" name = "content">
 							</td>
 						</tr>
@@ -212,7 +217,7 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				</div>
 		
 				<div id = "btn1">
-					<% if(loginUser != null && loginUser.getUserId().equals(b.getWriter())){ %>
+					<% if(loginUser != null && loginUser.getNickName().equals(b.getNickname())){ %>
 					<input id = "revise" type="submit" value="수정"> 
 					<input id = "delete" type="submit" value="삭제" onclick="deleteBo();" >
 					<% } %>
@@ -382,7 +387,72 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				})
 				
 				$(document).on('click', '.replyUpdate', function(){
-					console.log($(this).parent().parent().parent().next().children()); // 댓글 보여주는 부분의 td까지 왔음
+					if(($(this).parent().parent().parent().next().children().children()[0]) == undefined) {
+						var content = $(this).parent().parent().parent().next().children().text();
+						$(this).parent().parent().parent().next().children().html("<textarea style='resize:none; border:0;' cols=80>" + content + "</textarea>");
+					} else {
+						var cno = $(this).parent().children()[0].value;
+						var content = $(this).parent().parent().parent().next().children().children()[0].value;
+						var bid = <%= b.getPostNo() %>;
+						
+						$.ajax({
+							url: '<%= request.getContextPath() %>/update.reply',
+							type: 'post',
+							data: {cno: cno, content: content, bid: bid},
+							success: function(data){
+								$replyTable = $('#replyTable');
+								$replyTable.html("");
+								
+								$('#replyCount').text(data.length);
+								
+								if(data.length == 0) {
+									var $span = $('<span>').text('등록된 댓글이 없습니다.').css('margin-right', '200px');
+									
+									$replyTable.append('<br>');
+									$replyTable.append($span);
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									$replyTable.append('<br>');
+									
+								} else {
+									for(var key in data){
+										var $table = $('<table>').css('text-align', 'left');
+										
+										var $tr1 = $('<tr>');
+										var $tr2 = $('<tr>');
+										
+										var $td1 = $('<td>').attr('rowspan', 2);
+										var $td2 = $('<td>');
+										var $td3 = $('<td>').text(data[key].content);
+										
+										var $span1 = $('<span>').html(data[key].writer + '&nbsp; &nbsp; ').css('font-weight', 'bold');
+										var $span2 = $('<span>').html(data[key].write_date + '&nbsp; &nbsp; ').css('font-weight', 'bold').css('color', 'rgb(190, 190, 190)');
+										var $span3 = $('<span>').html('<input type="hidden" value=' + data[key].cno + '><span class="replyUpdate">수정</span> | <span class="replyDelete">삭제</span>');
+										
+										var $img = $('<img>').attr('src', "<%= request.getContextPath() %>/images/blanket.png").css('width', 'auto').css('height', '50px');
+										
+										$td1.append($img);
+										$td2.append($span1);
+										$td2.append($span2);
+										if(data[key].writer == '<%= loginUser.getNickName() %>') {
+											$td2.append($span3);	
+										}
+										
+										$tr1.append($td1);
+										$tr1.append($td2);
+										$tr2.append($td3);
+										$table.append($tr1);
+										$table.append($tr2);
+										
+										$replyTable.append($table);
+										$replyTable.append('<br>');
+									}
+								}
+								
+								$('#commentLeft').val('');
+							}
+						});
+					}
 				})
 			</script>
 		

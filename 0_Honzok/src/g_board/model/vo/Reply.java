@@ -20,7 +20,7 @@ public class Reply {
 		this.content = content;
 		this.write_date = write_date;
 		this.delete_yn = delete_yn;
-	}
+	} 
 
 	public int getCno() {
 		return cno;

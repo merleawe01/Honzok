@@ -42,13 +42,11 @@ public class InsertMemberServlet extends HttpServlet {
 		String bAddr = request.getParameter("bAddr");
 		String lAddr = request.getParameter("lAddr");
 		String phone = request.getParameter("phone");
-		String email01 = request.getParameter("email01");
-		String email02 = request.getParameter("email02");
-		String email = email01 + "@" + email02;
-		
-		System.out.println(email02);
-		System.out.println(email);
-		
+		String email = request.getParameter("email");
+//		System.out.println("email : " + email);
+//		System.out.println(email02);
+//		System.out.println(email);
+		 
 		
 		Member member = new Member(userId, userPwd, userName, nickName, postalCode, bAddr, lAddr, phone, email);
 		int result = new MemberService().insertMember(member);

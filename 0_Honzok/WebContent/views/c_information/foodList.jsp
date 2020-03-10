@@ -457,6 +457,25 @@
 		<script>
 			var cateArr = $('#cateTable input');
 			
+			var inputCate = '<%= category %>';
+			var inputCateArr = inputCate.split(', ');
+			
+			if(inputCateArr.length != 8) {
+				for(var i in inputCateArr) {
+					console.log(inputCateArr[i])
+					switch(inputCateArr[i]) {
+					case '한식' : cateArr[1].checked = true; break;
+					case '분식' : cateArr[2].checked = true; break;
+					case '일식' : cateArr[3].checked = true; break;
+					case '중식' : cateArr[4].checked = true; break;
+					case '양식' : cateArr[5].checked = true; break;
+					case '야식' : cateArr[6].checked = true; break;
+					case '술집' : cateArr[7].checked = true; break;
+					case '패스트푸드' : cateArr[8].checked = true; break;
+					}
+				}
+			}
+			
 			$('.nameCate').click(function(){
 				$(this).prev().click()
 			});

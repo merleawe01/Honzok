@@ -6,6 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	body{padding:15px;}
+	#inputNick{height:25px;}
+	#checkBtn, #usedId, #cancle{border-radius:5px; border:0px; background-color:lightgray; height:30px; font-weight:bold;}
+	#checkBtn:hover, #usedId:hover{background-color:#f18332; color:white;}
+	#cancle:hover{background-color:#768149; color:white;}
+	#usedId, #cancle{width:50px;}
+	#btnDiv{text-align:center;}
+</style>
 <script>
 	function nickValue(){
 		if(typeof(opener.document.joinForm) != 'undefined'){
@@ -38,12 +47,12 @@
 	}
 </script>
 </head>
-<body onload="nickValue();">
-	<b>닉네임 중복 체크</b>
+<body onload="nickValue();parent.resizeTo(430,300);" onresize="parent.resizeTo(430,300)" >
+	<div style="font-size:20px; "><b>닉네임 중복 체크</b></div>
 	<br>
 	<form action="<%= request.getContextPath() %>/nickCheck.me" id="nickCheckForm" method="post">
 		<input type="text" id="inputNick" name="inputNick">
-		<input type="submit" value="중복확인">
+		<input type="submit" id="checkBtn" value="중복확인">
 	</form>
 	
 	<br>
@@ -66,9 +75,10 @@
 	
 	<br>
 	<br>
-	
-	<input type="button" id="cancel" value="취소" onclick="window.close();">
-	<input type="button" id="usedId" value="확인" onclick="usedNick();">
+	<div id="btnDiv">
+		<input type="button" id="usedId" value="확인" onclick="usedNick();">
+		<input type="button" id="cancle" value="취소" onclick="window.close();">
+	</div>
 
 </body>
 </html>

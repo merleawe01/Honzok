@@ -42,7 +42,7 @@
 	<div class="outer">
 		<div id="userMessage">
 			<%= nickName %>님의 쪽지함
-			<img alt="쪽지이미지" src="images/receive_letter.png"  
+			<img alt="쪽지이미지" src="<%=request.getContextPath() %>/images/receive_letter.png"  
 					style="width:30px; height:30px; align:center; vertical-align:bottom;">
 		</div>
 		<div class="wrap" style="margin-bottom:5px;">

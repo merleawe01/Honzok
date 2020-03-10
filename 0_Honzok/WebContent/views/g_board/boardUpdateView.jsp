@@ -96,7 +96,7 @@
 	</script>
 	
 	<div id = "main">
-		
+		 
 		<div>
 			<form action="<%= request.getContextPath() %>/update.bo" method="post">
 			
@@ -129,31 +129,5 @@
 			</form>
 		</div>
 	</div>
-	<script>
-	$(document).ready(function() {
-
-
-	    $('#input_content').on('keyup', function() {
-	    	 var inputLength=$(this).val().length;
-			  var remain=780-inputLength;
-			  
-			  $('#text-length').html(remain);
-
-
-	        if($(this).val().length > 780) {
-	        	 $('#text-length').css('color','red');
-	            $(this).val($(this).val().substring(0, 780));
-	        }else{
-				   $('#text-length').css('color','black');
-			  }
-
-
-	    });
-
-
-	});
-	
-	
-</script>
 </body>
 </html>
