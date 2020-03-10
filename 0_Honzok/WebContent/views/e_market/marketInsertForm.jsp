@@ -62,7 +62,7 @@
 								
 						</div>
 					</div>
-					<div id="size">※사진은 꼭 입력해주세요.※</div>
+					<div id="size">※사진은 꼭 등록해주세요.※</div>
 					
 					<br><br>
 					
@@ -121,7 +121,7 @@
 					</div>
 					<br><br>
 					<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:900px; height:200px;">내용을 입력해주세요.</textarea>	
+					<textarea class="right" name="incontent"style="width:900px; height:200px;" placeholder="내용을 입력해주세요."></textarea>	
 					<br>
 				<div id="fileArea">
 				<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">
