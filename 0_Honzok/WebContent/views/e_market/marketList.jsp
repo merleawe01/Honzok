@@ -41,8 +41,8 @@
       
    button{border: 0px; border-radius: 5px; background:gray; padding:5px auto;}
    button:hover{cursor: pointer;}
-   .pagingArea{display:block;}
-   .pagingArea > button{border-radius: 50px; background:none; color:#805959; margin:3px; padding:10px auto;}
+   .pagingArea{display:block; }
+   .pagingArea > button{border-radius: 50px; background:none; color:#805959; margin:3px; padding:10px auto; font-size:20px;}
    #numBtn{background:none; margin:3px; padding:10px auto;}
      #choosen{background:#f18332; border-radius:50px; color:white;}
      
@@ -152,7 +152,7 @@
 			<button class="pagingBtn" onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=1'">&lt;&lt;</button>
 			
 			
-			<button  onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn" class="pagingBtn">pre</button>
+			<button onclick="location.href='<%= request.getContextPath()%>/list.m?currentPage=<%= currentPage-1%>'" id="beforeBtn" class="pagingBtn">pre</button>
 			
 			<script>
 				if(<%= currentPage%> <= 1){

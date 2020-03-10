@@ -263,7 +263,7 @@
 	                                             minutes<%= t.getrNo() %> = "0" + minutes<%= t.getrNo() %>;
 	                                          }
 	                                       }
-	                                       if(minutes<%= t.getrNo() %> == 0-1){
+	                                       if(minutes<%= t.getrNo() %> == "0-1"){
 	                                          minutes<%= t.getrNo() %> = 59;
 	                                          hours<%= t.getrNo() %>--;
 	                                          if(hours<%= t.getrNo() %> < 10){
