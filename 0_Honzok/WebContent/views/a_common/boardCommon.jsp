@@ -188,7 +188,10 @@
 			</span>
 			
 			<% if(loginUser == null){ %>
-				<div class="nickname" id="login"><b>로그인</b></div>
+				<form method="post" action="<%= request.getContextPath() %>/views/b_member/login.jsp" id="loginUrl">
+					<input type="hidden" id="url" name="url" value="">
+					<div class="nickname" id="login"><b>로그인</b></div>
+				</form>
 			<%}else{ %>
 				<div class="nickname" id="nickname"><b><%= loginUser.getUserName() %></b></div>
 				<div id="miniInfo" hidden="">
@@ -244,11 +247,15 @@
 				
 				<script>
 					$('#login').click(function(){
-						location.href='<%= request.getContextPath() %>/views/b_member/login.jsp?page=' + window.location.pathname.substring(10) + window.location.search;
+						$('#url').val(window.location.pathname.substring(10) + window.location.search);
+						$('#loginUrl').submit()
 					})
 					
 					$('#logout').click(function(){
-						location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10) + window.location.search;
+						$.ajax({
+							url: '<%= request.getContextPath() %>/logout.me',
+						});
+						location.reload();
 					})
 					
 					function moveLink(link){

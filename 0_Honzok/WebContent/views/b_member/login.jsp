@@ -152,7 +152,8 @@
 				<!-- 로그인 박스 -->
 	            <div class="center">
 	            <form action="<%= request.getContextPath() %>/login.me" method="post">
-	            	<input type="hidden" name="page" value=<%= (String)request.getParameter("page") %>>
+	            	<input type="hidden" id="url" name="page" value=<%= (String)request.getParameter("url") %>>
+	            	
 	            	<div id="login_box">
 		            	<input type="text" name="userId" id="userId" placeholder="아이디"><br>
 		            	<input type="password" name="userPwd" id="userPwd" placeholder="비밀번호">

@@ -457,6 +457,12 @@
 		<div id="cancle">취소</div>
 		
 		<script>
+			$('#cancle').click(function(){
+				if(confirm("글작성을 그만두시겠습니까?")) {
+					javascript:history.back();
+				}
+			})
+			
 			function insertBoard(){
 				if($('#title').val() == ""){
 					alert("여행지 이름을 입력해주세요.");

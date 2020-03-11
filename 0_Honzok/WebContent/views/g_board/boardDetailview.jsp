@@ -389,6 +389,8 @@ ArrayList<Reply> replyList = (ArrayList<Reply>)request.getAttribute("replyList")
 				$(document).on('click', '.replyUpdate', function(){
 					if(($(this).parent().parent().parent().next().children().children()[0]) == undefined) {
 						var content = $(this).parent().parent().parent().next().children().text();
+						$(this).css("color","rgb(1, 87, 155)")
+						$(this).css("font-weight","bold")
 						$(this).parent().parent().parent().next().children().html("<textarea style='resize:none; border:0;' cols=80>" + content + "</textarea>");
 					} else {
 						var cno = $(this).parent().children()[0].value;
