@@ -254,7 +254,7 @@
 		left: 18%;
 	}
 	
-	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white;}
+	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white; z-index:999;}
 	#miniPage{display:inline-block; font-size: 18px; cursor: pointer; 
 			padding: 5px; color:#f18332; font-weight:bold;}
 	#logout {padding: 5px; color: #768149; font-size: 18px;
