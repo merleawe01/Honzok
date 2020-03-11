@@ -6,8 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-		
-		
 		#content_table{
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -83,10 +81,6 @@
 	
 	<div id = "main">
 		<form action="<%= request.getContextPath() %>/insert.bo" method="post">
-	
-			
-			 
-				
 					
 					<table id = "content_table" style="margin-left: auto; margin-right: auto;">
 						<tr>

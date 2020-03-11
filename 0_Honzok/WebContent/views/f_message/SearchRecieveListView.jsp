@@ -79,30 +79,17 @@
 			<% if(m.getmTitle().length() > 11) {
 				String title = m.getmTitle().substring(0,11);
 			%>
-				<% if(m.getView() == 0) { %>
-					<td class="detail" style="color:#f18332; width:300px;" id="title"><%= title + "..." %>
-						<img src="images/new.png" width=20px; height=20px; style="vertical-align:bottom;">
-					</td>
-				<% } else { %>
 					<td class="detail" style="color:#768149; width:300px;" id="title"><%= title + "..." %></td>
-				<% } %>	
 					<td class="detail" width=100px><%= m.getDate()%></td>
 				</tr>
 			<% 
 				} else{	%>
-					<% if(m.getView() == 0) { %>
-						<td class="detail" style="color:#f18332; width:300px;" id="title"><%= m.getmTitle() %>
-							<img src="images/new.png" width=20px; height=20px; style="vertical-align:bottom;">
-						</td>
-					<% } else { %>
 						<td class="detail" style="color:#768149; width:300px;" id="title"><%= m.getmTitle() %></td>
 					<% } %>	
 						<td width=100px><%= m.getDate()%></td>
 					</tr>					
 			<% 		
-				}
 					}
-						
 				} 
 			%>	
 		</table>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-
+<%
+	String msg = (String)request.getAttribute("msg");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +30,7 @@
    
    #icon {height: 90%; width: auto; float: right;}
    #subHeader {width : 1170px; height : 100px;display : inline-block;}
-   #logo {height: auto; width: auto; float: center;}
+   #logo {height: auto; width: auto; float: center; cursor:pointer;}
    
    #main {width: 100%; text-align: center; height:100%}
    #realMain {width : 900px; display : inline-table; height: auto;}
@@ -92,7 +94,7 @@
 
 		</div>
 		<div id="subHeader">
-			<a href="../../index.jsp"><img alt="로고" src="../../images/Logo.png" id="logo"></a>
+			<a href="<%= request.getContextPath() %>/index.jsp"><img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" id="logo"></a>
 		</div>
 		
 		<nav hidden="">
@@ -179,6 +181,14 @@
 
 	</section>
 	<script>
+		
+		var msg = "<%= msg %>";
+		
+		$(function(){
+			if(msg != "null") 
+				alert(msg);
+		});
+	
 		function login(){
 			if($('#userId').val() == ""){
 				alert("아이디를 입력해주세요.");

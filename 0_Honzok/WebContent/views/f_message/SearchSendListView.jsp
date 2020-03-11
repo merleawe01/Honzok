@@ -67,42 +67,28 @@
 			<% } else{  %>
 					<% for(Message m : list){ %>
 			<tr id="contentTr">
-				</td>
 				<td class="detail" width=100px>
-					<%= m.getTo()%>
+					<%= m.getFrom()%>
 					<input type="hidden" name="mNo" id="mNo" value="<%= m.getmNo()%>">
 				</td>
 				
 			<% if(m.getmTitle().length() > 11) {
 				String title = m.getmTitle().substring(0,11);
 			%>
-				<% if(m.getView() == 0) { %>
-					<td class="detail" style="color:#f18332; width:300px;" id="title"><%= title + "..." %>
-						<img src="images/new.png" width=20px; height=20px; style="vertical-align:bottom;">
-					</td>
-				<% } else { %>
 					<td class="detail" style="color:#768149; width:300px;" id="title"><%= title + "..." %></td>
-				<% } %>	
 					<td class="detail" width=100px><%= m.getDate()%></td>
 				</tr>
-			<% 
-				} else{	%>
-					<% if(m.getView() == 0) { %>
-						<td class="detail" style="color:#f18332; width:300px;" id="title"><%= m.getmTitle() %>
-							<img src="images/new.png" width=20px; height=20px; style="vertical-align:bottom;">
-						</td>
-					<% } else { %>
+			<% } else{	%>
 						<td class="detail" style="color:#768149; width:300px;" id="title"><%= m.getmTitle() %></td>
-					<% } %>	
 						<td width=100px><%= m.getDate()%></td>
+			<% } %>	
 					</tr>					
 			<% 		
-				}
 					}
-						
 				} 
 			%>	
 		</table>
+
 		<div class="buttonArea">
 			<button class="messageBtn" id="writeBtn"
 					onclick="location.href='views/f_message/sendMessageForm.jsp'">쪽지보내기</button>

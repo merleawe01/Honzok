@@ -47,14 +47,14 @@ public class LoginServlet extends HttpServlet {
 		
 		if(loginUser != null) { 
 			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(6000); //10분(60 * 10) 기본은 30분 시간 지정 방법 
+			session.setMaxInactiveInterval(1800); // 10분(60 * 10) 기본은 30분 시간 지정 방법 
 			session.setAttribute("loginUser", loginUser);
 			
 			response.sendRedirect(page);
 		
-		}else { // 로그인 실패 시 
-			request.setAttribute("msg", "로그인 실패");
-			RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
+		} else { // 로그인 실패 시 
+			request.setAttribute("msg", "회원 정보가 없습니다.");
+			RequestDispatcher view = request.getRequestDispatcher("views/b_member/login.jsp");
 			view.forward(request, response);
 		}
 	}

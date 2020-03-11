@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="b_member.model.vo.Member"%>
-   <%
-%>
-    <%
-    
+<%
     Member member = (Member)request.getAttribute("member");
 	String userId = member.getUserId();
 	String userPwd = member.getUserPwd();
@@ -15,7 +12,7 @@
 	String phone = member.getPhone() != null ? member.getPhone() : "-";
 	String email = member.getEmail() != null ? member.getEmail() : "-";
 	int point = member.getPoint();
-	%>
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,59 +27,10 @@
 	href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap"
 	rel="stylesheet">
 <style>
-	body {overflow-y: scroll;}
-	header {
-			width : 100%;
-			height : 170px;
-			text-align: center;
-		}
-		#mainHeader{
-			width : 1170px;
-			height : 50px;
-			display : inline-block;
-		}
-		#subHeader{
-			width : 1170px;
-			height : 100px;
-			display : inline-block;
-		}
-		#logo {
-			height : 100%;
-			width : auto;
-			float : left;
-		}
-		#list {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#icon {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#nickname {
-			float : right;
-			padding : 10px;
-			color: rgb(241,131,50);
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 12pt;
-		}
-		#boardName{
-			margin : 20px;
-			width : 100%;
-			height : 70px;
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 30pt;
-			font-weight: bold;
-			display : inline-table;
-			border-bottom: 2pt solid gray;
-		} 
 		#main{
 			width : 100%;
 			text-align: center;
 			height : 1170px;
-			
 		}
 		
 		#realMain {
@@ -300,7 +248,7 @@
 					</div>
 					<div class="border"></div>
 					<div class="input">
-						<div class="left">포인트 <img src="images/orange.png" height="25px" width="25px"></div>
+						<div class="left">포인트 <img src="<%= request.getContextPath() %>/images/orange.png" height="25px" width="25px" style="vertical-align:middle;"></div>
 						<span class="right"><input type="hidden" class="right" name="point" value="<%=point %>"><%=point %></span>
 					</div>
 				</div>

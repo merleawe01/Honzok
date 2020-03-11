@@ -3,7 +3,6 @@
 <%@ page import="b_member.model.vo.Member"%>
 <%
    Member loginUser = (Member)session.getAttribute("loginUser");
-   //System.out.println(loginUser);
    String msg = (String)request.getAttribute("msg"); 
 
    Message m = new Message();
@@ -103,13 +102,14 @@
 		margin-left: 10px;
 	}
 	
+	#login{cursor: pointer;}
+	
 	.nickname {
 		float: right;
 		padding: 10px;
 		color: rgb(241, 131, 50);
 		font-family: 'Nanum Gothic', sans-serif;
 		font-size: 15pt;
-		cursor: pointer;
 		font-weight: bold;
 	}
 	
@@ -128,15 +128,6 @@
 		color: black;
 	}
 	
-	#logout {
-		float: right;
-		padding: 10px;
-		color: rgb(118, 129, 73);
-		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 15pt;
-		cursor: pointer;
-	}
-	
 	#readmore {
 		position: fixed;
 		bottom: 0%;
@@ -151,14 +142,8 @@
 		cursor: pointer;
 	}
 	
-	nav {
-		background-color: #fff9f0;
-		position: fixed;
-		width: 99%;
-		height: 100%;
-		top: 60px;
-		z-index: 3;
-	}
+	nav {background-color: #fff9f0; position: fixed; 
+		width: 99%; height: 100%; top: 60px; z-index: 3;}
 	
 	.menu {
 		margin: 10px auto;
@@ -268,6 +253,14 @@
 	#text3.open {
 		left: 18%;
 	}
+	
+	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white;}
+	#miniPage{display:inline-block; font-size: 18px; cursor: pointer; 
+			padding: 5px; color:#f18332; font-weight:bold;}
+	#logout {padding: 5px; color: #768149; font-size: 18px;
+			cursor: pointer; display:inline-block; font-weight:bold;}
+	#miniPoint{font-size: 18px;}
+	
 </style>
 
 </head>
@@ -280,9 +273,9 @@
 			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
-					<img alt="메세지" src="images/receive_letter.png" style="width:40px; height:40px;">
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/receive_letter.png" style="width:40px; height:40px;">
 				<% } else { %>
-					<img alt="메세지" src="images/basic_letter.png" style="width:40px; height:40px;">
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/basic_letter.png" style="width:40px; height:40px;">
 				<% } %>
 				</button>
 			</span>
@@ -290,31 +283,28 @@
 			<% if(loginUser == null){ %>
 				<div class="nickname" id="login"><b>로그인</b></div>
 			<%}else{ %>
-				<div id="logout">로그아웃</div>
-				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
+				<div class="nickname" id="nickname"><b><%= loginUser.getUserName() %></b></div>
+				<div id="miniInfo" hidden="">
+					<div id="miniPage" onclick="location.href='<%= request.getContextPath()%>/myPage.me'">마이페이지</div>
+					<div id="logout">로그아웃</div>
+					<div id="miniPoint">
+						<b>귤포인트</b>  <%= loginUser.getPoint() %>귤
+						<img src="<%= request.getContextPath()%>/images/orange.png" width=30px; height=30px; style="vertical-align:middle;">
+				</div>
+		</div>
 			<%} %>
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
-					
-			
-			<script>
-				$('#login').click(function(){
-					location.href='views/b_member/login.jsp?page=' + window.location.pathname.substring(10);
-				})
-				
-				$('#logout').click(function(){
-					location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
-				})
-			</script>
+
       	</div>
 		
 		<div id="subHeader">
-			<img alt="로고" src="images/BigLogo.png" id="logo" onclick="location.href='index.jsp'">
+			<img alt="로고" src="<%= request.getContextPath() %>/images/BigLogo.png" id="logo" onclick="location.href='index.jsp'">
 		</div>
 		
 		<!-- html 높이는 454 -->
 		
 		<div id="readmore">
-			<img id="readmoreImg" src="images/readmore.png" >
+			<img id="readmoreImg" src="<%= request.getContextPath() %>/images/more.png" >
 		</div>
 		
 		<script>
@@ -369,8 +359,8 @@
 				<p>당신의 빛나는 Single Life를 응원합니다.</p>
 			</div>
 		</div>
-		<div class="textarea"><br><img src="images/menuImg1.jpg" width=auto height=450px></div>
-		<div class="textarea"><br><img src="images/menuImg2.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="<%= request.getContextPath() %>/images/menuImg1.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="<%= request.getContextPath() %>/images/menuImg2.jpg" width=auto height=450px></div>
 		<div class="textarea">
 			<div id="text2">
 				<br><br><br>
@@ -391,13 +381,33 @@
 				<p>다른 누군가한테는 필요할 것 같다고요?</p>
 			</div>
 		</div>
-		<div class="textarea"><br><img src="images/menuImg3.jpg" width=auto height=450px></div>
+		<div class="textarea"><br><img src="<%= request.getContextPath() %>/images/menuImg3.jpg" width=auto height=450px></div>
 	</div>
 
 	<section></section>
 	<footer></footer>
 	
 	<script>
+	
+		$('#login').click(function(){
+			location.href='views/b_member/login.jsp?page=' + window.location.pathname.substring(10);
+		})
+		
+		$('#logout').click(function(){
+			location.href="<%= request.getContextPath()%>/logout.me?page=" + window.location.pathname.substring(10);
+		})
+		
+		$(document).mousemove(function(e){
+		   if($('#nickname').is(":hover")) {
+		      $('#miniInfo').show();
+		      $('#miniInfo').css("top", 45);
+		      $('#miniPage').css("cursor", "pointer");
+		      $('#miniInfo').css("left", e.pageX - $('#miniInfo').width() / 2);
+		   } else if(!($('#miniInfo').is(":hover"))) {
+		      $('#miniInfo').hide();
+		   }
+		});
+	
 		$('nav').height($(document).height()-50)
 		var updownCheck = true;
 		
@@ -416,7 +426,7 @@
 		function goMessage(){
 			<% if(loginUser != null) {%>
 				window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
-			<% } else {%>
+			<% } else { %>
 				alert("로그인 후 이용해주세요.");
 			<% } %>
 		}	
@@ -435,9 +445,6 @@
 		}
 		
 		$(window).scroll(function(){
-			/* console.log($(window).scrollTop()) // 이거는 보고있는 창의 최상단
-			console.log($(document).height()) // 이거는 페이지 길이 밑에거는 보고있는 화면길이
-			console.log($(window).height())  */
 			
 		    var scrolltop = $(window).scrollTop();
 		    var winheight = $(window).height();

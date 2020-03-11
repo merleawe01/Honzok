@@ -43,29 +43,29 @@
 		cursor: pointer;
 	}
 	#list {
-		height : 85%;
-		width : auto;
-		float : right;
+		height: 100%;
+		width: auto;
+		float: right;
 		cursor: pointer;
 		margin-left: 10px;
 	}
 	#icon {
-		height : 90%;
-		width : auto;
-		float : right;
+		height: 50px;
+		width: 50px;
+		float: right;
 	}
 
 	.messageBtn {padding:3px; display: inline-table; float: right;
           background-color: transparent; border: none; cursor: pointer;}
-  .nickname {
-		float : right;
-		padding : 10px;
-		color: rgb(241,131,50);
-		font-family: 'Nanum Gothic', sans-serif;
-		font-size: 15pt;
-		cursor: pointer;
-		font-weight: bold;
-	}
+	 .nickname {
+			float : right;
+			padding : 10px;
+			color: rgb(241,131,50);
+			font-family: 'Nanum Gothic', sans-serif;
+			font-size: 15pt;
+			cursor: pointer;
+			font-weight: bold;
+		}
 	.messageBtn {padding:3px; display: inline-table; float: right; margin-right:5px;
           background-color: transparent; border: none; cursor: pointer;}
 	#nickname::after{
@@ -160,6 +160,13 @@
    				 top: 0; left: 0; border-radius:5%; display:none; z-index: 1; text-align:center; border-radius: 80%;}
 	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;
 		font-size:30px; font-weight:bold; font-family: 'Nanum Gothic', sans-serif;}
+	
+	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white;}
+	#miniPage{display:inline-block; font-size: 18px; cursor: pointer; 
+				padding: 5px; color:#f18332; font-weight:bold;}
+	#logout {padding: 5px; color: #768149; font-size: 18px;
+			cursor: pointer; display:inline-block; font-weight:bold;}
+	#point{font-size: 18px; padding: 5px;}
          
 </style>
 
@@ -170,24 +177,31 @@
 			<img alt="로고" src="<%= request.getContextPath() %>/images/Logo.png" onclick="location.href='<%= request.getContextPath()%>'" id="logo">
 			<img alt="메뉴" src="<%= request.getContextPath() %>/images/list.png" id="list" onclick="slideMenu()">
 			
-			<div id="message">
+			<span id="message">
 				<button type="button" class="messageBtn" onclick="goMessage();">
  				<% if(view == 0) {%> 
-					<img alt="메세지" src="<%= request.getContextPath() %>/images/receive_letter.png" style="width:auto; height:35px;">
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/receive_letter.png" style="width:40px; height:40px;">
 				<% } else { %>
-					<img alt="메세지" src="<%= request.getContextPath() %>/images/basic_letter.png" style="width:auto; height:35x;">
+					<img alt="메세지" src="<%= request.getContextPath() %>/images/basic_letter.png" style="width:40px; height:40px;">
 				<% } %>
 				</button>
-			</div>		
+			</span>
 			
 			<% if(loginUser == null){ %>
 				<div class="nickname" id="login"><b>로그인</b></div>
 			<%}else{ %>
-				<div id="logout">로그아웃</div>
-				<div class="nickname" id="nickname" onclick="location.href='<%= request.getContextPath()%>/myPage.me'"><b><%= loginUser.getUserName() %></b></div>
+				<div class="nickname" id="nickname"><b><%= loginUser.getUserName() %></b></div>
+				<div id="miniInfo" hidden="">
+					<div id="miniPage" onclick="location.href='<%= request.getContextPath()%>/myPage.me'">마이페이지</div>
+					<div id="logout">로그아웃</div>
+					<div id="miniPoint">
+						<b>귤포인트</b>  <%= loginUser.getPoint() %>귤
+						<img src="<%= request.getContextPath()%>/images/orange.png" width=30px; height=30px; style="vertical-align:middle;">
+				</div>
+		</div>
 			<%} %>
 			<img alt="아이콘" src="<%= request.getContextPath() %>/images/blanket.png" id="icon">
-			
+
 			<div id="quicklink">
 				<table>
 					<tr class="boardTr">
@@ -297,6 +311,18 @@
 		</nav>
 		
 		<script>
+		
+			$(document).mousemove(function(e){
+			   if($('#nickname').is(":hover")) {
+			      $('#miniInfo').show();
+			      $('#miniInfo').css("top", 45);
+			      $('#miniPage').css("cursor", "pointer");
+			      $('#miniInfo').css("left", e.pageX - $('#miniInfo').width() / 2);
+			   } else if(!($('#miniInfo').is(":hover"))) {
+			      $('#miniInfo').hide();
+			   }
+			});
+			
 			$('nav').height($(document).height()-50)
 			var updownCheck = true;
 			
@@ -312,13 +338,13 @@
 				}
 			}
       
-      function goMessage(){
-        <% if(loginUser != null) {%>
-          window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
-        <% } else {%>
-          alert("로그인 후 이용해주세요.");
-        <% } %>
-      }	
+	      function goMessage(){
+	        <% if(loginUser != null) {%>
+	          window.open("<%= request.getContextPath() %>/list.re", "messgaeHome", "width=1000", "height=1000");
+	        <% } else {%>
+	          alert("로그인 후 이용해주세요.");
+	        <% } %>
+	      }	
 
 			function goInfo(){
 				location.href="<%= request.getContextPath()%>/list.food";

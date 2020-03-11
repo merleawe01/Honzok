@@ -476,8 +476,8 @@ public class MessageDAO {
 		
 		int messages = 5;
 		
-		int startRow = (currentPage - 1) * messages + 1;   // 현재 페이지에서 나타나는 게시글 시작 번호
-		int endRow = startRow + messages - 1; 			  // 현재 페이지에서 게시글 끝 번호
+		int startRow = (currentPage - 1) * messages + 1;
+		int endRow = startRow + messages - 1; 
 		
 		String query = null;
 		

@@ -162,8 +162,8 @@
 				</div>
 					<br>
 				
-				<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:900px; height:200px;" style="resize: none;" readonly><%= m.getContent() %></textarea>
+				<!-- 내용입력 칸  -->-
+					<textarea class="right" name="incontent"style="width:900px; height:200px; font-size:20px; resize: none;" readonly><%= m.getContent() %></textarea>
 				<br><br>
 				<div id="caution">
 					<p>

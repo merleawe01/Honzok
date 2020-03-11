@@ -42,6 +42,8 @@ public class TravelInsert extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		Member user = ((Member)request.getSession().getAttribute("loginUser"));
+		
 		if(ServletFileUpload.isMultipartContent(request)) { // enctype이 multipart/form-data로 전송되었는지 확인
 			int maxSize = 1024 * 1024 * 10; // 10Mbyte : 전송파일 용량 제한
 			String root = request.getSession().getServletContext().getRealPath("/"); // 웹 서버 컨테이너 경로 추출
@@ -75,7 +77,7 @@ public class TravelInsert extends HttpServlet {
 			String address = multipartRequest.getParameter("address");
 			String local_name = multipartRequest.getParameter("local_name");
 			
-			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+			String writer = user.getUserId();
 			
 			TravelBoard board = new TravelBoard(title, writer, content, best_time, caution, local_name, address, star, area_x, area_y);
 			
@@ -92,6 +94,7 @@ public class TravelInsert extends HttpServlet {
 			int result = new TBoardService().insertTBoard(board, fileList);
 			
 			if(result > 0) {
+				user.setPoint(user.getPoint() + 300);
 				response.sendRedirect("list.travel");
 			} else {
 				for(int i = 0; i < saveFiles.size(); i++) {

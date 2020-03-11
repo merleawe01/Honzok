@@ -335,7 +335,7 @@
             
             <div id = "access_terms2">
                <div id = "access_all">
-                  <input type = "checkbox" id="checkall" class="access_terms3">이용약관 및 개인정보수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다. 
+                  <input type = "checkbox" id="checkall" class="access_terms3" required>이용약관, 개인정보수집 및 이용에 모두 동의합니다. 
                </div>
                
                <span class = "access_terms3" id = "check_content">[필수] 이용약관 동의</span>
@@ -392,7 +392,7 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
 참고로 혼족는 ‘개인정보 유효기간제’에 따라 1년간 서비스를 이용하지 않은 회원의 개인정보를 별도로 분리 보관하여 관리하고 있습니다.</textarea>
                 </div>    
          <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
-            	   개인정보 수집 및 이용에 대한 안내(필수) <input type="checkbox"  class="access_terms3" >동의함
+            	   개인정보 수집 및 이용에 대한 안내(필수) <input type="checkbox"  class="access_terms3" required>동의함
                </div>
                
                    <div class = "access_terms3" style = "margin : 10px 30px 10px 0px;">
@@ -404,7 +404,7 @@ NAVER 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정�
 　　　　　　　　　디지털 마케팅 업무</textarea>
                </div>
                <div class = "access_terms3" id = "check_content" style = "font-size : 15px;">
-               이용약관에 동의하시겠습니까?(필수) <input type="checkbox"  class="access_terms3" >동의함
+               이용약관에 동의하시겠습니까?(필수) <input type="checkbox"  class="access_terms3" required>동의함
                </div>
             </div>
             <input type = "submit" id = "finish_bt" value = "회원가입">
