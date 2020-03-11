@@ -473,6 +473,12 @@
 		<div id="cancle">취소</div>
 		
 		<script>
+			$('#cancle').click(function(){
+				if(confirm("글작성을 그만두시겠습니까?")) {
+					javascript:history.back();
+				}
+			})
+		
 			function insertBoard(){
 				var cateStr = "";
 				for(var i = 0; i < 8; i++){
