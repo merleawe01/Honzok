@@ -201,7 +201,7 @@
 		<form action="<%= request.getContextPath() %>/insert.food" method="post" id="detailForm" encType="multipart/form-data">
 			<div id="basic">
 				<div id="mainImg">
-					<img src="../../images/meal.png" width=100% height=100%>
+					<img src="<%= request.getContextPath() %>/images/meal.png" width=100% height=100%>
 				</div>
 				<input type="file" id="addMainImg" name="foodImg" accept=".bmp, .jpeg, .jpg, .gif, .png, .tiff, .jfif" onchange="LoadImg(this)" hidden="">
 				
@@ -229,19 +229,19 @@
 					<span class="bigText">음식점에 대한 평가 </span><br><br>
 					
 					<input type="hidden" id="star" name="star" value="">
-					<img src="../../images/empty_star_new.png" class="star" id="star1">
-					<img src="../../images/empty_star_new.png" class="star" id="star2">
-					<img src="../../images/empty_star_new.png" class="star" id="star3">
-					<img src="../../images/empty_star_new.png" class="star" id="star4">
-					<img src="../../images/empty_star_new.png" class="star" id="star5">
+					<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star" id="star1">
+					<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star" id="star2">
+					<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star" id="star3">
+					<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star" id="star4">
+					<img src="<%= request.getContextPath() %>/images/empty_star_new.png" class="star" id="star5">
 					<script>
 						$('.star').mouseenter(function(){
 							var findStar = [$('#star1'), $('#star2'), $('#star3'), $('#star4'), $('#star5')];
 							for(var i = 0; i < 5; i++){
-								findStar[i].attr('src','../../images/empty_star_new.png');
+								findStar[i].attr('src','<%= request.getContextPath() %>/images/empty_star_new.png');
 							}
 							for(var i = 0; i < 5; i++){
-								findStar[i].attr('src','../../images/star_new.PNG');
+								findStar[i].attr('src','<%= request.getContextPath() %>/images/star_new.PNG');
 								if(findStar[i][0].id == this.id){
 									$('#star').val(i);
 									break;

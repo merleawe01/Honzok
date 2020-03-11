@@ -174,7 +174,7 @@
 					</div>	
 					<br>
 					<!-- 내용입력 칸  -->
-					<textarea class="right" name="incontent"style="width:900px; height:200px; resize: none;" ><%= content %></textarea>
+					<textarea class="right" name="incontent"style="width:900px; height:200px; font-size:20px; resize: none;"><%= content %></textarea>
 					<br>
 				<div id="fileArea">
 				<input type="file" id="thumbnailImg1" multiple="multiple" name="thumbnailImg1" onchange="LoadImg(this,1)">

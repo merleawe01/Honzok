@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import b_member.model.vo.Member;
 import c_information.model.service.ReplyService;
 import c_information.model.vo.Reply;
 
@@ -35,6 +36,10 @@ public class ReplyInsert extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+		Member user = ((Member)request.getSession().getAttribute("loginUser"));
+		
+		user.setPoint(user.getPoint() + 30);
 		
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");

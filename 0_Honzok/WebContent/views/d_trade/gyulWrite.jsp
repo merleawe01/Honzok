@@ -14,7 +14,6 @@
 			margin-left : 100px;
 		}
 		
-		
 		#contentImgArea1:hover, #contentImgArea2:hover{cursor:pointer;}
 		
 		#content_table{

@@ -22,62 +22,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	header {
-			width : 100%;
-			height : 170px;
-			text-align: center;
-		}
-		#mainHeader{
-			width : 1170px;
-			height : 50px;
-			display : inline-block;
-		}
-		#subHeader{
-			width : 1170px;
-			height : 100px;
-			display : inline-block;
-		}
-		#logo {
-			height : 100%;
-			width : auto;
-			float : left;
-		}
-		#list {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#icon {
-			height : 100%;
-			width : auto;
-			float : right;
-		}
-		#nickname {
-			float : right;
-			padding : 10px;
-			color: rgb(241,131,50);
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 12pt;
-		}
-		#nickname::after{
-			color : black;
-		}
-		#boardName{
-			margin : 20px;
-			width : 100%;
-			height : 70px;
-			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 30pt;
-			font-weight: bold;
-			display : inline-table;
-			border-bottom: 2px solid gray;
-		}
-
-		
 		#title_table {
 			border-collapse: collapse;
 			border-spacing: 0;
-			
 		}
 		
 		#gyul{

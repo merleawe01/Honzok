@@ -34,9 +34,10 @@ public class WriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+			Member user = ((Member)request.getSession().getAttribute("loginUser"));
 			String postTitle = request.getParameter("postTitle");
 			String content = request.getParameter("content");
-			String writer = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
+			String writer = user.getUserId();
 			Board board = new Board();
 			board.setPostTitle(postTitle);
 			board.setContent(content);
@@ -44,6 +45,7 @@ public class WriteServlet extends HttpServlet {
 			int result = new BoardService().insertBoard(board);
 			
 			if(result > 0) {
+				user.setPoint(user.getPoint() + 80);
 				response.sendRedirect("list.bo");
 			} else {
 				RequestDispatcher view = request.getRequestDispatcher("views/a_common/errorPage.jsp");
