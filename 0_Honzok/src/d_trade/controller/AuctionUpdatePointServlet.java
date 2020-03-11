@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import b_member.model.vo.Member;
 import d_trade.model.service.TradeService;
 
 /**
@@ -29,6 +30,9 @@ public class AuctionUpdatePointServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Member user = ((Member)request.getSession().getAttribute("loginUser"));
+		
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
 		int bPoint = Integer.parseInt(request.getParameter("point"));
 		String writer = request.getParameter("writer");
@@ -40,6 +44,7 @@ public class AuctionUpdatePointServlet extends HttpServlet {
 		String page = "";
 		
 		if(result>0) {
+			user.setPoint(user.getPoint() - bPoint);
 			page = "detail.gy?postNo="+postNo;
 		}else {
 			request.setAttribute("msg", "입찰과정에 오류가 발생하였습니다."	);
