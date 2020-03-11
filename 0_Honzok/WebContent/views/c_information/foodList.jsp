@@ -318,7 +318,7 @@
 			
 			function makeClick(m) {
 				return function() {
-					location.href='<%= request.getContextPath() %>/detail.food?no=' + m.id;
+					location.href='<%= request.getContextPath() %>/detail.food?no=' + m.id + '&area=<%= area %>&category=<%= category %>';
 				};
 			}
 
