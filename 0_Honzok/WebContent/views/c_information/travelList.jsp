@@ -275,7 +275,7 @@
 			
 			function makeClick(m) {
 				return function() {
-					location.href='<%= request.getContextPath() %>/detail.travel?no=' + m.id;
+					location.href='<%= request.getContextPath() %>/detail.travel?no=' + m.id + '&area=<%= area %>';
 				};
 			}
 
