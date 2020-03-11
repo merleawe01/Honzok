@@ -161,7 +161,7 @@
 	.p {display:table-cell; text-align:center; vertical-align:middle; width:300px; height:300px; line-height:100%;
 		font-size:30px; font-weight:bold; font-family: 'Nanum Gothic', sans-serif;}
 	
-	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white;}
+	#miniInfo{border:3px solid powderblue; float: right; position:absolute; background-color:white; z-index:999;}
 	#miniPage{display:inline-block; font-size: 18px; cursor: pointer; 
 				padding: 5px; color:#f18332; font-weight:bold;}
 	#logout {padding: 5px; color: #768149; font-size: 18px;
