@@ -193,7 +193,7 @@
 					<div class="nickname" id="login"><b>로그인</b></div>
 				</form>
 			<%}else{ %>
-				<div class="nickname" id="nickname"><b><%= loginUser.getUserName() %></b></div>
+				<div class="nickname" id="nickname"><b><%= loginUser.getNickName() %></b></div>
 				<div id="miniInfo" hidden="">
 					<div id="miniPage" onclick="location.href='<%= request.getContextPath()%>/myPage.me'">마이페이지</div>
 					<div id="logout">로그아웃</div>

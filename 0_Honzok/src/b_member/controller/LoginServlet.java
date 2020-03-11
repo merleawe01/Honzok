@@ -39,7 +39,12 @@ public class LoginServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");
 		Member member = new Member(userId, userPwd);
 		
-		String page = request.getParameter("page") == "" ? "index.jsp" : request.getParameter("page");
+		String page = request.getParameter("page");
+		if(page.equals("") || page.equals("insert.me") || page.equals("null")) {
+			page = "index.jsp";
+		}
+		
+		System.out.println(page);
 		
 		Member loginUser = new MemberService().loginMember(member);
 		

@@ -114,7 +114,7 @@
 						</tr>
 						<tr>
 							<td class = "content_title" id = "content">내용<label class = "must">(필수)</label></td>
-							<td><textarea  id = "input_content"  name = "content" ><%= request.getParameter("content") %></textarea>
+							<td><textarea  id = "input_content"  name = "content" style="resize: none;"><%= request.getParameter("content") %></textarea>
 							<span ><span id="text-length">0</span>/780</span></td>
 						</tr>
 					</table>
