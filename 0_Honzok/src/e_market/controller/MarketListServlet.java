@@ -63,6 +63,9 @@ public class MarketListServlet extends HttpServlet {
 		ArrayList<Market> mList = service.selectMList(currentPage); // 보드에 관련된
 		ArrayList<Attachment> fList = service.selectFList(); // 사진에 관련된
 		
+		System.out.println(mList);
+		System.out.println(fList);
+		
 		String page = null;
 		if(mList != null && fList != null) {
 			request.setAttribute("mList", mList);

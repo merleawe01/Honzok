@@ -265,9 +265,9 @@
 	                        if(timeAll <= 0) {
 	                           timeAll = timeAll + 86400;
 	                        }
-	                        hour = /* timeAll / 3600 */ 0;
-	                        min = /* (timeAll - hour * 3600) / 60; */ 0;
- 	                        sec = /* timeAll - hour * 3600 - min * 60; */ 10;
+	                        hour = timeAll / 3600;
+	                        min = (timeAll - hour * 3600) / 60;
+ 	                        sec = timeAll - hour * 3600 - min * 60;
                         }
 
                        %>
