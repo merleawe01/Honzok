@@ -31,6 +31,9 @@ public class UpdatePointServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		Member user = ((Member)request.getSession().getAttribute("loginUser"));
+		
 		int postNo = Integer.parseInt(request.getParameter("pno"));
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		String nickName = ((Member)request.getSession().getAttribute("loginUser")).getNickName();
@@ -51,8 +54,9 @@ public class UpdatePointServlet extends HttpServlet {
 		
 		int result = new TradeService().udatePoint(td);
 		
-		String page =null;
+		String page = null;
 		if(result>0) {
+			user.setPoint(user.getPoint() - maxPoint);
 			page = "detail.gy?postNo="+td.getPostNo();
 		}else {
 			request.setAttribute("msg", "포인트결제에 실패하였습니다."	);
