@@ -126,7 +126,7 @@
 					</div>
 					<br><br>
 					<div class="input">
-						<div class="left" style="font-size:25px;"><b>게시글 작성</b></div>
+						<div class="left" style="font-size:25px;"><b>게시글 정보</b></div>
 					</div>
 					
 					<!-- 물품명 -->
@@ -177,7 +177,9 @@
 			
 				<div align="center">
 					<% if(loginUser != null){ %>
-						<button id = "threebu" type="button" onclick="buyMarket()" value="구매">구매</button>
+						<% if(!(loginUser.getNickName().equals(m.getNickname()))) {%>
+							<button id = "threebu" type="button" onclick="buyMarket()" value="구매">구매</button>
+						<% } %>
 						<button id = "fourbu"type="button" onclick="location.href='<%= request.getContextPath() %>/list.m'" value="목록으로">목록으로</button>
 					<% } %>
 				</div>

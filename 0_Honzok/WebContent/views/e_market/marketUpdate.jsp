@@ -119,7 +119,7 @@
 					<br><br>
 					
 					<div class="input">
-						<div class="left" style="font-size:25px;"><b>게시글 작성</b></div>
+						<div class="left" style="font-size:25px;"><b>게시글 수정</b></div>
 					</div>
 					
 					<!-- 물품명 -->

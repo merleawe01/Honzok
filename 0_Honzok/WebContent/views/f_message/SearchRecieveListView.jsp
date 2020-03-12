@@ -85,8 +85,8 @@
 			<% 
 				} else{	%>
 						<td class="detail" style="color:#768149; width:300px;" id="title"><%= m.getmTitle() %></td>
-					<% } %>	
 						<td width=100px><%= m.getDate()%></td>
+					<% } %>	
 					</tr>					
 			<% 		
 					}
