@@ -17,15 +17,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 		#title_table {
 			border-collapse: collapse;
 			border-spacing: 0;
 			margin-left : 90px;
 			font-weight: bold;
-			height:60px;
+			height:45px;
 			font-family: 'Nanum Gothic', sans-serif;
-			font-size: 17pt;
+			font-size: 20px;
 			display : inline-table;
 		
 		}

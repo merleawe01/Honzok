@@ -119,7 +119,7 @@
       #access_terms2{
          margin-top : 2%;
          border : solid 2px gray;
-         width : 100%;
+         width : 99%;
          text-align : left;
          padding : 20px 0px 20px 0px; 
          background : rgb(242, 242, 242);
